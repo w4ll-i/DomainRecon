@@ -1,0 +1,11 @@
+# Backend Docker Ignore
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.gitignore
+.env
+*.md
+.vscode/
+.idea/
+tests/

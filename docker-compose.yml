@@ -1,0 +1,21 @@
+# =============================================================================
+# DomainRecon - Docker Compose (simplifié, tout en un)
+# =============================================================================
+# Un seul conteneur : FastAPI sert l'API + le frontend
+# Base de données : SQLite (fichier local, zéro config)
+# =============================================================================
+
+services:
+  domainrecon:
+    build: .
+    container_name: domainrecon
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - domainrecon_data:/app/data
+    environment:
+      - ENV=production
+
+volumes:
+  domainrecon_data:
