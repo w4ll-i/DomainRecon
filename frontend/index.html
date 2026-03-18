@@ -46,7 +46,6 @@
             --font: 'Inter', -apple-system, system-ui, sans-serif;
             --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
         }
-        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
         .mono { font-family: var(--mono); }
         a { color: var(--accent); text-decoration: none; }
         a:hover { text-decoration: underline; }
@@ -57,102 +56,181 @@
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 
-        /* Header */
-        .header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 40; }
-        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 84px; display: flex; align-items: center; justify-content: space-between; }
-        .logo { display: flex; align-items: center; gap: 14px; }
-        .logo-icon { width: 50px; height: 50px; flex-shrink: 0; background: #ffffff00; border-radius: 50px; padding: 0px; }
-        .logo-icon img { width: 100%; height: 100%; object-fit: contain; }
-        .logo-text { font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
-        .logo-sub { font-size: 11px; color: var(--text-tertiary); font-weight: 400; }
-        .header-right { display: flex; align-items: center; gap: 16px; }
-        .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-tertiary); display: inline-block; margin-right: 6px; }
-        .status-dot.online { background: var(--success); }
-        .status-dot.offline { background: var(--danger); }
-        .header-link { font-size: 13px; color: var(--text-tertiary); transition: color .15s; display: flex; align-items: center; gap: 4px; }
-        .header-link:hover { color: var(--text); text-decoration: none; }
+        /* ── HEADER ─────────────────────────────────── */
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
+.header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40;height:52px;display:flex;align-items:center;padding:0 24px;gap:16px;}
+.logo{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.logo-icon{width:32px;height:32px;flex-shrink:0;}
+.logo-icon img{width:100%;height:100%;object-fit:contain;}
+.logo-text{font-size:15px;font-weight:600;letter-spacing:-.02em;}
+.header-search{flex:1;display:none;max-width:420px;margin:0 auto;}
+.header-search.visible{display:flex;gap:8px;align-items:center;}
+.header-right{display:flex;align-items:center;gap:16px;margin-left:auto;flex-shrink:0;}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--text-tertiary);display:inline-block;margin-right:5px;}
+.status-dot.online{background:var(--success);}
+.status-dot.offline{background:var(--danger);}
+.header-link{font-size:12px;color:var(--text-tertiary);transition:color .15s;display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:var(--font);}
+#status-text{font-size:12px;}
+.header-link:hover{color:var(--text);text-decoration:none;}
 
-        /* Main */
-        .main { max-width: 1200px; margin: 0 auto; padding: 24px; flex: 1; width: 100%; }
+/* ── HERO SEARCH ─────────────────────────────── */
+#hero-section{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;gap:32px;}
+#hero-section.hidden{display:none;}
+.hero-title{font-size:12px;color:var(--text-tertiary);letter-spacing:.08em;text-transform:uppercase;font-weight:500;}
+.hero-search-wrap{width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px;}
+.hero-input-row{display:flex;gap:10px;}
+.hero-input{flex:1;padding:13px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:var(--font);color:var(--text);background:transparent;outline:none;transition:border-color .15s,box-shadow .15s;}
+.hero-input::placeholder{color:var(--text-tertiary);}
+.hero-input:focus{border-color:#555;box-shadow:0 0 0 3px rgba(255,255,255,.04);}
+.btn-hero-scan{padding:13px 28px;background:#fff;color:#111;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s;white-space:nowrap;}
+.btn-hero-scan:hover{background:#e0e0e0;}
+.btn-hero-scan:disabled{background:var(--border);color:var(--text-tertiary);cursor:not-allowed;}
+.hero-profile{display:flex;align-items:center;gap:16px;}
+.hero-profile-label{font-size:12px;color:var(--text-tertiary);}
+.hero-profile label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);cursor:pointer;}
+.hero-profile input[type="radio"]{accent-color:var(--accent);cursor:pointer;}
 
-        /* Search */
-        .search-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
-        .search-form { display: flex; gap: 12px; }
-        .search-input-wrap { flex: 1; position: relative; }
-        .search-input-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 14px; }
-        .search-input { width: 100%; padding: 11px 16px 11px 40px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font); color: var(--text); background: var(--bg); transition: all .15s; outline: none; }
-        .search-input::placeholder { color: var(--text-tertiary); }
-        .search-input:focus { border-color: #555; background: var(--surface); }
-        .btn-scan { padding: 11px 28px; background: #fff; color: #111; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; font-family: var(--font); cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-        .btn-scan:hover { background: var(--accent-hover); }
-        .btn-scan:disabled { background: var(--border); color: var(--text-tertiary); cursor: not-allowed; }
+/* ── HERO HISTORY ────────────────────────────── */
+.hero-history{width:100%;max-width:560px;}
+.hero-history-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:8px;}
+.hero-history-item{display:flex;align-items:center;padding:8px 12px;border-radius:var(--radius-xs);cursor:pointer;transition:background .1s;gap:10px;}
+.hero-history-item:hover{background:var(--surface);}
+.hero-history-domain{font-family:var(--mono);font-size:13px;color:var(--accent);flex:1;}
+.hero-history-meta{font-size:11px;color:var(--text-tertiary);}
 
-        /* Loading */
-        .loading-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px; }
-        .loading-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-        .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg) } }
-        .loading-title { font-size: 14px; font-weight: 600; color: var(--text); }
-        .loading-timer { font-size: 12px; color: var(--text-tertiary); font-family: var(--mono); margin-left: auto; }
-        .scan-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .scan-step { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: var(--radius-xs); font-size: 12.5px; color: var(--text-tertiary); opacity: 0; transform: translateX(-8px); transition: all .3s; }
-        .scan-step.active { opacity: 1; transform: translateX(0); color: var(--text-secondary); }
-        .scan-step.done { color: var(--success); }
-        .scan-step.done .step-icon i { color: var(--success); }
-        .step-icon { width: 16px; text-align: center; flex-shrink: 0; }
+/* ── POST-SCAN LAYOUT ────────────────────────── */
+#app-post{display:none;flex-direction:column;flex:1;}
+#app-post.visible{display:flex;}
+.compact-input{flex:1;padding:7px 12px;border:1px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-family:var(--font);color:var(--text);background:transparent;outline:none;transition:border-color .15s;}
+.compact-input::placeholder{color:var(--text-tertiary);}
+.compact-input:focus{border-color:#555;}
+.btn-compact-scan{padding:7px 10px;background:#fff;color:#111;border:none;border-radius:var(--radius-xs);font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s;flex-shrink:0;}
+.btn-compact-scan:hover{background:#e0e0e0;}
+.btn-compact-scan:disabled{background:var(--border);color:var(--text-tertiary);cursor:not-allowed;}
+.compact-profile{display:flex;align-items:center;gap:10px;}
+.compact-profile label{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-tertiary);cursor:pointer;white-space:nowrap;}
+.compact-profile input[type="radio"]{accent-color:var(--accent);cursor:pointer;}
 
-        /* Error */
-        .error-card { background: var(--danger-bg); border: 1px solid rgba(199,80,80,.2); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: flex-start; gap: 12px; }
-        .error-card i { color: var(--danger); margin-top: 2px; }
-        .error-card h3 { font-size: 14px; font-weight: 600; color: var(--danger); }
-        .error-card p { font-size: 13px; color: var(--danger); margin-top: 2px; opacity:.85; }
+/* Metrics bar */
+.metrics-bar{background:#151515;border-bottom:1px solid var(--border-light);padding:0 24px;height:36px;display:flex;align-items:center;opacity:0;transition:opacity .3s;}
+.metrics-bar.loaded{opacity:1;}
+.metric-item{display:flex;align-items:center;gap:6px;cursor:pointer;padding:0 16px;height:100%;transition:background .1s;}
+.metric-item:first-child{padding-left:0;}
+.metric-item:hover{background:rgba(255,255,255,.03);}
+.metric-sep{color:var(--border);font-size:16px;user-select:none;}
+.metric-label{font-size:11px;color:var(--text-tertiary);}
+.metric-value{font-size:13px;font-weight:600;}
+.metric-value.mono{font-family:var(--mono);font-weight:400;font-size:12px;}
 
-        /* Results */
-        .results-section { margin-bottom: 20px; }
+/* Main tabs */
+.main-tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:0;overflow-x:auto;scrollbar-width:none;}
+.main-tabs::-webkit-scrollbar{display:none;}
+.main-tab{padding:0 16px;height:40px;display:flex;align-items:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;user-select:none;}
+.main-tab:hover{color:var(--text-secondary);}
+.main-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
-        /* Summary Cards */
-        .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
-        @media (min-width: 768px) { .summary-grid { grid-template-columns: repeat(8, 1fr); } }
-        .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 12px; text-align: center; transition: all .15s; }
-        .summary-card:hover { border-color: #444; }
-        .summary-label { font-size: 11px; color: var(--text-tertiary); margin-bottom: 6px; font-weight: 500; text-transform: uppercase; letter-spacing: .03em; }
-        .summary-value { font-size: 18px; font-weight: 700; color: var(--text); }
-        .summary-value.sm { font-size: 12px; font-weight: 600; }
-        .summary-value.accent { color: var(--accent); }
-        .summary-value.success { color: var(--success); }
-        .summary-value.warning { color: var(--warning); }
-        .summary-value.danger { color: var(--danger); }
+/* Content area */
+.content-area{flex:1;display:flex;flex-direction:column;min-height:0;}
+.main-panel{display:block;}
+.main-panel.hidden{display:none;}
 
-        /* Results Layout - Sidebar + Content */
-        .results-layout { display: flex; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); min-height: 560px; }
-        .results-sidebar { width: 200px; flex-shrink: 0; background: var(--bg); border-right: 1px solid var(--border); overflow-y: auto; padding: 8px 0; }
-        .sidebar-section { margin-bottom: 2px; }
-        .sidebar-section-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-tertiary); padding: 12px 16px 6px; }
-        .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px; font-size: 12.5px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all .12s; border-left: 2px solid transparent; user-select: none; }
-        .sidebar-item:hover { color: var(--text-secondary); background: rgba(255,255,255,.03); }
-        .sidebar-item.active { color: var(--accent); background: rgba(255,255,255,.05); border-left-color: var(--accent); }
-        .sidebar-item i { width: 16px; text-align: center; font-size: 12px; flex-shrink: 0; }
-        .sidebar-badge { margin-left: auto; font-size: 10px; padding: 1px 6px; border-radius: 100px; background: rgba(255,255,255,.06); color: var(--text-tertiary); font-weight: 600; font-family: var(--mono); }
-        .sidebar-item.active .sidebar-badge { background: rgba(255,255,255,.1); color: var(--accent); }
-        .results-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
-        .results-main-content { flex: 1; overflow-y: auto; }
-        .tab-content { padding: 24px; }
-        .tab-content.hidden { display: none; }
+/* Sub-tabs */
+.sub-tabs-bar{padding:12px 24px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--border-light);background:var(--bg);}
+.sub-tab{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:500;color:var(--text-tertiary);cursor:pointer;border:1px solid var(--border);background:transparent;transition:all .12s;white-space:nowrap;user-select:none;font-family:var(--font);}
+.sub-tab:hover{color:var(--text-secondary);border-color:#3a3a3a;}
+.sub-tab.active{background:#222;border-color:#444;color:var(--accent);}
 
-        /* Tab footer */
-        .tabs-footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-tertiary); }
-        .btn-export { background: none; border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 5px 12px; font-size: 12px; color: var(--text-secondary); cursor: pointer; font-family: var(--font); transition: all .15s; display: flex; align-items: center; gap: 6px; }
-        .btn-export:hover { border-color: var(--accent); color: var(--accent); }
+/* Tab content */
+.tab-content{padding:24px;}
+.tab-content.hidden{display:none;}
 
-        /* Common components */
-        .section-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .section-title i { color: var(--text-tertiary); font-size: 13px; }
-        .info-row { display: flex; align-items: flex-start; padding: 8px 12px; border-radius: var(--radius-xs); font-size: 13px; gap: 10px; }
-        .info-row:nth-child(odd) { background: rgba(255,255,255,.015); }
-        .info-row .row-icon { color: var(--text-tertiary); width: 16px; text-align: center; flex-shrink: 0; margin-top: 1px; font-size: 12px; }
-        .info-row .row-label { color: var(--text-tertiary); width: 110px; flex-shrink: 0; font-size: 12.5px; }
-        .info-row .row-value { color: var(--text); font-size: 13px; min-width: 0; word-break: break-word; }
-        .data-card { background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 16px; }
+/* Loading panel */
+.loading-panel{padding:24px;display:none;}
+.loading-panel.visible{display:block;}
+.loading-progress{height:2px;background:var(--border);border-radius:1px;margin-bottom:20px;overflow:hidden;}
+.loading-progress-bar{height:100%;background:var(--accent);border-radius:1px;width:0%;transition:width .3s;}
+.loading-header-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{font-size:13px;font-weight:600;}
+.loading-timer{font-size:12px;color:var(--text-tertiary);font-family:var(--mono);margin-left:auto;}
+.scan-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
+.scan-step{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:var(--radius-xs);font-size:12px;color:var(--text-tertiary);opacity:0;transform:translateX(-6px);transition:all .3s;}
+.scan-step.active{opacity:1;transform:translateX(0);color:var(--text-secondary);}
+.scan-step.done{color:var(--success);}
+.scan-step.done .step-icon i{color:var(--success);}
+.step-icon{width:14px;text-align:center;flex-shrink:0;}
+
+/* Error panel */
+.error-panel{margin:24px;background:var(--danger-bg);border:1px solid rgba(199,80,80,.2);border-radius:var(--radius);padding:16px 20px;display:none;align-items:flex-start;gap:12px;}
+.error-panel.visible{display:flex;}
+.error-panel i{color:var(--danger);margin-top:2px;}
+.error-panel h3{font-size:13px;font-weight:600;color:var(--danger);}
+.error-panel p{font-size:12px;color:var(--danger);margin-top:2px;opacity:.85;}
+
+/* Content footer */
+.content-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 24px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-tertiary);}
+.btn-export{background:none;border:1px solid var(--border);border-radius:var(--radius-xs);padding:4px 10px;font-size:11px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .15s;display:flex;align-items:center;gap:5px;}
+.btn-export:hover{border-color:var(--accent);color:var(--accent);}
+
+/* History (post-scan full panel) */
+.history-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:0 24px 24px;}
+.history-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);}
+.history-header h2{font-size:13px;font-weight:600;}
+.btn-refresh{background:none;border:none;font-size:12px;color:var(--text-tertiary);cursor:pointer;font-family:var(--font);transition:color .15s;display:flex;align-items:center;gap:4px;}
+.btn-refresh:hover{color:var(--accent);}
+.history-search{padding:8px 16px;border-bottom:1px solid var(--border-light);}
+.history-search-wrap{position:relative;}
+.history-search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);font-size:11px;}
+.history-search-input{width:100%;padding:7px 12px 7px 30px;border:1px solid var(--border);border-radius:var(--radius-xs);font-size:12px;font-family:var(--font);color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;}
+.history-search-input:focus{border-color:#555;}
+.history-search-input::placeholder{color:var(--text-tertiary);}
+.history-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border-light);cursor:pointer;transition:background .1s;}
+.history-item:last-child{border-bottom:none;}
+.history-item:hover{background:var(--bg);}
+.history-domain{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);}
+.history-ip{font-size:11px;color:var(--text-tertiary);margin-left:8px;}
+.history-right{display:flex;align-items:center;gap:8px;}
+.history-meta{font-size:11px;color:var(--text-tertiary);}
+.btn-delete{background:none;border:none;color:var(--text-tertiary);cursor:pointer;opacity:0;transition:all .15s;font-size:11px;padding:3px;}
+.history-item:hover .btn-delete{opacity:1;}
+.btn-delete:hover{color:var(--danger);}
+
+/* Settings overlay */
+.settings-overlay{position:fixed;inset:0;z-index:200;display:flex;}
+.settings-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);}
+.settings-panel{position:relative;z-index:1;background:var(--surface);border-left:1px solid var(--border);width:520px;max-width:100%;margin-left:auto;overflow-y:auto;padding:24px;}
+.settings-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.btn-settings-close{background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:20px;line-height:1;}
+
+/* App footer */
+.app-footer{text-align:center;padding:16px;font-size:11px;color:var(--text-tertiary);border-top:1px solid var(--border-light);}
+
+/* Common components */
+.section-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.section-title i { color: var(--text-tertiary); font-size: 13px; }
+.info-row { display: flex; align-items: flex-start; padding: 8px 12px; border-radius: var(--radius-xs); font-size: 13px; gap: 10px; }
+.info-row:nth-child(odd) { background: rgba(255,255,255,.015); }
+.info-row .row-icon { color: var(--text-tertiary); width: 16px; text-align: center; flex-shrink: 0; margin-top: 1px; font-size: 12px; }
+.info-row .row-label { color: var(--text-tertiary); width: 110px; flex-shrink: 0; font-size: 12.5px; }
+.info-row .row-value { color: var(--text); font-size: 13px; min-width: 0; word-break: break-word; }
+.data-card { background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 16px; }
+
+/* Responsive */
+@media(max-width:900px){
+    .metrics-bar{flex-wrap:wrap;height:auto;padding:8px 16px;gap:8px;}
+    .metric-sep{display:none;}
+    .metric-item{padding:4px 8px;}
+}
+@media(max-width:640px){
+    .header{padding:0 16px;}
+    .hero-input{font-size:14px;padding:11px 14px;}
+    .btn-hero-scan{padding:11px 18px;font-size:13px;}
+    .tab-content{padding:16px;}
+    .scan-steps{grid-template-columns:1fr 1fr;}
+    .history-card{margin:0 16px 16px;}
+    #hero-section{padding:32px 16px;}
+}
 
         /* Grade badges */
         .grade { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; font-weight: 700; font-size: 15px; }
@@ -187,40 +265,9 @@
         /* Leaflet overrides */
         .leaflet-container { background: var(--bg) !important; border-radius: var(--radius-sm); border: 1px solid var(--border-light); }
 
-        /* History */
-        .history-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-        .history-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); }
-        .history-header h2 { font-size: 15px; font-weight: 600; }
-        .btn-refresh { background: none; border: none; font-size: 12px; color: var(--text-tertiary); cursor: pointer; font-family: var(--font); transition: color .15s; display: flex; align-items: center; gap: 4px; }
-        .btn-refresh:hover { color: var(--accent); }
-        .history-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background .1s; }
-        .history-item:last-child { border-bottom: none; }
-        .history-item:hover { background: var(--bg); }
-        .history-domain { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--accent); }
-        .history-ip { font-size: 12px; color: var(--text-tertiary); margin-left: 10px; }
-        .history-right { display: flex; align-items: center; gap: 10px; }
-        .history-meta { font-size: 11.5px; color: var(--text-tertiary); }
-        .btn-delete { background: none; border: none; color: var(--text-tertiary); cursor: pointer; opacity: 0; transition: all .15s; font-size: 12px; padding: 4px; }
-        .history-item:hover .btn-delete { opacity: 1; }
-        .btn-delete:hover { color: var(--danger); }
-
-        /* History search */
-        .history-search { padding: 10px 20px; border-bottom: 1px solid var(--border-light); }
-        .history-search-input { width: 100%; padding: 8px 12px 8px 34px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 12.5px; font-family: var(--font); color: var(--text); background: var(--bg); outline: none; transition: border-color .15s; }
-        .history-search-input:focus { border-color: #555; }
-        .history-search-input::placeholder { color: var(--text-tertiary); }
-        .history-search-wrap { position: relative; }
-        .history-search-wrap i { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 12px; }
-
-        /* Footer */
-        .footer { text-align: center; padding: 20px; font-size: 12px; color: var(--text-tertiary); border-top: 1px solid var(--border-light); margin-top: 8px; }
-
         /* Tooltip */
         .tooltip-el { position: fixed; background: #333; color: #D4D4D4; font-size: 12px; padding: 4px 10px; border-radius: 4px; pointer-events: none; z-index: 100; max-width: 280px; }
 
-        .btn-scan:hover { background: #E0E0E0; }
-
-        /* Responsive */
         /* Security Score Gauge */
         .score-gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
         .score-gauge { position: relative; width: 160px; height: 160px; }
@@ -318,260 +365,361 @@
         .settings-number-input { width: 70px; padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--mono); color: var(--text); background: var(--bg); text-align: center; outline: none; }
         .settings-number-input:focus { border-color: #555; }
 
-        @media (max-width: 900px) {
-            .results-layout { flex-direction: column; min-height: auto; }
-            .results-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); display: flex; flex-wrap: nowrap; overflow-x: auto; padding: 0; }
-            .sidebar-section { display: flex; padding: 0; margin: 0; }
-            .sidebar-section-title { display: none; }
-            .sidebar-item { padding: 10px 14px; border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; font-size: 12px; }
-            .sidebar-item.active { border-left-color: transparent; border-bottom-color: var(--accent); }
-        }
         @media (max-width: 640px) {
             .search-form { flex-direction: column; }
-            .summary-grid { grid-template-columns: repeat(2, 1fr); }
-            .scan-steps { grid-template-columns: 1fr; }
             .main { padding: 16px; }
         }
+        /* additions */
+        .profile-selector { display: flex; align-items: center; gap: 20px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-light); }
+        .profile-selector label { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); cursor: pointer; }
+        .profile-selector input[type="radio"] { accent-color: var(--accent); cursor: pointer; }
+        .profile-label { font-size: 12px; color: var(--text-tertiary); margin-right: 4px; }
+        .badge-danger { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; background: var(--danger-bg); color: var(--danger); }
+        .badge-ok { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; background: var(--success-bg); color: var(--success); }
+        .badge-warn { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; background: var(--warning-bg); color: var(--warning); }
+        .v6-section { margin-bottom: 12px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
+        .v6-row { display: flex; align-items: flex-start; padding: 5px 0; font-size: 13px; gap: 10px; border-bottom: 1px solid var(--border-light); }
+        .v6-row:last-child { border-bottom: none; }
+        .v6-label { color: var(--text-tertiary); width: 130px; flex-shrink: 0; font-size: 12.5px; }
+        .v6-value { color: var(--text); flex: 1; word-break: break-word; }
+        .rec-item { display: flex; align-items: baseline; gap: 10px; padding: 7px 12px; border-radius: var(--radius-xs); background: var(--danger-bg); border: 1px solid rgba(199,80,80,.15); margin-bottom: 5px; }
+        .rec-points { font-size: 12px; font-weight: 700; color: var(--danger); font-family: var(--mono); white-space: nowrap; }
+        .rec-reason { font-size: 13px; color: var(--text-secondary); }
+        .score-v6-header { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); margin-bottom: 16px; }
+        .grade-v6 { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; font-weight: 700; font-size: 22px; }
+        .profile-note { margin-top: 12px; padding: 10px 14px; background: var(--info-bg); border: 1px solid rgba(122,158,199,.2); border-radius: var(--radius-sm); font-size: 12.5px; color: var(--info); }
     </style>
 </head>
 
 <body>
     <!-- HEADER -->
     <header class="header">
-        <div class="header-inner">
-            <div class="logo">
-                <div class="logo-icon"><img src="https://i.ibb.co/HLGGw0X0/Logo-DR3.png" alt="DomainRecon"></div>
-                <div>
-                    <div class="logo-text">DomainRecon</div>
-                    <div class="logo-sub">OSINT Domain Intelligence · 27 modules</div>
-                </div>
+        <div class="logo">
+            <div class="logo-icon"><img src="https://i.ibb.co/HLGGw0X0/Logo-DR3.png" alt="DomainRecon"></div>
+            <span class="logo-text">DomainRecon</span>
+        </div>
+
+        <div class="header-search" id="header-search">
+            <input type="text" id="domain-input-compact" class="compact-input" placeholder="Nouveau domaine…" autocomplete="off">
+            <div class="compact-profile">
+                <label><input type="radio" name="scan_profile_compact" value="quick"> Quick</label>
+                <label><input type="radio" name="scan_profile_compact" value="full" checked> Full</label>
             </div>
-            <div class="header-right">  
-                <button id="btn-open-settings" class="header-link" style="background:none;border:none;cursor:pointer;font-family:var(--font);"><i class="fa-solid fa-gear"></i> Paramètres</button>
-                <div class="header-link">
-                    <span class="status-dot" id="status-indicator"></span>
-                    <span id="status-text" style="font-size:12px;">Connexion…</span>
-                </div>
+            <button id="scan-button-compact" class="btn-compact-scan">
+                <i class="fa-solid fa-satellite-dish"></i>
+            </button>
+        </div>
+
+        <div class="header-right">
+            <button id="btn-open-settings" class="header-link"><i class="fa-solid fa-gear"></i> Paramètres</button>
+            <div class="header-link">
+                <span class="status-dot" id="status-indicator"></span>
+                <span id="status-text">Connexion…</span>
             </div>
         </div>
     </header>
 
-    <main class="main">
-        <!-- SEARCH -->
-        <div class="search-card">
-            <form id="scan-form" class="search-form">
-                <div class="search-input-wrap">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="domain-input" class="search-input" placeholder="Entrez un domaine — ex: google.com" required autocomplete="off">
-                </div>
-                <button type="submit" id="scan-button" class="btn-scan">
-                    <i class="fa-solid fa-satellite-dish" style="font-size:13px;"></i>
-                    <span>Analyser</span>
+    <main style="display:contents;">
+
+    <!-- HERO (pre-scan) -->
+    <section id="hero-section">
+        <p class="hero-title">OSINT Domain Intelligence</p>
+        <div class="hero-search-wrap">
+            <div class="hero-input-row">
+                <input type="text" id="domain-input" class="hero-input" placeholder="Entrez un domaine — ex: google.com" autocomplete="off">
+                <button id="scan-button" class="btn-hero-scan">
+                    <i class="fa-solid fa-satellite-dish" style="font-size:13px;margin-right:6px;"></i>Analyser
                 </button>
-            </form>
-        </div>
-
-        <!-- LOADING -->
-        <div id="loading-section" class="loading-card" style="display:none;">
-            <div class="loading-header">
-                <div class="spinner"></div>
-                <span class="loading-title">Analyse en cours…</span>
-                <span id="scan-timer" class="loading-timer">0.0s</span>
             </div>
-            <div id="scan-steps" class="scan-steps">
-                <div class="scan-step" data-step="dns"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Résolution DNS</div>
-                <div class="scan-step" data-step="sub"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Sous-domaines</div>
-                <div class="scan-step" data-step="sec"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>En-têtes sécurité</div>
-                <div class="scan-step" data-step="tls"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Certificat TLS</div>
-                <div class="scan-step" data-step="ports"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Scan de ports</div>
-                <div class="scan-step" data-step="geo"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Géolocalisation</div>
-                <div class="scan-step" data-step="whois"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>WHOIS</div>
-                <div class="scan-step" data-step="tech"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Technologies</div>
-                <div class="scan-step" data-step="email"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Sécurité email</div>
-                <div class="scan-step" data-step="waf"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Détection WAF</div>
-                <div class="scan-step" data-step="redirect"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Redirections</div>
-                <div class="scan-step" data-step="files"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Fichiers web</div>
-                <div class="scan-step" data-step="cookies"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Cookies</div>
-                <div class="scan-step" data-step="cors"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>CORS</div>
-                <div class="scan-step" data-step="rdns"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Reverse DNS</div>
-                <div class="scan-step" data-step="takeover"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Subdomain takeover</div>
-                <div class="scan-step" data-step="network-ext"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Réseau étendu</div>
-                <div class="scan-step" data-step="screenshot"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Capture d'écran</div>
-                <div class="scan-step" data-step="score"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i></span>Score de sécurité</div>
+            <div class="hero-profile">
+                <span class="hero-profile-label">Mode :</span>
+                <label><input type="radio" name="scan_profile" value="quick"> Quick (~20s)</label>
+                <label><input type="radio" name="scan_profile" value="full" checked> Full (~3min)</label>
             </div>
         </div>
+        <div class="hero-history" id="hero-history">
+            <div class="hero-history-title">Récent</div>
+            <div id="hero-history-list"></div>
+        </div>
+    </section>
 
-        <!-- ERROR -->
-        <div id="error-section" class="error-card" style="display:none;">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <div>
-                <h3>Erreur lors de l'analyse</h3>
-                <p id="error-message">-</p>
+    <!-- POST-SCAN -->
+    <div id="app-post">
+
+        <!-- Metrics bar -->
+        <div class="metrics-bar" id="metrics-bar">
+            <div class="metric-item" id="metric-score" onclick="app.switchMainTab('securite')">
+                <span class="metric-label">Score</span>
+                <span class="metric-value" id="mval-score">—</span>
+            </div>
+            <span class="metric-sep">·</span>
+            <div class="metric-item" onclick="app.switchMainTab('overview')">
+                <span class="metric-label">IP</span>
+                <span class="metric-value mono" id="mval-ip">—</span>
+            </div>
+            <span class="metric-sep">·</span>
+            <div class="metric-item" onclick="app.switchMainTab('dns')">
+                <span class="metric-label">Ports</span>
+                <span class="metric-value" id="mval-ports">—</span>
+            </div>
+            <span class="metric-sep">·</span>
+            <div class="metric-item" onclick="app.switchMainTab('osint')">
+                <span class="metric-label">Threat</span>
+                <span class="metric-value" id="mval-threat">—</span>
             </div>
         </div>
 
-        <!-- RESULTS -->
-        <div id="results-section" class="results-section" style="display:none;">
+        <!-- Main tabs -->
+        <nav class="main-tabs" id="main-tabs">
+            <div class="main-tab active" data-main="overview">Overview</div>
+            <div class="main-tab" data-main="dns">DNS &amp; Réseau</div>
+            <div class="main-tab" data-main="securite">Sécurité</div>
+            <div class="main-tab" data-main="infra">Infrastructure</div>
+            <div class="main-tab" data-main="web">Web</div>
+            <div class="main-tab" data-main="osint">OSINT</div>
+        </nav>
 
-            <!-- Summary Cards -->
-            <div class="summary-grid">
-                <div class="summary-card"><div class="summary-label">Adresse IP</div><div id="card-ip" class="summary-value sm mono" style="color:var(--text-secondary);">-</div></div>
-                <div class="summary-card"><div class="summary-label">Sous-dom.</div><div id="card-subs" class="summary-value accent">0</div></div>
-                <div class="summary-card"><div class="summary-label">Sécurité</div><div id="card-security" class="summary-value">0/7</div></div>
-                <div class="summary-card"><div class="summary-label">Ports</div><div id="card-ports" class="summary-value warning">0</div></div>
-                <div class="summary-card"><div class="summary-label">TLS</div><div id="card-tls" class="summary-value sm success">-</div></div>
-                <div class="summary-card"><div class="summary-label">Email</div><div id="card-email" class="summary-value">-</div></div>
-                <div class="summary-card"><div class="summary-label">WAF</div><div id="card-waf" class="summary-value sm">-</div></div>
-                <div class="summary-card"><div class="summary-label">Pays</div><div id="card-geo" class="summary-value sm">-</div></div>
+        <!-- Content area -->
+        <div class="content-area">
+
+            <!-- Loading panel -->
+            <div class="loading-panel" id="loading-section">
+                <div class="loading-progress"><div class="loading-progress-bar" id="loading-bar"></div></div>
+                <div class="loading-header-row">
+                    <div class="spinner"></div>
+                    <span class="loading-title">Analyse en cours…</span>
+                    <span id="scan-timer" class="loading-timer">0.0s</span>
+                </div>
+                <div id="scan-steps" class="scan-steps">
+                    <div class="scan-step" data-step="dns"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Résolution DNS</div>
+                    <div class="scan-step" data-step="sub"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Sous-domaines</div>
+                    <div class="scan-step" data-step="sec"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>En-têtes sécurité</div>
+                    <div class="scan-step" data-step="tls"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Certificat TLS</div>
+                    <div class="scan-step" data-step="ports"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Scan de ports</div>
+                    <div class="scan-step" data-step="geo"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Géolocalisation</div>
+                    <div class="scan-step" data-step="whois"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>WHOIS</div>
+                    <div class="scan-step" data-step="tech"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Technologies</div>
+                    <div class="scan-step" data-step="email"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Sécurité email</div>
+                    <div class="scan-step" data-step="waf"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Détection WAF</div>
+                    <div class="scan-step" data-step="redirect"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Redirections</div>
+                    <div class="scan-step" data-step="files"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Fichiers web</div>
+                    <div class="scan-step" data-step="cookies"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Cookies</div>
+                    <div class="scan-step" data-step="cors"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>CORS</div>
+                    <div class="scan-step" data-step="rdns"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Reverse DNS</div>
+                    <div class="scan-step" data-step="takeover"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Subdomain takeover</div>
+                    <div class="scan-step" data-step="network-ext"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Réseau étendu</div>
+                    <div class="scan-step" data-step="screenshot"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Capture d'écran</div>
+                    <div class="scan-step" data-step="score"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Score de sécurité</div>
+                </div>
             </div>
 
-            <!-- Results: Sidebar + Content -->
-            <div class="results-layout">
-                <nav class="results-sidebar" id="tab-bar">
-                    <div class="sidebar-section">
-                        <div class="sidebar-section-title">Général</div>
-                        <div class="sidebar-item active" data-tab="overview"><i class="fa-solid fa-chart-pie"></i><span>Vue d'ensemble</span></div>
-                        <div class="sidebar-item" data-tab="dns"><i class="fa-solid fa-server"></i><span>DNS</span></div>
-                        <div class="sidebar-item" data-tab="subdomains"><i class="fa-solid fa-sitemap"></i><span>Sous-domaines</span><span class="sidebar-badge" id="sidebar-sub-count"></span></div>
-                        <div class="sidebar-item" data-tab="timeline"><i class="fa-solid fa-timeline"></i><span>Timeline DNS</span></div>
-                        <div class="sidebar-item" data-tab="screenshot"><i class="fa-solid fa-camera"></i><span>Screenshot</span></div>
-                        <div class="sidebar-item" data-tab="notes"><i class="fa-solid fa-sticky-note"></i><span>Notes & Tags</span></div>
-                    </div>
-                    <div class="sidebar-section">
-                        <div class="sidebar-section-title">Sécurité</div>
-                        <div class="sidebar-item" data-tab="security"><i class="fa-solid fa-shield-halved"></i><span>En-têtes</span></div>
-                        <div class="sidebar-item" data-tab="score"><i class="fa-solid fa-gauge-high"></i><span>Score global</span></div>
-                        <div class="sidebar-item" data-tab="email"><i class="fa-solid fa-envelope"></i><span>Email</span></div>
-                        <div class="sidebar-item" data-tab="waf"><i class="fa-solid fa-shield"></i><span>WAF / CDN</span></div>
-                        <div class="sidebar-item" data-tab="tls"><i class="fa-solid fa-lock"></i><span>TLS</span></div>
-                        <div class="sidebar-item" data-tab="cookies"><i class="fa-solid fa-cookie-bite"></i><span>Cookies</span></div>
-                        <div class="sidebar-item" data-tab="cors"><i class="fa-solid fa-arrows-left-right"></i><span>CORS</span></div>
-                        <div class="sidebar-item" data-tab="takeover"><i class="fa-solid fa-triangle-exclamation"></i><span>Takeover</span></div>
-                    </div>
-                    <div class="sidebar-section">
-                        <div class="sidebar-section-title">Infrastructure</div>
-                        <div class="sidebar-item" data-tab="whois"><i class="fa-solid fa-address-card"></i><span>WHOIS</span></div>
-                        <div class="sidebar-item" data-tab="geo"><i class="fa-solid fa-earth-americas"></i><span>Géo</span></div>
-                        <div class="sidebar-item" data-tab="ports"><i class="fa-solid fa-door-open"></i><span>Ports</span></div>
-                        <div class="sidebar-item" data-tab="tech"><i class="fa-solid fa-microchip"></i><span>Technologies</span></div>
-                        <div class="sidebar-item" data-tab="rdns"><i class="fa-solid fa-rotate-left"></i><span>Reverse DNS</span></div>
-                        <div class="sidebar-item" data-tab="network-ext"><i class="fa-solid fa-network-wired"></i><span>Réseau étendu</span></div>
-                    </div>
-                    <div class="sidebar-section">
-                        <div class="sidebar-section-title">Web</div>
-                        <div class="sidebar-item" data-tab="redirects"><i class="fa-solid fa-route"></i><span>Redirections</span></div>
-                        <div class="sidebar-item" data-tab="webfiles"><i class="fa-solid fa-file-lines"></i><span>Fichiers</span></div>
-                        <div class="sidebar-item" data-tab="jsanalysis"><i class="fa-brands fa-js"></i><span>JS Analysis</span></div>
-                        <div class="sidebar-item" data-tab="linkeddomains"><i class="fa-solid fa-link"></i><span>Liens externes</span></div>
-                    </div>
-                    <div class="sidebar-section">
-                        <div class="sidebar-section-title">OSINT</div>
-                        <div class="sidebar-item" data-tab="urlscan"><i class="fa-solid fa-magnifying-glass-chart"></i><span>URLScan.io</span></div>
-                        <div class="sidebar-item" data-tab="wayback"><i class="fa-solid fa-clock-rotate-left"></i><span>Wayback Machine</span></div>
-                        <div class="sidebar-item" data-tab="threatintel"><i class="fa-solid fa-biohazard"></i><span>Threat Intel</span></div>
-                        <div class="sidebar-item" data-tab="favicon"><i class="fa-solid fa-image"></i><span>Favicon Hash</span></div>
-                        <div class="sidebar-item" data-tab="emailbl"><i class="fa-solid fa-ban"></i><span>Blacklists IP</span></div>
-                        <div class="sidebar-item" data-tab="hsts"><i class="fa-solid fa-lock-open"></i><span>HSTS Preload</span></div>
-                    </div>
-                </nav>
-                <div class="results-main"><div class="results-main-content">
-                <!-- Tab Contents -->
+            <!-- Error panel -->
+            <div class="error-panel" id="error-section">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div>
+                    <h3>Erreur lors de l'analyse</h3>
+                    <p id="error-message">-</p>
+                </div>
+            </div>
+
+            <!-- Overview (no sub-tabs) -->
+            <div id="main-overview" class="main-panel">
                 <div id="tab-overview" class="tab-content">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
                         <div><div class="section-title"><i class="fa-solid fa-circle-info"></i> Informations générales</div><div id="overview-info"></div></div>
-                        <div><div class="section-title"><i class="fa-solid fa-diagram-project"></i> Carte réseau</div><div id="network-graph"></div>
-                        <div class="graph-controls"><button class="graph-btn" onclick="app.cyFit()"><i class="fa-solid fa-expand"></i> Recentrer</button><button class="graph-btn" onclick="app.cyZoomIn()"><i class="fa-solid fa-magnifying-glass-plus"></i></button><button class="graph-btn" onclick="app.cyZoomOut()"><i class="fa-solid fa-magnifying-glass-minus"></i></button></div></div>
+                        <div>
+                            <div class="section-title"><i class="fa-solid fa-diagram-project"></i> Carte réseau</div>
+                            <div id="network-graph"></div>
+                            <div class="graph-controls">
+                                <button class="graph-btn" onclick="app.cyFit()"><i class="fa-solid fa-expand"></i> Recentrer</button>
+                                <button class="graph-btn" onclick="app.cyZoomIn()"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                                <button class="graph-btn" onclick="app.cyZoomOut()"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div id="tab-dns" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-server"></i> Enregistrements DNS</div><div id="dns-content"></div></div>
-                <div id="tab-subdomains" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-sitemap"></i> Sous-domaines découverts</div><span id="sub-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div id="subdomains-content" style="max-height:500px;overflow-y:auto;"></div></div>
-                <div id="tab-security" class="tab-content hidden">
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                        <div><div class="section-title"><i class="fa-solid fa-shield-halved"></i> En-têtes de sécurité OWASP</div><div id="security-details"></div></div>
-                        <div><div class="section-title"><i class="fa-solid fa-chart-simple"></i> Score de sécurité</div><div style="display:flex;justify-content:center;"><canvas id="security-chart" width="300" height="300"></canvas></div></div>
-                    </div>
-                </div>
-                <div id="tab-email" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-envelope-circle-check"></i> Sécurité Email — SPF / DKIM / DMARC</div><div id="email-content"></div></div>
-                <div id="tab-waf" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-shield"></i> Détection WAF / CDN</div><div id="waf-content"></div></div>
-                <div id="tab-whois" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-address-card"></i> Informations WHOIS</div><div id="whois-content"></div></div>
-                <div id="tab-geo" class="tab-content hidden">
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                        <div><div class="section-title"><i class="fa-solid fa-earth-americas"></i> Géolocalisation</div><div id="geo-details"></div></div>
-                        <div><div class="section-title"><i class="fa-solid fa-map"></i> Carte</div><div id="geo-map" style="height:300px;border-radius:var(--radius-sm);border:1px solid var(--border-light);"></div></div>
-                    </div>
-                </div>
-                <div id="tab-tls" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-lock"></i> Certificat TLS / SSL</div><div id="tls-content"></div></div>
-                <div id="tab-ports" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-door-open"></i> Ports ouverts</div><div id="ports-content"></div></div>
-                <div id="tab-tech" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-microchip"></i> Technologies détectées</div><div id="tech-content" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div></div>
-                <div id="tab-redirects" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-route"></i> Chaîne de Redirections HTTP</div><div id="redirects-content"></div></div>
-                <div id="tab-webfiles" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-lines"></i> Fichiers Web</div><div id="webfiles-content"></div></div>
-                <div id="tab-cookies" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-cookie-bite"></i> Analyse des Cookies</div><div id="cookies-content"></div></div>
-                <div id="tab-cors" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-arrows-left-right"></i> Configuration CORS</div><div id="cors-content"></div></div>
-                <div id="tab-rdns" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-rotate-left"></i> Reverse DNS (PTR)</div><div id="rdns-content"></div></div>
-                <div id="tab-takeover" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> Subdomain Takeover</div><div id="takeover-content"></div></div>
-                <div id="tab-score" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-gauge-high"></i> Score Global de Sécurité</div><div id="score-content"></div></div>
-                <div id="tab-network-ext" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-network-wired"></i> Réseau Étendu</div><div id="network-ext-content"></div></div>
-                <div id="tab-timeline" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-timeline"></i> Timeline DNS</div><div id="timeline-content"></div></div>
-                <div id="tab-screenshot" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-camera"></i> Capture d'écran</div><div id="screenshot-content"></div></div>
-                <div id="tab-notes" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-sticky-note"></i> Notes & Tags</div><div id="notes-content"></div></div>
-                <!-- Nouveaux modules v4.0 -->
-                <div id="tab-jsanalysis" class="tab-content hidden"><div class="section-title"><i class="fa-brands fa-js"></i> Analyse des fichiers JS</div><div id="jsanalysis-content"></div></div>
-                <div id="tab-linkeddomains" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-link"></i> Domaines externes liés</div><div id="linkeddomains-content"></div></div>
-                <div id="tab-urlscan" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-magnifying-glass-chart"></i> URLScan.io — Historique passif</div><div id="urlscan-content"></div></div>
-                <div id="tab-wayback" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Wayback Machine — Archive</div><div id="wayback-content"></div></div>
-                <div id="tab-threatintel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-biohazard"></i> Threat Intelligence — AlienVault OTX</div><div id="threatintel-content"></div></div>
-                <div id="tab-favicon" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-image"></i> Favicon Hash — Compatible Shodan</div><div id="favicon-content"></div></div>
-                <div id="tab-emailbl" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-ban"></i> Blacklists IP / DNSBL</div><div id="emailbl-content"></div></div>
-                <div id="tab-hsts" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-lock-open"></i> HSTS Preload Status</div><div id="hsts-content"></div></div>
-                <div id="tab-settings" class="tab-content hidden">
-                    <div class="section-title"><i class="fa-solid fa-gear"></i> Paramètres</div>
-                    <div id="settings-content"></div>
-                </div>
-
-                </div>
-                <div class="tabs-footer">
-                    <span>Scan #<span id="result-id">—</span> · <span id="result-domain-footer" style="color:var(--accent);">—</span></span>
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <span id="result-timestamp">—</span>
-                        <button id="export-pdf-btn" class="btn-pdf"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-                        <button id="export-btn" class="btn-export"><i class="fa-solid fa-download"></i> JSON</button>
-                    </div>
-                </div>
                 </div>
             </div>
-        </div>
 
-        <!-- HISTORY -->
+            <!-- DNS & Réseau -->
+            <div id="main-dns" class="main-panel hidden">
+                <div class="sub-tabs-bar">
+                    <button class="sub-tab active" data-sub="dns">DNS</button>
+                    <button class="sub-tab" data-sub="subdomains">Sous-domaines</button>
+                    <button class="sub-tab" data-sub="timeline">Timeline</button>
+                    <button class="sub-tab" data-sub="ports">Ports</button>
+                    <button class="sub-tab" data-sub="rdns">Reverse DNS</button>
+                    <button class="sub-tab" data-sub="network-ext">Réseau étendu</button>
+                    <button class="sub-tab" data-sub="zone-transfer">Zone Transfer</button>
+                </div>
+                <div id="tab-dns" class="tab-content"><div class="section-title"><i class="fa-solid fa-server"></i> Enregistrements DNS</div><div id="dns-content"></div></div>
+                <div id="tab-subdomains" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-sitemap"></i> Sous-domaines découverts</div><span id="sub-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div id="subdomains-content" style="max-height:500px;overflow-y:auto;"></div></div>
+                <div id="tab-timeline" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-timeline"></i> Timeline DNS</div><div id="timeline-content"></div></div>
+                <div id="tab-ports" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-door-open"></i> Ports ouverts</div><div id="ports-content"></div></div>
+                <div id="tab-rdns" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-rotate-left"></i> Reverse DNS (PTR)</div><div id="rdns-content"></div></div>
+                <div id="tab-network-ext" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-network-wired"></i> Réseau Étendu</div><div id="network-ext-content"></div></div>
+                <div id="tab-zone-transfer" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-arrows-rotate"></i> Zone Transfer (AXFR)</div><div id="zone-transfer-content"></div></div>
+            </div>
+
+            <!-- Sécurité -->
+            <div id="main-securite" class="main-panel hidden">
+                <div class="sub-tabs-bar">
+                    <button class="sub-tab active" data-sub="security">Headers</button>
+                    <button class="sub-tab" data-sub="score">Score</button>
+                    <button class="sub-tab" data-sub="score-v6">Score v6</button>
+                    <button class="sub-tab" data-sub="tls">TLS</button>
+                    <button class="sub-tab" data-sub="tls-deep">TLS Deep</button>
+                    <button class="sub-tab" data-sub="email">Email</button>
+                    <button class="sub-tab" data-sub="cookies">Cookies</button>
+                    <button class="sub-tab" data-sub="cors">CORS</button>
+                    <button class="sub-tab" data-sub="waf">WAF/CDN</button>
+                    <button class="sub-tab" data-sub="takeover">Takeover</button>
+                    <button class="sub-tab" data-sub="hsts">HSTS</button>
+                    <button class="sub-tab" data-sub="hsts-deep">HSTS Deep</button>
+                    <button class="sub-tab" data-sub="csp-grade">CSP Grade</button>
+                </div>
+                <div id="tab-security" class="tab-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;"><div><div class="section-title"><i class="fa-solid fa-shield-halved"></i> En-têtes OWASP</div><div id="security-details"></div></div><div><div class="section-title"><i class="fa-solid fa-chart-simple"></i> Score</div><div style="display:flex;justify-content:center;"><canvas id="security-chart" width="300" height="300"></canvas></div></div></div></div>
+                <div id="tab-score" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-gauge-high"></i> Score Global</div><div id="score-content"></div></div>
+                <div id="tab-score-v6" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-star"></i> Security Score</div><div id="score-v6-content"></div></div>
+                <div id="tab-tls" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-lock"></i> Certificat TLS / SSL</div><div id="tls-content"></div></div>
+                <div id="tab-tls-deep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-layer-group"></i> TLS Protocol &amp; Cipher Audit</div><div id="tls-deep-content"></div></div>
+                <div id="tab-email" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-envelope-circle-check"></i> Email — SPF / DKIM / DMARC</div><div id="email-content"></div></div>
+                <div id="tab-cookies" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-cookie-bite"></i> Cookies</div><div id="cookies-content"></div></div>
+                <div id="tab-cors" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-arrows-left-right"></i> CORS</div><div id="cors-content"></div></div>
+                <div id="tab-waf" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-shield"></i> WAF / CDN</div><div id="waf-content"></div></div>
+                <div id="tab-takeover" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> Subdomain Takeover</div><div id="takeover-content"></div></div>
+                <div id="tab-hsts" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-lock-open"></i> HSTS Preload</div><div id="hsts-content"></div></div>
+                <div id="tab-hsts-deep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-shield-halved"></i> HSTS Deep</div><div id="hsts-deep-content"></div></div>
+                <div id="tab-csp-grade" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-shield"></i> CSP Grade</div><div id="csp-grade-content"></div></div>
+            </div>
+
+            <!-- Infrastructure -->
+            <div id="main-infra" class="main-panel hidden">
+                <div class="sub-tabs-bar">
+                    <button class="sub-tab active" data-sub="whois">WHOIS</button>
+                    <button class="sub-tab" data-sub="geo">Géolocalisation</button>
+                    <button class="sub-tab" data-sub="tech">Technologies</button>
+                    <button class="sub-tab" data-sub="admin-panels">Admin Panels</button>
+                    <button class="sub-tab" data-sub="banners">Banners</button>
+                    <button class="sub-tab" data-sub="shodan">Shodan</button>
+                </div>
+                <div id="tab-whois" class="tab-content"><div class="section-title"><i class="fa-solid fa-address-card"></i> WHOIS</div><div id="whois-content"></div></div>
+                <div id="tab-geo" class="tab-content hidden"><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;"><div><div class="section-title"><i class="fa-solid fa-earth-americas"></i> Géolocalisation</div><div id="geo-details"></div></div><div><div class="section-title"><i class="fa-solid fa-map"></i> Carte</div><div id="geo-map" style="height:300px;border-radius:var(--radius-sm);border:1px solid var(--border-light);"></div></div></div></div>
+                <div id="tab-tech" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-microchip"></i> Technologies</div><div id="tech-content" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div></div>
+                <div id="tab-admin-panels" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-door-open"></i> Admin Panel Discovery</div><div id="admin-panels-content"></div></div>
+                <div id="tab-banners" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flag"></i> Banners</div><div id="banners-content"></div></div>
+                <div id="tab-shodan" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-satellite-dish"></i> Shodan</div><div id="shodan-content"></div></div>
+            </div>
+
+            <!-- Web -->
+            <div id="main-web" class="main-panel hidden">
+                <div class="sub-tabs-bar">
+                    <button class="sub-tab active" data-sub="redirects">Redirections</button>
+                    <button class="sub-tab" data-sub="webfiles">Fichiers</button>
+                    <button class="sub-tab" data-sub="jsanalysis">JS Analysis</button>
+                    <button class="sub-tab" data-sub="linkeddomains">Liens externes</button>
+                    <button class="sub-tab" data-sub="screenshot">Screenshot</button>
+                    <button class="sub-tab" data-sub="http-methods">HTTP Methods</button>
+                </div>
+                <div id="tab-redirects" class="tab-content"><div class="section-title"><i class="fa-solid fa-route"></i> Redirections HTTP</div><div id="redirects-content"></div></div>
+                <div id="tab-webfiles" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-lines"></i> Fichiers Web</div><div id="webfiles-content"></div></div>
+                <div id="tab-jsanalysis" class="tab-content hidden"><div class="section-title"><i class="fa-brands fa-js"></i> Analyse JS</div><div id="jsanalysis-content"></div></div>
+                <div id="tab-linkeddomains" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-link"></i> Liens externes</div><div id="linkeddomains-content"></div></div>
+                <div id="tab-screenshot" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-camera"></i> Screenshot</div><div id="screenshot-content"></div></div>
+                <div id="tab-http-methods" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-code"></i> HTTP Methods</div><div id="http-methods-content"></div></div>
+            </div>
+
+            <!-- OSINT -->
+            <div id="main-osint" class="main-panel hidden">
+                <div class="sub-tabs-bar">
+                    <button class="sub-tab active" data-sub="urlscan">URLScan</button>
+                    <button class="sub-tab" data-sub="wayback">Wayback</button>
+                    <button class="sub-tab" data-sub="threatintel">Threat Intel</button>
+                    <button class="sub-tab" data-sub="favicon">Favicon</button>
+                    <button class="sub-tab" data-sub="emailbl">Blacklists IP</button>
+                    <button class="sub-tab" data-sub="robtex">Robtex</button>
+                    <button class="sub-tab" data-sub="typosquatting">Typosquatting</button>
+                    <button class="sub-tab" data-sub="html-intel">HTML Intel</button>
+                    <button class="sub-tab" data-sub="smtp-security">SMTP</button>
+                    <button class="sub-tab" data-sub="notes">Notes &amp; Tags</button>
+                </div>
+                <div id="tab-urlscan" class="tab-content"><div class="section-title"><i class="fa-solid fa-magnifying-glass-chart"></i> URLScan.io</div><div id="urlscan-content"></div></div>
+                <div id="tab-wayback" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Wayback Machine</div><div id="wayback-content"></div></div>
+                <div id="tab-threatintel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-biohazard"></i> Threat Intel — OTX</div><div id="threatintel-content"></div></div>
+                <div id="tab-favicon" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-image"></i> Favicon Hash</div><div id="favicon-content"></div></div>
+                <div id="tab-emailbl" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-ban"></i> Blacklists IP / DNSBL</div><div id="emailbl-content"></div></div>
+                <div id="tab-robtex" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-diagram-project"></i> Robtex</div><div id="robtex-content"></div></div>
+                <div id="tab-typosquatting" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-spell-check"></i> Typosquatting</div><div id="typosquatting-content"></div></div>
+                <div id="tab-html-intel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-code"></i> HTML Intel</div><div id="html-intel-content"></div></div>
+                <div id="tab-smtp-security" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-at"></i> SMTP Security</div><div id="smtp-security-content"></div></div>
+                <div id="tab-notes" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-sticky-note"></i> Notes &amp; Tags</div><div id="notes-content"></div></div>
+            </div>
+
+            <!-- Content footer -->
+            <div class="content-footer" id="content-footer" style="display:none;">
+                <span>Scan #<span id="result-id">—</span> · <span id="result-domain-footer" style="color:var(--accent);">—</span> · <span id="result-timestamp">—</span></span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button id="export-pdf-btn" class="btn-pdf"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                    <button id="export-btn" class="btn-export"><i class="fa-solid fa-download"></i> JSON</button>
+                </div>
+            </div>
+
+        </div><!-- .content-area -->
+
+        <!-- Full history panel -->
         <div class="history-card">
             <div class="history-header">
-                <h2><i class="fa-solid fa-clock-rotate-left" style="color:var(--text-tertiary);margin-right:8px;font-size:14px;"></i>Historique des analyses</h2>
+                <h2><i class="fa-solid fa-clock-rotate-left" style="color:var(--text-tertiary);margin-right:6px;font-size:12px;"></i>Historique</h2>
                 <button id="refresh-history" class="btn-refresh"><i class="fa-solid fa-arrows-rotate"></i> Actualiser</button>
             </div>
             <div class="history-search">
                 <div class="history-search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="history-search-input" class="history-search-input" placeholder="Rechercher un domaine…" autocomplete="off">
+                    <input type="text" id="history-search-input" class="history-search-input" placeholder="Rechercher…" autocomplete="off">
                 </div>
             </div>
             <div id="history-container">
-                <div style="padding:32px;text-align:center;color:var(--text-tertiary);font-size:13px;">Chargement…</div>
+                <div style="padding:24px;text-align:center;color:var(--text-tertiary);font-size:12px;">Chargement…</div>
             </div>
         </div>
+
+    </div><!-- #app-post -->
+
     </main>
 
-    <footer class="footer">
-        DomainRecon — 27 modules OSINT ·
-        <a href="/api/docs">Documentation API</a>
+    <footer class="app-footer">
+        DomainRecon — 50+ modules OSINT · <a href="/api/docs">Documentation API</a>
     </footer>
 
     <div id="toast-container" class="toast-container"></div>
-
     <div id="tooltip" class="tooltip-el" style="display:none;"></div>
 
     <script>
     // =========================================================================
-    // DomainRecon Frontend v3.0 — Anthropic-Inspired Design
+    // DomainRecon Frontend
     // =========================================================================
+
+    // DOM helpers
+    function clearEl(el) { while (el.lastChild) { el.removeChild(el.lastChild); } }
+    function escapeHtml(str) {
+        if (str === null || str === undefined) return '';
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    function mkEl(tag, opts) {
+        var el = document.createElement(tag);
+        if (opts) {
+            if (opts.cls) el.className = opts.cls;
+            if (opts.style) el.style.cssText = opts.style;
+            if (opts.text !== undefined) el.textContent = opts.text;
+        }
+        return el;
+    }
+    function v6Row(label, value) {
+        var row = mkEl('div', {cls:'v6-row'});
+        var l = mkEl('span', {cls:'v6-label', text: label + ': '});
+        var v = mkEl('span', {cls:'v6-value', text: String(value)});
+        row.appendChild(l); row.appendChild(v); return row;
+    }
+
     class DomainReconApp {
         constructor() {
             this.apiBase = '/api';
@@ -588,31 +736,88 @@
         }
 
         init() {
-            document.getElementById('scan-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const domain = document.getElementById('domain-input').value.trim();
-                if (domain) this.scan(domain);
+            // Hero scan
+            const heroBtn = document.getElementById('scan-button');
+            const heroInput = document.getElementById('domain-input');
+            heroBtn.addEventListener('click', () => { const d = heroInput.value.trim(); if (d) this.scan(d); });
+            heroInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const d = heroInput.value.trim(); if (d) this.scan(d); } });
+
+            // Compact scan (post-scan header)
+            const compactBtn = document.getElementById('scan-button-compact');
+            const compactInput = document.getElementById('domain-input-compact');
+            compactBtn.addEventListener('click', () => { const d = compactInput.value.trim(); if (d) this.scan(d); });
+            compactInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const d = compactInput.value.trim(); if (d) this.scan(d); } });
+
+            // Keep hero input in sync with compact input
+            compactInput.addEventListener('input', () => { heroInput.value = compactInput.value; });
+
+            // Main tabs
+            document.querySelectorAll('.main-tab').forEach(btn => {
+                btn.addEventListener('click', () => this.switchMainTab(btn.dataset.main));
             });
+
+            // Sub-tabs (event delegation per bar)
+            document.querySelectorAll('.sub-tabs-bar').forEach(bar => {
+                bar.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.sub-tab');
+                    if (btn) this.switchSubTab(btn);
+                });
+            });
+
+            // History + export
             document.getElementById('refresh-history').addEventListener('click', () => this.loadHistory());
             document.getElementById('export-btn').addEventListener('click', () => this.exportJSON());
             document.getElementById('export-pdf-btn').addEventListener('click', () => this.exportPDF());
-            document.querySelectorAll('.sidebar-item').forEach(btn => {
-                btn.addEventListener('click', () => this.switchTab(btn.dataset.tab));
-            });
             document.getElementById('history-search-input').addEventListener('input', (e) => this.filterHistory(e.target.value));
-            // Settings tab depuis la sidebar (toujours actif, même sans scan)
-            document.querySelectorAll('.sidebar-item[data-tab="settings"]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.sidebar-item').forEach(b => b.classList.toggle('active', b.dataset.tab === 'settings'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-                    const el = document.getElementById('tab-settings');
-                    if (el) el.classList.remove('hidden');
-                    this.renderSettings();
-                });
-            });
+
+            // Settings
+            document.getElementById('btn-open-settings').addEventListener('click', () => this.openSettings());
+
             this.checkApiStatus();
             this.loadHistory();
             setInterval(() => this.checkApiStatus(), 30000);
+        }
+
+        openSettings() {
+            const existing = document.getElementById('settings-overlay');
+            if (existing) { existing.remove(); return; }
+
+            const overlay = document.createElement('div');
+            overlay.id = 'settings-overlay';
+            overlay.className = 'settings-overlay';
+
+            const backdrop = document.createElement('div');
+            backdrop.className = 'settings-backdrop';
+            backdrop.addEventListener('click', () => overlay.remove());
+
+            const panelEl = document.createElement('div');
+            panelEl.className = 'settings-panel';
+
+            const panelHeader = document.createElement('div');
+            panelHeader.className = 'settings-panel-header';
+
+            const title = document.createElement('span');
+            title.style.cssText = 'font-size:15px;font-weight:600;';
+            title.textContent = 'Paramètres';
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'btn-settings-close';
+            closeBtn.textContent = '×';
+            closeBtn.addEventListener('click', () => overlay.remove());
+
+            panelHeader.appendChild(title);
+            panelHeader.appendChild(closeBtn);
+
+            const contentDiv = document.createElement('div');
+            contentDiv.id = 'settings-overlay-content';
+
+            panelEl.appendChild(panelHeader);
+            panelEl.appendChild(contentDiv);
+            overlay.appendChild(backdrop);
+            overlay.appendChild(panelEl);
+            document.body.appendChild(overlay);
+
+            this.renderSettings(contentDiv);
         }
 
         async checkApiStatus() {
@@ -637,12 +842,14 @@
             this.showSection('loading');
             this.startScanAnimation();
             const btn = document.getElementById('scan-button');
-            btn.disabled = true;
+            const btnCompact = document.getElementById('scan-button-compact');
+            if (btn) btn.disabled = true;
+            if (btnCompact) btnCompact.disabled = true;
             try {
                 const res = await fetch(`${this.apiBase}/scan`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ domain })
+                    body: JSON.stringify({ domain, profile: (document.querySelector('input[name="scan_profile"]:checked') || document.querySelector('input[name="scan_profile_compact"]:checked') || {value:'full'}).value })
                 });
                 if (!res.ok) {
                     const err = await res.json();
@@ -662,7 +869,8 @@
                 document.getElementById('error-message').textContent = e.message;
                 this.showSection('error');
             } finally {
-                btn.disabled = false;
+                if (btn) btn.disabled = false;
+                if (btnCompact) btnCompact.disabled = false;
             }
         }
 
@@ -692,46 +900,59 @@
         // =====================================================================
         displayResults(data) {
             const d = data;
-            document.getElementById('card-ip').textContent = d.ip_address || 'N/A';
-            document.getElementById('card-subs').textContent = (d.subdomains || []).length;
-            const sbc = document.getElementById('sidebar-sub-count'); if (sbc) sbc.textContent = (d.subdomains || []).length || '';
-            // Security score display
+            // Metrics bar update
             const secScore = d.security_score || {};
-            const scoreEl = document.getElementById('card-security');
-            if (secScore.score != null) {
-                scoreEl.textContent = `${secScore.score}/100`;
-                scoreEl.className = `summary-value ${secScore.score >= 75 ? 'success' : secScore.score >= 50 ? 'warning' : 'danger'}`;
-            } else {
-                document.getElementById('card-security').textContent = d.security_headers?.score || '0/7';
-                const [found] = (d.security_headers?.score || '0/7').split('/').map(Number);
-                scoreEl.className = `summary-value ${found >= 5 ? 'success' : found >= 3 ? 'warning' : 'danger'}`;
+            const displayScore = secScore.total != null ? secScore.total : (secScore.score != null ? secScore.score : null);
+            const scoreEl = document.getElementById('mval-score');
+            if (scoreEl) {
+                scoreEl.textContent = '';
+                if (displayScore != null) {
+                    const grade = secScore.grade || '?';
+                    const color = displayScore >= 75 ? 'var(--success)' : displayScore >= 50 ? 'var(--warning)' : 'var(--danger)';
+                    const numSpan = document.createElement('span');
+                    numSpan.style.cssText = 'color:' + color + ';font-weight:700;';
+                    numSpan.textContent = String(displayScore);
+                    const gradeSpan = document.createElement('span');
+                    gradeSpan.className = 'grade grade-sm grade-' + (grade === '?' ? 'NA' : grade);
+                    gradeSpan.style.marginLeft = '6px';
+                    gradeSpan.textContent = grade;
+                    scoreEl.appendChild(numSpan);
+                    scoreEl.appendChild(gradeSpan);
+                } else {
+                    scoreEl.textContent = '—';
+                }
             }
+            const ipEl = document.getElementById('mval-ip');
+            if (ipEl) ipEl.textContent = d.ip_address || '—';
+            const portsArr = Array.isArray(d.open_ports) ? d.open_ports : ((d.open_ports || {}).open_ports || []);
+            const portsEl = document.getElementById('mval-ports');
+            if (portsEl) {
+                portsEl.textContent = String(portsArr.length);
+                portsEl.style.color = portsArr.length > 0 ? 'var(--warning)' : 'var(--success)';
+            }
+            const threatEl = document.getElementById('mval-threat');
+            if (threatEl) {
+                threatEl.textContent = '';
+                const isMalicious = ((d.threat_intel || {}).virustotal || {}).malicious > 0;
+                const isBlacklisted = (d.email_blacklist || {}).is_blacklisted === true;
+                const threatSpan = document.createElement('span');
+                if (isMalicious || isBlacklisted) {
+                    threatSpan.style.color = 'var(--danger)';
+                    threatSpan.textContent = '⚠ Menace';
+                } else {
+                    threatSpan.style.color = 'var(--success)';
+                    threatSpan.textContent = '✓ Propre';
+                }
+                threatEl.appendChild(threatSpan);
+            }
+            const metricsBar = document.getElementById('metrics-bar');
+            if (metricsBar) metricsBar.classList.add('loaded');
 
-            document.getElementById('card-ports').textContent = (d.open_ports || []).length;
+            // Footer metadata
+            const resultId = document.getElementById('result-id'); if (resultId) resultId.textContent = d.id;
+            const resultDomain = document.getElementById('result-domain-footer'); if (resultDomain) resultDomain.textContent = d.domain;
+            const resultTs = document.getElementById('result-timestamp'); if (resultTs) resultTs.textContent = this.formatDate(d.scan_timestamp);
 
-            const tls = d.tls_certificate || {};
-            const tlsEl = document.getElementById('card-tls');
-            if (tls.error) { tlsEl.textContent = 'Absent'; tlsEl.className = 'summary-value sm danger'; }
-            else if (tls.days_remaining != null) { tlsEl.textContent = `${tls.days_remaining}j`; tlsEl.className = `summary-value sm ${tls.days_remaining > 30 ? 'success' : tls.days_remaining > 7 ? 'warning' : 'danger'}`; }
-            else { tlsEl.textContent = 'OK'; tlsEl.className = 'summary-value sm success'; }
-
-            const geo = d.geo_data || {};
-            document.getElementById('card-geo').textContent = geo.country ? `${this.flag(geo.country_code)} ${geo.country}` : 'N/A';
-
-            const emailGrade = (d.email_security || {}).overall_grade || 'N/A';
-            const emailEl = document.getElementById('card-email');
-            emailEl.innerHTML = `<span class="grade grade-sm grade-${emailGrade === 'N/A' ? 'NA' : emailGrade}">${emailGrade}</span>`;
-
-            const waf = d.waf || {};
-            const wafEl = document.getElementById('card-waf');
-            wafEl.textContent = waf.detected ? (waf.waf_name || 'Détecté') : 'Aucun';
-            wafEl.className = `summary-value sm ${waf.detected ? 'success' : ''}`;
-
-            document.getElementById('result-id').textContent = d.id;
-            document.getElementById('result-domain-footer').textContent = d.domain;
-            document.getElementById('result-timestamp').textContent = this.formatDate(d.scan_timestamp);
-
-            this.switchTab('overview');
             this.showSection('results');
         }
 
@@ -739,10 +960,6 @@
         // TAB SWITCHING
         // =====================================================================
         switchTab(tab) {
-            document.querySelectorAll('.sidebar-item').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            const el = document.getElementById(`tab-${tab}`);
-            if (el) el.classList.remove('hidden');
             if (!this.currentScan) return;
             const d = this.currentScan;
             const renderers = {
@@ -777,6 +994,20 @@
                 emailbl: () => this.renderEmailBlacklist(d),
                 hsts: () => this.renderHSTS(d),
                 settings: () => this.renderSettings(),
+                //
+                'zone-transfer':  () => this.renderZoneTransfer(d),
+                'tls-deep':       () => this.renderTlsDeep(d),
+                'csp-grade':      () => this.renderCspGrade(d),
+                'hsts-deep':      () => this.renderHstsDeep(d),
+                'admin-panels':   () => this.renderAdminPanels(d),
+                'http-methods':   () => this.renderHttpMethods(d),
+                'smtp-security':  () => this.renderSmtpSecurity(d),
+                'banners':        () => this.renderBanners(d),
+                'shodan':         () => this.renderShodan(d),
+                'typosquatting':  () => this.renderTyposquatting(d),
+                'robtex':         () => this.renderRobtex(d),
+                'html-intel':     () => this.renderHtmlIntel(d),
+                'score-v6':       () => this.renderScoreV6(d),
             };
             if (renderers[tab]) renderers[tab]();
         }
@@ -788,15 +1019,16 @@
         renderOverview(d) {
             const geo = d.geo_data || {}, tls = d.tls_certificate || {}, whois = d.whois_data || {};
             const waf = d.waf || {}, emailGrade = (d.email_security || {}).overall_grade || 'N/A';
-            const takeover = d.subdomain_takeover || [];
+            const takeover = (d.subdomain_takeover || {}).vulnerable || [];
             const ss = d.security_score || {};
-            const scoreColor = (ss.score||0) >= 75 ? 'var(--success)' : (ss.score||0) >= 50 ? 'var(--warning)' : 'var(--danger)';
+            const _scoreVal = ss.total != null ? ss.total : (ss.score || 0);
+            const scoreColor = _scoreVal >= 75 ? 'var(--success)' : _scoreVal >= 50 ? 'var(--warning)' : 'var(--danger)';
 
             let infoHtml = `
-                ${ss.score != null ? `<div class="info-row" style="background:rgba(255,255,255,.03);border:1px solid var(--border-light);border-radius:var(--radius-xs);margin-bottom:8px;">
+                ${_scoreVal > 0 || ss.grade ? `<div class="info-row" style="background:rgba(255,255,255,.03);border:1px solid var(--border-light);border-radius:var(--radius-xs);margin-bottom:8px;">
                     <i class="fa-solid fa-gauge-high row-icon" style="color:${scoreColor};"></i>
                     <span class="row-label">Score sécurité</span>
-                    <span class="row-value" style="font-weight:700;color:${scoreColor};">${ss.score}/100 <span class="grade grade-sm grade-${ss.grade || 'NA'}" style="margin-left:6px;">${ss.grade || '?'}</span></span>
+                    <span class="row-value" style="font-weight:700;color:${scoreColor};">${_scoreVal}/100 <span class="grade grade-sm grade-${ss.grade || 'NA'}" style="margin-left:6px;">${ss.grade || '?'}</span></span>
                 </div>` : ''}
                 ${this.infoRow('Domaine', d.domain, 'fa-globe')}
                 ${this.infoRow('Adresse IP', d.ip_address || 'N/A', 'fa-location-dot')}
@@ -808,10 +1040,10 @@
                 ${this.infoRow('Email', `<span class="grade grade-sm grade-${emailGrade === 'N/A' ? 'NA' : emailGrade}">${emailGrade}</span>`, 'fa-envelope')}
                 ${this.infoRow('Technologies', (d.technologies || []).map(t => `<span class="pill pill-neutral">${this.esc(t.name)}</span>`).join(' ') || 'Aucune', 'fa-microchip')}
                 ${takeover.length > 0 ? this.infoRow('Takeover', `<span class="pill pill-danger">${takeover.length} vulnérable(s)</span>`, 'fa-triangle-exclamation') : ''}
-                ${(d.threat_intel||{}).malicious ? this.infoRow('Threat Intel', `<span class="pill pill-danger">⚠ ${(d.threat_intel||{}).pulse_count||0} pulses OTX</span>`, 'fa-biohazard') : this.infoRow('Threat Intel', '<span class="pill pill-success">Propre</span>', 'fa-biohazard')}
-                ${(d.email_blacklist||{}).blacklisted ? this.infoRow('Blacklist IP', `<span class="pill pill-danger">Blacklisté (${((d.email_blacklist||{}).blacklists_hit||[]).length})</span>`, 'fa-ban') : ''}
+                ${((d.threat_intel||{}).virustotal||{}).malicious > 0 ? this.infoRow('Threat Intel', `<span class="pill pill-danger">⚠ ${((d.threat_intel||{}).virustotal||{}).malicious} menaces VirusTotal</span>`, 'fa-biohazard') : this.infoRow('Threat Intel', '<span class="pill pill-success">Propre</span>', 'fa-biohazard')}
+                ${(d.email_blacklist||{}).is_blacklisted ? this.infoRow('Blacklist IP', `<span class="pill pill-danger">Blacklisté (${((d.email_blacklist||{}).listed_on||[]).length})</span>`, 'fa-ban') : ''}
                 ${(d.hsts_preload||{}).preloaded ? this.infoRow('HSTS Preload', '<span class="pill pill-success">Préchargé ✓</span>', 'fa-lock') : ''}
-                ${(d.wayback_data||{}).available ? this.infoRow('Wayback', `Actif depuis ${(d.wayback_data||{}).first_seen||'?'}`, 'fa-clock-rotate-left') : ''}
+                ${(d.wayback_data||{}).available ? this.infoRow('Wayback', `Archive : ${(d.wayback_data||{}).timestamp||'?'}`, 'fa-clock-rotate-left') : ''}
                 ${this.infoRow('Statut', `<span class="pill ${this.statusPill(d.status)}">${d.status}</span>`, 'fa-circle-check')}
             `;
             document.getElementById('overview-info').innerHTML = infoHtml;
@@ -834,15 +1066,20 @@
         }
 
         renderSubdomains(d) {
-            const subs = d.subdomains || [];
+            // subdomains may be {subdomains:[...]} or legacy array
+            const subs = Array.isArray(d.subdomains) ? d.subdomains : ((d.subdomains || {}).subdomains || []);
             document.getElementById('sub-count').textContent = `${subs.length} trouvé(s)`;
-            if (!subs.length) { document.getElementById('subdomains-content').innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Aucun sous-domaine découvert (crt.sh, HackerTarget, RapidDNS, AlienVault OTX, URLScan.io)</p>'; return; }
-            document.getElementById('subdomains-content').innerHTML = subs.map(s =>
-                `<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-radius:var(--radius-xs);font-size:13px;border-bottom:1px solid var(--border-light);">
-                    <span class="mono" style="color:var(--accent);">${this.esc(s.subdomain)}</span>
-                    <span class="mono" style="color:${s.ip ? 'var(--success)' : 'var(--text-tertiary)'}; font-size:12px;">${s.ip || 'Non résolu'}</span>
-                </div>`
-            ).join('');
+            if (!subs.length) { const p = mkEl('p',{style:'color:var(--text-tertiary);font-size:13px;',text:'Aucun sous-domaine découvert'}); clearEl(document.getElementById('subdomains-content')); document.getElementById('subdomains-content').appendChild(p); return; }
+            const container = document.getElementById('subdomains-content');
+            clearEl(container);
+            subs.forEach(s => {
+                const name = typeof s === 'string' ? s : (s.subdomain || String(s));
+                const ip   = typeof s === 'object' ? (s.ip || '') : '';
+                const row  = mkEl('div', {style:'display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-radius:var(--radius-xs);font-size:13px;border-bottom:1px solid var(--border-light);'});
+                const nm   = mkEl('span', {cls:'mono', style:'color:var(--accent);', text: name});
+                const ipm  = mkEl('span', {cls:'mono', style:'font-size:12px;color:' + (ip ? 'var(--success)' : 'var(--text-tertiary)'), text: ip || 'N/A'});
+                row.appendChild(nm); row.appendChild(ipm); container.appendChild(row);
+            });
         }
 
         renderSecurity(d) {
@@ -1000,7 +1237,8 @@
         }
 
         renderPorts(d) {
-            const ports = d.open_ports || [];
+            // : open_ports may be {open_ports:[...]} or legacy array
+            const ports = Array.isArray(d.open_ports) ? d.open_ports : ((d.open_ports || {}).open_ports || []);
             if (!ports.length) { document.getElementById('ports-content').innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Aucun port ouvert détecté</p>'; return; }
             document.getElementById('ports-content').innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">${ports.map(p =>
                 `<div class="data-card" style="display:flex;align-items:center;gap:10px;padding:10px 14px;">
@@ -1026,14 +1264,17 @@
         renderRedirects(d) {
             const rc = d.redirect_chain || {}, chain = rc.chain || [];
             if (!chain.length) { document.getElementById('redirects-content').innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Aucune donnée de redirection</p>'; return; }
+            const finalUrl = chain.length ? chain[chain.length - 1].url : 'N/A';
+            const forcesHttps = chain.some(h => (h.url||'').startsWith('http://')) && chain.some(h => (h.url||'').startsWith('https://'));
             let html = `<div class="data-card" style="margin-bottom:14px;"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;">
-                <div><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;">Sauts</div><div style="font-size:22px;font-weight:700;color:var(--accent);">${rc.total_hops || 0}</div></div>
-                <div><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;">Force HTTPS</div><div style="font-size:14px;font-weight:700;"><span class="pill ${rc.forces_https ? 'pill-success' : 'pill-danger'}">${rc.forces_https ? 'Oui' : 'Non'}</span></div></div>
-                <div><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;">URL finale</div><div class="mono" style="font-size:12px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${this.esc(rc.final_url || 'N/A')}</div></div>
+                <div><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;">Sauts</div><div style="font-size:22px;font-weight:700;color:var(--accent);">${rc.hops || chain.length}</div></div>
+                <div><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;">Force HTTPS</div><div style="font-size:14px;font-weight:700;"><span class="pill ${forcesHttps ? 'pill-success' : 'pill-neutral'}">${forcesHttps ? 'Oui' : 'N/A'}</span></div></div>
+                <div><div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;">URL finale</div><div class="mono" style="font-size:12px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${this.esc(finalUrl)}</div></div>
             </div></div>`;
 
             chain.forEach((hop, i) => {
-                const sc = hop.status_code >= 200 && hop.status_code < 300 ? 'pill-success' : hop.status_code >= 300 && hop.status_code < 400 ? 'pill-warning' : 'pill-danger';
+                const hopStatus = hop.status || hop.status_code || 0;
+                const sc = hopStatus >= 200 && hopStatus < 300 ? 'pill-success' : hopStatus >= 300 && hopStatus < 400 ? 'pill-warning' : 'pill-danger';
                 const last = i === chain.length - 1;
                 html += `<div style="display:flex;gap:12px;margin-bottom:8px;">
                     <div style="display:flex;flex-direction:column;align-items:center;">
@@ -1043,9 +1284,7 @@
                     <div class="data-card" style="flex:1;padding:12px;">
                         <div class="mono" style="font-size:12.5px;color:var(--accent);word-break:break-all;">${this.esc(hop.url || '')}</div>
                         <div style="display:flex;gap:10px;margin-top:6px;align-items:center;">
-                            <span class="pill ${sc}">${hop.status_code || '?'}</span>
-                            ${hop.server ? `<span style="font-size:12px;color:var(--text-tertiary);">Serveur : ${this.esc(hop.server)}</span>` : ''}
-                            ${hop.error ? `<span style="font-size:12px;color:var(--danger);">${this.esc(hop.error)}</span>` : ''}
+                            <span class="pill ${sc}">${hopStatus || '?'}</span>
                         </div>
                     </div>
                 </div>`;
@@ -1054,79 +1293,79 @@
         }
 
         renderWebFiles(d) {
-            const wf = d.web_files || {}, robots = wf.robots_txt || {}, sitemap = wf.sitemap_xml || {}, sec = wf.security_txt || {};
+            const wf = d.web_files || {};
+            const files = wf.files || [];
+            // Categorize known files
+            const robotsFile = files.find(f => f.path === '/robots.txt');
+            const sitemapFile = files.find(f => f.path === '/sitemap.xml');
+            const securityFile = files.find(f => f.path === '/.well-known/security.txt' || f.path === '/security.txt');
+            const sensitivePatterns = ['.env', '.git', 'wp-config', 'phpinfo', 'backup', '.sql', 'dump', '.bak'];
+            const sensitiveFiles = files.filter(f => sensitivePatterns.some(p => f.path.includes(p)));
+            const otherFiles = files.filter(f => f !== robotsFile && f !== sitemapFile && f !== securityFile && !sensitiveFiles.includes(f));
+
             let html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">';
 
             const fileCard = (name, found, content) =>
                 `<div class="data-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                     <i class="fa-solid ${found ? 'fa-check-circle' : 'fa-times-circle'}" style="color:${found ? 'var(--success)' : 'var(--danger)'};"></i>
                     <span style="font-size:13px;font-weight:600;">${name}</span>
-                    <span class="pill ${found ? 'pill-success' : 'pill-danger'}" style="margin-left:auto;">${found ? 'Trouvé' : 'Absent'}</span>
+                    <span class="pill ${found ? 'pill-success' : 'pill-neutral'}" style="margin-left:auto;">${found ? 'Trouvé' : 'Absent'}</span>
                 </div>${content}</div>`;
 
-            // robots.txt
-            let rc = '';
-            if (robots.found) {
-                if (robots.disallowed?.length) rc += `<div style="font-size:12px;color:var(--text-tertiary);margin-bottom:4px;">Chemins interdits (${robots.disallowed.length}) :</div><div style="max-height:140px;overflow-y:auto;">${robots.disallowed.slice(0, 30).map(p => `<div class="mono" style="font-size:12px;color:var(--warning);padding:1px 0;">${this.esc(p)}</div>`).join('')}</div>`;
-                if (robots.sitemaps?.length) rc += `<div style="font-size:12px;color:var(--text-tertiary);margin-top:8px;">Sitemaps :</div>${robots.sitemaps.map(s => `<div class="mono" style="font-size:12px;color:var(--accent);word-break:break-all;">${this.esc(s)}</div>`).join('')}`;
-            } else rc = '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé</div>';
-            html += fileCard('robots.txt', robots.found, rc);
+            html += fileCard('robots.txt', !!robotsFile, robotsFile ? `<div style="font-size:12px;color:var(--text-tertiary);">HTTP ${robotsFile.status} · ${robotsFile.size} bytes</div>` : '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé</div>');
+            html += fileCard('sitemap.xml', !!sitemapFile, sitemapFile ? `<div style="font-size:12px;color:var(--text-tertiary);">HTTP ${sitemapFile.status} · ${sitemapFile.size} bytes</div>` : '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé</div>');
+            html += fileCard('security.txt', !!securityFile, securityFile ? `<div style="font-size:12px;color:var(--success);">HTTP ${securityFile.status} · ${securityFile.size} bytes</div>` : '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé — <span style="color:var(--warning);">Recommandé</span></div>');
+            html += '</div>';
 
-            // sitemap.xml
-            let sc2 = '';
-            if (sitemap.found) sc2 = `<div style="font-size:12px;color:var(--text-tertiary);">URLs indexées : <span style="font-size:20px;font-weight:700;color:var(--accent);">${sitemap.url_count || 0}</span></div>`;
-            else sc2 = '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé</div>';
-            html += fileCard('sitemap.xml', sitemap.found, sc2);
-
-            // security.txt
-            let stc = '';
-            if (sec.found) {
-                if (sec.contact) stc += `<div style="font-size:12px;color:var(--text-tertiary);">Contact : <span class="mono" style="color:var(--accent);">${this.esc(sec.contact)}</span></div>`;
-                stc += `<div class="mono" style="font-size:11.5px;color:var(--text-tertiary);margin-top:6px;white-space:pre-wrap;max-height:120px;overflow-y:auto;">${this.esc((sec.content || '').substring(0, 500))}</div>`;
-            } else stc = '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé — <span style="color:var(--warning);">Recommandé</span></div>';
-            html += fileCard('security.txt', sec.found, stc);
-
-            // Fichiers sensibles détectés
-            const sensitive = (wf.sensitive_files || []);
-            if (sensitive.length > 0) {
-                html += `<div class="data-card" style="margin-top:16px;border-color:var(--danger);">
+            if (sensitiveFiles.length > 0) {
+                html += `<div class="data-card" style="margin-top:14px;border-color:var(--danger);">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                         <i class="fa-solid fa-skull-crossbones" style="color:var(--danger);"></i>
-                        <span style="font-size:13px;font-weight:700;color:var(--danger);">⚠ Fichiers sensibles exposés (${sensitive.length})</span>
+                        <span style="font-size:13px;font-weight:700;color:var(--danger);">⚠ Fichiers sensibles exposés (${sensitiveFiles.length})</span>
                     </div>
-                    ${sensitive.map(f => `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border-light);">
-                        <span class="pill pill-${f.severity === 'critical' ? 'danger' : 'warning'}" style="font-size:10px;">${f.severity.toUpperCase()}</span>
+                    ${sensitiveFiles.map(f => `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border-light);">
+                        <span class="pill pill-danger" style="font-size:10px;">HTTP ${f.status}</span>
                         <span class="mono" style="font-size:12px;color:var(--accent);flex:1;">${this.esc(f.path)}</span>
-                        <span style="font-size:11.5px;color:var(--text-tertiary);">${this.esc(f.description)}</span>
                         <span style="font-size:11px;color:var(--text-tertiary);">${f.size}B</span>
                     </div>`).join('')}
                 </div>`;
             }
+            if (otherFiles.length > 0) {
+                html += `<div class="data-card" style="margin-top:14px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Autres fichiers accessibles (${otherFiles.length})</div>
+                    ${otherFiles.map(f => `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--border-light);">
+                        <span class="pill pill-neutral" style="font-size:10px;">HTTP ${f.status}</span>
+                        <span class="mono" style="font-size:12px;color:var(--text-secondary);">${this.esc(f.path)}</span>
+                        <span style="font-size:11px;color:var(--text-tertiary);margin-left:auto;">${f.size}B</span>
+                    </div>`).join('')}
+                </div>`;
+            }
+            if (!files.length) {
+                html += '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Aucun fichier accessible trouvé.</p></div>';
+            }
 
-            document.getElementById('webfiles-content').innerHTML = html + '</div>';
+            document.getElementById('webfiles-content').innerHTML = html;
         }
 
         renderCookies(d) {
-            const cs = d.cookie_security || {}, cookies = cs.cookies || [], score = cs.score || 'N/A';
+            const cs = d.cookie_security || {}, cookies = cs.cookies || [];
             let html = `<div class="data-card" style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
-                <span class="grade grade-${score === 'N/A' ? 'NA' : score}">${score}</span>
-                <div><div style="font-size:14px;font-weight:600;">Score sécurité des cookies</div><div style="font-size:12.5px;color:var(--text-tertiary);">${cookies.length} cookie(s) analysé(s)</div></div></div>`;
+                <i class="fa-solid fa-cookie-bite" style="font-size:24px;color:var(--accent);"></i>
+                <div><div style="font-size:14px;font-weight:600;">Cookies HTTP</div><div style="font-size:12.5px;color:var(--text-tertiary);">${cookies.length} cookie(s) analysé(s)</div></div></div>`;
 
             if (!cookies.length) { html += '<p style="color:var(--text-tertiary);font-size:13px;">Aucun cookie Set-Cookie détecté</p>'; }
             else {
                 cookies.forEach(c => {
-                    const iss = c.issues || [];
+                    const missingFlags = [!c.secure && 'Secure', !c.httponly && 'HttpOnly', !c.samesite && 'SameSite'].filter(Boolean);
                     html += `<div class="data-card" style="margin-bottom:8px;">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                             <span class="mono" style="font-size:13px;font-weight:600;color:var(--accent);">${this.esc(c.name)}</span>
-                            <span class="pill ${iss.length === 0 ? 'pill-success' : 'pill-warning'}">${iss.length === 0 ? 'Sécurisé' : `${iss.length} problème(s)`}</span>
+                            <span class="pill ${missingFlags.length === 0 ? 'pill-success' : 'pill-warning'}">${missingFlags.length === 0 ? 'Sécurisé' : `${missingFlags.length} flag(s) manquant(s)`}</span>
                         </div>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
                             <span class="pill ${c.secure ? 'pill-success' : 'pill-danger'}">Secure: ${c.secure ? '✓' : '✗'}</span>
                             <span class="pill ${c.httponly ? 'pill-success' : 'pill-danger'}">HttpOnly: ${c.httponly ? '✓' : '✗'}</span>
                             <span class="pill ${c.samesite ? 'pill-success' : 'pill-danger'}">SameSite: ${c.samesite || '✗'}</span>
                         </div>
-                        ${iss.length ? iss.map(i2 => `<div style="font-size:12px;color:var(--warning);margin-top:3px;"><i class="fa-solid fa-exclamation-triangle" style="font-size:10px;margin-right:4px;"></i>${this.esc(i2)}</div>`).join('') : ''}
                     </div>`;
                 });
             }
@@ -1135,11 +1374,15 @@
 
         renderCORS(d) {
             const cors = d.cors || {};
-            const mis = cors.misconfigured;
-            const alertBg = mis ? 'background:var(--danger-bg);border-color:rgba(255,92,92,.25);' : cors.cors_enabled ? 'background:var(--success-bg);border-color:rgba(0,214,143,.25);' : '';
-            const alertIcon = mis ? 'fa-triangle-exclamation' : cors.cors_enabled ? 'fa-check-circle' : 'fa-info-circle';
-            const alertColor = mis ? 'var(--danger)' : cors.cors_enabled ? 'var(--success)' : 'var(--text-tertiary)';
-            const alertMsg = mis ? 'Misconfiguration CORS détectée !' : cors.cors_enabled ? 'CORS activé et correctement configuré' : 'CORS non activé';
+            const corsEnabled = !!(cors.allow_origin);
+            const allowsWildcard = cors.allow_origin === '*';
+            const reflectsOrigin = cors.allow_origin === 'https://evil.example.com';
+            const credentialsWithWildcard = allowsWildcard && (cors.allow_credentials || '').toLowerCase() === 'true';
+            const mis = cors.vulnerable;
+            const alertBg = mis ? 'background:var(--danger-bg);border-color:rgba(255,92,92,.25);' : corsEnabled ? 'background:var(--success-bg);border-color:rgba(0,214,143,.25);' : '';
+            const alertIcon = mis ? 'fa-triangle-exclamation' : corsEnabled ? 'fa-check-circle' : 'fa-info-circle';
+            const alertColor = mis ? 'var(--danger)' : corsEnabled ? 'var(--success)' : 'var(--text-tertiary)';
+            const alertMsg = mis ? 'Misconfiguration CORS détectée !' : corsEnabled ? 'CORS activé' : 'CORS non activé';
 
             let html = `<div class="data-card" style="${alertBg}margin-bottom:14px;"><div style="display:flex;align-items:center;gap:12px;">
                 <i class="fa-solid ${alertIcon}" style="font-size:24px;color:${alertColor};"></i>
@@ -1155,21 +1398,23 @@
             };
 
             html += `<div class="data-card">
-                ${check('CORS activé', cors.cors_enabled, false)}
-                ${check('Origin wildcard (*)', cors.allows_any_origin, true)}
-                ${check('Credentials + wildcard', cors.allows_credentials_with_wildcard, true)}
-                ${check("Reflète l'origin", cors.reflects_origin, true)}
+                ${check('CORS activé', corsEnabled, false)}
+                ${check('Origin wildcard (*)', allowsWildcard, true)}
+                ${check('Credentials + wildcard', credentialsWithWildcard, true)}
+                ${check("Reflète l'origin test", reflectsOrigin, true)}
             </div>`;
 
-            if (cors.details?.length) {
-                html += `<div class="data-card" style="margin-top:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);margin-bottom:6px;">Détails :</div>
-                    ${cors.details.map(dd => `<div style="font-size:12.5px;color:${dd.includes('CRITIQUE') ? 'var(--danger)' : 'var(--warning)'};padding:2px 0;font-weight:${dd.includes('CRITIQUE') ? '600' : '400'};"><i class="fa-solid fa-angle-right" style="margin-right:6px;font-size:10px;"></i>${this.esc(dd)}</div>`).join('')}</div>`;
+            if (corsEnabled) {
+                html += `<div class="data-card" style="margin-top:12px;">
+                    ${this.infoRow('Access-Control-Allow-Origin', this.esc(cors.allow_origin||''), 'fa-globe')}
+                    ${cors.allow_credentials ? this.infoRow('Access-Control-Allow-Credentials', this.esc(cors.allow_credentials||''), 'fa-key') : ''}
+                </div>`;
             }
             document.getElementById('cors-content').innerHTML = html;
         }
 
         renderReverseDNS(d) {
-            const rdns = d.reverse_dns || {};
+            const rdns = d.reverse_dns_data || {};
             let html = `<div class="data-card">${this.infoRow('IP', d.ip_address || 'N/A', 'fa-location-dot')}`;
             if (rdns.ptr) {
                 html += `${this.infoRow('PTR', `<span style="color:var(--accent);font-weight:600;">${this.esc(rdns.ptr)}</span>`, 'fa-rotate-left')}`;
@@ -1184,14 +1429,16 @@
         }
 
         renderTakeover(d) {
-            const takeover = d.subdomain_takeover || [];
+            const _tk = d.subdomain_takeover || {};
+            const takeover = _tk.vulnerable || [];
+            const _subsCount = ((d.subdomains || {}).subdomains || []).length;
             let html = '';
             if (!takeover.length) {
                 html = `<div class="data-card" style="background:var(--success-bg);border-color:rgba(0,214,143,.25);">
                     <div style="display:flex;align-items:center;gap:14px;">
                         <i class="fa-solid fa-check-circle" style="font-size:28px;color:var(--success);"></i>
                         <div><div style="font-size:14px;font-weight:600;color:var(--success);">Aucune vulnérabilité subdomain takeover</div>
-                        <div style="font-size:12.5px;color:var(--text-secondary);">${(d.subdomains || []).length} sous-domaine(s) vérifié(s)</div></div>
+                        <div style="font-size:12.5px;color:var(--text-secondary);">${_subsCount} sous-domaine(s) vérifié(s)</div></div>
                     </div></div>`;
             } else {
                 html = `<div class="data-card" style="background:var(--danger-bg);border-color:rgba(255,92,92,.25);margin-bottom:14px;">
@@ -1201,17 +1448,17 @@
                         <div style="font-size:12.5px;color:#FF9A9A;">Ces sous-domaines pourraient être détournés par un attaquant</div></div>
                     </div></div>`;
                 takeover.forEach(t => {
-                    const rp = t.risk === 'high' ? 'pill-danger' : 'pill-warning';
-                    const rb = t.risk === 'high' ? 'border-color:rgba(255,92,92,.25);' : 'border-color:rgba(255,181,71,.25);';
+                    const _isVuln = (t.status || '').startsWith('VULNERABLE');
+                    const rp = _isVuln ? 'pill-danger' : 'pill-warning';
+                    const rb = _isVuln ? 'border-color:rgba(255,92,92,.25);' : 'border-color:rgba(255,181,71,.25);';
                     html += `<div class="data-card" style="margin-bottom:8px;${rb}">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                             <span class="mono" style="font-size:13px;font-weight:600;color:var(--accent);">${this.esc(t.subdomain)}</span>
-                            <span class="pill ${rp}">${t.risk === 'high' ? 'HAUTE' : 'MOYENNE'}</span>
+                            <span class="pill ${rp}">${_isVuln ? 'VULNÉRABLE' : 'POSSIBLE'}</span>
                         </div>
                         <div style="font-size:12.5px;color:var(--text-secondary);">
-                            <div style="padding:2px 0;"><i class="fa-solid fa-link" style="width:14px;text-align:center;color:var(--text-tertiary);margin-right:6px;"></i>CNAME : <span class="mono" style="color:var(--accent);">${this.esc(t.cname)}</span></div>
-                            <div style="padding:2px 0;"><i class="fa-solid fa-cloud" style="width:14px;text-align:center;color:var(--text-tertiary);margin-right:6px;"></i>Service : <span style="font-weight:600;">${this.esc(t.service)}</span></div>
-                            <div style="padding:2px 0;"><i class="fa-solid fa-fingerprint" style="width:14px;text-align:center;color:var(--text-tertiary);margin-right:6px;"></i>Fingerprint : <span class="pill ${t.fingerprint_matched ? 'pill-danger' : 'pill-warning'}">${t.fingerprint_matched ? 'Correspondance' : 'Connexion échouée'}</span></div>
+                            <div style="padding:2px 0;"><i class="fa-solid fa-link" style="width:14px;text-align:center;color:var(--text-tertiary);margin-right:6px;"></i>CNAME : <span class="mono" style="color:var(--accent);">${this.esc((t.status||'').split('-> ')[1]||'N/A')}</span></div>
+                            <div style="padding:2px 0;"><i class="fa-solid fa-info-circle" style="width:14px;text-align:center;color:var(--text-tertiary);margin-right:6px;"></i>Statut : <span style="font-weight:600;">${this.esc(t.status||'')}</span></div>
                         </div>
                     </div>`;
                 });
@@ -1225,10 +1472,22 @@
 
         renderSecurityScore(d) {
             const ss = d.security_score || {};
-            const score = ss.score || 0;
+            // compatibility: total vs score
+            const score = ss.total != null ? ss.total : (ss.score || 0);
             const maxScore = ss.max_score || 100;
             const grade = ss.grade || 'N/A';
-            const breakdown = ss.breakdown || {};
+            // categories vs legacy breakdown
+            const breakdown = ss.breakdown || (() => {
+                const c = ss.categories || {};
+                return {
+                    tls:     {score: c.tls || 0, max: 20},
+                    headers: {score: c.headers || 0, max: 20},
+                    email:   {score: c.email || 0, max: 15},
+                    reputation: {score: c.reputation || 0, max: 15},
+                    infrastructure: {score: c.infrastructure || 0, max: 15},
+                    osint:   {score: c.osint || 0, max: 15},
+                };
+            })();
 
             const pct = Math.round((score / maxScore) * 100);
             const radius = 68, circ = 2 * Math.PI * radius;
@@ -1271,38 +1530,25 @@
 
         renderNetworkExtended(d) {
             const net = d.network_extended || {};
-            const neighbors = net.reverse_ip_neighbors || [];
-            const asn = net.asn_info || {};
+            const rdap = net.rdap || {};
+            const geo = d.geo_data || {};
             let html = '';
 
-            // ASN Info
+            // RDAP Info
             html += `<div class="data-card" style="margin-bottom:16px;">
-                <div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:10px;">Informations ASN</div>
-                ${this.infoRow('ASN', asn.asn || 'N/A', 'fa-network-wired')}
-                ${this.infoRow('Organisation', asn.org || 'N/A', 'fa-building')}
-                ${this.infoRow('Hostname', asn.hostname || 'N/A', 'fa-server')}
-                ${this.infoRow('Anycast', asn.anycast ? 'Oui' : 'Non', 'fa-globe')}
+                <div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:10px;">RDAP — Informations IP</div>
+                ${this.infoRow('Nom réseau', rdap.name || 'N/A', 'fa-network-wired')}
+                ${this.infoRow('Handle', rdap.handle || 'N/A', 'fa-fingerprint')}
+                ${this.infoRow('Type', rdap.type || 'N/A', 'fa-tag')}
             </div>`;
 
-            // Reverse IP neighbors
+            // ASN from geo_data
             html += `<div class="data-card">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                    <div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;">Voisins IP (Reverse IP)</div>
-                    <span class="pill pill-neutral">${neighbors.length} domaine(s)</span>
-                </div>`;
-            if (neighbors.length) {
-                html += `<div style="max-height:400px;overflow-y:auto;">`;
-                neighbors.forEach((n, i) => {
-                    html += `<div style="display:flex;align-items:center;padding:6px 10px;border-radius:var(--radius-xs);font-size:13px;${i % 2 ? '' : 'background:rgba(255,255,255,.015);'}">
-                        <span style="width:28px;color:var(--text-tertiary);font-size:11px;font-family:var(--mono);">${i+1}</span>
-                        <span class="mono" style="color:var(--accent);">${this.esc(n)}</span>
-                    </div>`;
-                });
-                html += '</div>';
-            } else {
-                html += '<p style="color:var(--text-tertiary);font-size:13px;">Aucun voisin IP détecté</p>';
-            }
-            html += '</div>';
+                <div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:10px;">ASN / Opérateur</div>
+                ${this.infoRow('ASN', geo.as_info || 'N/A', 'fa-building')}
+                ${this.infoRow('ISP', geo.isp || 'N/A', 'fa-server')}
+                ${this.infoRow('Organisation', geo.org || 'N/A', 'fa-building-columns')}
+            </div>`;
             document.getElementById('network-ext-content').innerHTML = html;
         }
 
@@ -1498,10 +1744,13 @@
                 elements.push({ data: { source: 'domain', target: 'ip' } });
             }
             // Subdomain nodes
-            const subs = (d.subdomains || []).slice(0, 80);
+            const _subsArr = Array.isArray(d.subdomains) ? d.subdomains : ((d.subdomains || {}).subdomains || []);
+            const subs = _subsArr.slice(0, 80);
             subs.forEach((sub, i) => {
                 const sid = `sub-${i}`;
-                elements.push({ data: { id: sid, label: sub.subdomain, nodeType: sub.ip ? 'sub-resolved' : 'sub-unresolved', ip: sub.ip || '' } });
+                const subName = typeof sub === 'string' ? sub : (sub.subdomain || String(sub));
+                const subIp = typeof sub === 'object' ? (sub.ip || '') : '';
+                elements.push({ data: { id: sid, label: subName, nodeType: subIp ? 'sub-resolved' : 'sub-unresolved', ip: subIp } });
                 elements.push({ data: { source: 'domain', target: sid } });
             });
             // Port nodes (attached to IP)
@@ -1627,7 +1876,50 @@
                 const { scans } = await res.json();
                 this.historyData = scans || [];
                 this.displayHistory(this.historyData);
-            } catch { document.getElementById('history-container').innerHTML = '<div style="padding:24px;text-align:center;color:var(--danger);font-size:13px;">Impossible de charger l\'historique</div>'; }
+                this.renderHeroHistory((this.historyData || []).slice(0, 5));
+            } catch {
+                const hc = document.getElementById('history-container');
+                if (hc) { const msg = document.createElement('div'); msg.style.cssText = 'padding:24px;text-align:center;color:var(--danger);font-size:13px;'; msg.textContent = 'Impossible de charger l\'historique'; while(hc.firstChild) hc.removeChild(hc.firstChild); hc.appendChild(msg); }
+            }
+        }
+
+        renderHeroHistory(items) {
+            const container = document.getElementById('hero-history-list');
+            if (!container) return;
+            while (container.firstChild) container.removeChild(container.firstChild);
+            if (!items || items.length === 0) {
+                const msg = document.createElement('div');
+                msg.style.cssText = 'font-size:12px;color:var(--text-tertiary);padding:4px 0;';
+                msg.textContent = 'Aucune analyse récente';
+                container.appendChild(msg);
+                return;
+            }
+            items.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'hero-history-item';
+                row.addEventListener('click', () => {
+                    const inp = document.getElementById('domain-input');
+                    if (inp) { inp.value = item.domain; inp.focus(); }
+                });
+                const domainSpan = document.createElement('span');
+                domainSpan.className = 'hero-history-domain';
+                domainSpan.textContent = item.domain;
+                const metaSpan = document.createElement('span');
+                metaSpan.className = 'hero-history-meta';
+                metaSpan.textContent = (item.ip_address ? item.ip_address + ' · ' : '') + this.timeAgo(item.scan_timestamp);
+                row.appendChild(domainSpan);
+                row.appendChild(metaSpan);
+                container.appendChild(row);
+            });
+        }
+
+        timeAgo(iso) {
+            if (!iso) return '';
+            const diff = Math.floor((Date.now() - new Date(iso)) / 1000);
+            if (diff < 60) return diff + 's';
+            if (diff < 3600) return Math.floor(diff / 60) + 'm';
+            if (diff < 86400) return Math.floor(diff / 3600) + 'h';
+            return Math.floor(diff / 86400) + 'j';
         }
 
         filterHistory(query) {
@@ -1646,7 +1938,7 @@
                         <span class="history-ip">${s.ip_address || ''}</span>
                     </div>
                     <div class="history-right">
-                        <span class="history-meta">${(s.subdomains || []).length} subs</span>
+                        <span class="history-meta">${Array.isArray(s.subdomains) ? s.subdomains.length : ((s.subdomains || {}).count || 0)} subs</span>
                         <span class="pill ${this.statusPill(s.status)}">${s.status}</span>
                         <span class="history-meta" style="min-width:100px;text-align:right;">${this.formatDate(s.scan_timestamp)}</span>
                         <button class="btn-delete" onclick="event.stopPropagation();app.deleteScan(${s.id})" title="Supprimer"><i class="fa-solid fa-trash-can"></i></button>
@@ -1682,30 +1974,30 @@
 
         renderURLScan(d) {
             const u = d.urlscan_data || {};
+            const results = u.results || [];
             let html = '';
-            if (!u.total_scans && !u.last_scan) {
+            if (!results.length && !u.total) {
                 html = '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Aucun scan historique URLScan.io pour ce domaine.</p></div>';
             } else {
-                html += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;">
-                    ${this.kv('Total scans historiques', u.total_scans || 0)}
-                    ${this.kv('Dernier scan', u.last_scan ? u.last_scan.substring(0,10) : 'N/A')}
-                    ${this.kv('Titre de page', this.esc(u.page_title || 'N/A'))}
+                html += `<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px;">
+                    ${this.kv('Total scans', u.total || results.length)}
+                    ${this.kv('Résultats affichés', results.length)}
                 </div>`;
-                if (u.ips_seen?.length) {
-                    html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">IPs observées</div>
-                        <div style="display:flex;flex-wrap:wrap;gap:6px;">${u.ips_seen.map(ip => `<span class="mono pill" style="font-size:12px;">${this.esc(ip)}</span>`).join('')}</div></div>`;
-                }
-                if (u.verdicts?.length) {
-                    html += `<div class="data-card" style="border-color:var(--danger);margin-bottom:12px;"><div style="font-size:13px;font-weight:700;color:var(--danger);margin-bottom:8px;"><i class="fa-solid fa-triangle-exclamation"></i> Verdicts malveillants détectés</div>
-                        ${u.verdicts.map(v => `<div style="padding:4px 0;font-size:12.5px;">Score: <b>${v.score}</b> — ${(v.categories||[]).join(', ') || 'Non catégorisé'}</div>`).join('')}</div>`;
-                }
-                if (u.screenshot_url) {
-                    html += `<div class="data-card"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);margin-bottom:8px;">Dernier screenshot URLScan.io</div>
-                        <div style="font-size:12px;color:var(--info);">
-                            <i class="fa-solid fa-external-link"></i>
-                            Disponible sur URLScan.io (consultation manuelle recommandée)
-                        </div></div>`;
-                }
+                results.forEach(r => {
+                    const page = r.page || {};
+                    const task = r.task || {};
+                    const stats = r.stats || {};
+                    const malicious = stats.malicious || 0;
+                    html += `<div class="data-card" style="margin-bottom:8px;${malicious > 0 ? 'border-color:var(--danger);' : ''}">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                            <span class="mono" style="font-size:12px;color:var(--accent);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${this.esc(page.url||page.domain||'')}</span>
+                            ${malicious > 0 ? `<span class="pill pill-danger" style="margin-left:8px;">${malicious} malveillant(s)</span>` : '<span class="pill pill-success" style="margin-left:8px;">Propre</span>'}
+                        </div>
+                        <div style="font-size:12px;color:var(--text-tertiary);">
+                            IP : ${this.esc(page.ip||'N/A')} · Date : ${(task.time||'').substring(0,10)||'N/A'}
+                        </div>
+                    </div>`;
+                });
             }
             document.getElementById('urlscan-content').innerHTML = html;
         }
@@ -1716,90 +2008,70 @@
             if (!w.available) {
                 html = '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Aucune archive Wayback Machine trouvée pour ce domaine.</p></div>';
             } else {
-                html += `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;">
-                    ${this.kv('Première archive', w.first_seen || 'N/A')}
-                    ${this.kv('Dernière archive', w.last_seen || 'N/A')}
-                    ${this.kv('Total captures', w.total_captures || 0)}
-                    ${this.kv('Années actives', (w.years_active||[]).length)}
+                html += `<div class="data-card" style="margin-bottom:14px;">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                        <i class="fa-solid fa-clock-rotate-left" style="font-size:28px;color:var(--info);"></i>
+                        <div><div style="font-size:14px;font-weight:600;">Archive Wayback Machine disponible</div>
+                        <div style="font-size:12.5px;color:var(--text-tertiary);">Statut HTTP : ${this.esc(w.status || 'N/A')}</div></div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+                    ${this.kv('Timestamp', w.timestamp || 'N/A')}
+                    ${this.kv('URL archive', w.url ? '<a href="' + this.esc(w.url) + '" target="_blank" style="color:var(--accent);font-size:12px;word-break:break-all;">' + this.esc(w.url) + '</a>' : 'N/A')}
                 </div>`;
-                if (w.years_active?.length) {
-                    html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Années d'activité</div>
-                        <div style="display:flex;flex-wrap:wrap;gap:6px;">${w.years_active.map(y => `<span class="pill">${y}</span>`).join('')}</div></div>`;
-                }
-                if (w.sample_old_urls?.length) {
-                    html += `<div class="data-card"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">URLs archivées (échantillon)</div>
-                        <div style="max-height:200px;overflow-y:auto;">${w.sample_old_urls.map(u2 => `<div class="mono" style="font-size:11.5px;color:var(--text-secondary);padding:2px 0;word-break:break-all;">${this.esc(u2)}</div>`).join('')}</div></div>`;
-                }
             }
             document.getElementById('wayback-content').innerHTML = html;
         }
 
         renderThreatIntel(d) {
             const ti = d.threat_intel || {};
-            const isMalicious = ti.malicious;
+            const vt = ti.virustotal || {};
+            const isMalicious = (vt.malicious || 0) > 0;
             let html = `<div class="data-card" style="margin-bottom:14px;border-color:${isMalicious ? 'var(--danger)' : 'var(--success)'};">
                 <div style="display:flex;align-items:center;gap:12px;">
                     <i class="fa-solid ${isMalicious ? 'fa-skull-crossbones' : 'fa-shield-check'}" style="font-size:24px;color:${isMalicious ? 'var(--danger)' : 'var(--success)'};"></i>
-                    <div><div style="font-size:15px;font-weight:700;color:${isMalicious ? 'var(--danger)' : 'var(--success)'};">${isMalicious ? '⚠ Domaine signalé comme malveillant' : '✓ Aucune menace connue (OTX)'}</div>
-                    <div style="font-size:12.5px;color:var(--text-tertiary);">${ti.pulse_count || 0} pulse(s) AlienVault OTX</div></div>
+                    <div><div style="font-size:15px;font-weight:700;color:${isMalicious ? 'var(--danger)' : 'var(--success)'};">${isMalicious ? '⚠ Domaine signalé comme malveillant' : '✓ Aucune menace connue'}</div>
+                    <div style="font-size:12.5px;color:var(--text-tertiary);">${Object.keys(vt).length ? 'VirusTotal' : 'Aucune clé API configurée'}</div></div>
                 </div></div>`;
-            if (ti.threat_types?.length) {
-                html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Types de menaces</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${ti.threat_types.map(t2 => `<span class="pill pill-danger">${this.esc(t2)}</span>`).join('')}</div></div>`;
-            }
-            if (ti.malware_families?.length) {
-                html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Familles de malwares</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${ti.malware_families.map(m2 => `<span class="pill pill-danger">${this.esc(m2)}</span>`).join('')}</div></div>`;
-            }
-            if (ti.passive_dns?.length) {
-                html += `<div class="data-card"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">DNS Passif historique (OTX)</div>
-                    <table style="width:100%;font-size:12px;border-collapse:collapse;">
-                    <thead><tr style="color:var(--text-tertiary);border-bottom:1px solid var(--border);">
-                        <th style="text-align:left;padding:4px;">IP</th><th style="text-align:left;padding:4px;">Type</th>
-                        <th style="text-align:left;padding:4px;">Première vue</th><th style="text-align:left;padding:4px;">Dernière vue</th>
-                        <th style="text-align:left;padding:4px;">Pays</th>
-                    </tr></thead><tbody>
-                    ${ti.passive_dns.map(p => `<tr style="border-bottom:1px solid var(--border-light);">
-                        <td class="mono" style="padding:4px;color:var(--accent);">${this.esc(p.ip||'')}</td>
-                        <td style="padding:4px;">${this.esc(p.record_type||'')}</td>
-                        <td style="padding:4px;color:var(--text-tertiary);">${this.esc((p.first||'').substring(0,10))}</td>
-                        <td style="padding:4px;color:var(--text-tertiary);">${this.esc((p.last||'').substring(0,10))}</td>
-                        <td style="padding:4px;">${this.esc(p.country||'')}</td>
-                    </tr>`).join('')}
-                    </tbody></table></div>`;
-            }
-            if (!ti.malicious && !ti.passive_dns?.length) {
-                html += '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Aucune donnée de threat intelligence disponible.</p></div>';
+            if (Object.keys(vt).length) {
+                const stats = [
+                    {label:'Malveillant', key:'malicious', cls:'pill-danger'},
+                    {label:'Suspect', key:'suspicious', cls:'pill-warning'},
+                    {label:'Inoffensif', key:'harmless', cls:'pill-success'},
+                    {label:'Non détecté', key:'undetected', cls:'pill-neutral'},
+                ];
+                html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:12px;">VirusTotal — Résultats d'analyse</div>
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">`;
+                stats.forEach(s => {
+                    const val = vt[s.key] || 0;
+                    html += `<div style="text-align:center;padding:12px;background:var(--surface);border-radius:var(--radius-xs);">
+                        <div style="font-size:22px;font-weight:700;">${val}</div>
+                        <div><span class="pill ${s.cls}" style="font-size:11px;">${s.label}</span></div>
+                    </div>`;
+                });
+                html += '</div></div>';
+            } else {
+                html += '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Configurez une clé API VirusTotal dans les paramètres pour activer l\'analyse de menaces.</p></div>';
             }
             document.getElementById('threatintel-content').innerHTML = html;
         }
 
         renderJSAnalysis(d) {
             const js = d.js_analysis || {};
+            const secrets = js.secrets_found || [];
             let html = `<div class="data-card" style="display:flex;gap:20px;margin-bottom:14px;">
-                ${this.kv('Fichiers JS trouvés', js.js_files_found || 0)}
-                ${this.kv('Endpoints découverts', (js.endpoints||[]).length)}
-                ${this.kv('APIs externes', (js.external_apis||[]).length)}
-                ${this.kv('Patterns suspects', (js.secrets_patterns||[]).length)}
+                ${this.kv('Fichiers JS analysés', js.js_files_scanned || 0)}
+                ${this.kv('Secrets potentiels', secrets.length)}
             </div>`;
-            if (js.secrets_patterns?.length) {
+            if (secrets.length) {
                 html += `<div class="data-card" style="margin-bottom:12px;border-color:var(--warning);">
                     <div style="font-size:13px;font-weight:700;color:var(--warning);margin-bottom:8px;"><i class="fa-solid fa-key"></i> Patterns secrets détectés — Vérification manuelle requise</div>
-                    ${js.secrets_patterns.map(s2 => `<div style="padding:4px 0;border-top:1px solid var(--border-light);">
-                        <span class="pill pill-warning">${this.esc(s2.type)}</span>
-                        <span class="mono" style="font-size:11.5px;margin-left:8px;color:var(--text-tertiary);">${this.esc(s2.js_file)}</span>
+                    ${secrets.map(s2 => `<div style="padding:6px 0;border-top:1px solid var(--border-light);">
+                        <div class="mono" style="font-size:12px;color:var(--accent);word-break:break-all;">${this.esc(s2.url||'')}</div>
+                        <div style="font-size:12px;color:var(--text-tertiary);margin-top:3px;">Pattern : <span class="pill pill-warning">${this.esc((s2.pattern||'').substring(0,60))}</span> · ${s2.matches_count||0} correspondance(s)</div>
                     </div>`).join('')}</div>`;
             }
-            if (js.endpoints?.length) {
-                html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Endpoints internes découverts (${js.endpoints.length})</div>
-                    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;max-height:250px;overflow-y:auto;">
-                    ${js.endpoints.map(e2 => `<div class="mono" style="font-size:12px;color:var(--accent);padding:2px 0;">${this.esc(e2)}</div>`).join('')}</div></div>`;
-            }
-            if (js.external_apis?.length) {
-                html += `<div class="data-card"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">APIs externes référencées</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${js.external_apis.map(a2 => `<span class="mono pill" style="font-size:11.5px;">${this.esc(a2)}</span>`).join('')}</div></div>`;
-            }
-            if (!js.js_files_found) {
+            if (!js.js_files_scanned) {
                 html += '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Aucun fichier JS analysé.</p></div>';
             }
             document.getElementById('jsanalysis-content').innerHTML = html;
@@ -1808,14 +2080,12 @@
         renderFavicon(d) {
             const fv = d.favicon_hash || {};
             let html = '';
-            if (!fv.found) {
+            if (fv.hash == null && !fv.shodan_query) {
                 html = '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Favicon non trouvé ou inaccessible.</p></div>';
             } else {
                 html += `<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px;">
-                    ${this.kv('URL du favicon', this.esc(fv.favicon_url || 'N/A'))}
-                    ${this.kv('Taille', (fv.size_bytes || 0) + ' bytes')}
-                    ${this.kv('Hash MD5', `<span class="mono">${this.esc(fv.hash_md5 || 'N/A')}</span>`)}
-                    ${this.kv('Hash MurmurHash3 (Shodan)', `<span class="mono" style="color:var(--accent);font-size:13px;">${fv.hash_mmh3 ?? 'N/A'}</span>`)}
+                    ${this.kv('Hash MurmurHash3 (Shodan)', `<span class="mono" style="color:var(--accent);font-size:13px;">${fv.hash ?? 'N/A'}</span>`)}
+                    ${this.kv('URL favicon', `<span class="mono" style="font-size:12px;">https://${this.esc(d.domain)}/favicon.ico</span>`)}
                 </div>`;
                 if (fv.shodan_query) {
                     html += `<div class="data-card" style="background:var(--accent-bg);">
@@ -1830,26 +2100,15 @@
 
         renderLinkedDomains(d) {
             const ld = d.linked_domains || {};
-            let html = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;">
-                ${this.kv('Domaines externes', ld.total_external || 0)}
-                ${this.kv('Médias sociaux', (ld.social_media||[]).length)}
-                ${this.kv('Scripts tiers', (ld.third_party_scripts||[]).length)}
-                ${this.kv('Trackers analytics', (ld.analytics_trackers||[]).length)}
+            const domains = ld.linked_domains || [];
+            let html = `<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px;">
+                ${this.kv('Domaines externes', ld.count || domains.length)}
+                ${this.kv('Source', 'Liens href extraits')}
             </div>`;
-            if (ld.analytics_trackers?.length) {
-                html += `<div class="data-card" style="margin-bottom:12px;border-color:var(--warning);">
-                    <div style="font-size:12px;font-weight:600;color:var(--warning);text-transform:uppercase;margin-bottom:8px;"><i class="fa-solid fa-eye"></i> Trackers & Analytics</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${ld.analytics_trackers.map(t2 => `<span class="mono pill pill-warning" style="font-size:11.5px;">${this.esc(t2)}</span>`).join('')}</div></div>`;
-            }
-            if (ld.social_media?.length) {
-                html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Médias sociaux liés</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${ld.social_media.map(s2 => `<span class="mono pill" style="font-size:11.5px;">${this.esc(s2)}</span>`).join('')}</div></div>`;
-            }
-            if (ld.external_domains?.length) {
-                html += `<div class="data-card"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Tous les domaines externes (${ld.external_domains.length})</div>
-                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-height:200px;overflow-y:auto;">${ld.external_domains.slice(0,60).map(dm => `<div class="mono" style="font-size:11.5px;color:var(--text-secondary);padding:1px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${this.esc(dm)}">${this.esc(dm)}</div>`).join('')}</div></div>`;
-            }
-            if (!ld.total_external) {
+            if (domains.length) {
+                html += `<div class="data-card"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Domaines externes liés (${domains.length})</div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-height:300px;overflow-y:auto;">${domains.slice(0,60).map(dm => `<div class="mono" style="font-size:11.5px;color:var(--text-secondary);padding:1px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${this.esc(dm)}">${this.esc(dm)}</div>`).join('')}</div></div>`;
+            } else {
                 html += '<div class="data-card"><p style="color:var(--text-tertiary);font-size:13px;">Aucun domaine externe détecté.</p></div>';
             }
             document.getElementById('linkeddomains-content').innerHTML = html;
@@ -1857,22 +2116,19 @@
 
         renderEmailBlacklist(d) {
             const bl = d.email_blacklist || {};
-            const isBlacklisted = bl.blacklisted;
+            const isBlacklisted = bl.is_blacklisted;
+            const listed = bl.listed_on || [];
             let html = `<div class="data-card" style="margin-bottom:14px;border-color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};">
                 <div style="display:flex;align-items:center;gap:12px;">
                     <i class="fa-solid ${isBlacklisted ? 'fa-ban' : 'fa-circle-check'}" style="font-size:24px;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};"></i>
                     <div>
-                        <div style="font-size:15px;font-weight:700;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};">${isBlacklisted ? `⚠ IP blacklistée (${(bl.blacklists_hit||[]).length} liste(s))` : '✓ IP propre — Aucune blacklist'}</div>
-                        <div style="font-size:12.5px;color:var(--text-tertiary);">${bl.checked || 0} DNSBL vérifiées · Réputation : <b>${bl.reputation || 'N/A'}</b></div>
+                        <div style="font-size:15px;font-weight:700;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};">${isBlacklisted ? `⚠ IP blacklistée (${listed.length} liste(s))` : '✓ IP propre — Aucune blacklist'}</div>
+                        <div style="font-size:12.5px;color:var(--text-tertiary);">DNSBL vérifiées · ${d.ip_address || 'IP inconnue'}</div>
                     </div>
                 </div></div>`;
-            if (bl.blacklists_hit?.length) {
+            if (listed.length) {
                 html += `<div class="data-card" style="margin-bottom:12px;border-color:var(--danger);"><div style="font-size:12px;font-weight:600;color:var(--danger);text-transform:uppercase;margin-bottom:8px;">Blacklists avec correspondance</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${bl.blacklists_hit.map(b2 => `<span class="mono pill pill-danger" style="font-size:12px;">${this.esc(b2)}</span>`).join('')}</div></div>`;
-            }
-            if (bl.blacklists_clean?.length) {
-                html += `<div class="data-card"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;">Blacklists propres</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${bl.blacklists_clean.map(b2 => `<span class="mono pill pill-success" style="font-size:11.5px;">${this.esc(b2)}</span>`).join('')}</div></div>`;
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${listed.map(b2 => `<span class="mono pill pill-danger" style="font-size:12px;">${this.esc(b2)}</span>`).join('')}</div></div>`;
             }
             document.getElementById('emailbl-content').innerHTML = html;
         }
@@ -1900,12 +2156,19 @@
         }
 
         // SETTINGS
-        async renderSettings() {
-            const el = document.getElementById('settings-content');
-            el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-tertiary);">Chargement…</div>';
+        async renderSettings(targetEl) {
+            const el = targetEl || document.getElementById('settings-overlay-content');
+            if (!el) return;
+            const loadMsg = document.createElement('div');
+            loadMsg.style.cssText = 'padding:20px;text-align:center;color:var(--text-tertiary);';
+            loadMsg.textContent = 'Chargement…';
+            while (el.firstChild) el.removeChild(el.firstChild);
+            el.appendChild(loadMsg);
             let s = {};
             try { const r = await fetch(`${this.apiBase}/settings`); if (r.ok) s = await r.json(); } catch(e) {}
             const keys = [
+                { id:'shodan', name:'Shodan', desc:'Enrichissement ports/banners/CVEs — ports ouverts indexés, vulnérabilités connues, ASN/org', docs:'https://developer.shodan.io/', cur:s.shodan_key },
+                { id:'virustotal', name:'VirusTotal', desc:'Threat intelligence — détections malveillantes, réputation domaine/IP', docs:'https://developers.virustotal.com/', cur:s.virustotal_key },
                 { id:'securitytrails', name:'SecurityTrails', desc:'Subdomains avancés + historique DNS étendu', docs:'https://docs.securitytrails.com/', cur:s.securitytrails_key },
                 { id:'censys', name:'Censys', desc:'Recon alternatif — certificats & services indexés (ID + Secret)', docs:'https://search.censys.io/api', cur:s.censys_id, hasSecret:true, curSecret:s.censys_secret },
                 { id:'urlscan', name:'URLScan.io', desc:'Scans privés + résultats étendus (fonctionne en public sans clé)', docs:'https://urlscan.io/about-api/', cur:s.urlscan_key },
@@ -1957,6 +2220,7 @@
         async saveSettings() {
             const g = id => { const e = document.getElementById(id); return e ? e.value.trim() : null; };
             const body = {
+                shodan_key: g('input-shodan'), virustotal_key: g('input-virustotal'),
                 securitytrails_key: g('input-securitytrails'), censys_id: g('input-censys-id'),
                 censys_secret: g('input-censys-secret'), urlscan_key: g('input-urlscan'),
                 screenshot_enabled: document.getElementById('toggle-screenshot')?.checked || false,
@@ -2059,12 +2323,12 @@
 
             // Subdomains
             addLine();
-            const subs = d.subdomains || [];
+            const subs = Array.isArray(d.subdomains) ? d.subdomains : ((d.subdomains || {}).subdomains || []);
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
             doc.text(`Sous-domaines (${subs.length})`, 14, y); y += 8;
             if (subs.length) {
-                const subRows = subs.slice(0, 50).map(s => [s.subdomain, s.ip || 'Non résolu']);
+                const subRows = subs.slice(0, 50).map(s => [typeof s === 'string' ? s : (s.subdomain || String(s)), typeof s === 'object' ? (s.ip || 'Non résolu') : 'N/A']);
                 doc.autoTable({ startY: y, head: [['Sous-domaine', 'IP']], body: subRows, theme: 'striped', headStyles: { fillColor: [30, 30, 30] }, margin: { left: 14 }, styles: { fontSize: 8 } });
                 y = doc.lastAutoTable.finalY + 10;
             }
@@ -2116,12 +2380,71 @@
         // HELPERS
         // =====================================================================
         showSection(name) {
-            document.getElementById('loading-section').style.display = 'none';
-            document.getElementById('results-section').style.display = 'none';
-            document.getElementById('error-section').style.display = 'none';
-            if (name === 'loading') document.getElementById('loading-section').style.display = 'block';
-            else if (name === 'results') document.getElementById('results-section').style.display = 'block';
-            else if (name === 'error') document.getElementById('error-section').style.display = 'flex';
+            const loading = document.getElementById('loading-section');
+            const errorEl = document.getElementById('error-section');
+            const appPost = document.getElementById('app-post');
+            const hero = document.getElementById('hero-section');
+            const headerSearch = document.getElementById('header-search');
+            const footer = document.getElementById('content-footer');
+
+            loading.classList.remove('visible');
+            errorEl.classList.remove('visible');
+
+            if (name === 'loading') {
+                hero.classList.add('hidden');
+                appPost.classList.add('visible');
+                headerSearch.classList.add('visible');
+                loading.classList.add('visible');
+                if (footer) footer.style.display = 'none';
+                document.querySelectorAll('.main-panel').forEach(p => p.classList.add('hidden'));
+                ['mval-score','mval-ip','mval-ports','mval-threat'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = '—';
+                });
+                document.getElementById('metrics-bar').classList.remove('loaded');
+            } else if (name === 'results') {
+                hero.classList.add('hidden');
+                appPost.classList.add('visible');
+                headerSearch.classList.add('visible');
+                if (footer) footer.style.display = 'flex';
+                const compactInput = document.getElementById('domain-input-compact');
+                const heroInput = document.getElementById('domain-input');
+                if (compactInput && heroInput) compactInput.value = heroInput.value;
+                this.switchMainTab('overview');
+            } else if (name === 'error') {
+                hero.classList.add('hidden');
+                appPost.classList.add('visible');
+                headerSearch.classList.add('visible');
+                errorEl.classList.add('visible');
+                document.querySelectorAll('.main-panel').forEach(p => p.classList.add('hidden'));
+                if (footer) footer.style.display = 'none';
+            }
+        }
+
+        switchMainTab(mainTabId) {
+            document.querySelectorAll('.main-tab').forEach(t => t.classList.toggle('active', t.dataset.main === mainTabId));
+            document.querySelectorAll('.main-panel').forEach(p => p.classList.add('hidden'));
+            const panel = document.getElementById('main-' + mainTabId);
+            if (!panel) return;
+            panel.classList.remove('hidden');
+            if (!this.currentScan) return;
+            if (mainTabId === 'overview') {
+                this.renderOverview(this.currentScan);
+            } else {
+                const firstActive = panel.querySelector('.sub-tab.active');
+                if (firstActive) this.switchSubTab(firstActive);
+            }
+        }
+
+        switchSubTab(subTabEl) {
+            const bar = subTabEl.closest('.sub-tabs-bar');
+            const panel = subTabEl.closest('.main-panel');
+            const subId = subTabEl.dataset.sub;
+            if (bar) bar.querySelectorAll('.sub-tab').forEach(t => t.classList.toggle('active', t === subTabEl));
+            if (panel) panel.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            const content = document.getElementById('tab-' + subId);
+            if (content) content.classList.remove('hidden');
+            if (this.currentScan) this.switchTab(subId);
         }
 
         formatDate(iso) { return new Date(iso).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
@@ -2140,26 +2463,464 @@
             return `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:12.5px;"><span style="color:var(--text-tertiary);">${label}</span><span class="mono" style="color:var(--text);text-align:right;">${value ?? 'N/A'}</span></div>`;
         }
 
+        // =====================================================================
+        // RENDERERS
+        // =====================================================================
+        renderZoneTransfer(d) {
+            const c = document.getElementById('zone-transfer-content');
+            clearEl(c);
+            const zt = d.zone_transfer || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            const badge = mkEl('span', {cls: zt.vulnerable ? 'badge-danger' : 'badge-ok', text: zt.vulnerable ? 'VULNERABLE — Zone Transfer Open' : 'Secure — AXFR Disabled'});
+            sec.appendChild(badge);
+            const attempted = zt.attempted || zt.nameservers || [];
+            if (attempted.length) {
+                const ns = mkEl('p', {style:'margin-top:8px;font-size:12.5px;color:var(--text-tertiary);', text:'Nameservers tested: ' + attempted.join(', ')});
+                sec.appendChild(ns);
+            }
+            c.appendChild(sec);
+            const wd = d.wildcard_dns || {};
+            const hasWildcard = wd.wildcard || wd.has_wildcard;
+            const wSec = mkEl('div', {cls:'v6-section', style:'margin-top:10px;'});
+            wSec.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;', text:'Wildcard DNS'}));
+            wSec.appendChild(mkEl('span', {cls: hasWildcard ? 'badge-warn' : 'badge-ok', text: hasWildcard ? 'Wildcard record detected (*.' + (d.domain||'') + ')' : 'No wildcard DNS'}));
+            c.appendChild(wSec);
+            const rb = d.dns_rebinding || {};
+            const isRebinding = rb.rebinding_risk || rb.vulnerable;
+            const rSec = mkEl('div', {cls:'v6-section', style:'margin-top:10px;'});
+            rSec.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;', text:'DNS Rebinding'}));
+            rSec.appendChild(mkEl('span', {cls: isRebinding ? 'badge-danger' : 'badge-ok', text: isRebinding ? 'Potentially vulnerable to DNS rebinding' : 'No rebinding indicators found'}));
+            if ((rb.private_ips || []).length) {
+                const ips = mkEl('p', {style:'margin-top:6px;font-size:12px;color:var(--danger);font-family:var(--mono);'});
+                ips.textContent = 'Private IPs: ' + rb.private_ips.join(', ');
+                rSec.appendChild(ips);
+            }
+            c.appendChild(rSec);
+        }
+
+        renderTlsDeep(d) {
+            const c = document.getElementById('tls-deep-content');
+            clearEl(c);
+            const td = d.tls_deep || {};
+            if (!td.protocols && !td.ciphers) {
+                c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:'TLS deep analysis not available (Quick scan or no TLS).'}));
+                return;
+            }
+            if (td.protocols) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                sec.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;', text:'Protocol Support'}));
+                Object.entries(td.protocols).forEach(([proto, supported]) => {
+                    const row = v6Row(proto, supported ? 'Supported' : 'Not supported');
+                    if (supported && (proto === 'TLSv1.0' || proto === 'TLSv1.1')) {
+                        row.lastChild.style.color = 'var(--danger)';
+                    }
+                    sec.appendChild(row);
+                });
+                c.appendChild(sec);
+            }
+            if (td.weak_ciphers && td.weak_ciphers.length) {
+                const sec2 = mkEl('div', {cls:'v6-section', style:'margin-top:10px;'});
+                sec2.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--danger);text-transform:uppercase;margin-bottom:6px;', text:'Weak Ciphers Detected'}));
+                td.weak_ciphers.forEach(ci => sec2.appendChild(mkEl('div', {cls:'badge-danger', style:'display:inline-block;margin:2px;', text: ci})));
+                c.appendChild(sec2);
+            }
+        }
+
+        renderCspGrade(d) {
+            const c = document.getElementById('csp-grade-content');
+            clearEl(c);
+            const cg = d.csp_grade || {};
+            if (!cg.grade) { c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:'No CSP header present.'})); return; }
+            const sec = mkEl('div', {cls:'v6-section'});
+            const gradeMap = {'A+':'success','A':'success','B':'ok','C':'warn','D':'danger','F':'danger'};
+            const gradeEl = mkEl('span', {cls: 'badge-' + (gradeMap[cg.grade] || 'warn'), style:'font-size:16px;padding:4px 12px;', text: 'Grade: ' + cg.grade});
+            sec.appendChild(gradeEl);
+            sec.appendChild(mkEl('span', {style:'margin-left:10px;font-size:13px;color:var(--text-tertiary);', text: (cg.score || 0) + '/' + (cg.max_score || 6) + ' criteria passed'}));
+            c.appendChild(sec);
+            if (cg.issues && cg.issues.length) {
+                const iSec = mkEl('div', {cls:'v6-section', style:'margin-top:10px;'});
+                iSec.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);margin-bottom:6px;', text:'Issues'}));
+                cg.issues.forEach(iss => {
+                    const d2 = mkEl('div', {style:'padding:4px 0;font-size:13px;color:var(--warning);'});
+                    d2.textContent = iss;
+                    iSec.appendChild(d2);
+                });
+                c.appendChild(iSec);
+            }
+        }
+
+        renderHstsDeep(d) {
+            const c = document.getElementById('hsts-deep-content');
+            clearEl(c);
+            const h = d.hsts_deep || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            [
+                ['Present', h.present ? 'Yes' : 'No'],
+                ['Max-Age', h.max_age ? h.max_age + ' seconds' : '-'],
+                ['Max-Age (days)', h.max_age_days != null ? h.max_age_days + ' days' : '-'],
+                ['includeSubDomains', h.include_subdomains ? 'Yes' : 'No'],
+                ['Preload directive', h.preload ? 'Yes' : 'No'],
+                ['Grade', h.grade || '-'],
+            ].forEach(pair => sec.appendChild(v6Row(pair[0], pair[1])));
+            c.appendChild(sec);
+        }
+
+        renderAdminPanels(d) {
+            const c = document.getElementById('admin-panels-content');
+            clearEl(c);
+            const ap = d.admin_panels || {};
+            const found = ap.panels_found || [];
+            if (!found.length) { c.appendChild(mkEl('p', {style:'color:var(--success);font-size:13px;', text:'No admin panels found (' + (ap.count || 0) + ' checked).'})); return; }
+            const hdr = mkEl('div', {style:'margin-bottom:10px;'});
+            hdr.appendChild(mkEl('span', {cls:'badge-danger', text: found.length + ' admin panel(s) exposed'}));
+            c.appendChild(hdr);
+            found.forEach(p => {
+                const row = mkEl('div', {cls:'v6-section', style:'margin-bottom:6px;'});
+                row.appendChild(mkEl('span', {cls:'mono', style:'color:var(--accent);', text: p.path || p.url}));
+                row.appendChild(mkEl('span', {cls:'badge-warn', style:'margin-left:8px;', text: 'HTTP ' + p.status}));
+                c.appendChild(row);
+            });
+        }
+
+        renderHttpMethods(d) {
+            const c = document.getElementById('http-methods-content');
+            clearEl(c);
+            const hm = d.http_methods || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            const allowed = hm.methods || hm.allowed_methods || [];
+            const dangerous = hm.dangerous_methods || [];
+            sec.appendChild(v6Row('Allowed methods', allowed.join(', ') || '-'));
+            sec.appendChild(v6Row('Dangerous methods', dangerous.length ? dangerous.join(', ') : 'None'));
+            if (dangerous.length) {
+                const warn = mkEl('div', {style:'margin-top:8px;'});
+                warn.appendChild(mkEl('span', {cls:'badge-danger', text: dangerous.length + ' dangerous method(s) enabled: ' + dangerous.join(', ')}));
+                sec.appendChild(warn);
+            }
+            c.appendChild(sec);
+        }
+
+        renderSmtpSecurity(d) {
+            const c = document.getElementById('smtp-security-content');
+            clearEl(c);
+            const smtp = d.smtp_security || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            [
+                ['SPF', smtp.spf ? 'Present' : 'Missing'],
+                ['DMARC', smtp.dmarc ? 'Present' : 'Missing'],
+                ['DKIM selectors', Object.keys(smtp.dkim || {}).join(', ') || 'None found'],
+                ['Spoofability Score', smtp.spoofability_score != null ? smtp.spoofability_score + '/100' : '-'],
+                ['Risk Level', smtp.risk_level || '-'],
+                ['Catch-All', smtp.catch_all === true ? 'Enabled' : smtp.catch_all === false ? 'Disabled' : 'Unknown'],
+            ].forEach(pair => {
+                const row = v6Row(pair[0], pair[1]);
+                if ((pair[0] === 'SPF' || pair[0] === 'DMARC') && pair[1] === 'Missing') row.lastChild.style.color = 'var(--danger)';
+                sec.appendChild(row);
+            });
+            const smtpRaw = smtp.smtp || {};
+            if (smtpRaw.open_relay) {
+                const warn = mkEl('div', {style:'margin-top:8px;'});
+                warn.appendChild(mkEl('span', {cls:'badge-danger', text:'OPEN RELAY DETECTED — critical vulnerability'}));
+                sec.appendChild(warn);
+            }
+            c.appendChild(sec);
+        }
+
+        renderBanners(d) {
+            const c = document.getElementById('banners-content');
+            clearEl(c);
+            const banners = (d.banners || {}).banners || {};
+            const keys = Object.keys(banners);
+            if (!keys.length) { c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:'No service banners captured.'})); return; }
+            keys.forEach(port => {
+                const row = mkEl('div', {cls:'v6-section', style:'margin-bottom:6px;'});
+                const portLbl = mkEl('strong', {style:'color:var(--accent);font-family:var(--mono);', text:'Port ' + port + ': '});
+                const bannerCode = mkEl('code', {style:'font-size:12px;color:var(--text-secondary);font-family:var(--mono);white-space:pre-wrap;word-break:break-all;'});
+                bannerCode.textContent = banners[port];
+                row.appendChild(portLbl); row.appendChild(bannerCode); c.appendChild(row);
+            });
+        }
+
+        renderShodan(d) {
+            const c = document.getElementById('shodan-content');
+            clearEl(c);
+            const sd = d.shodan_data || {};
+
+            if (!sd.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const icon = mkEl('div', {style:'font-size:32px;text-align:center;margin-bottom:12px;color:var(--text-tertiary);'});
+                icon.textContent = '🛰️';
+                const title = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;margin-bottom:8px;'});
+                title.textContent = sd.error || 'Shodan non configuré';
+                const hint = mkEl('p', {style:'text-align:center;font-size:12px;color:var(--text-tertiary);'});
+                hint.textContent = 'Ajoutez une clé API Shodan dans les Paramètres pour activer l\'enrichissement (ports, banners, CVEs, ASN).';
+                msg.appendChild(icon); msg.appendChild(title); msg.appendChild(hint);
+                c.appendChild(msg);
+                return;
+            }
+
+            // Summary row
+            const sum = mkEl('div', {style:'display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;'});
+            const mkMetric = (label, val, color) => {
+                const card = mkEl('div', {cls:'data-card', style:'text-align:center;'});
+                const v = mkEl('div', {style:`font-size:22px;font-weight:700;font-family:var(--mono);color:${color||'var(--accent)'};`});
+                v.textContent = val;
+                const l = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);text-transform:uppercase;margin-top:4px;letter-spacing:.04em;'});
+                l.textContent = label;
+                card.appendChild(v); card.appendChild(l); return card;
+            };
+            sum.appendChild(mkMetric('Ports Shodan', (sd.ports||[]).length, 'var(--info)'));
+            sum.appendChild(mkMetric('Services', sd.total_services||0, 'var(--accent)'));
+            sum.appendChild(mkMetric('CVEs', sd.vuln_count||0, sd.vuln_count>0?'var(--danger)':'var(--success)'));
+            sum.appendChild(mkMetric('Mise à jour', sd.last_update ? sd.last_update.split('T')[0] : '—', 'var(--text-secondary)'));
+            c.appendChild(sum);
+
+            // Org/ASN info
+            const infoGrid = mkEl('div', {style:'display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;'});
+            [[sd.org||'—','Organisation'],[sd.isp||'—','ISP'],[sd.asn||'—','ASN'],
+             [sd.country||'—','Pays'],[sd.city||'—','Ville'],[sd.os||'—','OS détecté']].forEach(([val,lbl]) => {
+                const card = mkEl('div', {cls:'data-card'});
+                const l = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:4px;font-weight:600;'});
+                l.textContent = lbl;
+                const v = mkEl('div', {style:'font-size:13px;font-weight:500;font-family:var(--mono);'});
+                v.textContent = val;
+                card.appendChild(l); card.appendChild(v); infoGrid.appendChild(card);
+            });
+            c.appendChild(infoGrid);
+
+            // Tags
+            if ((sd.tags||[]).length) {
+                const tagRow = mkEl('div', {style:'margin-bottom:16px;display:flex;flex-wrap:wrap;gap:6px;'});
+                sd.tags.forEach(t => {
+                    const badge = mkEl('span', {style:'background:var(--surface-2);border:1px solid var(--border-light);border-radius:4px;padding:3px 8px;font-size:11px;font-family:var(--mono);color:var(--info);'});
+                    badge.textContent = t;
+                    tagRow.appendChild(badge);
+                });
+                c.appendChild(tagRow);
+            }
+
+            // Ports + services table
+            if ((sd.services||[]).length) {
+                const sec = mkEl('div', {cls:'v6-section', style:'margin-bottom:16px;'});
+                const secTitle = mkEl('div', {style:'font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:.06em;margin-bottom:10px;'});
+                secTitle.textContent = 'Services indexés par Shodan';
+                sec.appendChild(secTitle);
+                const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:12px;'});
+                const thead = mkEl('thead');
+                const hrow = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                ['Port','Proto','Produit','Version','CPE','Banner'].forEach((h,i) => {
+                    const th = mkEl('th', {style:`text-align:left;padding:6px 8px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.05em;${i===5?'max-width:260px;':''}`});
+                    th.textContent = h; hrow.appendChild(th);
+                });
+                thead.appendChild(hrow); tbl.appendChild(thead);
+                const tbody = mkEl('tbody');
+                sd.services.forEach(svc => {
+                    const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.04);'});
+                    const portTd = mkEl('td', {style:'padding:6px 8px;font-family:var(--mono);color:var(--accent);font-weight:600;'});
+                    portTd.textContent = svc.port;
+                    const protoTd = mkEl('td', {style:'padding:6px 8px;color:var(--text-secondary);'});
+                    protoTd.textContent = svc.protocol||'tcp';
+                    const prodTd = mkEl('td', {style:'padding:6px 8px;'});
+                    prodTd.textContent = svc.product||'—';
+                    const verTd = mkEl('td', {style:'padding:6px 8px;color:var(--text-tertiary);font-family:var(--mono);font-size:11px;'});
+                    verTd.textContent = svc.version||'—';
+                    const cpeTd = mkEl('td', {style:'padding:6px 8px;color:var(--text-tertiary);font-size:11px;font-family:var(--mono);'});
+                    cpeTd.textContent = (svc.cpe||[]).join(', ')||'—';
+                    const bannerTd = mkEl('td', {style:'padding:6px 8px;max-width:260px;overflow:hidden;'});
+                    const bannerCode = mkEl('code', {style:'font-size:11px;color:var(--text-secondary);font-family:var(--mono);white-space:pre-wrap;word-break:break-all;display:block;max-height:60px;overflow:hidden;'});
+                    bannerCode.textContent = svc.banner ? svc.banner.substring(0,200) : '—';
+                    bannerTd.appendChild(bannerCode);
+                    tr.appendChild(portTd); tr.appendChild(protoTd); tr.appendChild(prodTd);
+                    tr.appendChild(verTd); tr.appendChild(cpeTd); tr.appendChild(bannerTd);
+                    tbody.appendChild(tr);
+                });
+                tbl.appendChild(tbody); sec.appendChild(tbl); c.appendChild(sec);
+            }
+
+            // CVEs
+            if ((sd.vulns||[]).length) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                const secTitle = mkEl('div', {style:'font-size:12px;font-weight:700;text-transform:uppercase;color:var(--danger);letter-spacing:.06em;margin-bottom:10px;'});
+                secTitle.textContent = `⚠ ${sd.vulns.length} Vulnérabilités détectées par Shodan`;
+                sec.appendChild(secTitle);
+                sd.vulns.forEach(v => {
+                    const row = mkEl('div', {style:'padding:10px 12px;border-left:3px solid var(--danger);background:rgba(255,71,71,.05);border-radius:0 6px 6px 0;margin-bottom:8px;'});
+                    const header = mkEl('div', {style:'display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;'});
+                    const cveId = mkEl('span', {style:'font-weight:700;font-family:var(--mono);color:var(--danger);font-size:13px;'});
+                    cveId.textContent = v.id;
+                    const cvss = mkEl('span', {style:`font-family:var(--mono);font-size:12px;padding:2px 6px;border-radius:4px;background:${(v.cvss||0)>=7?'rgba(255,71,71,.2)':'rgba(255,190,0,.15)'};color:${(v.cvss||0)>=7?'var(--danger)':'var(--warning)'};`});
+                    cvss.textContent = `CVSS ${v.cvss||'?'}`;
+                    header.appendChild(cveId); header.appendChild(cvss);
+                    row.appendChild(header);
+                    if (v.summary) {
+                        const sumEl = mkEl('div', {style:'font-size:12px;color:var(--text-secondary);line-height:1.5;'});
+                        sumEl.textContent = v.summary;
+                        row.appendChild(sumEl);
+                    }
+                    sec.appendChild(row);
+                });
+                c.appendChild(sec);
+            }
+
+            // Hostnames
+            if ((sd.hostnames||[]).length) {
+                const sec = mkEl('div', {cls:'v6-section', style:'margin-top:16px;'});
+                const secTitle = mkEl('div', {style:'font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:.06em;margin-bottom:8px;'});
+                secTitle.textContent = 'Hostnames Shodan';
+                sec.appendChild(secTitle);
+                sd.hostnames.forEach(h => {
+                    const row = mkEl('div', {style:'padding:5px 0;border-bottom:1px solid var(--border-light);font-family:var(--mono);font-size:12px;color:var(--text-secondary);'});
+                    row.textContent = h; sec.appendChild(row);
+                });
+                c.appendChild(sec);
+            }
+        }
+
+        renderTyposquatting(d) {
+            const c = document.getElementById('typosquatting-content');
+            clearEl(c);
+            const typo = d.typosquatting || {};
+            if (typo.error) { c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:'Not available (Quick scan).'})); return; }
+            const hdr = mkEl('div', {style:'margin-bottom:10px;'});
+            hdr.appendChild(mkEl('span', {cls: (typo.count||0) > 0 ? 'badge-danger' : 'badge-ok', text: (typo.count||0) + ' typosquatting variants registered out of ' + (typo.variants_checked||0) + ' tested'}));
+            c.appendChild(hdr);
+            const registered = typo.registered || [];
+            if (registered.length) {
+                const ul = mkEl('ul', {style:'list-style:none;padding:0;'});
+                registered.forEach(v => {
+                    const li = mkEl('li', {style:'padding:5px 12px;border-bottom:1px solid var(--border-light);font-family:var(--mono);font-size:13px;color:var(--danger);'});
+                    li.textContent = v;
+                    ul.appendChild(li);
+                });
+                c.appendChild(ul);
+            }
+        }
+
+        renderRobtex(d) {
+            const c = document.getElementById('robtex-content');
+            clearEl(c);
+            const r = d.robtex || {};
+            if (r.error) { c.appendChild(mkEl('p', {style:'color:var(--warning);font-size:13px;', text:'Robtex: ' + r.error})); return; }
+            const records = r.records || r.passive_dns || [];
+            const sec = mkEl('div', {cls:'v6-section'});
+            sec.appendChild(v6Row('Passive DNS entries', records.length));
+            c.appendChild(sec);
+            if (records.length) {
+                const pSec = mkEl('div', {cls:'v6-section', style:'margin-top:10px;'});
+                pSec.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);margin-bottom:6px;', text:'Passive DNS Records'}));
+                records.slice(0, 20).forEach(e => {
+                    const row = mkEl('div', {style:'padding:3px 0;font-size:12.5px;font-family:var(--mono);color:var(--text-secondary);'});
+                    const display = typeof e === 'object' ? (e.rrname || '') + ' → ' + (e.rdata || '') + ' [' + (e.rrtype || '') + ']' : String(e);
+                    row.textContent = display;
+                    pSec.appendChild(row);
+                });
+                c.appendChild(pSec);
+            }
+        }
+
+        renderHtmlIntel(d) {
+            const c = document.getElementById('html-intel-content');
+            clearEl(c);
+            const h = d.html_intelligence || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            [
+                ['Generator', h.generator || '-'],
+                ['HTML length', h.html_length != null ? h.html_length + ' bytes' : '-'],
+                ['Comments', (h.comments || []).length],
+                ['Emails found', (h.emails || []).length],
+                ['Form actions', (h.form_actions || []).length],
+            ].forEach(pair => sec.appendChild(v6Row(pair[0], pair[1])));
+            c.appendChild(sec);
+            if ((h.emails || []).length) {
+                const eSec = mkEl('div', {cls:'v6-section', style:'margin-top:10px;'});
+                eSec.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;', text:'Emails trouvés'}));
+                h.emails.forEach(e => { const row = mkEl('div', {cls:'mono', style:'font-size:12.5px;padding:2px 0;color:var(--warning);'}); row.textContent = e; eSec.appendChild(row); });
+                c.appendChild(eSec);
+            }
+            if ((h.comments || []).length) {
+                const cSec = mkEl('div', {cls:'v6-section', style:'margin-top:10px;'});
+                cSec.appendChild(mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;', text:'Commentaires HTML'}));
+                h.comments.slice(0, 5).forEach(cm => { const row = mkEl('div', {style:'font-size:12px;padding:2px 0;color:var(--text-secondary);font-family:var(--mono);white-space:pre-wrap;word-break:break-all;'}); row.textContent = cm; cSec.appendChild(row); });
+                c.appendChild(cSec);
+            }
+        }
+
+        renderScoreV6(d) {
+            const c = document.getElementById('score-v6-content');
+            clearEl(c);
+            const ss = d.security_score || {};
+            if (!ss.grade) { c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:'No v6.0 score available.'})); return; }
+
+            // Header
+            const hdr = mkEl('div', {cls:'score-v6-header'});
+            const gradeMap = {'A+':'success','A':'success','B':'ok','C':'warn','D':'danger','F':'danger'};
+            const gradeEl = mkEl('span', {cls:'grade-v6 badge-' + (gradeMap[ss.grade] || 'warn'), text: ss.grade});
+            const totEl = mkEl('div');
+            const totNum = mkEl('div', {style:'font-size:24px;font-weight:700;', text: (ss.total || 0) + ' / 100'});
+            const gradeDesc = {'A+':'Excellent','A':'Good','B':'Fair','C':'Average','D':'Poor','F':'Critical'};
+            const totDesc = mkEl('div', {style:'font-size:12px;color:var(--text-tertiary);', text: gradeDesc[ss.grade] || ''});
+            totEl.appendChild(totNum); totEl.appendChild(totDesc);
+            hdr.appendChild(gradeEl); hdr.appendChild(totEl); c.appendChild(hdr);
+
+            // Categories breakdown
+            const cats = ss.categories || {};
+            const catLabels = {tls:'TLS (20pt)',headers:'Headers (20pt)',email:'Email (15pt)',reputation:'Reputation (15pt)',infrastructure:'Infrastructure (15pt)',osint:'OSINT (15pt)'};
+            const catMax = {tls:20,headers:20,email:15,reputation:15,infrastructure:15,osint:15};
+            const catSec = mkEl('div', {cls:'v6-section', style:'margin-bottom:12px;'});
+            Object.entries(catLabels).forEach(([key, label]) => {
+                const score = cats[key] || 0;
+                const max = catMax[key] || 20;
+                const pct = Math.round(score / max * 100);
+                const row = mkEl('div', {style:'display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border-light);'});
+                const lbl = mkEl('span', {style:'width:140px;font-size:12.5px;color:var(--text-tertiary);flex-shrink:0;', text: label});
+                const track = mkEl('div', {style:'flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;'});
+                const fill = mkEl('div', {style:'height:100%;border-radius:3px;width:' + pct + '%;background:' + (pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--danger)') + ';'});
+                const pts = mkEl('span', {style:'font-size:12px;font-family:var(--mono);color:var(--text-secondary);width:40px;text-align:right;', text: score + '/' + max});
+                track.appendChild(fill);
+                row.appendChild(lbl); row.appendChild(track); row.appendChild(pts);
+                catSec.appendChild(row);
+            });
+            c.appendChild(catSec);
+
+            // Radar chart (Chart.js)
+            const canvas = mkEl('canvas');
+            canvas.width = 350; canvas.height = 350;
+            c.appendChild(canvas);
+            if (window.Chart) {
+                new Chart(canvas, {
+                    type: 'radar',
+                    data: {
+                        labels: ['TLS (20)','Headers (20)','Email (15)','Reputation (15)','Infra (15)','OSINT (15)'],
+                        datasets: [{ label: 'Score', data: [cats.tls||0, cats.headers||0, cats.email||0, cats.reputation||0, cats.infrastructure||0, cats.osint||0], backgroundColor: 'rgba(255,255,255,.04)', borderColor: '#888', borderWidth: 1.5, pointBackgroundColor: '#aaa', pointRadius: 4 }]
+                    },
+                    options: { responsive: false, scales: { r: { min: 0, max: 20, ticks: { display: false }, grid: { color: 'rgba(255,255,255,.04)' }, pointLabels: { color: '#999', font: { size: 10 } }, angleLines: { color: 'rgba(255,255,255,.04)' } } }, plugins: { legend: { display: false } } }
+                });
+            }
+
+            // Recommendations
+            const recs = ss.top_recommendations || [];
+            if (recs.length) {
+                const recSec = mkEl('div', {style:'margin-top:14px;'});
+                recSec.appendChild(mkEl('div', {style:'font-size:13px;font-weight:600;margin-bottom:8px;', text:'Top Issues'}));
+                recs.forEach(rec => {
+                    const item = mkEl('div', {cls:'rec-item'});
+                    item.appendChild(mkEl('span', {cls:'rec-points', text: '-' + rec.points + ' pts'}));
+                    item.appendChild(mkEl('span', {cls:'rec-reason', text: rec.reason}));
+                    recSec.appendChild(item);
+                });
+                c.appendChild(recSec);
+            }
+
+            // Profile note
+            if (ss.profile_note) {
+                const note = mkEl('div', {cls:'profile-note', text: ss.profile_note});
+                c.appendChild(note);
+            }
+        }
+
         sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
     }
 
     const app = new DomainReconApp();
-
-    // --- Bouton Paramètres dans le header ---
-    document.getElementById('btn-open-settings').addEventListener('click', () => {
-        const resultsSection = document.getElementById('results-section');
-        if (resultsSection.style.display === 'none' || !resultsSection.style.display) {
-            // Pas de résultats affichés — afficher une page settings standalone
-            resultsSection.style.display = 'block';
-            document.getElementById('loading-section').style.display = 'none';
-            document.getElementById('error-section').style.display = 'none';
-            // Masquer les summary cards
-            document.querySelector('.summary-grid').style.display = 'none';
-        } else {
-            document.querySelector('.summary-grid').style.display = '';
-        }
-        app.switchTab('settings');
-    });
     </script>
 </body>
 </html>

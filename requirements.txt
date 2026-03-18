@@ -1,5 +1,5 @@
 # =============================================================================
-# DomainRecon - Dépendances Python
+# DomainRecon v6.0 - Dépendances Python
 # =============================================================================
 
 # Core
@@ -13,3 +13,6 @@ httpx>=0.27.0
 tldextract>=5.1.1
 python-whois>=0.9.4
 dnspython>=2.7.0
+
+# Screenshot (optionnel — activer dans les settings)
+# playwright>=1.40.0

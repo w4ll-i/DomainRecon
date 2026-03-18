@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"from app.scanners._config import SUBDOMAIN_WORDLIST; print\\(len\\(SUBDOMAIN_WORDLIST\\)\\)\")",
+      "Bash(python3 -c \"from app.scanners._config import SUBDOMAIN_WORDLIST; print\\(len\\(SUBDOMAIN_WORDLIST\\)\\)\")",
+      "Bash(python3 -c \":*)",
+      "Bash(python -c \"from app.scanners._config import SUBDOMAIN_WORDLIST, ADMIN_PATHS, WEAK_CIPHERS, PRIVATE_IP_PATTERNS, SECURITY_HEADERS; print\\(''SUBDOMAIN_WORDLIST:'', len\\(SUBDOMAIN_WORDLIST\\)\\); print\\(''ADMIN_PATHS:'', len\\(ADMIN_PATHS\\)\\); print\\(''All imports OK''\\)\")",
+      "Bash(python -c \"from app.scanners._config import SUBDOMAIN_WORDLIST, ADMIN_PATHS, SECURITY_HEADERS; print\\(''SUBDOMAIN_WORDLIST:'', len\\(SUBDOMAIN_WORDLIST\\)\\); print\\(''All imports OK''\\)\")",
+      "Bash(py -c \"from app.scanners._config import SUBDOMAIN_WORDLIST; print\\(len\\(SUBDOMAIN_WORDLIST\\)\\)\")",
+      "Bash(where python:*)",
+      "Bash(where python3:*)",
+      "Bash(where py:*)",
+      "Bash(\"e:\\\\TOOL\\\\DomainRecon\\\\.venv\\\\Scripts\\\\python.exe\" -c \"from app.scanners._config import SUBDOMAIN_WORDLIST, ADMIN_PATHS, SECURITY_HEADERS, WEAK_CIPHERS; print\\(''SUBDOMAIN_WORDLIST:'', len\\(SUBDOMAIN_WORDLIST\\)\\); print\\(''ADMIN_PATHS:'', len\\(ADMIN_PATHS\\)\\); print\\(''All OK''\\)\")",
+      "Bash(cmd /c \"cd e:\\\\TOOL\\\\DomainRecon\\\\backend && e:\\\\TOOL\\\\DomainRecon\\\\.venv\\\\Scripts\\\\python.exe -c \"\"from app.scanners._config import SUBDOMAIN_WORDLIST; print\\(len\\(SUBDOMAIN_WORDLIST\\)\\)\"\"\")",
+      "Bash(cmd /c \"e:\\\\TOOL\\\\DomainRecon\\\\.venv\\\\Scripts\\\\python.exe --version\")",
+      "Bash(\"e:\\\\TOOL\\\\DomainRecon\\\\.venv\\\\Scripts\\\\python.exe\" --version)",
+      "Bash(find backend/app/scanners -type f -name *.py)",
+      "Bash(\"e:\\\\TOOL\\\\DomainRecon\\\\.venv\\\\Scripts\\\\python.exe\" -c \"import ast; ast.parse\\(open\\(''app/scanners/dns.py''\\).read\\(\\)\\); print\\(''Syntax OK''\\)\")",
+      "Bash(/e/TOOL/DomainRecon/.venv/Scripts/python.exe -c \"import ast; ast.parse\\(open\\(''app/scanners/dns.py''\\).read\\(\\)\\); print\\(''Syntax OK''\\)\")",
+      "Bash(python3 -m py_compile \"e:/TOOL/DomainRecon/backend/app/scanners/web.py\")",
+      "Bash(python3:*)",
+      "Bash(wc:*)",
+      "Bash(grep:*)"
+    ]
+  }
+}

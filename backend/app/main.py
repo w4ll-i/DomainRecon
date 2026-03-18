@@ -4,7 +4,7 @@
 # Sert l'API sous /api et le frontend à la racine /
 # =============================================================================
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -19,7 +19,7 @@ from sqlalchemy import text
 
 from .database import engine, get_db, Base
 from .models import Scan, Settings
-from .scanner import perform_full_scan
+from .scanner import run_scan
 
 # Chemin vers le frontend
 FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
@@ -41,12 +41,32 @@ async def lifespan(app: FastAPI):
     ]
     # Migration v5.0 — nouvelle colonne vuln_data
     v5_columns = ["vuln_data"]
+    # Migration v6.0 — nouvelles colonnes
+    v6_scan_columns = [
+        ("zone_transfer", "JSON"), ("wildcard_dns", "JSON"), ("dns_rebinding", "JSON"),
+        ("tls_deep", "JSON"), ("csp_grade", "JSON"), ("hsts_deep", "JSON"),
+        ("admin_panels", "JSON"), ("html_intelligence", "JSON"), ("http_methods", "JSON"),
+        ("smtp_security", "JSON"), ("banners", "JSON"), ("typosquatting", "JSON"),
+        ("scan_profile", "VARCHAR(10) DEFAULT 'full'"), ("robtex", "JSON"),
+        ("shodan_data", "JSON"),
+    ]
+    v6_settings_columns = [
+        ("quick_timeout", "INTEGER DEFAULT 30"),
+        ("full_timeout", "INTEGER DEFAULT 180"),
+    ]
 
     existing_scan_cols = {col["name"] for col in inspector.get_columns("scans")}
+    existing_settings_cols = {col["name"] for col in inspector.get_columns("settings")}
     with engine.connect() as conn:
         for col in v4_columns + v5_columns:
             if col not in existing_scan_cols:
                 conn.execute(text(f"ALTER TABLE scans ADD COLUMN {col} JSON"))
+        for col, dtype in v6_scan_columns:
+            if col not in existing_scan_cols:
+                conn.execute(text(f"ALTER TABLE scans ADD COLUMN {col} {dtype}"))
+        for col, dtype in v6_settings_columns:
+            if col not in existing_settings_cols:
+                conn.execute(text(f"ALTER TABLE settings ADD COLUMN {col} {dtype}"))
         conn.commit()
 
     yield
@@ -55,7 +75,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="DomainRecon API",
     description="API OSINT pour la reconnaissance de domaines",
-    version="5.0.0",
+    version="6.0.0",
     lifespan=lifespan,
     docs_url="/api/docs",
     redoc_url="/api/redoc",
@@ -101,6 +121,7 @@ def _get_or_create_settings(db: Session) -> Settings:
 
 class ScanRequest(BaseModel):
     domain: str = Field(..., min_length=1, max_length=255)
+    profile: str = Field(default="full", pattern="^(quick|full)$")
 
 
 class ScanResponse(BaseModel):
@@ -137,6 +158,22 @@ class ScanResponse(BaseModel):
     linked_domains: dict = Field(default_factory=dict)
     email_blacklist: dict = Field(default_factory=dict)
     hsts_preload: dict = Field(default_factory=dict)
+    # v6.0
+    zone_transfer:      Optional[dict] = None
+    wildcard_dns:       Optional[dict] = None
+    dns_rebinding:      Optional[dict] = None
+    tls_deep:           Optional[dict] = None
+    csp_grade:          Optional[dict] = None
+    hsts_deep:          Optional[dict] = None
+    admin_panels:       Optional[dict] = None
+    html_intelligence:  Optional[dict] = None
+    http_methods:       Optional[dict] = None
+    smtp_security:      Optional[dict] = None
+    banners:            Optional[dict] = None
+    typosquatting:      Optional[dict] = None
+    scan_profile:       Optional[str]  = None
+    robtex:             Optional[dict] = None
+    shodan_data:        Optional[dict] = None
     scan_timestamp: datetime
     status: str
     error_message: Optional[str] = None
@@ -151,15 +188,21 @@ class HistoryResponse(BaseModel):
 
 
 class SettingsRequest(BaseModel):
+    shodan_key: Optional[str] = None
     securitytrails_key: Optional[str] = None
     censys_id: Optional[str] = None
     censys_secret: Optional[str] = None
     urlscan_key: Optional[str] = None
+    virustotal_key: Optional[str] = None
     screenshot_enabled: bool = False
     scan_timeout: int = Field(default=60, ge=10, le=300)
+    quick_timeout: Optional[int] = 30
+    full_timeout:  Optional[int] = 180
 
 
 class SettingsResponse(BaseModel):
+    shodan_key: Optional[str] = None
+    virustotal_key: Optional[str] = None
     securitytrails_key: Optional[str] = None
     censys_id: Optional[str] = None
     censys_secret: Optional[str] = None
@@ -167,6 +210,7 @@ class SettingsResponse(BaseModel):
     screenshot_enabled: bool = False
     scan_timeout: int = 60
     # Flags de validité (non stockés, renvoyés après test)
+    shodan_valid: Optional[bool] = None
     securitytrails_valid: Optional[bool] = None
     censys_valid: Optional[bool] = None
     urlscan_valid: Optional[bool] = None
@@ -179,6 +223,13 @@ class SettingsResponse(BaseModel):
 # Helper — Scan → Response
 # =============================================================================
 
+def _extract_list(val, key: str) -> list:
+    """Extrait une liste depuis un dict {key: [...]} ou retourne la valeur directement."""
+    if isinstance(val, dict):
+        return val.get(key, [])
+    return val or []
+
+
 def _scan_to_response(scan: Scan) -> ScanResponse:
     """Convertit un objet Scan SQLAlchemy en ScanResponse Pydantic."""
     return ScanResponse(
@@ -186,13 +237,13 @@ def _scan_to_response(scan: Scan) -> ScanResponse:
         domain=scan.domain,
         ip_address=scan.ip_address,
         dns_records=scan.dns_records or {},
-        subdomains=scan.subdomains or [],
+        subdomains=_extract_list(scan.subdomains, "subdomains"),
         security_headers=scan.security_headers or {},
         whois_data=scan.whois_data or {},
         geo_data=scan.geo_data or {},
         tls_certificate=scan.tls_certificate or {},
-        open_ports=scan.open_ports or [],
-        technologies=scan.technologies or [],
+        open_ports=scan.open_ports if isinstance(scan.open_ports, list) else _extract_list(scan.open_ports, "open_ports"),
+        technologies=scan.technologies if isinstance(scan.technologies, list) else _extract_list(scan.technologies, "technologies"),
         email_security=scan.email_security or {},
         waf=scan.waf or {},
         redirect_chain=scan.redirect_chain or {},
@@ -200,7 +251,7 @@ def _scan_to_response(scan: Scan) -> ScanResponse:
         cookie_security=scan.cookie_security or {},
         cors=scan.cors or {},
         reverse_dns=scan.reverse_dns_data or {},
-        subdomain_takeover=scan.subdomain_takeover or [],
+        subdomain_takeover=_extract_list(scan.subdomain_takeover, "vulnerable"),
         network_extended=scan.network_extended or {},
         security_score=scan.security_score or {},
         screenshot_path=scan.screenshot_path,
@@ -214,6 +265,21 @@ def _scan_to_response(scan: Scan) -> ScanResponse:
         linked_domains=scan.linked_domains or {},
         email_blacklist=scan.email_blacklist or {},
         hsts_preload=scan.hsts_preload or {},
+        zone_transfer=scan.zone_transfer,
+        wildcard_dns=scan.wildcard_dns,
+        dns_rebinding=scan.dns_rebinding,
+        tls_deep=scan.tls_deep,
+        csp_grade=scan.csp_grade,
+        hsts_deep=scan.hsts_deep,
+        admin_panels=scan.admin_panels,
+        html_intelligence=scan.html_intelligence,
+        http_methods=scan.http_methods,
+        smtp_security=scan.smtp_security,
+        banners=scan.banners,
+        typosquatting=scan.typosquatting,
+        scan_profile=scan.scan_profile,
+        robtex=scan.robtex,
+        shodan_data=getattr(scan, "shodan_data", None),
         scan_timestamp=scan.scan_timestamp,
         status=scan.status,
         error_message=scan.error_message,
@@ -243,44 +309,70 @@ async def health_check(db: Session = Depends(get_db)):
 
 @api.post("/scan", response_model=ScanResponse)
 async def scan_domain(request: ScanRequest, db: Session = Depends(get_db)):
-    """Lance un scan complet d'un domaine."""
+    """Lance un scan d'un domaine (Quick ~20s ou Full ~3min)."""
     try:
-        settings = _get_or_create_settings(db)
-        result = await perform_full_scan(request.domain, settings=settings)
+        settings_row = _get_or_create_settings(db)
+        settings = {
+            "urlscan_key": settings_row.urlscan_key,
+            "virustotal_key": getattr(settings_row, "virustotal_key", None),
+            "shodan_key": getattr(settings_row, "shodan_key", None),
+            "screenshot_enabled": settings_row.screenshot_enabled,
+        }
+        timeout = (
+            (getattr(settings_row, "quick_timeout", None) or 30)
+            if request.profile == "quick"
+            else (getattr(settings_row, "full_timeout", None) or 180)
+        )
+
+        result = await run_scan(request.domain, request.profile, settings, timeout)
 
         db_scan = Scan(
-            domain=result["domain"],
-            ip_address=result["ip_address"],
-            dns_records=result["dns_records"],
-            subdomains=result["subdomains"],
-            security_headers=result["security_headers"],
-            whois_data=result["whois_data"],
-            geo_data=result["geo_data"],
-            tls_certificate=result["tls_certificate"],
-            open_ports=result["open_ports"],
-            technologies=result["technologies"],
-            email_security=result["email_security"],
-            waf=result["waf"],
-            redirect_chain=result["redirect_chain"],
-            web_files=result["web_files"],
-            cookie_security=result["cookie_security"],
-            cors=result["cors"],
-            reverse_dns_data=result["reverse_dns"],
-            subdomain_takeover=result["subdomain_takeover"],
-            network_extended=result["network_extended"],
-            security_score=result["security_score"],
-            screenshot_path=result["screenshot_path"],
-            urlscan_data=result["urlscan_data"],
-            wayback_data=result["wayback_data"],
-            threat_intel=result["threat_intel"],
-            js_analysis=result["js_analysis"],
-            favicon_hash=result["favicon_hash"],
-            linked_domains=result["linked_domains"],
-            email_blacklist=result["email_blacklist"],
-            hsts_preload=result["hsts_preload"],
-            scan_timestamp=datetime.utcnow(),
-            status=result["status"],
-            error_message=result["error_message"],
+            domain=request.domain,
+            scan_profile=request.profile,
+            ip_address=result.get("ip_address"),
+            dns_records=result.get("dns_records"),
+            subdomains=result.get("subdomains"),
+            security_headers=result.get("security_headers"),
+            whois_data=result.get("whois_data"),
+            geo_data=result.get("geo_data"),
+            tls_certificate=result.get("tls_certificate"),
+            open_ports=result.get("open_ports"),
+            technologies=result.get("technologies"),
+            email_security=result.get("email_security"),
+            waf=result.get("waf"),
+            redirect_chain=result.get("redirect_chain"),
+            web_files=result.get("web_files"),
+            cookie_security=result.get("cookie_security"),
+            cors=result.get("cors"),
+            reverse_dns_data=result.get("reverse_dns_data"),
+            subdomain_takeover=result.get("subdomain_takeover"),
+            network_extended=result.get("network_extended"),
+            security_score=result.get("security_score"),
+            screenshot_path=result.get("screenshot_path"),
+            urlscan_data=result.get("urlscan_data"),
+            wayback_data=result.get("wayback_data"),
+            threat_intel=result.get("threat_intel"),
+            js_analysis=result.get("js_analysis"),
+            favicon_hash=result.get("favicon_hash"),
+            linked_domains=result.get("linked_domains"),
+            hsts_preload=result.get("hsts_preload"),
+            zone_transfer=result.get("zone_transfer"),
+            wildcard_dns=result.get("wildcard_dns"),
+            dns_rebinding=result.get("dns_rebinding"),
+            tls_deep=result.get("tls_deep"),
+            csp_grade=result.get("csp_grade"),
+            hsts_deep=result.get("hsts_deep"),
+            admin_panels=result.get("admin_panels"),
+            html_intelligence=result.get("html_intelligence"),
+            http_methods=result.get("http_methods"),
+            smtp_security=result.get("smtp_security"),
+            banners=result.get("banners"),
+            typosquatting=result.get("typosquatting"),
+            robtex=result.get("robtex"),
+            shodan_data=result.get("shodan_data"),
+            email_blacklist=result.get("email_blacklist"),
+            scan_timestamp=datetime.now(timezone.utc),
+            status="success",
         )
 
         db.add(db_scan)
@@ -369,6 +461,8 @@ async def get_settings(db: Session = Depends(get_db)):
     """Retourne les paramètres avec les clés masquées."""
     s = _get_or_create_settings(db)
     return SettingsResponse(
+        shodan_key=_mask_key(s.shodan_key),
+        virustotal_key=_mask_key(getattr(s, "virustotal_key", None)),
         securitytrails_key=_mask_key(s.securitytrails_key),
         censys_id=_mask_key(s.censys_id),
         censys_secret=_mask_key(s.censys_secret),
@@ -385,6 +479,10 @@ async def update_settings(request: SettingsRequest, db: Session = Depends(get_db
 
     # Ne mettre à jour que les champs explicitement fournis (None = non touché)
     # Chaîne vide "" = effacer la clé
+    if request.shodan_key is not None:
+        s.shodan_key = request.shodan_key or None
+    if request.virustotal_key is not None:
+        s.virustotal_key = request.virustotal_key or None
     if request.securitytrails_key is not None:
         s.securitytrails_key = request.securitytrails_key or None
     if request.censys_id is not None:
@@ -396,12 +494,18 @@ async def update_settings(request: SettingsRequest, db: Session = Depends(get_db
 
     s.screenshot_enabled = request.screenshot_enabled
     s.scan_timeout = request.scan_timeout
-    s.updated_at = datetime.utcnow()
+    if request.quick_timeout is not None:
+        s.quick_timeout = request.quick_timeout
+    if request.full_timeout is not None:
+        s.full_timeout = request.full_timeout
+    s.updated_at = datetime.now(timezone.utc)
 
     db.commit()
     db.refresh(s)
 
     return SettingsResponse(
+        shodan_key=_mask_key(s.shodan_key),
+        virustotal_key=_mask_key(getattr(s, "virustotal_key", None)),
         securitytrails_key=_mask_key(s.securitytrails_key),
         censys_id=_mask_key(s.censys_id),
         censys_secret=_mask_key(s.censys_secret),
@@ -420,7 +524,32 @@ async def test_api_key(service: str, db: Session = Depends(get_db)):
 
     try:
         async with httpx.AsyncClient(timeout=8.0) as client:
-            if service == "securitytrails":
+            if service == "shodan":
+                if not s.shodan_key:
+                    return {"valid": False, "detail": "Clé non configurée"}
+                r = await client.get(
+                    "https://api.shodan.io/api-info",
+                    params={"key": s.shodan_key},
+                )
+                valid = r.status_code == 200
+                if valid:
+                    info = r.json()
+                    credits = info.get("query_credits", "?")
+                    detail = f"OK — {credits} crédits restants"
+                else:
+                    detail = f"Erreur {r.status_code}"
+
+            elif service == "virustotal":
+                if not getattr(s, "virustotal_key", None):
+                    return {"valid": False, "detail": "Clé non configurée"}
+                r = await client.get(
+                    "https://www.virustotal.com/api/v3/users/me",
+                    headers={"x-apikey": s.virustotal_key},
+                )
+                valid = r.status_code == 200
+                detail = "OK" if valid else f"Erreur {r.status_code}"
+
+            elif service == "securitytrails":
                 if not s.securitytrails_key:
                     return {"valid": False, "detail": "Clé non configurée"}
                 r = await client.get(
@@ -496,8 +625,8 @@ async def get_dns_timeline(domain: str, db: Session = Depends(get_db)):
             "timestamp": s.scan_timestamp.isoformat(),
             "ip_address": s.ip_address,
             "dns_records": s.dns_records or {},
-            "subdomains_count": len(s.subdomains or []),
-            "open_ports_count": len(s.open_ports or []),
+            "subdomains_count": len(_extract_list(s.subdomains, "subdomains")),
+            "open_ports_count": len(_extract_list(s.open_ports, "open_ports")),
             "security_score": (s.security_score or {}).get("score"),
         })
     return {"domain": domain, "total_scans": len(timeline), "timeline": timeline}

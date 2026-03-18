@@ -22,6 +22,8 @@ class Settings(Base):
     screenshot_enabled  = Column(Boolean, default=False)
     scan_timeout        = Column(Integer, default=60)
     updated_at          = Column(DateTime, nullable=True)
+    quick_timeout       = Column(Integer, default=30)
+    full_timeout        = Column(Integer, default=180)
 
     def __repr__(self):
         return "<Settings>"
@@ -68,6 +70,22 @@ class Scan(Base):
     hsts_preload = Column(JSON, nullable=True)
     # v5.0 — Vulnerability Scan
     vuln_data = Column(JSON, nullable=True)
+    # v6.0 — New modules
+    zone_transfer       = Column(JSON, nullable=True)
+    wildcard_dns        = Column(JSON, nullable=True)
+    dns_rebinding       = Column(JSON, nullable=True)
+    tls_deep            = Column(JSON, nullable=True)
+    csp_grade           = Column(JSON, nullable=True)
+    hsts_deep           = Column(JSON, nullable=True)
+    admin_panels        = Column(JSON, nullable=True)
+    html_intelligence   = Column(JSON, nullable=True)
+    http_methods        = Column(JSON, nullable=True)
+    smtp_security       = Column(JSON, nullable=True)
+    banners             = Column(JSON, nullable=True)
+    typosquatting       = Column(JSON, nullable=True)
+    scan_profile        = Column(String(10), nullable=True)
+    robtex              = Column(JSON, nullable=True)
+    shodan_data         = Column(JSON, nullable=True)
     scan_timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
     status = Column(String(50), default="success", nullable=False)
     error_message = Column(Text, nullable=True)

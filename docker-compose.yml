@@ -1,5 +1,5 @@
 # =============================================================================
-# DomainRecon - Docker Compose (simplifié, tout en un)
+# DomainRecon v6.0 - Docker Compose
 # =============================================================================
 # Un seul conteneur : FastAPI sert l'API + le frontend
 # Base de données : SQLite (fichier local, zéro config)
@@ -13,9 +13,15 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - domainrecon_data:/app/data
+      - domainrecon_data_v6:/app/data
     environment:
       - ENV=production
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -sf http://localhost:8000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
 
 volumes:
-  domainrecon_data:
+  domainrecon_data_v6:
