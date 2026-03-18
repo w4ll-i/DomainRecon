@@ -1,6 +1,6 @@
 # backend/app/scanner.py
 """
-DomainRecon v6.0 — Scan Orchestrator.
+DomainRecon — Scan Orchestrator.
 Execution flow:
   1. Resolve IP
   2. Wave 1: all independent async tasks
@@ -53,6 +53,15 @@ from .scanners.osint import (
 from .scanners.tech import detect_technologies, detect_waf
 from .scanners.scoring import compute_security_score
 from .scanners.shodan_scanner import shodan_lookup
+from .scanners.pdns_scanner import pdns_lookup
+from .scanners.certsh_scanner import certsh_lookup
+from .scanners.builtwith_scanner import builtwith_lookup
+from .scanners.bgpview_scanner import bgpview_lookup
+from .scanners.dast_scanner import dast_scan
+from .scanners.emailrep_scanner import emailrep_lookup
+from .scanners.abuseipdb_scanner import abuseipdb_lookup
+from .scanners.observatory_scanner import observatory_scan
+from .scanners.cert_pinning_scanner import check_cert_pinning
 
 
 async def _noop() -> dict:
@@ -106,6 +115,17 @@ async def run_scan(
         urlscan_lookup(domain, settings.get("urlscan_key")),              # 29
         check_threat_intelligence(domain, ip or "", settings.get("virustotal_key")),  # 30
         check_catch_all(domain),                                          # 31
+        certsh_lookup(domain),                                            # 32
+        pdns_lookup(                                                       # 33
+            domain,
+            settings.get("circl_user", "") or "",
+            settings.get("circl_password", "") or "",
+        ),
+        builtwith_lookup(domain, settings.get("builtwith_key", "") or ""), # 34
+        bgpview_lookup(ip) if (is_full and ip) else _noop(),              # 35
+        dast_scan(domain) if is_full else _noop(),                        # 36
+        asyncio.wait_for(observatory_scan(domain), timeout=40) if is_full else _noop(),  # 37
+        check_cert_pinning(domain),                                        # 38
     ]
     wave1_results = await asyncio.wait_for(
         asyncio.gather(*wave1_coros, return_exceptions=True),
@@ -113,8 +133,9 @@ async def run_scan(
     )
 
     def _safe(v):
-        return v if not isinstance(v, Exception) else {}
+        return v if not isinstance(v, BaseException) else {}
 
+    _w1 = [_safe(v) for v in wave1_results]
     (
         dns_records, subdomains, tls_cert, security_headers, web_files,
         cookies, cors, redirects, technologies, waf, whois, wayback,
@@ -122,19 +143,52 @@ async def run_scan(
         geo, ports, zone_transfer, wildcard, dns_rebinding, email_blacklist,
         html_intel, http_methods, hsts_deep, rev_dns, network_ext, robtex,
         urlscan, threat_intel, catch_all,
-    ) = [_safe(v) for v in wave1_results]
+    ) = _w1[:32]
+    certsh_data      = _w1[32] if len(_w1) > 32 else {}
+    pdns_data        = _w1[33] if len(_w1) > 33 else {}
+    builtwith_data   = _w1[34] if len(_w1) > 34 else {}
+    bgpview_data     = _w1[35] if len(_w1) > 35 else {}
+    dast_data        = _w1[36] if len(_w1) > 36 else {}
+    observatory_data = _w1[37] if len(_w1) > 37 else {}
+    cert_pinning     = _w1[38] if len(_w1) > 38 else {}
 
     # Post-Wave-1: pure calculations
     csp_value = (security_headers or {}).get("Content-Security-Policy")
     csp_grade = grade_csp(csp_value)
     spoofability = compute_spoofability(email_security, catch_all)
 
+    # Post-Wave-1: crt.sh — find subdomains seen only via CT logs
+    if certsh_data and certsh_data.get("enriched"):
+        subdomains_known = set((subdomains or {}).get("subdomains", []))
+        ct_subs = set()
+        for cert in certsh_data.get("certs", []):
+            for san in cert.get("san", []):
+                san_clean = san.lstrip("*.")
+                if san_clean.endswith(f".{domain}") and san_clean not in subdomains_known:
+                    ct_subs.add(san_clean)
+        certsh_data["ct_only_subdomains"] = sorted(ct_subs)
+        certsh_data["ct_only_count"] = len(ct_subs)
+
     # Wave 2: depends on Wave 1 output
     subdomains_list = (subdomains or {}).get("subdomains", [])
     ports_open = (ports or {}).get("open_ports", [])
 
+    # Post-Wave-1: extract emails for EmailRep
+    _html_emails = (html_intel or {}).get("emails", [])
+
     wave2_coros = [check_subdomain_takeover(subdomains_list)]
     wave2_keys = ["subdomain_takeover"]
+
+    # EmailRep — uses emails from html_intel
+    if _html_emails:
+        wave2_coros.append(emailrep_lookup(_html_emails))
+        wave2_keys.append("emailrep_data")
+
+    # AbuseIPDB — requires IP + API key
+    abuseipdb_key = settings.get("abuseipdb_key")
+    if ip and abuseipdb_key:
+        wave2_coros.append(abuseipdb_lookup(ip, abuseipdb_key))
+        wave2_keys.append("abuseipdb_data")
 
     shodan_key = settings.get("shodan_key")
     if ip and shodan_key:
@@ -188,9 +242,6 @@ async def run_scan(
         "http_methods": http_methods,
     }, scan_profile)
 
-    # ─── Normalize output to v5-compatible format ─────────────────────────────
-    # Must happen AFTER scoring (which uses raw v6 formats internally).
-
     # security_headers: flat dict → {headers_found, headers_missing, score}
     _sh = security_headers or {}
     _sh_found = {h: _sh[h] for h in _SH_KEYS if _sh.get(h)}
@@ -242,7 +293,7 @@ async def run_scan(
         "evidence": [f"Detected: {', '.join(_waf_list)}"] if _waf_list else [],
     }
 
-    # geo_data: raw ip-api.com keys → v5 keys
+    # geo_data: normalize ip-api.com keys to output format
     _g = geo or {}
     geo_out = {
         "country_code": _g.get("countryCode", _g.get("country_code", "")),
@@ -271,7 +322,7 @@ async def run_scan(
         if isinstance(_p, dict) else _p
     )
 
-    # tls_certificate: normalize keys to v5 format
+    # tls_certificate: normalize keys to output format
     _tls = tls_cert or {}
     if _tls and not _tls.get("error"):
         _subj = _tls.get("subject", {})
@@ -345,4 +396,13 @@ async def run_scan(
         "screenshot_path": r2.get("screenshot"),
         "scan_profile":    scan_profile,
         "shodan_data":     r2.get("shodan_data"),
+        "bgpview_data":    bgpview_data,
+        "certsh_data":     certsh_data,
+        "builtwith_data":  builtwith_data,
+        "dast_data":       dast_data,
+        "pdns_data":       pdns_data,
+        "observatory_data": observatory_data,
+        "cert_pinning":    cert_pinning,
+        "emailrep_data":   r2.get("emailrep_data"),
+        "abuseipdb_data":  r2.get("abuseipdb_data"),
     }

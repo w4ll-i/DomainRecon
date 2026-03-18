@@ -1,5 +1,5 @@
 # =============================================================================
-# DomainRecon - Modèles SQLAlchemy
+# DomainRecon - Models
 # =============================================================================
 
 from datetime import datetime
@@ -24,6 +24,10 @@ class Settings(Base):
     updated_at          = Column(DateTime, nullable=True)
     quick_timeout       = Column(Integer, default=30)
     full_timeout        = Column(Integer, default=180)
+    builtwith_key       = Column(String(100), nullable=True)
+    circl_user          = Column(String(100), nullable=True)
+    circl_password      = Column(String(200), nullable=True)
+    abuseipdb_key       = Column(String(100), nullable=True)
 
     def __repr__(self):
         return "<Settings>"
@@ -53,13 +57,11 @@ class Scan(Base):
     cors = Column(JSON, nullable=True)
     reverse_dns_data = Column(JSON, nullable=True)
     subdomain_takeover = Column(JSON, nullable=True)
-    # v3.1 — Extended
     network_extended = Column(JSON, nullable=True)
     security_score = Column(JSON, nullable=True)
     screenshot_path = Column(String(500), nullable=True)
     tags = Column(JSON, nullable=True)
     notes = Column(Text, nullable=True)
-    # v4.0 — OSINT Enhanced
     urlscan_data = Column(JSON, nullable=True)
     wayback_data = Column(JSON, nullable=True)
     threat_intel = Column(JSON, nullable=True)
@@ -68,9 +70,7 @@ class Scan(Base):
     linked_domains = Column(JSON, nullable=True)
     email_blacklist = Column(JSON, nullable=True)
     hsts_preload = Column(JSON, nullable=True)
-    # v5.0 — Vulnerability Scan
     vuln_data = Column(JSON, nullable=True)
-    # v6.0 — New modules
     zone_transfer       = Column(JSON, nullable=True)
     wildcard_dns        = Column(JSON, nullable=True)
     dns_rebinding       = Column(JSON, nullable=True)
@@ -86,6 +86,15 @@ class Scan(Base):
     scan_profile        = Column(String(10), nullable=True)
     robtex              = Column(JSON, nullable=True)
     shodan_data         = Column(JSON, nullable=True)
+    bgpview_data        = Column(JSON, nullable=True)
+    certsh_data         = Column(JSON, nullable=True)
+    builtwith_data      = Column(JSON, nullable=True)
+    dast_data           = Column(JSON, nullable=True)
+    pdns_data           = Column(JSON, nullable=True)
+    emailrep_data       = Column(JSON, nullable=True)
+    abuseipdb_data      = Column(JSON, nullable=True)
+    observatory_data    = Column(JSON, nullable=True)
+    cert_pinning        = Column(JSON, nullable=True)
     scan_timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
     status = Column(String(50), default="success", nullable=False)
     error_message = Column(Text, nullable=True)

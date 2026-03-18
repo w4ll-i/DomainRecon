@@ -20,7 +20,9 @@
       "Bash(python3 -m py_compile \"e:/TOOL/DomainRecon/backend/app/scanners/web.py\")",
       "Bash(python3:*)",
       "Bash(wc:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git mv:*)",
+      "Bash(git rm:*)"
     ]
   }
 }

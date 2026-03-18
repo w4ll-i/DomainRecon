@@ -1,6 +1,8 @@
 # backend/app/scanners/dns.py
 import asyncio
+import logging
 import socket
+from concurrent.futures import ThreadPoolExecutor
 from typing import Optional
 
 import dns.resolver
@@ -8,7 +10,24 @@ import dns.zone
 import dns.query
 import dns.exception
 
+from pathlib import Path
+
 from ._config import SUBDOMAIN_WORDLIST, PRIVATE_IP_PATTERNS
+
+_log = logging.getLogger(__name__)
+
+# Dedicated thread pool for brute-force DNS lookups (avoids saturating default pool)
+_brute_pool = ThreadPoolExecutor(max_workers=100, thread_name_prefix="dns_brute")
+
+# Load extended wordlist for full scan (SecLists-compatible)
+_WORDLIST_FILE = Path(__file__).parent / "wordlists" / "subdomains.txt"
+try:
+    _FULL_WORDLIST = [
+        w.strip() for w in _WORDLIST_FILE.read_text(encoding="utf-8").splitlines()
+        if w.strip() and not w.startswith("#")
+    ]
+except Exception:
+    _FULL_WORDLIST = SUBDOMAIN_WORDLIST
 
 
 async def resolve_ip(domain: str) -> Optional[str]:
@@ -102,17 +121,30 @@ async def check_dns_rebinding(domain: str) -> dict:
     return await loop.run_in_executor(None, _check_dns_rebinding_sync, domain)
 
 
-async def _permute_subdomains(domain: str) -> list:
-    """Resolve all wordlist permutations concurrently (Semaphore 50)."""
-    sem = asyncio.Semaphore(50)
+def _resolve_fqdn_sync(fqdn: str) -> Optional[str]:
+    """Synchronous DNS lookup with hard 3s lifetime (runs in _brute_pool)."""
+    try:
+        dns.resolver.resolve(fqdn, "A", lifetime=3)
+        return fqdn
+    except Exception:
+        return None
+
+
+async def _permute_subdomains(domain: str, wordlist: list) -> list:
+    """Resolve all wordlist permutations concurrently via dedicated thread pool.
+
+    Uses dns.resolver.resolve(lifetime=3) instead of loop.getaddrinfo so each
+    lookup is capped at 3 seconds — prevents thread pool saturation in Docker.
+    """
+    loop = asyncio.get_event_loop()
+    sem = asyncio.Semaphore(100)
 
     async def resolve_one(sub: str) -> Optional[str]:
         async with sem:
             fqdn = f"{sub}.{domain}"
-            ip = await resolve_ip(fqdn)
-            return fqdn if ip else None
+            return await loop.run_in_executor(_brute_pool, _resolve_fqdn_sync, fqdn)
 
-    tasks = [resolve_one(w) for w in SUBDOMAIN_WORDLIST]
+    tasks = [resolve_one(w) for w in wordlist]
     results = await asyncio.gather(*tasks, return_exceptions=True)
     return [r for r in results if isinstance(r, str)]
 
@@ -135,8 +167,15 @@ async def find_subdomains(domain: str, scan_profile: str = "full") -> dict:
         pass
 
     if scan_profile == "full":
-        permuted = await _permute_subdomains(domain)
-        found.update(permuted)
+        wordlist = _FULL_WORDLIST if _FULL_WORDLIST else SUBDOMAIN_WORDLIST
+        try:
+            permuted = await asyncio.wait_for(
+                _permute_subdomains(domain, wordlist), timeout=50
+            )
+            found.update(permuted)
+        except (asyncio.TimeoutError, TimeoutError):
+            pass  # best-effort — keep whatever crt.sh found
+    # Quick scan: crt.sh only — no brute-force
 
     return {"subdomains": sorted(found), "count": len(found)}
 

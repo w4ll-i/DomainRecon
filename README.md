@@ -8,11 +8,11 @@
   <img src="https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white">
   <img src="https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white">
   <img src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white">
-  <img src="https://img.shields.io/badge/version-5.0-blueviolet">
+  <img src="https://img.shields.io/badge/modules-50%2B-blueviolet">
   <img src="https://img.shields.io/badge/license-MIT-green">
 </p>
 
-Plateforme OSINT de reconnaissance de domaines — **27 modules** exécutés en parallèle, sans clé API requise pour la majorité des sources.
+Plateforme OSINT de reconnaissance de domaines — **50+ modules** exécutés en parallèle, sans clé API requise pour la majorité des sources.
 
 > **Usage légal uniquement.** Cet outil est destiné aux pentesters, chercheurs en sécurité et admins système analysant des domaines **dont ils ont l'autorisation**. Ne jamais l'utiliser sur des systèmes tiers sans autorisation écrite.
 
@@ -57,6 +57,29 @@ DomainRecon centralise en un seul scan toutes les informations utiles sur un dom
 | 25 | Linked Domains — trackers, scripts tiers, dépendances | Actif discret |
 | 26 | Email Blacklist — vérification 10 DNSBL (Spamhaus, SpamCop, SORBS…) | Quasi-passif DNS |
 | 27 | HSTS Preload — statut Chromium via hstspreload.org | 100% Passif |
+| 28 | Zone Transfer — détection de transfert de zone DNS ouvert | Actif discret |
+| 29 | Wildcard DNS — détection de wildcard DNS | Passif DNS |
+| 30 | DNS Rebinding — détection de configurations vulnérables | Passif DNS |
+| 31 | TLS Deep Scan — audit protocoles/ciphers, OCSP (full) | Actif discret |
+| 32 | CSP Grading — notation de la Content-Security-Policy | Actif discret |
+| 33 | HSTS Deep Analysis — audit strict-transport-security | Actif discret |
+| 34 | Admin Panels — découverte de panneaux d'administration (full) | Actif |
+| 35 | HTML Intelligence — emails, commentaires, formulaires cachés | Actif discret |
+| 36 | HTTP Methods — détection de méthodes dangereuses (PUT, DELETE…) | Actif discret |
+| 37 | SMTP Security — TLS, STARTTLS, AUTH (full) | Actif discret |
+| 38 | Banner Grabbing — banners des ports ouverts | Actif |
+| 39 | Typosquatting Detection — variantes homographes (full) | Passif DNS |
+| 40 | Robtex — historique IP/DNS via Robtex | 100% Passif |
+| 41 | Shodan — données d'indexation IP (clé API optionnelle) | 100% Passif |
+| 42 | crt.sh Certificate Transparency — certificats émis | 100% Passif |
+| 43 | CIRCL Passive DNS — historique DNS passif (credentials optionnels) | 100% Passif |
+| 44 | BuiltWith — stack technologique enrichie (clé API optionnelle) | 100% Passif |
+| 45 | BGPView — informations ASN/réseau (full) | 100% Passif |
+| 46 | DAST-lite — tests de sécurité dynamiques légers (full) | Actif discret |
+| 47 | Mozilla Observatory — audit headers de sécurité (full) | 100% Passif |
+| 48 | Certificate Pinning — vérification du pinning TLS | Actif discret |
+| 49 | EmailRep — réputation des adresses email découvertes | 100% Passif |
+| 50 | AbuseIPDB — réputation IP (clé API optionnelle) | 100% Passif |
 
 ---
 
@@ -120,9 +143,9 @@ Sans Playwright, tous les autres modules fonctionnent normalement. Le module scr
 ### Interface web
 
 1. Ouvrir **http://localhost:8000**
-2. Entrer un domaine (ex: `example.com`) et cliquer sur **Analyser**
-3. Les 27 modules s'exécutent en parallèle (~20–40 secondes)
-4. Naviguer via la sidebar : Général / Sécurité / Infrastructure / Web / OSINT
+2. Entrer un domaine (ex: `example.com`), choisir le profil **Quick** ou **Full**, puis cliquer sur **Analyser**
+3. Les modules s'exécutent en parallèle (~20s en Quick, ~3min en Full)
+4. Naviguer via les onglets : Général / Sécurité / Infrastructure / Web / OSINT
 5. Exporter en **JSON** ou **PDF**
 
 ### API REST
@@ -130,10 +153,10 @@ Sans Playwright, tous les autres modules fonctionnent normalement. Le module scr
 Documentation Swagger disponible sur **http://localhost:8000/api/docs**
 
 ```bash
-# Lancer un scan
+# Lancer un scan (profil: "quick" ou "full")
 curl -X POST http://localhost:8000/api/scan \
   -H "Content-Type: application/json" \
-  -d '{"domain": "example.com"}'
+  -d '{"domain": "example.com", "profile": "full"}'
 
 # Récupérer un scan par ID
 curl http://localhost:8000/api/scan/1
@@ -160,11 +183,13 @@ curl http://localhost:8000/api/dns-timeline/example.com
 ```
 DomainRecon/
 ├── backend/
+│   ├── migrate.py        # Migration idempotente de la base de données
 │   └── app/
 │       ├── main.py       # FastAPI — routes API, schémas Pydantic
-│       ├── scanner.py    # 27 modules async
+│       ├── scanner.py    # Orchestrateur — 50+ modules async (2 vagues)
 │       ├── models.py     # ORM SQLAlchemy
-│       └── database.py   # SQLite
+│       ├── database.py   # SQLite / PostgreSQL
+│       └── scanners/     # Modules de scan (dns, tls, web, email, ports…)
 ├── frontend/
 │   └── index.html        # SPA vanilla (HTML/CSS/JS)
 ├── data/
@@ -206,6 +231,11 @@ Les modules suivants fonctionnent sans clé, mais peuvent être enrichis via la 
 | SecurityTrails | Subdomain Discovery (+6ème source) | 5 sources passives |
 | Censys | Extended Network (détails hôte indexé) | ipinfo.io uniquement |
 | URLScan.io | URLScan — scans privés + résultats étendus | Scans publics uniquement |
+| Shodan | Données d'indexation IP enrichies | Désactivé |
+| BuiltWith | Stack technologique détaillée | Désactivé |
+| AbuseIPDB | Score de réputation IP | Désactivé |
+| CIRCL (user/pass) | Passive DNS historique | Désactivé |
+| VirusTotal | Threat Intelligence étendue | Sources OTX publiques |
 
 Configurer les clés : `http://localhost:8000` → bouton **Paramètres** → section Clés API.
 
@@ -219,5 +249,5 @@ MIT — voir [LICENSE](LICENSE).
 
 <p align="center">
   <strong>DomainRecon</strong> — Built for security researchers 🔐<br>
-  <em>27 modules · Majority passive · 3 optional API keys · Legal OSINT only</em>
+  <em>50+ modules · Majority passive · Optional API keys · Legal OSINT only</em>
 </p>

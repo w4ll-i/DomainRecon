@@ -32,8 +32,7 @@ def main():
 
     print(f"""
     ╔══════════════════════════════════════════╗
-    ║       🔍 DomainRecon v2.0                ║
-    ║       OSINT Domain Scanner               ║
+    ║       DomainRecon — OSINT Scanner        ║
     ╠══════════════════════════════════════════╣
     ║  URL  : http://localhost:{port}             ║
     ║  API  : http://localhost:{port}/api/docs    ║

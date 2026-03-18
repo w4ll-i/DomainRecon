@@ -1,13 +1,16 @@
 # =============================================================================
-# DomainRecon - API FastAPI v5.0
-# =============================================================================
-# Sert l'API sous /api et le frontend à la racine /
+# DomainRecon - API
 # =============================================================================
 
+import logging
+import traceback
+import asyncio
 from datetime import datetime, timezone
 from typing import Optional
 from contextlib import asynccontextmanager
 from pathlib import Path
+
+logger = logging.getLogger("domainrecon")
 
 import httpx
 from fastapi import FastAPI, Depends, HTTPException, APIRouter
@@ -27,22 +30,18 @@ FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Crée les tables au démarrage + migrations douces v4.0 / v5.0."""
+    """Crée les tables au démarrage et applique les migrations idempotentes."""
     Base.metadata.create_all(bind=engine)
 
     from sqlalchemy import inspect
     inspector = inspect(engine)
 
-    # Migration v4.0 — colonnes scans
-    v4_columns = [
+    legacy_columns = [
         "urlscan_data", "wayback_data", "threat_intel",
         "js_analysis", "favicon_hash", "linked_domains",
-        "email_blacklist", "hsts_preload",
+        "email_blacklist", "hsts_preload", "vuln_data",
     ]
-    # Migration v5.0 — nouvelle colonne vuln_data
-    v5_columns = ["vuln_data"]
-    # Migration v6.0 — nouvelles colonnes
-    v6_scan_columns = [
+    scan_columns = [
         ("zone_transfer", "JSON"), ("wildcard_dns", "JSON"), ("dns_rebinding", "JSON"),
         ("tls_deep", "JSON"), ("csp_grade", "JSON"), ("hsts_deep", "JSON"),
         ("admin_panels", "JSON"), ("html_intelligence", "JSON"), ("http_methods", "JSON"),
@@ -50,21 +49,36 @@ async def lifespan(app: FastAPI):
         ("scan_profile", "VARCHAR(10) DEFAULT 'full'"), ("robtex", "JSON"),
         ("shodan_data", "JSON"),
     ]
-    v6_settings_columns = [
-        ("quick_timeout", "INTEGER DEFAULT 30"),
-        ("full_timeout", "INTEGER DEFAULT 180"),
+    settings_columns = [
+        ("quick_timeout",    "INTEGER DEFAULT 30"),
+        ("full_timeout",     "INTEGER DEFAULT 180"),
+        ("builtwith_key",    "VARCHAR(100)"),
+        ("circl_user",       "VARCHAR(100)"),
+        ("circl_password",   "VARCHAR(200)"),
+        ("abuseipdb_key",    "VARCHAR(100)"),
+    ]
+    scan_columns += [
+        ("bgpview_data",     "JSON"),
+        ("certsh_data",      "JSON"),
+        ("builtwith_data",   "JSON"),
+        ("dast_data",        "JSON"),
+        ("pdns_data",        "JSON"),
+        ("emailrep_data",    "JSON"),
+        ("abuseipdb_data",   "JSON"),
+        ("observatory_data", "JSON"),
+        ("cert_pinning",     "JSON"),
     ]
 
     existing_scan_cols = {col["name"] for col in inspector.get_columns("scans")}
     existing_settings_cols = {col["name"] for col in inspector.get_columns("settings")}
     with engine.connect() as conn:
-        for col in v4_columns + v5_columns:
+        for col in legacy_columns:
             if col not in existing_scan_cols:
                 conn.execute(text(f"ALTER TABLE scans ADD COLUMN {col} JSON"))
-        for col, dtype in v6_scan_columns:
+        for col, dtype in scan_columns:
             if col not in existing_scan_cols:
                 conn.execute(text(f"ALTER TABLE scans ADD COLUMN {col} {dtype}"))
-        for col, dtype in v6_settings_columns:
+        for col, dtype in settings_columns:
             if col not in existing_settings_cols:
                 conn.execute(text(f"ALTER TABLE settings ADD COLUMN {col} {dtype}"))
         conn.commit()
@@ -75,7 +89,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="DomainRecon API",
     description="API OSINT pour la reconnaissance de domaines",
-    version="6.0.0",
+    version="1.0.0",
     lifespan=lifespan,
     docs_url="/api/docs",
     redoc_url="/api/redoc",
@@ -149,7 +163,6 @@ class ScanResponse(BaseModel):
     screenshot_path: Optional[str] = None
     tags: list = Field(default_factory=list)
     notes: Optional[str] = None
-    # v4.0
     urlscan_data: dict = Field(default_factory=dict)
     wayback_data: dict = Field(default_factory=dict)
     threat_intel: dict = Field(default_factory=dict)
@@ -158,7 +171,6 @@ class ScanResponse(BaseModel):
     linked_domains: dict = Field(default_factory=dict)
     email_blacklist: dict = Field(default_factory=dict)
     hsts_preload: dict = Field(default_factory=dict)
-    # v6.0
     zone_transfer:      Optional[dict] = None
     wildcard_dns:       Optional[dict] = None
     dns_rebinding:      Optional[dict] = None
@@ -174,6 +186,15 @@ class ScanResponse(BaseModel):
     scan_profile:       Optional[str]  = None
     robtex:             Optional[dict] = None
     shodan_data:        Optional[dict] = None
+    bgpview_data:       Optional[dict] = None
+    certsh_data:        Optional[dict] = None
+    builtwith_data:     Optional[dict] = None
+    dast_data:          Optional[dict] = None
+    pdns_data:          Optional[dict] = None
+    emailrep_data:      Optional[dict] = None
+    abuseipdb_data:     Optional[dict] = None
+    observatory_data:   Optional[dict] = None
+    cert_pinning:       Optional[dict] = None
     scan_timestamp: datetime
     status: str
     error_message: Optional[str] = None
@@ -198,6 +219,10 @@ class SettingsRequest(BaseModel):
     scan_timeout: int = Field(default=60, ge=10, le=300)
     quick_timeout: Optional[int] = 30
     full_timeout:  Optional[int] = 180
+    builtwith_key:  Optional[str] = None
+    circl_user:     Optional[str] = None
+    circl_password: Optional[str] = None
+    abuseipdb_key:  Optional[str] = None
 
 
 class SettingsResponse(BaseModel):
@@ -209,11 +234,16 @@ class SettingsResponse(BaseModel):
     urlscan_key: Optional[str] = None
     screenshot_enabled: bool = False
     scan_timeout: int = 60
+    builtwith_key:  Optional[str] = None
+    circl_user:     Optional[str] = None
+    abuseipdb_key:  Optional[str] = None
+    # circl_password intentionally omitted (never return passwords)
     # Flags de validité (non stockés, renvoyés après test)
     shodan_valid: Optional[bool] = None
     securitytrails_valid: Optional[bool] = None
     censys_valid: Optional[bool] = None
     urlscan_valid: Optional[bool] = None
+    builtwith_valid: Optional[bool] = None
 
     class Config:
         from_attributes = True
@@ -280,6 +310,15 @@ def _scan_to_response(scan: Scan) -> ScanResponse:
         scan_profile=scan.scan_profile,
         robtex=scan.robtex,
         shodan_data=getattr(scan, "shodan_data", None),
+        bgpview_data=getattr(scan, "bgpview_data", None),
+        certsh_data=getattr(scan, "certsh_data", None),
+        builtwith_data=getattr(scan, "builtwith_data", None),
+        dast_data=getattr(scan, "dast_data", None),
+        pdns_data=getattr(scan, "pdns_data", None),
+        emailrep_data=getattr(scan, "emailrep_data", None),
+        abuseipdb_data=getattr(scan, "abuseipdb_data", None),
+        observatory_data=getattr(scan, "observatory_data", None),
+        cert_pinning=getattr(scan, "cert_pinning", None),
         scan_timestamp=scan.scan_timestamp,
         status=scan.status,
         error_message=scan.error_message,
@@ -317,6 +356,10 @@ async def scan_domain(request: ScanRequest, db: Session = Depends(get_db)):
             "virustotal_key": getattr(settings_row, "virustotal_key", None),
             "shodan_key": getattr(settings_row, "shodan_key", None),
             "screenshot_enabled": settings_row.screenshot_enabled,
+            "builtwith_key":  getattr(settings_row, "builtwith_key", None),
+            "circl_user":     getattr(settings_row, "circl_user", None),
+            "circl_password": getattr(settings_row, "circl_password", None),
+            "abuseipdb_key":  getattr(settings_row, "abuseipdb_key", None),
         }
         timeout = (
             (getattr(settings_row, "quick_timeout", None) or 30)
@@ -324,7 +367,10 @@ async def scan_domain(request: ScanRequest, db: Session = Depends(get_db)):
             else (getattr(settings_row, "full_timeout", None) or 180)
         )
 
-        result = await run_scan(request.domain, request.profile, settings, timeout)
+        try:
+            result = await run_scan(request.domain, request.profile, settings, timeout)
+        except asyncio.TimeoutError:
+            raise HTTPException(status_code=504, detail="Le scan a pris trop de temps et a dépassé le délai autorisé.")
 
         db_scan = Scan(
             domain=request.domain,
@@ -370,6 +416,15 @@ async def scan_domain(request: ScanRequest, db: Session = Depends(get_db)):
             typosquatting=result.get("typosquatting"),
             robtex=result.get("robtex"),
             shodan_data=result.get("shodan_data"),
+            bgpview_data=result.get("bgpview_data"),
+            certsh_data=result.get("certsh_data"),
+            builtwith_data=result.get("builtwith_data"),
+            dast_data=result.get("dast_data"),
+            pdns_data=result.get("pdns_data"),
+            emailrep_data=result.get("emailrep_data"),
+            abuseipdb_data=result.get("abuseipdb_data"),
+            observatory_data=result.get("observatory_data"),
+            cert_pinning=result.get("cert_pinning"),
             email_blacklist=result.get("email_blacklist"),
             scan_timestamp=datetime.now(timezone.utc),
             status="success",
@@ -381,8 +436,12 @@ async def scan_domain(request: ScanRequest, db: Session = Depends(get_db)):
 
         return _scan_to_response(db_scan)
 
+    except HTTPException:
+        db.rollback()
+        raise
     except Exception as e:
         db.rollback()
+        logger.error("SCAN ERROR [%s]: %s\n%s", request.domain, e, traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -467,6 +526,9 @@ async def get_settings(db: Session = Depends(get_db)):
         censys_id=_mask_key(s.censys_id),
         censys_secret=_mask_key(s.censys_secret),
         urlscan_key=_mask_key(s.urlscan_key),
+        builtwith_key=_mask_key(getattr(s, "builtwith_key", None)),
+        circl_user=getattr(s, "circl_user", None) or None,
+        abuseipdb_key=_mask_key(getattr(s, "abuseipdb_key", None)),
         screenshot_enabled=s.screenshot_enabled or False,
         scan_timeout=s.scan_timeout or 60,
     )
@@ -491,6 +553,14 @@ async def update_settings(request: SettingsRequest, db: Session = Depends(get_db
         s.censys_secret = request.censys_secret or None
     if request.urlscan_key is not None:
         s.urlscan_key = request.urlscan_key or None
+    if request.builtwith_key is not None:
+        s.builtwith_key = request.builtwith_key or None
+    if request.circl_user is not None:
+        s.circl_user = request.circl_user or None
+    if request.circl_password is not None:
+        s.circl_password = request.circl_password or None
+    if request.abuseipdb_key is not None:
+        s.abuseipdb_key = request.abuseipdb_key or None
 
     s.screenshot_enabled = request.screenshot_enabled
     s.scan_timeout = request.scan_timeout
@@ -510,6 +580,9 @@ async def update_settings(request: SettingsRequest, db: Session = Depends(get_db
         censys_id=_mask_key(s.censys_id),
         censys_secret=_mask_key(s.censys_secret),
         urlscan_key=_mask_key(s.urlscan_key),
+        builtwith_key=_mask_key(getattr(s, "builtwith_key", None)),
+        circl_user=getattr(s, "circl_user", None) or None,
+        abuseipdb_key=_mask_key(getattr(s, "abuseipdb_key", None)),
         screenshot_enabled=s.screenshot_enabled or False,
         scan_timeout=s.scan_timeout or 60,
     )
@@ -549,6 +622,16 @@ async def test_api_key(service: str, db: Session = Depends(get_db)):
                 valid = r.status_code == 200
                 detail = "OK" if valid else f"Erreur {r.status_code}"
 
+            elif service == "builtwith":
+                if not getattr(s, "builtwith_key", None):
+                    return {"valid": False, "detail": "Clé non configurée"}
+                r = await client.get(
+                    "https://api.builtwith.com/v21/api.json",
+                    params={"KEY": s.builtwith_key, "LOOKUP": "builtwith.com"},
+                )
+                valid = r.status_code == 200
+                detail = "OK" if valid else f"Erreur {r.status_code}"
+
             elif service == "securitytrails":
                 if not s.securitytrails_key:
                     return {"valid": False, "detail": "Clé non configurée"}
@@ -578,6 +661,21 @@ async def test_api_key(service: str, db: Session = Depends(get_db)):
                 )
                 valid = r.status_code == 200
                 detail = "OK" if valid else f"Erreur {r.status_code}"
+
+            elif service == "abuseipdb":
+                if not getattr(s, "abuseipdb_key", None):
+                    return {"valid": False, "detail": "Clé non configurée"}
+                r = await client.get(
+                    "https://api.abuseipdb.com/api/v2/check",
+                    params={"ipAddress": "8.8.8.8", "maxAgeInDays": 1},
+                    headers={"Key": s.abuseipdb_key, "Accept": "application/json"},
+                )
+                valid = r.status_code == 200
+                if valid:
+                    data = r.json().get("data", {})
+                    detail = f"OK — score: {data.get('abuseConfidenceScore', '?')}%"
+                else:
+                    detail = f"Erreur {r.status_code}"
 
             else:
                 raise HTTPException(status_code=400, detail=f"Service inconnu: {service}")

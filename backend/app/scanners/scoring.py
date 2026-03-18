@@ -1,7 +1,6 @@
 # backend/app/scanners/scoring.py
 """
-Unified security scoring v6.0
-6 categories totaling 100 points:
+Unified security scoring — 6 categories totaling 100 points:
   TLS(20) + Headers(20) + Email(15) + Reputation(15) + Infrastructure(15) + OSINT(15)
 """
 

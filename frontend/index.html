@@ -550,7 +550,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="rdns">Reverse DNS</button>
                     <button class="sub-tab" data-sub="network-ext">Réseau étendu</button>
                     <button class="sub-tab" data-sub="zone-transfer">Zone Transfer</button>
+                    <button class="sub-tab" data-sub="certsh">Cert Transparency</button>
                 </div>
+                <div id="tab-certsh" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-certificate"></i> Certificate Transparency — crt.sh</div><div id="certsh-content"></div></div>
                 <div id="tab-dns" class="tab-content"><div class="section-title"><i class="fa-solid fa-server"></i> Enregistrements DNS</div><div id="dns-content"></div></div>
                 <div id="tab-subdomains" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-sitemap"></i> Sous-domaines découverts</div><span id="sub-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div id="subdomains-content" style="max-height:500px;overflow-y:auto;"></div></div>
                 <div id="tab-timeline" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-timeline"></i> Timeline DNS</div><div id="timeline-content"></div></div>
@@ -576,6 +578,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="hsts">HSTS</button>
                     <button class="sub-tab" data-sub="hsts-deep">HSTS Deep</button>
                     <button class="sub-tab" data-sub="csp-grade">CSP Grade</button>
+                    <button class="sub-tab" data-sub="dast">DAST</button>
+                    <button class="sub-tab" data-sub="observatory">Observatory</button>
+                    <button class="sub-tab" data-sub="cert-pinning">Cert Pinning</button>
                 </div>
                 <div id="tab-security" class="tab-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;"><div><div class="section-title"><i class="fa-solid fa-shield-halved"></i> En-têtes OWASP</div><div id="security-details"></div></div><div><div class="section-title"><i class="fa-solid fa-chart-simple"></i> Score</div><div style="display:flex;justify-content:center;"><canvas id="security-chart" width="300" height="300"></canvas></div></div></div></div>
                 <div id="tab-score" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-gauge-high"></i> Score Global</div><div id="score-content"></div></div>
@@ -590,6 +595,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-hsts" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-lock-open"></i> HSTS Preload</div><div id="hsts-content"></div></div>
                 <div id="tab-hsts-deep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-shield-halved"></i> HSTS Deep</div><div id="hsts-deep-content"></div></div>
                 <div id="tab-csp-grade" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-shield"></i> CSP Grade</div><div id="csp-grade-content"></div></div>
+                <div id="tab-dast" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-bug"></i> DAST-lite — Passive Checks</div><div id="dast-content"></div></div>
+                <div id="tab-observatory" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flask"></i> Mozilla Observatory — HTTP Security</div><div id="observatory-content"></div></div>
+                <div id="tab-cert-pinning" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-thumbtack"></i> Certificate Pinning — HPKP / Expect-CT</div><div id="cert-pinning-content"></div></div>
             </div>
 
             <!-- Infrastructure -->
@@ -601,13 +609,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="admin-panels">Admin Panels</button>
                     <button class="sub-tab" data-sub="banners">Banners</button>
                     <button class="sub-tab" data-sub="shodan">Shodan</button>
+                    <button class="sub-tab" data-sub="bgpview">BGPView</button>
+                    <button class="sub-tab" data-sub="abuseipdb">AbuseIPDB</button>
                 </div>
+                <div id="tab-bgpview" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-route"></i> BGP Routing — ASN / Prefixes / Peers</div><div id="bgpview-content"></div></div>
                 <div id="tab-whois" class="tab-content"><div class="section-title"><i class="fa-solid fa-address-card"></i> WHOIS</div><div id="whois-content"></div></div>
                 <div id="tab-geo" class="tab-content hidden"><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;"><div><div class="section-title"><i class="fa-solid fa-earth-americas"></i> Géolocalisation</div><div id="geo-details"></div></div><div><div class="section-title"><i class="fa-solid fa-map"></i> Carte</div><div id="geo-map" style="height:300px;border-radius:var(--radius-sm);border:1px solid var(--border-light);"></div></div></div></div>
-                <div id="tab-tech" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-microchip"></i> Technologies</div><div id="tech-content" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div></div>
+                <div id="tab-tech" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-microchip"></i> Technologies</div><div id="tech-content" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div><div id="builtwith-content" style="margin-top:16px;"></div></div>
                 <div id="tab-admin-panels" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-door-open"></i> Admin Panel Discovery</div><div id="admin-panels-content"></div></div>
                 <div id="tab-banners" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flag"></i> Banners</div><div id="banners-content"></div></div>
                 <div id="tab-shodan" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-satellite-dish"></i> Shodan</div><div id="shodan-content"></div></div>
+                <div id="tab-abuseipdb" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-skull-crossbones"></i> AbuseIPDB — IP Reputation</div><div id="abuseipdb-content"></div></div>
             </div>
 
             <!-- Web -->
@@ -640,6 +652,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="typosquatting">Typosquatting</button>
                     <button class="sub-tab" data-sub="html-intel">HTML Intel</button>
                     <button class="sub-tab" data-sub="smtp-security">SMTP</button>
+                    <button class="sub-tab" data-sub="pdns">Passive DNS</button>
+                    <button class="sub-tab" data-sub="emailrep">EmailRep</button>
                     <button class="sub-tab" data-sub="notes">Notes &amp; Tags</button>
                 </div>
                 <div id="tab-urlscan" class="tab-content"><div class="section-title"><i class="fa-solid fa-magnifying-glass-chart"></i> URLScan.io</div><div id="urlscan-content"></div></div>
@@ -648,6 +662,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-favicon" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-image"></i> Favicon Hash</div><div id="favicon-content"></div></div>
                 <div id="tab-emailbl" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-ban"></i> Blacklists IP / DNSBL</div><div id="emailbl-content"></div></div>
                 <div id="tab-robtex" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-diagram-project"></i> Robtex</div><div id="robtex-content"></div></div>
+                <div id="tab-pdns" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-database"></i> Passive DNS — CIRCL</div><div id="pdns-content"></div></div>
+                <div id="tab-emailrep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-envelope-open-text"></i> EmailRep.io — Email Reputation</div><div id="emailrep-content"></div></div>
                 <div id="tab-typosquatting" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-spell-check"></i> Typosquatting</div><div id="typosquatting-content"></div></div>
                 <div id="tab-html-intel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-code"></i> HTML Intel</div><div id="html-intel-content"></div></div>
                 <div id="tab-smtp-security" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-at"></i> SMTP Security</div><div id="smtp-security-content"></div></div>
@@ -974,7 +990,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 geo: () => this.renderGeo(d),
                 tls: () => this.renderTLS(d),
                 ports: () => this.renderPorts(d),
-                tech: () => this.renderTech(d),
+                tech: () => { this.renderTech(d); this.renderBuiltWith(d); },
                 redirects: () => this.renderRedirects(d),
                 webfiles: () => this.renderWebFiles(d),
                 cookies: () => this.renderCookies(d),
@@ -1004,9 +1020,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 'smtp-security':  () => this.renderSmtpSecurity(d),
                 'banners':        () => this.renderBanners(d),
                 'shodan':         () => this.renderShodan(d),
+                'certsh':         () => this.renderCertsh(d),
+                'dast':           () => this.renderDast(d),
+                'bgpview':        () => this.renderBgpview(d),
+                'pdns':           () => this.renderPdns(d),
                 'typosquatting':  () => this.renderTyposquatting(d),
                 'robtex':         () => this.renderRobtex(d),
                 'html-intel':     () => this.renderHtmlIntel(d),
+                'observatory':    () => this.renderObservatory(d),
+                'cert-pinning':   () => this.renderCertPinning(d),
+                'abuseipdb':      () => this.renderAbuseIpdb(d),
+                'emailrep':       () => this.renderEmailRep(d),
                 'score-v6':       () => this.renderScoreV6(d),
             };
             if (renderers[tab]) renderers[tab]();
@@ -2172,6 +2196,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 { id:'securitytrails', name:'SecurityTrails', desc:'Subdomains avancés + historique DNS étendu', docs:'https://docs.securitytrails.com/', cur:s.securitytrails_key },
                 { id:'censys', name:'Censys', desc:'Recon alternatif — certificats & services indexés (ID + Secret)', docs:'https://search.censys.io/api', cur:s.censys_id, hasSecret:true, curSecret:s.censys_secret },
                 { id:'urlscan', name:'URLScan.io', desc:'Scans privés + résultats étendus (fonctionne en public sans clé)', docs:'https://urlscan.io/about-api/', cur:s.urlscan_key },
+                { id:'builtwith', name:'BuiltWith', desc:'Stack technologique passif — Analytics, CDN, CMS, Framework…', docs:'https://api.builtwith.com/', cur:s.builtwith_key },
+                { id:'abuseipdb', name:'AbuseIPDB', desc:'Score de réputation IP — compte gratuit sur abuseipdb.com', docs:'https://www.abuseipdb.com/account/api', cur:s.abuseipdb_key },
             ];
             let html = '<div class="settings-section"><div class="settings-section-title">Clés API</div>';
             keys.forEach(k => {
@@ -2190,6 +2216,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     </div>
                 </div>`;
             });
+            html += `<div class="api-key-row">
+                <div class="api-key-status ${s.circl_user?'ok':''}" id="status-dot-circl"></div>
+                <div class="api-key-info">
+                    <div class="api-key-name">CIRCL PDNS ${s.circl_user?'<span class="badge-api">Configuré</span>':'<span class="badge-na">Non configuré</span>'}</div>
+                    <div class="api-key-desc">Passive DNS historique — compte gratuit sur <a href="https://www.circl.lu/services/passive-dns/" target="_blank" style="color:var(--info);">circl.lu↗</a></div>
+                </div>
+                <div class="api-key-inputs">
+                    <input type="text" class="api-key-input narrow" id="input-circl-user" placeholder="Username" value="${s.circl_user||''}">
+                    <input type="password" class="api-key-input narrow" id="input-circl-password" placeholder="Password">
+                </div>
+            </div>`;
             html += `</div><div class="settings-section"><div class="settings-section-title">Scanner</div>
                 <div class="settings-toggle-row">
                     <div><div style="font-size:13.5px;font-weight:600;">Screenshot automatique</div><div style="font-size:12px;color:var(--text-tertiary);">Nécessite Playwright (<code>pip install playwright && playwright install chromium</code>)</div></div>
@@ -2223,6 +2260,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 shodan_key: g('input-shodan'), virustotal_key: g('input-virustotal'),
                 securitytrails_key: g('input-securitytrails'), censys_id: g('input-censys-id'),
                 censys_secret: g('input-censys-secret'), urlscan_key: g('input-urlscan'),
+                builtwith_key: g('input-builtwith'),
+                abuseipdb_key: g('input-abuseipdb'),
+                circl_user: g('input-circl-user'),
+                circl_password: g('input-circl-password'),
                 screenshot_enabled: document.getElementById('toggle-screenshot')?.checked || false,
                 scan_timeout: parseInt(document.getElementById('input-timeout')?.value||'60'),
             };
@@ -2915,6 +2956,400 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const note = mkEl('div', {cls:'profile-note', text: ss.profile_note});
                 c.appendChild(note);
             }
+        }
+
+        renderCertsh(d) {
+            const c = document.getElementById('certsh-content');
+            clearEl(c);
+            const cs = d.certsh_data || {};
+            if (!cs.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = cs.error || 'Aucune donnée crt.sh';
+                msg.appendChild(p); c.appendChild(msg); return;
+            }
+            const sum = mkEl('div', {style:'display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;'});
+            const mkM = (label, val, color) => {
+                const card = mkEl('div', {cls:'data-card', style:'text-align:center;'});
+                const v = mkEl('div', {style:`font-size:22px;font-weight:700;font-family:var(--mono);color:${color||'var(--accent)'};`});
+                v.textContent = val;
+                const l = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);text-transform:uppercase;margin-top:4px;'});
+                l.textContent = label;
+                card.appendChild(v); card.appendChild(l); return card;
+            };
+            sum.appendChild(mkM('Certs total', cs.total_certs||0, 'var(--info)'));
+            sum.appendChild(mkM('Uniques', cs.unique_certs||0, 'var(--accent)'));
+            sum.appendChild(mkM('CT-only subdomains', cs.ct_only_count||0, cs.ct_only_count>0?'var(--warning)':'var(--success)'));
+            c.appendChild(sum);
+            if ((cs.ct_only_count||0) > 0) {
+                const alert = mkEl('div', {style:'background:var(--warning-bg);border:1px solid rgba(212,162,78,.25);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;font-size:12.5px;color:var(--warning);'});
+                alert.textContent = `⚠ ${cs.ct_only_count} sous-domaine(s) trouvés uniquement via CT logs`;
+                c.appendChild(alert);
+                const ctList = mkEl('div', {cls:'v6-section', style:'margin-bottom:14px;'});
+                const ctTitle = mkEl('div', {style:'font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;'});
+                ctTitle.textContent = 'CT-only subdomains';
+                ctList.appendChild(ctTitle);
+                (cs.ct_only_subdomains||[]).forEach(sub => {
+                    const row = mkEl('div', {style:'font-family:var(--mono);font-size:12.5px;padding:2px 0;color:var(--warning);'});
+                    row.textContent = sub; ctList.appendChild(row);
+                });
+                c.appendChild(ctList);
+            }
+            if ((cs.issuers||[]).length) {
+                const issRow = mkEl('div', {style:'margin-bottom:14px;display:flex;flex-wrap:wrap;gap:6px;'});
+                cs.issuers.forEach(iss => {
+                    const badge = mkEl('span', {style:'background:var(--surface-hover);border:1px solid var(--border-light);border-radius:4px;padding:3px 8px;font-size:11px;color:var(--text-secondary);'});
+                    badge.textContent = iss; issRow.appendChild(badge);
+                });
+                c.appendChild(issRow);
+            }
+            if ((cs.certs||[]).length) {
+                const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:12px;'});
+                const thead = mkEl('thead');
+                const hrow = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                ['Logged','Not After','Issuer','CN','SANs'].forEach(h => {
+                    const th = mkEl('th', {style:'text-align:left;padding:6px 8px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;font-size:10px;'});
+                    th.textContent = h; hrow.appendChild(th);
+                });
+                thead.appendChild(hrow); tbl.appendChild(thead);
+                const tbody = mkEl('tbody');
+                cs.certs.slice(0,50).forEach(cert => {
+                    const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.04);'});
+                    [cert.logged_at||'—', cert.not_after||'—', (cert.issuer_name||'').slice(0,30), cert.common_name||'—', (cert.san||[]).length+''].forEach((val,i) => {
+                        const td = mkEl('td', {style:`padding:6px 8px;font-size:12px;${i<2?'font-family:var(--mono);color:var(--text-tertiary);':''}`});
+                        td.textContent = val; tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                tbl.appendChild(tbody); c.appendChild(tbl);
+            }
+        }
+
+        renderDast(d) {
+            const c = document.getElementById('dast-content');
+            clearEl(c);
+            const dt = d.dast_data || {};
+            if (!dt.enriched && dt.error) { c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:dt.error})); return; }
+            if (!dt.enriched) { c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:'DAST-lite disponible en mode Full scan uniquement.'})); return; }
+            const ss = dt.severity_summary || {};
+            const sev = mkEl('div', {style:'display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;'});
+            const sevColors = {high:'var(--danger)', medium:'var(--warning)', low:'var(--info)', info:'var(--text-tertiary)'};
+            const sevBg = {high:'var(--danger-bg)', medium:'var(--warning-bg)', low:'var(--info-bg)', info:'transparent'};
+            ['high','medium','low','info'].forEach(s => {
+                const badge = mkEl('span', {style:`background:${sevBg[s]};border:1px solid ${sevColors[s]};border-radius:4px;padding:4px 10px;font-size:12px;color:${sevColors[s]};font-weight:600;`});
+                badge.textContent = `${s.toUpperCase()}: ${ss[s]||0}`; sev.appendChild(badge);
+            });
+            c.appendChild(sev);
+            if (!(dt.findings||[]).length) {
+                const ok = mkEl('div', {style:'text-align:center;padding:20px;color:var(--success);font-size:13px;'});
+                ok.textContent = '✓ Aucune exposition détectée'; c.appendChild(ok); return;
+            }
+            const sevBorder = {high:'var(--danger)', medium:'var(--warning)', low:'var(--info)', info:'var(--border)'};
+            dt.findings.forEach(f => {
+                const card = mkEl('div', {style:`padding:10px 14px;border-left:3px solid ${sevBorder[f.severity]||'var(--border)'};background:rgba(255,255,255,.02);border-radius:0 6px 6px 0;margin-bottom:8px;`});
+                const header = mkEl('div', {style:'display:flex;align-items:center;gap:8px;margin-bottom:4px;'});
+                const sLabel = mkEl('span', {style:`font-size:10px;font-weight:700;text-transform:uppercase;color:${sevColors[f.severity]||'var(--text-tertiary)'};`});
+                sLabel.textContent = f.severity;
+                const type = mkEl('span', {style:'font-size:12px;font-weight:600;font-family:var(--mono);'});
+                type.textContent = f.type;
+                header.appendChild(sLabel); header.appendChild(type);
+                if (f.header) {
+                    const hdr = mkEl('code', {style:'margin-left:auto;font-size:11px;color:var(--text-tertiary);'});
+                    hdr.textContent = f.header + ': ' + (f.value||''); header.appendChild(hdr);
+                }
+                card.appendChild(header);
+                const desc = mkEl('div', {style:'font-size:12px;color:var(--text-secondary);'});
+                desc.textContent = f.description||''; card.appendChild(desc); c.appendChild(card);
+            });
+        }
+
+        renderBgpview(d) {
+            const c = document.getElementById('bgpview-content');
+            clearEl(c);
+            const bg = d.bgpview_data || {};
+            if (!bg.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const icon = mkEl('div', {style:'font-size:32px;text-align:center;margin-bottom:12px;color:var(--text-tertiary);'});
+                icon.textContent = '🌐';
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = bg.error || 'BGPView disponible en mode Full scan uniquement.';
+                msg.appendChild(icon); msg.appendChild(p); c.appendChild(msg); return;
+            }
+            const sum = mkEl('div', {style:'display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;'});
+            [[bg.asn||'—','ASN','var(--accent)'],[bg.asn_description||'—','Organisation','var(--info)'],[bg.peer_count||0,'Peers','var(--text-secondary)']].forEach(([val,lbl,color]) => {
+                const card = mkEl('div', {cls:'data-card', style:'text-align:center;'});
+                const v = mkEl('div', {style:`font-size:18px;font-weight:700;font-family:var(--mono);color:${color};`});
+                v.textContent = val;
+                const l = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);text-transform:uppercase;margin-top:4px;'});
+                l.textContent = lbl; card.appendChild(v); card.appendChild(l); sum.appendChild(card);
+            });
+            c.appendChild(sum);
+            const info = mkEl('div', {cls:'v6-section', style:'margin-bottom:14px;'});
+            [[bg.prefix||'—','Prefix'],[bg.rir_allocation||'—','RIR'],[bg.country_code||'—','Pays']].forEach(([val,lbl]) => info.appendChild(v6Row(lbl, val)));
+            c.appendChild(info);
+            const mkTable = (title, rows, cols) => {
+                if (!rows || !rows.length) return;
+                const sec = mkEl('div', {cls:'v6-section', style:'margin-bottom:14px;'});
+                const t = mkEl('div', {style:'font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:8px;'});
+                t.textContent = title; sec.appendChild(t);
+                const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:12px;'});
+                const thead = mkEl('thead');
+                const hr = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                cols.forEach(col => { const th = mkEl('th', {style:'text-align:left;padding:5px 8px;color:var(--text-tertiary);font-size:10px;font-weight:600;text-transform:uppercase;'}); th.textContent = col; hr.appendChild(th); });
+                thead.appendChild(hr); tbl.appendChild(thead);
+                const tbody = mkEl('tbody');
+                rows.forEach(row => {
+                    const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.03);'});
+                    Object.values(row).forEach(val => { const td = mkEl('td', {style:'padding:5px 8px;font-family:var(--mono);font-size:12px;color:var(--text-secondary);'}); td.textContent = val||'—'; tr.appendChild(td); });
+                    tbody.appendChild(tr);
+                });
+                tbl.appendChild(tbody); sec.appendChild(tbl); c.appendChild(sec);
+            };
+            mkTable('Préfixes IPv4 annoncés', bg.prefixes_v4, ['Prefix','Nom','Description']);
+            mkTable('Préfixes IPv6 annoncés', bg.prefixes_v6, ['Prefix','Nom','Description']);
+            mkTable('Peers IPv4', bg.peers_v4, ['ASN','Nom','Description']);
+            mkTable('Peers IPv6', bg.peers_v6, ['ASN','Nom','Description']);
+        }
+
+        renderBuiltWith(d) {
+            const c = document.getElementById('builtwith-content');
+            if (!c) return;
+            clearEl(c);
+            const bw = d.builtwith_data || {};
+            if (!bw.enriched) {
+                if (bw.error && bw.error.includes('No BuiltWith')) return;
+                if (bw.error) { const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:12px;margin-top:8px;'}); p.textContent = 'BuiltWith: ' + bw.error; c.appendChild(p); }
+                return;
+            }
+            const title = mkEl('div', {style:'font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;'});
+            title.textContent = 'BuiltWith'; c.appendChild(title);
+            const cats = bw.categories || {};
+            const grid = mkEl('div', {style:'display:grid;grid-template-columns:repeat(3,1fr);gap:8px;'});
+            Object.entries(cats).forEach(([cat, names]) => {
+                const card = mkEl('div', {cls:'data-card'});
+                const catLabel = mkEl('div', {style:'font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;'});
+                catLabel.textContent = cat; card.appendChild(catLabel);
+                names.forEach(name => {
+                    const pill = mkEl('span', {style:'display:inline-block;background:var(--surface-hover);border:1px solid var(--border-light);border-radius:4px;padding:2px 6px;font-size:11px;margin:2px;color:var(--text-secondary);'});
+                    pill.textContent = name; card.appendChild(pill);
+                });
+                grid.appendChild(card);
+            });
+            c.appendChild(grid);
+        }
+
+        renderPdns(d) {
+            const c = document.getElementById('pdns-content');
+            clearEl(c);
+            const pd = d.pdns_data || {};
+            if (!pd.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = pd.error || 'Passive DNS CIRCL non configuré';
+                const hint = mkEl('p', {style:'text-align:center;font-size:12px;color:var(--text-tertiary);margin-top:6px;'});
+                hint.textContent = 'Créez un compte gratuit sur circl.lu et configurez vos credentials dans les Paramètres.';
+                msg.appendChild(p); msg.appendChild(hint); c.appendChild(msg); return;
+            }
+            const sum = mkEl('div', {style:'display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;'});
+            [[pd.total||0,'Enregistrements','var(--info)'],[(pd.unique_ips||[]).length,'IPs uniques','var(--accent)'],[Object.keys(pd.record_types||{}).length,'Types DNS','var(--text-secondary)']].forEach(([val,lbl,color]) => {
+                const card = mkEl('div', {cls:'data-card', style:'text-align:center;'});
+                const v = mkEl('div', {style:`font-size:22px;font-weight:700;font-family:var(--mono);color:${color};`});
+                v.textContent = val;
+                const l = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);text-transform:uppercase;margin-top:4px;'});
+                l.textContent = lbl; card.appendChild(v); card.appendChild(l); sum.appendChild(card);
+            });
+            c.appendChild(sum);
+            const rtRow = mkEl('div', {style:'display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;'});
+            Object.entries(pd.record_types||{}).forEach(([type, cnt]) => {
+                const chip = mkEl('span', {style:'background:var(--surface-hover);border:1px solid var(--border-light);border-radius:4px;padding:3px 8px;font-size:11px;font-family:var(--mono);color:var(--accent);'});
+                chip.textContent = `${type} (${cnt})`; rtRow.appendChild(chip);
+            });
+            c.appendChild(rtRow);
+            if ((pd.records||[]).length) {
+                const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:12px;'});
+                const thead = mkEl('thead');
+                const hrow = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                ['rrname','rrtype','rdata','time_last','count'].forEach(h => { const th = mkEl('th', {style:'text-align:left;padding:6px 8px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;font-size:10px;'}); th.textContent = h; hrow.appendChild(th); });
+                thead.appendChild(hrow); tbl.appendChild(thead);
+                const tbody = mkEl('tbody');
+                pd.records.slice(0,50).forEach(rec => {
+                    const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.04);'});
+                    [rec.rrname||'—', rec.rrtype||'—', rec.rdata||'—', (rec.time_last||'').slice(0,10), rec.count||''].forEach((val,i) => {
+                        const td = mkEl('td', {style:`padding:6px 8px;font-family:var(--mono);font-size:12px;${i===1?'color:var(--info);font-weight:600;':i===4?'color:var(--text-tertiary);':''}`});
+                        td.textContent = val; tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                tbl.appendChild(tbody); c.appendChild(tbl);
+            }
+        }
+
+        renderObservatory(d) {
+            const c = document.getElementById('observatory-content');
+            clearEl(c);
+            const ob = d.observatory_data || {};
+            if (!ob.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = ob.reason || 'Observatory disponible en mode Full scan uniquement.';
+                msg.appendChild(p); c.appendChild(msg); return;
+            }
+            const gradeColor = {'A+':'var(--ok)','A':'var(--ok)','B':'var(--info)','C':'var(--warning)','D':'var(--error)','F':'var(--error)'}[ob.grade] || 'var(--text-secondary)';
+            const header = mkEl('div', {style:'display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;margin-bottom:18px;'});
+            const gradeBox = mkEl('div', {style:`font-size:56px;font-weight:900;font-family:var(--mono);color:${gradeColor};text-align:center;width:90px;line-height:1;`});
+            gradeBox.textContent = ob.grade || '?';
+            const stats = mkEl('div');
+            [[`Score: ${ob.score || 0}/100`,'var(--text-primary)'],[`Tests réussis: ${ob.tests_passed}/${ob.tests_quantity}`,'var(--ok)'],[`Tests échoués: ${ob.tests_failed}`,'var(--error)']].forEach(([label,color]) => {
+                const row = mkEl('div', {style:`font-size:13px;margin-bottom:5px;color:${color};font-family:var(--mono);`});
+                row.textContent = label; stats.appendChild(row);
+            });
+            header.appendChild(gradeBox); header.appendChild(stats); c.appendChild(header);
+            if (ob.tests && Object.keys(ob.tests).length) {
+                const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:12px;'});
+                const thead = mkEl('thead');
+                const hrow = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                ['Test','Résultat','Score','Description'].forEach(h => { const th = mkEl('th', {style:'text-align:left;padding:6px 8px;color:var(--text-tertiary);font-weight:600;font-size:10px;text-transform:uppercase;'}); th.textContent=h; hrow.appendChild(th); });
+                thead.appendChild(hrow); tbl.appendChild(thead);
+                const tbody = mkEl('tbody');
+                Object.entries(ob.tests).forEach(([name, t]) => {
+                    const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.04);'});
+                    const passIcon = t.pass ? '✅' : '❌';
+                    const scoreColor = t.score_modifier >= 0 ? 'var(--ok)' : 'var(--error)';
+                    [name, passIcon, t.score_modifier >= 0 ? `+${t.score_modifier}` : `${t.score_modifier}`, t.score_description || ''].forEach((val, i) => {
+                        const td = mkEl('td', {style:`padding:6px 8px;font-family:var(--mono);${i===2?`color:${scoreColor};`:''}`});
+                        td.textContent = val; tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                tbl.appendChild(tbody); c.appendChild(tbl);
+            }
+        }
+
+        renderCertPinning(d) {
+            const c = document.getElementById('cert-pinning-content');
+            clearEl(c);
+            const cp = d.cert_pinning || {};
+            if (!cp.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = cp.error || 'Données non disponibles.';
+                msg.appendChild(p); c.appendChild(msg); return;
+            }
+            const hasAny = cp.hpkp || cp.hpkp_report_only || cp.expect_ct;
+            if (!hasAny) {
+                const none = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;text-align:center;'});
+                p.textContent = 'Aucun en-tête de certificate pinning détecté (HPKP/Expect-CT absent — normal pour la plupart des sites).';
+                none.appendChild(p); c.appendChild(none); return;
+            }
+            const items = [
+                {key:'hpkp',label:'Public-Key-Pins (HPKP)',value:cp.hpkp,color:'var(--warning)'},
+                {key:'hpkp_report_only',label:'Public-Key-Pins-Report-Only',value:cp.hpkp_report_only,color:'var(--info)'},
+                {key:'expect_ct',label:'Expect-CT',value:cp.expect_ct,color:'var(--accent)'},
+            ];
+            items.forEach(item => {
+                if (!item.value) return;
+                const sec = mkEl('div', {cls:'v6-section', style:'margin-bottom:12px;'});
+                const title = mkEl('div', {style:`font-size:12px;font-weight:700;color:${item.color};margin-bottom:6px;text-transform:uppercase;`});
+                title.textContent = item.label; sec.appendChild(title);
+                const val = mkEl('div', {style:'font-family:var(--mono);font-size:12px;color:var(--text-secondary);word-break:break-all;background:var(--surface-hover);padding:8px;border-radius:4px;'});
+                val.textContent = item.value; sec.appendChild(val);
+                c.appendChild(sec);
+            });
+            if (cp.pins && cp.pins.length) {
+                const pinSec = mkEl('div', {cls:'v6-section'});
+                const title = mkEl('div', {style:'font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;'});
+                title.textContent = `${cp.pins.length} pin(s) détecté(s)${cp.max_age ? ` • max-age: ${cp.max_age}s` : ''}${cp.include_subdomains ? ' • includeSubDomains' : ''}`;
+                pinSec.appendChild(title);
+                cp.pins.forEach(pin => {
+                    const p = mkEl('div', {style:'font-family:var(--mono);font-size:11px;color:var(--text-tertiary);margin-top:3px;'});
+                    p.textContent = pin; pinSec.appendChild(p);
+                });
+                c.appendChild(pinSec);
+            }
+            if (cp.deprecated_warning) {
+                const warn = mkEl('div', {style:'margin-top:10px;padding:8px 12px;border-left:3px solid var(--warning);background:rgba(255,165,0,.08);border-radius:0 4px 4px 0;font-size:12px;color:var(--warning);'});
+                warn.textContent = '⚠ ' + cp.deprecated_warning; c.appendChild(warn);
+            }
+        }
+
+        renderAbuseIpdb(d) {
+            const c = document.getElementById('abuseipdb-content');
+            clearEl(c);
+            const ab = d.abuseipdb_data || {};
+            if (!ab.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = ab.reason === 'no_key' ? 'Clé API AbuseIPDB non configurée. Créez un compte gratuit sur abuseipdb.com.' : (ab.reason || 'Données non disponibles.');
+                msg.appendChild(p); c.appendChild(msg); return;
+            }
+            const score = ab.abuse_confidence_score || 0;
+            const scoreColor = score >= 75 ? 'var(--error)' : score >= 25 ? 'var(--warning)' : 'var(--ok)';
+            const header = mkEl('div', {style:'display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;margin-bottom:18px;'});
+            const scoreBox = mkEl('div', {style:`font-size:52px;font-weight:900;font-family:var(--mono);color:${scoreColor};text-align:center;width:100px;`});
+            scoreBox.textContent = score + '%';
+            const info = mkEl('div');
+            [
+                [`IP: ${ab.ip || '—'}`, 'var(--text-primary)'],
+                [`Risque: ${ab.risk_level || '—'}`, scoreColor],
+                [`Rapports: ${ab.total_reports || 0} (${ab.num_distinct_users || 0} users)`, 'var(--text-secondary)'],
+                [`ISP: ${ab.isp || '—'} (${ab.country_code || '—'})`, 'var(--text-secondary)'],
+                ab.last_reported_at ? [`Dernier rapport: ${ab.last_reported_at.slice(0,10)}`, 'var(--text-tertiary)'] : null,
+                ab.is_whitelisted ? ['✅ IP en whitelist AbuseIPDB', 'var(--ok)'] : null,
+            ].filter(Boolean).forEach(([text, color]) => {
+                const row = mkEl('div', {style:`font-size:13px;margin-bottom:5px;color:${color};font-family:var(--mono);`});
+                row.textContent = text; info.appendChild(row);
+            });
+            header.appendChild(scoreBox); header.appendChild(info); c.appendChild(header);
+            if (ab.usage_type) {
+                const ut = mkEl('div', {style:'margin-top:10px;padding:6px 10px;background:var(--surface-hover);border-radius:4px;font-size:12px;color:var(--text-secondary);font-family:var(--mono);'});
+                ut.textContent = `Type d'usage: ${ab.usage_type}`; c.appendChild(ut);
+            }
+        }
+
+        renderEmailRep(d) {
+            const c = document.getElementById('emailrep-content');
+            clearEl(c);
+            const er = d.emailrep_data || {};
+            if (!er.enriched) {
+                const msg = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = er.reason === 'no_emails' ? 'Aucune adresse email trouvée dans le HTML du site.' : (er.reason || 'Données non disponibles.');
+                msg.appendChild(p); c.appendChild(msg); return;
+            }
+            const results = er.results || [];
+            results.forEach(r => {
+                const sec = mkEl('div', {cls:'v6-section', style:'margin-bottom:12px;'});
+                const repColor = r.reputation === 'high' ? 'var(--ok)' : r.reputation === 'medium' ? 'var(--warning)' : r.suspicious ? 'var(--error)' : 'var(--text-secondary)';
+                const title = mkEl('div', {style:'display:flex;align-items:center;gap:10px;margin-bottom:8px;'});
+                const email = mkEl('span', {style:'font-family:var(--mono);font-size:14px;font-weight:700;color:var(--text-primary);'});
+                email.textContent = r.email;
+                const rep = mkEl('span', {style:`font-size:12px;padding:2px 8px;border-radius:4px;background:${repColor}22;color:${repColor};font-weight:600;text-transform:uppercase;`});
+                rep.textContent = r.reputation || 'unknown';
+                title.appendChild(email); title.appendChild(rep); sec.appendChild(title);
+                const flags = [];
+                if (r.suspicious) flags.push(['⚠ Suspicious','var(--warning)']);
+                if (r.blacklisted) flags.push(['🚫 Blacklisté','var(--error)']);
+                if (r.credentials_leaked) flags.push(['🔑 Credentials leakés','var(--error)']);
+                if (r.data_breach) flags.push(['💀 Data breach','var(--error)']);
+                if (r.malicious_activity) flags.push(['☣ Activité malveillante','var(--error)']);
+                if (r.spam) flags.push(['📧 Spam','var(--warning)']);
+                if (r.disposable) flags.push(['🗑 Adresse jetable','var(--warning)']);
+                if (r.free_provider) flags.push(['📮 Fournisseur gratuit','var(--info)']);
+                if (flags.length === 0) flags.push(['✅ Aucun flag suspect','var(--ok)']);
+                const flagRow = mkEl('div', {style:'display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;'});
+                flags.forEach(([text, color]) => {
+                    const chip = mkEl('span', {style:`font-size:11px;padding:2px 8px;border-radius:4px;background:${color}22;color:${color};`});
+                    chip.textContent = text; flagRow.appendChild(chip);
+                });
+                sec.appendChild(flagRow);
+                if (r.references !== undefined) {
+                    const ref = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);font-family:var(--mono);'});
+                    ref.textContent = `${r.references} référence(s) en ligne`;
+                    sec.appendChild(ref);
+                }
+                c.appendChild(sec);
+            });
         }
 
         sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
