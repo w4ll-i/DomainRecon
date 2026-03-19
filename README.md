@@ -90,7 +90,7 @@ DomainRecon centralise en un seul scan toutes les informations utiles sur un dom
 Prérequis : Docker + Docker Compose
 
 ```bash
-git clone https://github.com/ch4tbl4nc/DomainRecon.git
+git clone https://github.com/w4ll-i/DomainRecon.git
 cd DomainRecon
 docker-compose up -d --build
 ```
@@ -110,7 +110,7 @@ docker-compose down
 Prérequis : Python 3.10+
 
 ```bash
-git clone https://github.com/ch4tbl4nc/DomainRecon.git
+git clone https://github.com/w4ll-i/DomainRecon.git
 cd DomainRecon
 
 python -m venv .venv
