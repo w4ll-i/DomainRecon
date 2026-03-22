@@ -48,7 +48,6 @@ from .scanners.osint import (
     get_whois_data, check_wayback_machine, urlscan_lookup,
     check_threat_intelligence, analyze_js_files, compute_favicon_hash,
     extract_linked_domains, check_hsts_preload, capture_screenshot,
-    detect_typosquatting,
 )
 from .scanners.tech import detect_technologies, detect_waf
 from .scanners.scoring import compute_security_score
@@ -62,6 +61,27 @@ from .scanners.emailrep_scanner import emailrep_lookup
 from .scanners.abuseipdb_scanner import abuseipdb_lookup
 from .scanners.observatory_scanner import observatory_scan
 from .scanners.cert_pinning_scanner import check_cert_pinning
+from .scanners.crypto_scanner import crypto_audit
+from .scanners.intelx_scanner import intelx_search
+from .scanners.dnssec_scanner import check_dnssec
+from .scanners.http_version_scanner import check_http_versions
+from .scanners.safebrowsing_scanner import safebrowsing_check
+from .scanners.phishtank_scanner import phishtank_check
+from .scanners.doh_scanner import doh_comparison
+from .scanners.cloud_storage_scanner import cloud_storage_scan
+from .scanners.api_endpoints_scanner import scan_api_endpoints
+from .scanners.cms_scanner import scan_cms
+from .scanners.subdomain_bruteforce import bruteforce_subdomains
+from .scanners.leakix_scanner import leakix_lookup
+from .scanners.github_dork_scanner import github_dork
+from .scanners.hibp_scanner import hibp_check
+from .scanners.js_dependency_scanner import scan_js_dependencies
+from .scanners.censys_scanner import censys_lookup
+from .scanners.nuclei_scanner import nuclei_scan
+from .scanners.js_secrets_scanner import scan_js_secrets
+from .scanners.typosquatting_scanner import scan_typosquatting
+from .scanners.dnsbl_scanner import scan_dnsbl
+from .scanners.paste_scanner import scan_paste
 
 
 async def _noop() -> dict:
@@ -69,11 +89,31 @@ async def _noop() -> dict:
     return {}
 
 
+async def _tracked(coro, name: str, idx: int, total: int, progress_cb=None):
+    """Wrap a coroutine to emit a progress event when it completes."""
+    try:
+        result = await coro
+        if progress_cb:
+            try:
+                await progress_cb({"module": name, "index": idx, "total": total, "status": "done"})
+            except Exception:
+                pass
+        return result
+    except Exception as e:
+        if progress_cb:
+            try:
+                await progress_cb({"module": name, "index": idx, "total": total, "status": "error"})
+            except Exception:
+                pass
+        raise
+
+
 async def run_scan(
     domain: str,
     scan_profile: str = "full",
     settings: Optional[dict] = None,
     timeout: int = 180,
+    progress_cb=None,
 ) -> dict:
     if settings is None:
         settings = {}
@@ -82,7 +122,24 @@ async def run_scan(
     ip = await resolve_ip(domain)
 
     # Wave 1: all independent coroutines
-    wave1_coros = [
+    _W1_NAMES = [
+        "dns_records", "subdomains", "tls_certificate", "security_headers",   # 0-3
+        "web_files", "cookies", "cors", "redirects",                           # 4-7
+        "technologies", "waf", "whois", "wayback",                             # 8-11
+        "email_security", "hsts_preload", "linked_domains", "js_analysis",     # 12-15
+        "favicon_hash", "geo", "ports", "zone_transfer",                       # 16-19
+        "wildcard", "dns_rebinding", "email_blacklist", "html_intel",          # 20-23
+        "http_methods", "hsts_deep", "reverse_dns", "network_ext",             # 24-27
+        "robtex", "urlscan", "threat_intel", "catch_all",                      # 28-31
+        "certsh", "pdns", "builtwith", "bgpview",                              # 32-35
+        "dast", "observatory", "cert_pinning", "crypto_audit",                 # 36-39
+        "dnssec", "http_versions", "safebrowsing", "phishtank",               # 40-43
+        "doh_comparison", "cloud_storage", "api_endpoints", "cms",            # 44-47
+        "subdomain_bruteforce", "hibp", "js_dependencies", "censys",         # 48-51
+        "js_secrets_data", "typosquatting", "paste_data",                    # 52-54
+    ]
+    _total_w1 = len(_W1_NAMES)
+    wave1_raw = [
         scan_dns_records(domain),                                         # 0
         find_subdomains(domain, scan_profile),                            # 1
         check_tls_certificate(domain),                                    # 2
@@ -126,6 +183,30 @@ async def run_scan(
         dast_scan(domain) if is_full else _noop(),                        # 36
         asyncio.wait_for(observatory_scan(domain), timeout=40) if is_full else _noop(),  # 37
         check_cert_pinning(domain),                                        # 38
+        crypto_audit(domain),                                              # 39
+        check_dnssec(domain),                                              # 40
+        check_http_versions(domain),                                       # 41
+        safebrowsing_check(domain, settings.get("safebrowsing_key")),     # 42
+        phishtank_check(domain, settings.get("phishtank_key")),           # 43
+        doh_comparison(domain),                                            # 44
+        cloud_storage_scan(domain),                                        # 45
+        scan_api_endpoints(domain),                                        # 46
+        scan_cms(domain),                                                  # 47
+        bruteforce_subdomains(domain),                                     # 48
+        hibp_check(domain),                                                # 49
+        scan_js_dependencies(domain),                                      # 50
+        censys_lookup(                                                     # 51
+            domain,
+            settings.get("censys_id", "") or "",
+            settings.get("censys_secret", "") or "",
+        ),
+        scan_js_secrets(domain, settings),                                     # 52
+        scan_typosquatting(domain, settings),                                  # 53
+        scan_paste(domain, settings),                                          # 54
+    ]
+    wave1_coros = [
+        _tracked(c, _W1_NAMES[i], i + 1, _total_w1, progress_cb)
+        for i, c in enumerate(wave1_raw)
     ]
     wave1_results = await asyncio.wait_for(
         asyncio.gather(*wave1_coros, return_exceptions=True),
@@ -151,6 +232,22 @@ async def run_scan(
     dast_data        = _w1[36] if len(_w1) > 36 else {}
     observatory_data = _w1[37] if len(_w1) > 37 else {}
     cert_pinning     = _w1[38] if len(_w1) > 38 else {}
+    crypto_audit_data = _w1[39] if len(_w1) > 39 else {}
+    dnssec_data      = _w1[40] if len(_w1) > 40 else {}
+    http_versions    = _w1[41] if len(_w1) > 41 else {}
+    safebrowsing_data = _w1[42] if len(_w1) > 42 else {}
+    phishtank_data   = _w1[43] if len(_w1) > 43 else {}
+    doh_comp              = _w1[44] if len(_w1) > 44 else {}
+    cloud_storage_data    = _w1[45] if len(_w1) > 45 else {}
+    api_endpoints_data    = _w1[46] if len(_w1) > 46 else {}
+    cms_data_result       = _w1[47] if len(_w1) > 47 else {}
+    subdomain_bf_data     = _w1[48] if len(_w1) > 48 else {}
+    hibp_data_result      = _w1[49] if len(_w1) > 49 else {}
+    js_deps_data          = _w1[50] if len(_w1) > 50 else {}
+    censys_data           = _w1[51] if len(_w1) > 51 else {}
+    js_secrets_data_result = _w1[52] if len(_w1) > 52 else {}
+    typosquatting_data     = _w1[53] if len(_w1) > 53 else {}
+    paste_data_result      = _w1[54] if len(_w1) > 54 else {}
 
     # Post-Wave-1: pure calculations
     csp_value = (security_headers or {}).get("Content-Security-Policy")
@@ -204,15 +301,55 @@ async def run_scan(
             scan_tls_deep(domain),
             discover_admin_panels(domain),
             check_smtp_security(domain),
-            detect_typosquatting(domain),
         ]
-        wave2_keys += ["tls_deep", "admin_panels", "smtp_raw", "typosquatting"]
+        wave2_keys += ["tls_deep", "admin_panels", "smtp_raw"]
         if settings.get("screenshot_enabled"):
             wave2_coros.append(capture_screenshot(domain))
             wave2_keys.append("screenshot")
+    else:
+        # Quick scan still discovers admin panels (but without heavy checks)
+        wave2_coros.append(discover_admin_panels(domain))
+        wave2_keys.append("admin_panels")
+
+    # LeakIX — free, works without key
+    wave2_coros.append(leakix_lookup(domain, settings.get("leakix_key")))
+    wave2_keys.append("leakix_data")
+
+    # GitHub dork — free without token (rate-limited), better with token
+    wave2_coros.append(github_dork(domain, settings.get("github_token")))
+    wave2_keys.append("github_dork")
+
+    # Nuclei — full scan only, requires nuclei binary in PATH
+    if is_full:
+        wave2_coros.append(nuclei_scan(domain))
+        wave2_keys.append("nuclei_data")
+
+    # DNSBL — requires resolved IP
+    if ip:
+        wave2_coros.append(scan_dnsbl(ip, settings))
+        wave2_keys.append("dnsbl_data")
 
     wave2_results = await asyncio.gather(*wave2_coros, return_exceptions=True)
     r2 = {k: _safe(v) for k, v in zip(wave2_keys, wave2_results)}
+
+    # Wave 2 progress events
+    if progress_cb:
+        for k in wave2_keys:
+            try:
+                await progress_cb({"module": k, "status": "done", "wave": 2})
+            except Exception:
+                pass
+
+    # Wave 3 — IntelX: triggered only when admin panels confirmed found + API key set
+    intelx_data = {}
+    intelx_key = settings.get("intelx_key")
+    if intelx_key:
+        panels = r2.get("admin_panels", {})
+        panels_found = (panels or {}).get("panels_found", [])
+        # Only run if at least one panel found with medium/high confidence
+        confident_panels = [p for p in panels_found if p.get("confidence") in ("high", "medium")]
+        if confident_panels:
+            intelx_data = await intelx_search(domain, intelx_key)
 
     # Post-Wave-2: assemble smtp_security
     smtp_raw = r2.get("smtp_raw", {})
@@ -390,7 +527,7 @@ async def run_scan(
         "banners":         r2.get("banners"),
         "tls_deep":        r2.get("tls_deep"),
         "admin_panels":    r2.get("admin_panels"),
-        "typosquatting":   r2.get("typosquatting"),
+        "typosquatting":   typosquatting_data,
         "csp_grade":       csp_grade,
         "security_score":  security_score,
         "screenshot_path": r2.get("screenshot"),
@@ -403,6 +540,26 @@ async def run_scan(
         "pdns_data":       pdns_data,
         "observatory_data": observatory_data,
         "cert_pinning":    cert_pinning,
+        "crypto_audit":    crypto_audit_data,
+        "intelx_data":     intelx_data,
         "emailrep_data":   r2.get("emailrep_data"),
         "abuseipdb_data":  r2.get("abuseipdb_data"),
+        "dnssec_data":      dnssec_data,
+        "http_versions":    http_versions,
+        "safebrowsing_data": safebrowsing_data,
+        "phishtank_data":   phishtank_data,
+        "doh_comparison":   doh_comp,
+        "cloud_storage":    cloud_storage_data,
+        "api_endpoints":    api_endpoints_data,
+        "cms_data":         cms_data_result,
+        "subdomain_bruteforce": subdomain_bf_data,
+        "leakix_data":      r2.get("leakix_data"),
+        "github_dork":      r2.get("github_dork"),
+        "hibp_data":        hibp_data_result,
+        "js_deps_data":     js_deps_data,
+        "censys_data":      censys_data,
+        "nuclei_data":      r2.get("nuclei_data"),
+        "js_secrets_data":  js_secrets_data_result,
+        "paste_data":       paste_data_result,
+        "dnsbl_data":       r2.get("dnsbl_data"),
     }

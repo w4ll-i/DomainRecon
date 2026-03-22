@@ -17,27 +17,27 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root {
-            --bg: #111111;
-            --bg-warm: #151515;
-            --surface: #1A1A1A;
-            --surface-hover: #222222;
-            --border: #2A2A2A;
-            --border-light: #242424;
-            --text: #D4D4D4;
-            --text-secondary: #999999;
-            --text-tertiary: #666666;
-            --accent: #FFFFFF;
-            --accent-hover: #E0E0E0;
-            --accent-light: rgba(255,255,255,.08);
-            --accent-bg: rgba(255,255,255,.04);
-            --success: #6EC072;
-            --success-bg: rgba(110,192,114,.08);
-            --warning: #D4A24E;
-            --warning-bg: rgba(212,162,78,.08);
-            --danger: #C75050;
-            --danger-bg: rgba(199,80,80,.08);
-            --info: #7A9EC7;
-            --info-bg: rgba(122,158,199,.08);
+            --bg: #090909;
+            --bg-warm: #0c0c0c;
+            --surface: #0e0e0e;
+            --surface-hover: #141414;
+            --border: #1e1e1e;
+            --border-light: #161616;
+            --text: #c8c8c8;
+            --text-secondary: #777;
+            --text-tertiary: #444;
+            --accent: #e8e8e8;
+            --accent-hover: #d0d0d0;
+            --accent-light: rgba(255,255,255,.06);
+            --accent-bg: rgba(255,255,255,.03);
+            --success: #4a9e4e;
+            --success-bg: rgba(74,158,78,.07);
+            --warning: #c4903a;
+            --warning-bg: rgba(196,144,58,.07);
+            --danger: #c75050;
+            --danger-bg: rgba(199,80,80,.07);
+            --info: #5a7fa8;
+            --info-bg: rgba(90,127,168,.07);
             --radius: 8px;
             --radius-sm: 6px;
             --radius-xs: 4px;
@@ -51,83 +51,84 @@
         a:hover { text-decoration: underline; }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+        ::-webkit-scrollbar-thumb { background: #1e1e1e; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2a2a2a; }
 
         /* ── HEADER ─────────────────────────────────── */
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
-.header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40;height:52px;display:flex;align-items:center;padding:0 24px;gap:16px;}
-.logo{display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.logo-icon{width:32px;height:32px;flex-shrink:0;}
+.header{background:#060606;border-bottom:1px solid #141414;position:sticky;top:0;z-index:40;height:48px;display:flex;align-items:center;padding:0 24px;gap:16px;}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.logo-icon{width:28px;height:28px;flex-shrink:0;}
 .logo-icon img{width:100%;height:100%;object-fit:contain;}
-.logo-text{font-size:15px;font-weight:600;letter-spacing:-.02em;}
-.header-search{flex:1;display:none;max-width:420px;margin:0 auto;}
+.logo-text{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono);color:#888;}
+.header-search{flex:1;display:none;max-width:400px;margin:0 auto;}
 .header-search.visible{display:flex;gap:8px;align-items:center;}
-.header-right{display:flex;align-items:center;gap:16px;margin-left:auto;flex-shrink:0;}
-.status-dot{width:7px;height:7px;border-radius:50%;background:var(--text-tertiary);display:inline-block;margin-right:5px;}
+.header-right{display:flex;align-items:center;gap:20px;margin-left:auto;flex-shrink:0;}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#2a2a2a;display:inline-block;margin-right:5px;}
 .status-dot.online{background:var(--success);}
 .status-dot.offline{background:var(--danger);}
-.header-link{font-size:12px;color:var(--text-tertiary);transition:color .15s;display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:var(--font);}
-#status-text{font-size:12px;}
-.header-link:hover{color:var(--text);text-decoration:none;}
+.header-link{font-size:10.5px;font-family:var(--mono);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#333;transition:color .15s;display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;}
+#status-text{font-size:10.5px;font-family:var(--mono);}
+.header-link:hover{color:#888;text-decoration:none;}
 
 /* ── HERO SEARCH ─────────────────────────────── */
-#hero-section{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;gap:32px;}
+#hero-section{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 24px;gap:36px;}
 #hero-section.hidden{display:none;}
-.hero-title{font-size:12px;color:var(--text-tertiary);letter-spacing:.08em;text-transform:uppercase;font-weight:500;}
-.hero-search-wrap{width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px;}
-.hero-input-row{display:flex;gap:10px;}
-.hero-input{flex:1;padding:13px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:var(--font);color:var(--text);background:transparent;outline:none;transition:border-color .15s,box-shadow .15s;}
-.hero-input::placeholder{color:var(--text-tertiary);}
-.hero-input:focus{border-color:#555;box-shadow:0 0 0 3px rgba(255,255,255,.04);}
-.btn-hero-scan{padding:13px 28px;background:#fff;color:#111;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s;white-space:nowrap;}
-.btn-hero-scan:hover{background:#e0e0e0;}
-.btn-hero-scan:disabled{background:var(--border);color:var(--text-tertiary);cursor:not-allowed;}
-.hero-profile{display:flex;align-items:center;gap:16px;}
-.hero-profile-label{font-size:12px;color:var(--text-tertiary);}
-.hero-profile label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);cursor:pointer;}
-.hero-profile input[type="radio"]{accent-color:var(--accent);cursor:pointer;}
+.hero-title{font-size:9.5px;font-family:var(--mono);color:#252525;letter-spacing:.22em;text-transform:uppercase;font-weight:700;}
+.hero-search-wrap{width:100%;max-width:580px;display:flex;flex-direction:column;gap:10px;}
+.hero-input-row{display:flex;gap:8px;}
+.hero-input{flex:1;padding:12px 16px;border:1px solid #1a1a1a;border-radius:var(--radius-xs);font-size:14px;font-family:var(--mono);color:#bbb;background:#060606;outline:none;transition:border-color .15s;}
+.hero-input::placeholder{color:#252525;font-family:var(--font);}
+.hero-input:focus{border-color:#2e2e2e;}
+.btn-hero-scan{padding:12px 26px;background:#dcdcdc;color:#0a0a0a;border:none;border-radius:var(--radius-xs);font-size:12px;font-weight:700;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .15s;white-space:nowrap;}
+.btn-hero-scan:hover{background:#f0f0f0;}
+.btn-hero-scan:disabled{background:#1a1a1a;color:#333;cursor:not-allowed;}
+.hero-profile{display:flex;align-items:center;gap:20px;}
+.hero-profile-label{font-size:9.5px;font-family:var(--mono);color:#2a2a2a;letter-spacing:.1em;text-transform:uppercase;}
+.hero-profile label{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:#3a3a3a;cursor:pointer;}
+.hero-profile input[type="radio"]{accent-color:#888;cursor:pointer;}
 
 /* ── HERO HISTORY ────────────────────────────── */
-.hero-history{width:100%;max-width:560px;}
-.hero-history-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:8px;}
-.hero-history-item{display:flex;align-items:center;padding:8px 12px;border-radius:var(--radius-xs);cursor:pointer;transition:background .1s;gap:10px;}
-.hero-history-item:hover{background:var(--surface);}
-.hero-history-domain{font-family:var(--mono);font-size:13px;color:var(--accent);flex:1;}
-.hero-history-meta{font-size:11px;color:var(--text-tertiary);}
+.hero-history{width:100%;max-width:580px;}
+.hero-history-title{font-size:9.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:#252525;margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.hero-history-title::after{content:'';flex:1;height:1px;background:#141414;}
+.hero-history-item{display:flex;align-items:center;padding:7px 10px;border-radius:var(--radius-xs);cursor:pointer;transition:background .1s;gap:10px;}
+.hero-history-item:hover{background:#0d0d0d;}
+.hero-history-domain{font-family:var(--mono);font-size:12px;color:#888;flex:1;}
+.hero-history-meta{font-size:10px;font-family:var(--mono);color:#2e2e2e;}
 
 /* ── POST-SCAN LAYOUT ────────────────────────── */
 #app-post{display:none;flex-direction:column;flex:1;}
 #app-post.visible{display:flex;}
-.compact-input{flex:1;padding:7px 12px;border:1px solid var(--border);border-radius:var(--radius-xs);font-size:13px;font-family:var(--font);color:var(--text);background:transparent;outline:none;transition:border-color .15s;}
-.compact-input::placeholder{color:var(--text-tertiary);}
-.compact-input:focus{border-color:#555;}
-.btn-compact-scan{padding:7px 10px;background:#fff;color:#111;border:none;border-radius:var(--radius-xs);font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s;flex-shrink:0;}
-.btn-compact-scan:hover{background:#e0e0e0;}
-.btn-compact-scan:disabled{background:var(--border);color:var(--text-tertiary);cursor:not-allowed;}
+.compact-input{flex:1;padding:6px 11px;border:1px solid #1a1a1a;border-radius:var(--radius-xs);font-size:12px;font-family:var(--mono);color:#bbb;background:#060606;outline:none;transition:border-color .15s;}
+.compact-input::placeholder{color:#252525;font-family:var(--font);}
+.compact-input:focus{border-color:#2e2e2e;}
+.btn-compact-scan{padding:6px 10px;background:#d8d8d8;color:#0a0a0a;border:none;border-radius:var(--radius-xs);font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;transition:background .15s;flex-shrink:0;}
+.btn-compact-scan:hover{background:#f0f0f0;}
+.btn-compact-scan:disabled{background:#181818;color:#333;cursor:not-allowed;}
 .compact-profile{display:flex;align-items:center;gap:10px;}
-.compact-profile label{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-tertiary);cursor:pointer;white-space:nowrap;}
-.compact-profile input[type="radio"]{accent-color:var(--accent);cursor:pointer;}
+.compact-profile label{display:flex;align-items:center;gap:4px;font-size:10px;font-family:var(--mono);color:#333;cursor:pointer;white-space:nowrap;}
+.compact-profile input[type="radio"]{accent-color:#777;cursor:pointer;}
 
 /* Metrics bar */
-.metrics-bar{background:#151515;border-bottom:1px solid var(--border-light);padding:0 24px;height:36px;display:flex;align-items:center;opacity:0;transition:opacity .3s;}
+.metrics-bar{background:var(--bg);border-bottom:1px solid #141414;padding:0 24px;height:32px;display:flex;align-items:center;opacity:0;transition:opacity .3s;}
 .metrics-bar.loaded{opacity:1;}
-.metric-item{display:flex;align-items:center;gap:6px;cursor:pointer;padding:0 16px;height:100%;transition:background .1s;}
+.metric-item{display:flex;align-items:center;gap:7px;cursor:pointer;padding:0 14px;height:100%;transition:background .12s;}
 .metric-item:first-child{padding-left:0;}
-.metric-item:hover{background:rgba(255,255,255,.03);}
-.metric-sep{color:var(--border);font-size:16px;user-select:none;}
-.metric-label{font-size:11px;color:var(--text-tertiary);}
-.metric-value{font-size:13px;font-weight:600;}
-.metric-value.mono{font-family:var(--mono);font-weight:400;font-size:12px;}
+.metric-item:hover{background:rgba(255,255,255,.02);}
+.metric-sep{color:#1a1a1a;font-size:14px;font-family:var(--mono);user-select:none;}
+.metric-label{font-size:9px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;color:#2e2e2e;}
+.metric-value{font-size:11.5px;font-weight:600;font-family:var(--mono);}
+.metric-value.mono{font-family:var(--mono);font-weight:500;font-size:11px;}
 
 /* Main tabs */
-.main-tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:0;overflow-x:auto;scrollbar-width:none;}
+.main-tabs{background:var(--bg);border-bottom:1px solid #141414;display:flex;align-items:center;padding:0 24px;gap:0;overflow-x:auto;scrollbar-width:none;}
 .main-tabs::-webkit-scrollbar{display:none;}
-.main-tab{padding:0 16px;height:40px;display:flex;align-items:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;user-select:none;}
-.main-tab:hover{color:var(--text-secondary);}
-.main-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.main-tab{padding:0 14px;height:40px;display:flex;align-items:center;font-size:10.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.09em;color:#333;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;user-select:none;}
+.main-tab:hover{color:#666;}
+.main-tab.active{color:#c0c0c0;border-bottom-color:#555;}
 
 /* Content area */
 .content-area{flex:1;display:flex;flex-direction:column;min-height:0;}
@@ -135,10 +136,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .main-panel.hidden{display:none;}
 
 /* Sub-tabs */
-.sub-tabs-bar{padding:12px 24px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--border-light);background:var(--bg);}
-.sub-tab{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:500;color:var(--text-tertiary);cursor:pointer;border:1px solid var(--border);background:transparent;transition:all .12s;white-space:nowrap;user-select:none;font-family:var(--font);}
-.sub-tab:hover{color:var(--text-secondary);border-color:#3a3a3a;}
-.sub-tab.active{background:#222;border-color:#444;color:var(--accent);}
+.sub-tabs-bar{padding:0 24px;display:flex;gap:0;border-bottom:1px solid #141414;background:var(--bg);height:34px;align-items:center;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.sub-tabs-bar::-webkit-scrollbar{display:none;}
+.sub-tab{padding:0;margin-right:18px;border-radius:0;font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#2e2e2e;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;height:34px;display:inline-flex;align-items:center;transition:color .12s,border-color .12s;white-space:nowrap;user-select:none;flex-shrink:0;}
+.sub-tab:hover{color:#5a5a5a;}
+.sub-tab.active{color:#999;border-bottom-color:#444;}
 
 /* Tab content */
 .tab-content{padding:24px;}
@@ -147,74 +149,131 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 /* Loading panel */
 .loading-panel{padding:24px;display:none;}
 .loading-panel.visible{display:block;}
-.loading-progress{height:2px;background:var(--border);border-radius:1px;margin-bottom:20px;overflow:hidden;}
-.loading-progress-bar{height:100%;background:var(--accent);border-radius:1px;width:0%;transition:width .3s;}
+.loading-progress{height:1px;background:#161616;margin-bottom:20px;overflow:hidden;}
+.loading-progress-bar{height:100%;background:#4a9e4e;width:0%;transition:width .3s;box-shadow:0 0 8px rgba(74,158,78,.4);}
 .loading-header-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;}
+.spinner{width:14px;height:14px;border:1.5px solid #1e1e1e;border-top-color:#4a9e4e;border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-title{font-size:13px;font-weight:600;}
-.loading-timer{font-size:12px;color:var(--text-tertiary);font-family:var(--mono);margin-left:auto;}
-.scan-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
-.scan-step{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:var(--radius-xs);font-size:12px;color:var(--text-tertiary);opacity:0;transform:translateX(-6px);transition:all .3s;}
-.scan-step.active{opacity:1;transform:translateX(0);color:var(--text-secondary);}
-.scan-step.done{color:var(--success);}
-.scan-step.done .step-icon i{color:var(--success);}
-.step-icon{width:14px;text-align:center;flex-shrink:0;}
+.loading-title{font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:#555;}
+.loading-timer{font-size:10px;color:#333;font-family:var(--mono);margin-left:auto;letter-spacing:.08em;}
+.scan-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;}
+.scan-step{display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:var(--radius-xs);font-size:10.5px;font-family:var(--mono);color:#252525;opacity:0;transform:translateX(-4px);transition:all .25s;}
+.scan-step.active{opacity:1;transform:translateX(0);color:#555;}
+.scan-step.done{color:#4a9e4e;}
+.scan-step.done .step-icon i{color:#4a9e4e;}
+.step-icon{width:12px;text-align:center;flex-shrink:0;}
 
 /* Error panel */
-.error-panel{margin:24px;background:var(--danger-bg);border:1px solid rgba(199,80,80,.2);border-radius:var(--radius);padding:16px 20px;display:none;align-items:flex-start;gap:12px;}
+.error-panel{margin:20px 24px;background:rgba(199,80,80,.05);border:1px solid rgba(199,80,80,.12);border-radius:var(--radius-xs);padding:14px 18px;display:none;align-items:flex-start;gap:12px;}
 .error-panel.visible{display:flex;}
-.error-panel i{color:var(--danger);margin-top:2px;}
-.error-panel h3{font-size:13px;font-weight:600;color:var(--danger);}
-.error-panel p{font-size:12px;color:var(--danger);margin-top:2px;opacity:.85;}
+.error-panel i{color:var(--danger);margin-top:1px;font-size:12px;}
+.error-panel h3{font-size:11px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--danger);}
+.error-panel p{font-size:11.5px;color:#888;margin-top:3px;font-family:var(--mono);}
+
+/* Content fade animation */
+@keyframes contentFade { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:translateY(0); } }
 
 /* Content footer */
-.content-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 24px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-tertiary);}
-.btn-export{background:none;border:1px solid var(--border);border-radius:var(--radius-xs);padding:4px 10px;font-size:11px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .15s;display:flex;align-items:center;gap:5px;}
-.btn-export:hover{border-color:var(--accent);color:var(--accent);}
+.content-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 24px;border-top:1px solid #141414;font-size:10px;font-family:var(--mono);color:#2e2e2e;}
+.btn-export{background:none;border:1px solid #1e1e1e;border-radius:var(--radius-xs);padding:4px 12px;font-size:10px;font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3a3a3a;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;}
+.btn-export:hover{border-color:#333;color:#aaa;}
 
 /* History (post-scan full panel) */
-.history-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:0 24px 24px;}
-.history-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);}
-.history-header h2{font-size:13px;font-weight:600;}
-.btn-refresh{background:none;border:none;font-size:12px;color:var(--text-tertiary);cursor:pointer;font-family:var(--font);transition:color .15s;display:flex;align-items:center;gap:4px;}
-.btn-refresh:hover{color:var(--accent);}
-.history-search{padding:8px 16px;border-bottom:1px solid var(--border-light);}
+.history-card{background:#070707;border:1px solid #141414;border-radius:var(--radius-xs);overflow:hidden;margin:0 24px 24px;}
+.history-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #141414;}
+.history-header h2{font-size:9.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:#383838;}
+.btn-refresh{background:none;border:none;font-size:10px;font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#2e2e2e;cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:5px;}
+.btn-refresh:hover{color:#888;}
+.history-search{padding:7px 16px;border-bottom:1px solid #111;}
 .history-search-wrap{position:relative;}
-.history-search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);font-size:11px;}
-.history-search-input{width:100%;padding:7px 12px 7px 30px;border:1px solid var(--border);border-radius:var(--radius-xs);font-size:12px;font-family:var(--font);color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;}
-.history-search-input:focus{border-color:#555;}
-.history-search-input::placeholder{color:var(--text-tertiary);}
-.history-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border-light);cursor:pointer;transition:background .1s;}
+.history-search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#2a2a2a;font-size:10px;}
+.history-search-input{width:100%;padding:6px 12px 6px 28px;border:1px solid #1a1a1a;border-radius:var(--radius-xs);font-size:11.5px;font-family:var(--mono);color:#aaa;background:#060606;outline:none;transition:border-color .15s;}
+.history-search-input:focus{border-color:#2e2e2e;}
+.history-search-input::placeholder{color:#252525;font-family:var(--font);}
+.history-item{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid #0f0f0f;cursor:pointer;transition:background .1s;}
 .history-item:last-child{border-bottom:none;}
-.history-item:hover{background:var(--bg);}
-.history-domain{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);}
-.history-ip{font-size:11px;color:var(--text-tertiary);margin-left:8px;}
+.history-item:hover{background:#0c0c0c;}
+.history-domain{font-family:var(--mono);font-size:11.5px;font-weight:500;color:#888;}
+.history-ip{font-size:10px;font-family:var(--mono);color:#2e2e2e;margin-left:8px;}
 .history-right{display:flex;align-items:center;gap:8px;}
-.history-meta{font-size:11px;color:var(--text-tertiary);}
-.btn-delete{background:none;border:none;color:var(--text-tertiary);cursor:pointer;opacity:0;transition:all .15s;font-size:11px;padding:3px;}
+.history-meta{font-size:10px;font-family:var(--mono);color:#2e2e2e;}
+.btn-delete{background:none;border:none;color:#2a2a2a;cursor:pointer;opacity:0;transition:all .15s;font-size:10px;padding:3px;}
 .history-item:hover .btn-delete{opacity:1;}
 .btn-delete:hover{color:var(--danger);}
 
-/* Settings overlay */
+/* Settings overlay — redesigned */
 .settings-overlay{position:fixed;inset:0;z-index:200;display:flex;}
-.settings-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);}
-.settings-panel{position:relative;z-index:1;background:var(--surface);border-left:1px solid var(--border);width:520px;max-width:100%;margin-left:auto;overflow-y:auto;padding:24px;}
-.settings-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
-.btn-settings-close{background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:20px;line-height:1;}
+.settings-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);opacity:0;transition:opacity .3s ease;}
+.settings-backdrop.sopen{opacity:1;}
+.settings-panel{position:relative;z-index:1;background:#0c0c0c;border-left:1px solid #1e1e1e;width:680px;max-width:100%;margin-left:auto;display:flex;flex-direction:column;transform:translateX(110%);transition:transform .38s cubic-bezier(.16,1,.3,1);box-shadow:-32px 0 80px rgba(0,0,0,.7);}
+.settings-panel.sopen{transform:translateX(0);}
+.sp-header{padding:0 28px;border-bottom:1px solid #181818;flex-shrink:0;}
+.sp-header-top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 18px;}
+.sp-title{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#444;}
+.sp-title em{font-style:normal;color:#bbb;margin-left:6px;letter-spacing:.12em;}
+.sp-close{width:30px;height:30px;background:none;border:1px solid #222;border-radius:5px;color:#555;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;}
+.sp-close:hover{border-color:#3a3a3a;color:#ccc;background:#181818;}
+.sp-tabs{display:flex;gap:0;}
+.sp-tab{padding:11px 0;margin-right:26px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#444;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;user-select:none;}
+.sp-tab:hover{color:#888;}
+.sp-tab.active{color:#ddd;border-bottom-color:#ddd;}
+.sp-content{flex:1;overflow-y:auto;padding:26px 28px;scrollbar-width:thin;scrollbar-color:#222 transparent;}
+.sp-content::-webkit-scrollbar{width:3px;}
+.sp-content::-webkit-scrollbar-thumb{background:#252525;border-radius:4px;}
+.sp-cat-label{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#383838;display:flex;align-items:center;gap:10px;margin-bottom:10px;margin-top:28px;}
+.sp-cat-label:first-child{margin-top:0;}
+.sp-cat-label::after{content:'';flex:1;height:1px;background:#181818;}
+.sp-key-card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:8px;padding:13px 15px 13px 18px;margin-bottom:7px;display:flex;align-items:center;gap:14px;transition:border-color .2s,background .2s;position:relative;overflow:hidden;}
+.sp-key-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#1e1e1e;transition:background .25s,box-shadow .25s;}
+.sp-key-card.sk-ok::before{background:#4a9e4e;box-shadow:0 0 10px rgba(74,158,78,.35);}
+.sp-key-card.sk-err::before{background:#c75050;box-shadow:0 0 10px rgba(199,80,80,.3);}
+.sp-key-card:hover{border-color:#242424;background:#111;}
+.sp-key-icon{width:32px;height:32px;flex-shrink:0;border-radius:6px;background:#141414;border:1px solid #1e1e1e;display:flex;align-items:center;justify-content:center;font-size:13px;color:#3a3a3a;transition:color .2s;}
+.sp-key-card.sk-ok .sp-key-icon{color:#4a9e4e;}
+.sp-key-info{flex:1;min-width:0;}
+.sp-key-name{font-size:13px;font-weight:600;color:#ccc;display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.sp-key-badge{font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
+.sk-ok .sp-key-badge{background:rgba(74,158,78,.12);color:#4a9e4e;}
+.sk-na .sp-key-badge{background:rgba(255,255,255,.04);color:#383838;}
+.sk-err .sp-key-badge{background:rgba(199,80,80,.12);color:#c75050;}
+.sp-key-desc{font-size:11.5px;color:#444;line-height:1.45;}
+.sp-key-desc a{color:#4a4a4a;text-decoration:none;}
+.sp-key-desc a:hover{color:#888;}
+.sp-key-right{display:flex;flex-direction:column;gap:5px;align-items:flex-end;flex-shrink:0;}
+.sp-inp-wrap{position:relative;display:flex;}
+.sp-inp{padding:7px 34px 7px 11px;background:#080808;border:1px solid #1e1e1e;border-radius:5px;font-size:12px;font-family:var(--mono);color:#bbb;width:215px;outline:none;transition:border-color .15s;}
+.sp-inp:focus{border-color:#363636;background:#0c0c0c;}
+.sp-inp::placeholder{color:#2a2a2a;font-family:var(--font);}
+.sp-inp.narrow{width:130px;}
+.sp-inp-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#333;cursor:pointer;font-size:11px;transition:color .15s;padding:2px;}
+.sp-inp-eye:hover{color:#777;}
+.sp-test-btn{padding:5px 12px;background:none;border:1px solid #1e1e1e;border-radius:5px;font-size:11px;font-weight:500;color:#444;cursor:pointer;font-family:var(--font);transition:all .15s;white-space:nowrap;width:100%;}
+.sp-test-btn:hover{border-color:#333;color:#aaa;}
+.sp-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #141414;}
+.sp-toggle-row:last-child{border-bottom:none;}
+.sp-toggle-label{font-size:13px;font-weight:500;color:#bbb;}
+.sp-toggle-sub{font-size:11.5px;color:#3a3a3a;margin-top:3px;}
+.sp-num-inp{width:72px;padding:7px 10px;border:1px solid #1e1e1e;border-radius:5px;font-size:12px;font-family:var(--mono);color:#bbb;background:#080808;text-align:center;outline:none;transition:border-color .15s;}
+.sp-num-inp:focus{border-color:#363636;}
+.sp-footer{padding:16px 28px;border-top:1px solid #181818;background:#0c0c0c;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
+.sp-footer-hint{font-size:10px;color:#2a2a2a;font-family:var(--mono);letter-spacing:.06em;}
+.sp-save-btn{padding:9px 26px;background:#e8e8e8;color:#0a0a0a;border:none;border-radius:6px;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .18s;letter-spacing:.01em;}
+.sp-save-btn:hover{background:#fff;transform:translateY(-1px);}
+.sp-save-btn:active{transform:translateY(0);}
 
 /* App footer */
-.app-footer{text-align:center;padding:16px;font-size:11px;color:var(--text-tertiary);border-top:1px solid var(--border-light);}
+.app-footer{text-align:center;padding:12px;font-size:9.5px;font-family:var(--mono);letter-spacing:.08em;color:#252525;border-top:1px solid #141414;}
 
 /* Common components */
-.section-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.section-title i { color: var(--text-tertiary); font-size: 13px; }
-.info-row { display: flex; align-items: flex-start; padding: 8px 12px; border-radius: var(--radius-xs); font-size: 13px; gap: 10px; }
-.info-row:nth-child(odd) { background: rgba(255,255,255,.015); }
-.info-row .row-icon { color: var(--text-tertiary); width: 16px; text-align: center; flex-shrink: 0; margin-top: 1px; font-size: 12px; }
-.info-row .row-label { color: var(--text-tertiary); width: 110px; flex-shrink: 0; font-size: 12.5px; }
-.info-row .row-value { color: var(--text); font-size: 13px; min-width: 0; word-break: break-word; }
-.data-card { background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 16px; }
+.section-title { font-size: 9.5px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; letter-spacing: .14em; color: #383838; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-title::after { content: ''; flex: 1; height: 1px; background: #161616; }
+.section-title i { color: #2a2a2a; font-size: 10px; flex-shrink: 0; }
+.info-row { display: flex; align-items: flex-start; padding: 7px 12px; border-radius: var(--radius-xs); font-size: 12.5px; gap: 10px; }
+.info-row:nth-child(odd) { background: rgba(255,255,255,.012); }
+.info-row .row-icon { color: #2e2e2e; width: 14px; text-align: center; flex-shrink: 0; margin-top: 1px; font-size: 11px; }
+.info-row .row-label { color: #3a3a3a; width: 110px; flex-shrink: 0; font-size: 11px; font-family: var(--mono); letter-spacing: .03em; }
+.info-row .row-value { color: #aaa; font-size: 12.5px; min-width: 0; word-break: break-word; }
+.data-card { background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); padding: 16px; }
 
 /* Responsive */
 @media(max-width:900px){
@@ -251,19 +310,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .pill-neutral { background: rgba(255,255,255,.05); color: var(--text-secondary); }
 
         /* DNS Record blocks */
-        .dns-block { background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; }
-        .dns-type { display: inline-block; padding: 2px 8px; background: var(--accent-light); color: var(--accent); border-radius: 4px; font-size: 11px; font-weight: 700; font-family: var(--mono); margin-right: 8px; }
-        .dns-count { font-size: 11px; color: var(--text-tertiary); }
-        .dns-value { font-family: var(--mono); font-size: 12.5px; color: var(--text-secondary); padding: 4px 0; }
+        .dns-block { background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); padding: 12px 14px; margin-bottom: 8px; }
+        .dns-type { display: inline-block; padding: 1px 7px; background: rgba(255,255,255,.04); color: #888; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .05em; margin-right: 8px; }
+        .dns-count { font-size: 10px; font-family: var(--mono); color: #2e2e2e; }
+        .dns-value { font-family: var(--mono); font-size: 12px; color: #666; padding: 3px 0; }
 
         /* Network graph */
-        #network-graph { background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); height: 400px; width: 100%; }
-        .graph-controls { display: flex; gap: 6px; margin-top: 8px; }
-        .graph-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 4px 10px; font-size: 11px; color: var(--text-tertiary); cursor: pointer; font-family: var(--font); transition: all .15s; }
-        .graph-btn:hover { color: var(--accent); border-color: #444; }
+        #network-graph { background: #060606; border: 1px solid #161616; border-radius: var(--radius-xs); height: 400px; width: 100%; }
+        .graph-controls { display: flex; gap: 5px; margin-top: 8px; }
+        .graph-btn { background: none; border: 1px solid #1e1e1e; border-radius: var(--radius-xs); padding: 4px 12px; font-size: 10px; font-family: var(--mono); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #333; cursor: pointer; transition: all .15s; }
+        .graph-btn:hover { color: #aaa; border-color: #333; }
 
         /* Leaflet overrides */
-        .leaflet-container { background: var(--bg) !important; border-radius: var(--radius-sm); border: 1px solid var(--border-light); }
+        .leaflet-container { background: #060606 !important; border-radius: var(--radius-xs); border: 1px solid #161616; }
 
         /* Tooltip */
         .tooltip-el { position: fixed; background: #333; color: #D4D4D4; font-size: 12px; padding: 4px 10px; border-radius: 4px; pointer-events: none; z-index: 100; max-width: 280px; }
@@ -283,10 +342,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .score-breakdown-pts { font-size: 11px; font-family: var(--mono); color: var(--text-secondary); min-width: 40px; text-align: right; }
 
         /* Toast Notifications */
-        .toast-container { position: fixed; top: 100px; right: 24px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
-        .toast { pointer-events: auto; display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: var(--radius-sm); font-size: 13px; font-family: var(--font); background: var(--surface); border: 1px solid var(--border); color: var(--text); min-width: 280px; max-width: 420px; opacity: 0; transform: translateX(40px); transition: all .3s ease; }
+        .toast-container { position: fixed; top: 64px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
+        .toast { pointer-events: auto; display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: var(--radius-xs); font-size: 11px; font-family: var(--mono); background: #0c0c0c; border: 1px solid #1e1e1e; color: #aaa; min-width: 260px; max-width: 380px; opacity: 0; transform: translateX(20px); transition: all .25s ease; }
         .toast.show { opacity: 1; transform: translateX(0); }
-        .toast.hide { opacity: 0; transform: translateX(40px); }
+        .toast.hide { opacity: 0; transform: translateX(20px); }
         .toast-success { border-color: rgba(110,192,114,.3); }
         .toast-success i { color: var(--success); }
         .toast-error { border-color: rgba(199,80,80,.3); }
@@ -322,6 +381,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         /* PDF Export */
         .btn-pdf { background: none; border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 5px 12px; font-size: 12px; color: var(--text-secondary); cursor: pointer; font-family: var(--font); transition: all .15s; display: flex; align-items: center; gap: 6px; }
         .btn-pdf:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-sm { background: none; border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; font-size: 11px; color: var(--accent); cursor: pointer; font-family: var(--font); transition: all .12s; }
+        .btn-sm:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+        .btn-primary { background: #d8d8d8; border: none; border-radius: var(--radius-xs); padding: 7px 18px; font-size: 11px; font-weight: 700; font-family: var(--mono); letter-spacing: .07em; text-transform: uppercase; color: #0a0a0a; cursor: pointer; transition: background .15s; }
+        .btn-primary:hover { background: #f0f0f0; }
+        .btn-primary:disabled { background: #1a1a1a; color: #333; cursor: not-allowed; }
 
         /* Source badges */
         .badge-api  { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; font-family: var(--mono); background: var(--info-bg); color: var(--info); margin-left: 4px; vertical-align: middle; }
@@ -334,60 +398,37 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .vt-bar { display: flex; gap: 4px; align-items: center; margin-top: 8px; height: 24px; border-radius: var(--radius-xs); overflow: hidden; }
         .vt-bar-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #fff; min-width: 2px; transition: width .4s; }
 
-        /* Settings page */
-        .settings-section { margin-bottom: 24px; }
-        .settings-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-tertiary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-light); }
-        .api-key-row { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border-light); }
-        .api-key-row:last-child { border-bottom: none; }
-        .api-key-info { flex: 1; min-width: 0; }
-        .api-key-name { font-size: 13.5px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
-        .api-key-desc { font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
-        .api-key-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; background: var(--text-tertiary); }
-        .api-key-status.ok { background: var(--success); }
-        .api-key-status.invalid { background: var(--danger); }
-        .api-key-inputs { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
-        .api-key-input { padding: 7px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 12.5px; font-family: var(--mono); color: var(--text); background: var(--bg); outline: none; width: 240px; transition: border-color .15s; }
-        .api-key-input:focus { border-color: #555; }
-        .api-key-input::placeholder { color: var(--text-tertiary); font-family: var(--font); }
-        .api-key-input.narrow { width: 160px; }
-        .btn-test-key { padding: 7px 14px; background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary); cursor: pointer; font-family: var(--font); transition: all .15s; white-space: nowrap; }
-        .btn-test-key:hover { border-color: var(--info); color: var(--info); }
-        .settings-save-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
-        .btn-settings-save { padding: 9px 24px; background: #fff; color: #111; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; font-family: var(--font); cursor: pointer; transition: background .15s; }
-        .btn-settings-save:hover { background: var(--accent-hover); }
-        .settings-toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+        /* Toggle switch (settings scanner tab) */
         .toggle-switch { position: relative; width: 36px; height: 20px; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .toggle-slider { position: absolute; inset: 0; background: var(--border); border-radius: 10px; cursor: pointer; transition: background .2s; }
-        .toggle-slider::before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: transform .2s; }
-        .toggle-switch input:checked + .toggle-slider { background: var(--success); }
-        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); }
-        .settings-number-input { width: 70px; padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--mono); color: var(--text); background: var(--bg); text-align: center; outline: none; }
-        .settings-number-input:focus { border-color: #555; }
+        .toggle-slider { position: absolute; inset: 0; background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 10px; cursor: pointer; transition: background .2s; }
+        .toggle-slider::before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; bottom: 2px; background: #444; border-radius: 50%; transition: transform .2s,background .2s; }
+        .toggle-switch input:checked + .toggle-slider { background: #1e3d20; border-color: #2d5c30; }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: #4a9e4e; }
 
         @media (max-width: 640px) {
             .search-form { flex-direction: column; }
             .main { padding: 16px; }
         }
         /* additions */
-        .profile-selector { display: flex; align-items: center; gap: 20px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-light); }
-        .profile-selector label { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); cursor: pointer; }
-        .profile-selector input[type="radio"] { accent-color: var(--accent); cursor: pointer; }
-        .profile-label { font-size: 12px; color: var(--text-tertiary); margin-right: 4px; }
-        .badge-danger { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; background: var(--danger-bg); color: var(--danger); }
-        .badge-ok { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; background: var(--success-bg); color: var(--success); }
-        .badge-warn { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; background: var(--warning-bg); color: var(--warning); }
-        .v6-section { margin-bottom: 12px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
-        .v6-row { display: flex; align-items: flex-start; padding: 5px 0; font-size: 13px; gap: 10px; border-bottom: 1px solid var(--border-light); }
+        .profile-selector { display: flex; align-items: center; gap: 20px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #161616; }
+        .profile-selector label { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); color: #3a3a3a; cursor: pointer; }
+        .profile-selector input[type="radio"] { accent-color: #888; cursor: pointer; }
+        .profile-label { font-size: 10px; font-family: var(--mono); color: #2a2a2a; margin-right: 4px; text-transform: uppercase; letter-spacing: .08em; }
+        .badge-danger { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .04em; background: var(--danger-bg); color: var(--danger); }
+        .badge-ok { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .04em; background: var(--success-bg); color: var(--success); }
+        .badge-warn { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .04em; background: var(--warning-bg); color: var(--warning); }
+        .v6-section { margin-bottom: 10px; padding: 10px 14px; background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); }
+        .v6-row { display: flex; align-items: flex-start; padding: 5px 0; font-size: 12px; gap: 10px; border-bottom: 1px solid #111; }
         .v6-row:last-child { border-bottom: none; }
-        .v6-label { color: var(--text-tertiary); width: 130px; flex-shrink: 0; font-size: 12.5px; }
-        .v6-value { color: var(--text); flex: 1; word-break: break-word; }
-        .rec-item { display: flex; align-items: baseline; gap: 10px; padding: 7px 12px; border-radius: var(--radius-xs); background: var(--danger-bg); border: 1px solid rgba(199,80,80,.15); margin-bottom: 5px; }
-        .rec-points { font-size: 12px; font-weight: 700; color: var(--danger); font-family: var(--mono); white-space: nowrap; }
-        .rec-reason { font-size: 13px; color: var(--text-secondary); }
-        .score-v6-header { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); margin-bottom: 16px; }
-        .grade-v6 { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; font-weight: 700; font-size: 22px; }
-        .profile-note { margin-top: 12px; padding: 10px 14px; background: var(--info-bg); border: 1px solid rgba(122,158,199,.2); border-radius: var(--radius-sm); font-size: 12.5px; color: var(--info); }
+        .v6-label { color: #3a3a3a; width: 130px; flex-shrink: 0; font-size: 10.5px; font-family: var(--mono); letter-spacing: .03em; }
+        .v6-value { color: #aaa; flex: 1; word-break: break-word; font-size: 12px; }
+        .rec-item { display: flex; align-items: baseline; gap: 10px; padding: 7px 12px; border-radius: var(--radius-xs); background: rgba(199,80,80,.04); border: 1px solid rgba(199,80,80,.1); margin-bottom: 5px; }
+        .rec-points { font-size: 11px; font-weight: 700; color: var(--danger); font-family: var(--mono); white-space: nowrap; }
+        .rec-reason { font-size: 12.5px; color: #666; }
+        .score-v6-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); margin-bottom: 14px; }
+        .grade-v6 { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; font-weight: 700; font-size: 20px; }
+        .profile-note { margin-top: 10px; padding: 9px 14px; background: rgba(90,127,168,.05); border: 1px solid rgba(90,127,168,.12); border-radius: var(--radius-xs); font-size: 12px; color: #5a7fa8; }
     </style>
 </head>
 
@@ -411,6 +452,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         </div>
 
         <div class="header-right">
+            <button id="btn-vpn" class="header-link" title="VPN Mullvad">
+                <span class="status-dot" id="vpn-indicator" style="background:var(--text-tertiary);"></span>
+                <span id="vpn-text">VPN</span>
+            </button>
             <button id="btn-open-settings" class="header-link"><i class="fa-solid fa-gear"></i> Paramètres</button>
             <div class="header-link">
                 <span class="status-dot" id="status-indicator"></span>
@@ -477,6 +522,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             <div class="main-tab" data-main="infra">Infrastructure</div>
             <div class="main-tab" data-main="web">Web</div>
             <div class="main-tab" data-main="osint">OSINT</div>
+            <div class="main-tab" data-main="bulk">Bulk Scan</div>
+            <div class="main-tab" data-main="diff">Diff</div>
+            <div class="main-tab" data-main="dashboard">Dashboard</div>
         </nav>
 
         <!-- Content area -->
@@ -551,8 +599,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="network-ext">Réseau étendu</button>
                     <button class="sub-tab" data-sub="zone-transfer">Zone Transfer</button>
                     <button class="sub-tab" data-sub="certsh">Cert Transparency</button>
+                    <button class="sub-tab" data-sub="subdomain-bruteforce">Brute-force DNS</button>
                 </div>
                 <div id="tab-certsh" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-certificate"></i> Certificate Transparency — crt.sh</div><div id="certsh-content"></div></div>
+                <div id="tab-subdomain-bruteforce" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Brute-force DNS</div><div id="subdomain-bruteforce-content"></div></div>
                 <div id="tab-dns" class="tab-content"><div class="section-title"><i class="fa-solid fa-server"></i> Enregistrements DNS</div><div id="dns-content"></div></div>
                 <div id="tab-subdomains" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-sitemap"></i> Sous-domaines découverts</div><span id="sub-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div id="subdomains-content" style="max-height:500px;overflow-y:auto;"></div></div>
                 <div id="tab-timeline" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-timeline"></i> Timeline DNS</div><div id="timeline-content"></div></div>
@@ -581,6 +631,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="dast">DAST</button>
                     <button class="sub-tab" data-sub="observatory">Observatory</button>
                     <button class="sub-tab" data-sub="cert-pinning">Cert Pinning</button>
+                    <button class="sub-tab" data-sub="js-secrets">JS Secrets</button>
                 </div>
                 <div id="tab-security" class="tab-content"><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;"><div><div class="section-title"><i class="fa-solid fa-shield-halved"></i> En-têtes OWASP</div><div id="security-details"></div></div><div><div class="section-title"><i class="fa-solid fa-chart-simple"></i> Score</div><div style="display:flex;justify-content:center;"><canvas id="security-chart" width="300" height="300"></canvas></div></div></div></div>
                 <div id="tab-score" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-gauge-high"></i> Score Global</div><div id="score-content"></div></div>
@@ -598,6 +649,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-dast" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-bug"></i> DAST-lite — Passive Checks</div><div id="dast-content"></div></div>
                 <div id="tab-observatory" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flask"></i> Mozilla Observatory — HTTP Security</div><div id="observatory-content"></div></div>
                 <div id="tab-cert-pinning" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-thumbtack"></i> Certificate Pinning — HPKP / Expect-CT</div><div id="cert-pinning-content"></div></div>
+                <div id="tab-js-secrets" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-key"></i> JS Secrets — Hardcoded Credentials</div><div id="js-secrets-content"></div></div>
             </div>
 
             <!-- Infrastructure -->
@@ -611,6 +663,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="shodan">Shodan</button>
                     <button class="sub-tab" data-sub="bgpview">BGPView</button>
                     <button class="sub-tab" data-sub="abuseipdb">AbuseIPDB</button>
+                    <button class="sub-tab" data-sub="censys">Censys</button>
+                    <button class="sub-tab" data-sub="nuclei">Nuclei</button>
+                    <button class="sub-tab" data-sub="dnsbl">DNSBL</button>
                 </div>
                 <div id="tab-bgpview" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-route"></i> BGP Routing — ASN / Prefixes / Peers</div><div id="bgpview-content"></div></div>
                 <div id="tab-whois" class="tab-content"><div class="section-title"><i class="fa-solid fa-address-card"></i> WHOIS</div><div id="whois-content"></div></div>
@@ -620,6 +675,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-banners" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flag"></i> Banners</div><div id="banners-content"></div></div>
                 <div id="tab-shodan" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-satellite-dish"></i> Shodan</div><div id="shodan-content"></div></div>
                 <div id="tab-abuseipdb" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-skull-crossbones"></i> AbuseIPDB — IP Reputation</div><div id="abuseipdb-content"></div></div>
+                <div id="tab-censys" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-eye"></i> Censys — Certificates &amp; Hosts</div><div id="censys-content"></div></div>
+                <div id="tab-nuclei" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-radiation"></i> Nuclei — Vulnerability Scan</div><div id="nuclei-content"></div></div>
+                <div id="tab-dnsbl" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-list-check"></i> Multi-DNSBL — Réputation IP</div><div id="dnsbl-content"></div></div>
             </div>
 
             <!-- Web -->
@@ -631,6 +689,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="linkeddomains">Liens externes</button>
                     <button class="sub-tab" data-sub="screenshot">Screenshot</button>
                     <button class="sub-tab" data-sub="http-methods">HTTP Methods</button>
+                    <button class="sub-tab" data-sub="cloud-storage">Cloud Storage</button>
+                    <button class="sub-tab" data-sub="api-endpoints">API Endpoints</button>
+                    <button class="sub-tab" data-sub="cms">CMS</button>
                 </div>
                 <div id="tab-redirects" class="tab-content"><div class="section-title"><i class="fa-solid fa-route"></i> Redirections HTTP</div><div id="redirects-content"></div></div>
                 <div id="tab-webfiles" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-lines"></i> Fichiers Web</div><div id="webfiles-content"></div></div>
@@ -638,6 +699,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-linkeddomains" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-link"></i> Liens externes</div><div id="linkeddomains-content"></div></div>
                 <div id="tab-screenshot" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-camera"></i> Screenshot</div><div id="screenshot-content"></div></div>
                 <div id="tab-http-methods" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-code"></i> HTTP Methods</div><div id="http-methods-content"></div></div>
+                <div id="tab-cloud-storage" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-cloud"></i> Cloud Storage Exposure</div><div id="cloud-storage-content"></div></div>
+                <div id="tab-api-endpoints" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-plug"></i> API Endpoints</div><div id="api-endpoints-content"></div></div>
+                <div id="tab-cms" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-layer-group"></i> CMS Fingerprinting</div><div id="cms-content"></div></div>
             </div>
 
             <!-- OSINT -->
@@ -655,6 +719,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="pdns">Passive DNS</button>
                     <button class="sub-tab" data-sub="emailrep">EmailRep</button>
                     <button class="sub-tab" data-sub="notes">Notes &amp; Tags</button>
+                    <button class="sub-tab" data-sub="leakix">LeakIX</button>
+                    <button class="sub-tab" data-sub="github-dork">GitHub</button>
+                    <button class="sub-tab" data-sub="hibp">HIBP</button>
+                    <button class="sub-tab" data-sub="js-deps">JS Deps</button>
+                    <button class="sub-tab" data-sub="paste-leaks">Paste Leaks</button>
                 </div>
                 <div id="tab-urlscan" class="tab-content"><div class="section-title"><i class="fa-solid fa-magnifying-glass-chart"></i> URLScan.io</div><div id="urlscan-content"></div></div>
                 <div id="tab-wayback" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Wayback Machine</div><div id="wayback-content"></div></div>
@@ -668,6 +737,78 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-html-intel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-code"></i> HTML Intel</div><div id="html-intel-content"></div></div>
                 <div id="tab-smtp-security" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-at"></i> SMTP Security</div><div id="smtp-security-content"></div></div>
                 <div id="tab-notes" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-sticky-note"></i> Notes &amp; Tags</div><div id="notes-content"></div></div>
+                <div id="tab-leakix" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> LeakIX — Services & Leaks</div><div id="leakix-content"></div></div>
+                <div id="tab-github-dork" class="tab-content hidden"><div class="section-title"><i class="fa-brands fa-github"></i> GitHub Dork</div><div id="github-dork-content"></div></div>
+                <div id="tab-hibp" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-database"></i> Have I Been Pwned</div><div id="hibp-content"></div></div>
+                <div id="tab-js-deps" class="tab-content hidden"><div class="section-title"><i class="fa-brands fa-js"></i> JS Dependencies — CVE Check</div><div id="js-deps-content"></div></div>
+                <div id="tab-paste-leaks" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-paste"></i> Paste Leaks — Fuites de Données</div><div id="paste-content"></div></div>
+            </div>
+
+            <div id="main-bulk" class="main-panel hidden" style="padding:24px;">
+                <div style="max-width:720px;">
+                    <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Bulk Scan</div>
+                    <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:16px;">Scannez jusqu'à 20 domaines en une fois. Les résultats sont sauvegardés dans l'historique.</div>
+                    <textarea id="bulk-domains-input" placeholder="exemple.com&#10;autre-domaine.fr&#10;test.io" style="width:100%;height:140px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);color:var(--text-primary);font-family:var(--mono);font-size:13px;padding:10px 12px;resize:vertical;"></textarea>
+                    <div style="display:flex;align-items:center;gap:16px;margin-top:10px;margin-bottom:18px;">
+                        <label style="font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;cursor:pointer;">
+                            <input type="radio" name="bulk_profile" value="quick" checked> Quick
+                        </label>
+                        <label style="font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;cursor:pointer;">
+                            <input type="radio" name="bulk_profile" value="full"> Full
+                        </label>
+                        <button id="bulk-scan-btn" class="btn-primary" onclick="app.runBulkScan()" style="margin-left:auto;">Lancer le scan bulk</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+                            <thead><tr style="color:var(--text-tertiary);text-align:left;">
+                                <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Domaine</th>
+                                <th style="padding:6px 10px;border-bottom:1px solid var(--border);">IP</th>
+                                <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Score</th>
+                                <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Statut</th>
+                                <th style="padding:6px 10px;border-bottom:1px solid var(--border);"></th>
+                            </tr></thead>
+                            <tbody id="bulk-results-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diff panel -->
+            <div id="main-diff" class="main-panel hidden" style="padding:24px;">
+                <div style="max-width:860px;">
+                    <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Comparaison de scans</div>
+                    <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:18px;">Sélectionnez deux scans du même domaine pour voir les changements.</div>
+                    <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:20px;">
+                        <div>
+                            <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:4px;">Scan de référence (ancien)</div>
+                            <select id="diff-select-a" class="settings-input" style="min-width:240px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);color:var(--text-primary);padding:6px 10px;font-family:var(--mono);font-size:12px;">
+                                <option value="">— Sélectionner —</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:4px;">Scan à comparer (récent)</div>
+                            <select id="diff-select-b" class="settings-input" style="min-width:240px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);color:var(--text-primary);padding:6px 10px;font-family:var(--mono);font-size:12px;">
+                                <option value="">— Sélectionner —</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary" onclick="app.runDiff()">Comparer</button>
+                    </div>
+                    <div id="diff-results"></div>
+                </div>
+            </div>
+
+            <!-- Dashboard panel -->
+            <div id="main-dashboard" class="main-panel hidden" style="padding:24px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                    <div style="font-size:15px;font-weight:700;">Dashboard — tous les domaines</div>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn-sm" onclick="app.loadDashboard()"><i class="fa-solid fa-arrows-rotate"></i> Actualiser</button>
+                        <button class="btn-sm" onclick="app.exportCSV()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                    </div>
+                </div>
+                <div id="dashboard-content">
+                    <div style="color:var(--text-tertiary);font-size:13px;">Chargement…</div>
+                </div>
             </div>
 
             <!-- Content footer -->
@@ -675,6 +816,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <span>Scan #<span id="result-id">—</span> · <span id="result-domain-footer" style="color:var(--accent);">—</span> · <span id="result-timestamp">—</span></span>
                 <div style="display:flex;align-items:center;gap:8px;">
                     <button id="export-pdf-btn" class="btn-pdf"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                    <button id="export-csv-btn" class="btn-export"><i class="fa-solid fa-file-csv"></i> CSV</button>
                     <button id="export-btn" class="btn-export"><i class="fa-solid fa-download"></i> JSON</button>
                 </div>
             </div>
@@ -784,6 +926,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             document.getElementById('refresh-history').addEventListener('click', () => this.loadHistory());
             document.getElementById('export-btn').addEventListener('click', () => this.exportJSON());
             document.getElementById('export-pdf-btn').addEventListener('click', () => this.exportPDF());
+            document.getElementById('export-csv-btn').addEventListener('click', () => this.exportCSVSingle());
             document.getElementById('history-search-input').addEventListener('input', (e) => this.filterHistory(e.target.value));
 
             // Settings
@@ -792,48 +935,67 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             this.checkApiStatus();
             this.loadHistory();
             setInterval(() => this.checkApiStatus(), 30000);
+            this.updateVpnStatus();
+            setInterval(() => this.updateVpnStatus(), 15000);
         }
 
         openSettings() {
-            const existing = document.getElementById('settings-overlay');
-            if (existing) { existing.remove(); return; }
-
+            if (document.getElementById('settings-overlay')) { this._closeSettings(); return; }
             const overlay = document.createElement('div');
             overlay.id = 'settings-overlay';
             overlay.className = 'settings-overlay';
 
             const backdrop = document.createElement('div');
             backdrop.className = 'settings-backdrop';
-            backdrop.addEventListener('click', () => overlay.remove());
+            backdrop.addEventListener('click', () => this._closeSettings());
 
-            const panelEl = document.createElement('div');
-            panelEl.className = 'settings-panel';
+            const panel = document.createElement('div');
+            panel.className = 'settings-panel';
+            panel.innerHTML = `
+                <div class="sp-header">
+                    <div class="sp-header-top">
+                        <span class="sp-title">DomainRecon <em>Paramètres</em></span>
+                        <button class="sp-close" onclick="app._closeSettings()"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="sp-tabs">
+                        <div class="sp-tab active" data-sptab="api" onclick="app._spTab(this)">API Keys</div>
+                        <div class="sp-tab" data-sptab="scanner" onclick="app._spTab(this)">Scanner</div>
+                        <div class="sp-tab" data-sptab="vpn" onclick="app._spTab(this)">VPN</div>
+                    </div>
+                </div>
+                <div id="settings-overlay-content" class="sp-content"></div>
+                <div class="sp-footer">
+                    <span class="sp-footer-hint">Les clés sont stockées localement.</span>
+                    <button class="sp-save-btn" onclick="app.saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Enregistrer</button>
+                </div>`;
 
-            const panelHeader = document.createElement('div');
-            panelHeader.className = 'settings-panel-header';
-
-            const title = document.createElement('span');
-            title.style.cssText = 'font-size:15px;font-weight:600;';
-            title.textContent = 'Paramètres';
-
-            const closeBtn = document.createElement('button');
-            closeBtn.className = 'btn-settings-close';
-            closeBtn.textContent = '×';
-            closeBtn.addEventListener('click', () => overlay.remove());
-
-            panelHeader.appendChild(title);
-            panelHeader.appendChild(closeBtn);
-
-            const contentDiv = document.createElement('div');
-            contentDiv.id = 'settings-overlay-content';
-
-            panelEl.appendChild(panelHeader);
-            panelEl.appendChild(contentDiv);
             overlay.appendChild(backdrop);
-            overlay.appendChild(panelEl);
+            overlay.appendChild(panel);
             document.body.appendChild(overlay);
+            requestAnimationFrame(() => { backdrop.classList.add('sopen'); panel.classList.add('sopen'); });
+            this.renderSettings(document.getElementById('settings-overlay-content'), 'api');
+        }
 
-            this.renderSettings(contentDiv);
+        _closeSettings() {
+            const o = document.getElementById('settings-overlay');
+            if (!o) return;
+            o.querySelector('.settings-backdrop')?.classList.remove('sopen');
+            o.querySelector('.settings-panel')?.classList.remove('sopen');
+            setTimeout(() => o.remove(), 400);
+        }
+
+        _spTab(el) {
+            el.closest('.sp-tabs').querySelectorAll('.sp-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            this.renderSettings(document.getElementById('settings-overlay-content'), el.dataset.sptab);
+        }
+
+        _toggleEye(btn) {
+            const inp = btn.closest('.sp-inp-wrap').querySelector('.sp-inp');
+            if (!inp) return;
+            const show = inp.type === 'password';
+            inp.type = show ? 'text' : 'password';
+            btn.querySelector('i').className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
         }
 
         async checkApiStatus() {
@@ -861,33 +1023,82 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             const btnCompact = document.getElementById('scan-button-compact');
             if (btn) btn.disabled = true;
             if (btnCompact) btnCompact.disabled = true;
+            const profile = (document.querySelector('input[name="scan_profile"]:checked') || document.querySelector('input[name="scan_profile_compact"]:checked') || {value:'full'}).value;
+            const wsBase = this.apiBase.replace(/^http/, 'ws');
+            let ws;
             try {
-                const res = await fetch(`${this.apiBase}/scan`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ domain, profile: (document.querySelector('input[name="scan_profile"]:checked') || document.querySelector('input[name="scan_profile_compact"]:checked') || {value:'full'}).value })
+                await new Promise((resolve, reject) => {
+                    ws = new WebSocket(`${wsBase}/ws/scan`);
+                    ws.onopen = () => {
+                        ws.send(JSON.stringify({ domain, profile }));
+                    };
+                    ws.onmessage = (evt) => {
+                        let msg;
+                        try { msg = JSON.parse(evt.data); } catch { return; }
+                        if (msg.type === 'progress' && msg.module) {
+                            this._wsUpdateModule(msg.module, msg.status);
+                        } else if (msg.type === 'result') {
+                            this.currentScan = msg.data;
+                            resolve();
+                        } else if (msg.type === 'error') {
+                            reject(new Error(msg.detail || 'Erreur scan'));
+                        }
+                    };
+                    ws.onerror = () => reject(new Error('WebSocket error'));
+                    ws.onclose = (e) => {
+                        if (e.code !== 1000 && e.code !== 1001) reject(new Error('WebSocket fermé'));
+                    };
                 });
-                if (!res.ok) {
-                    const err = await res.json();
-                    throw new Error(err.detail || `Erreur HTTP ${res.status}`);
-                }
+                ws.close();
                 this.stopScanAnimation();
-                const data = await res.json();
-                this.currentScan = data;
                 this.completeScanSteps();
-                await this.sleep(400);
-                this.displayResults(data);
+                await this.sleep(300);
+                this.displayResults(this.currentScan);
                 this.loadHistory();
-                this.showToast(`Analyse de ${data.domain} terminée`, 'success');
+                this.showToast(`Analyse de ${this.currentScan.domain} terminée`, 'success');
             } catch (e) {
-                this.stopScanAnimation();
-                this.showToast(e.message, 'error');
-                document.getElementById('error-message').textContent = e.message;
-                this.showSection('error');
+                if (ws) try { ws.close(); } catch {}
+                // Fallback to HTTP if WebSocket fails
+                try {
+                    const res = await fetch(`${this.apiBase}/scan`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ domain, profile })
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.detail || `Erreur HTTP ${res.status}`);
+                    }
+                    this.stopScanAnimation();
+                    const data = await res.json();
+                    this.currentScan = data;
+                    this.completeScanSteps();
+                    await this.sleep(400);
+                    this.displayResults(data);
+                    this.loadHistory();
+                    this.showToast(`Analyse de ${data.domain} terminée`, 'success');
+                } catch (e2) {
+                    this.stopScanAnimation();
+                    this.showToast(e2.message, 'error');
+                    document.getElementById('error-message').textContent = e2.message;
+                    this.showSection('error');
+                }
             } finally {
                 if (btn) btn.disabled = false;
                 if (btnCompact) btnCompact.disabled = false;
             }
+        }
+
+        _wsUpdateModule(module, status) {
+            // Try to highlight the nearest scan step label
+            const steps = document.querySelectorAll('.scan-step');
+            steps.forEach(s => {
+                const label = s.querySelector('.step-label');
+                if (label && label.textContent.toLowerCase().includes(module.replace(/_/g, ' ').toLowerCase().slice(0, 6))) {
+                    s.classList.add('done');
+                    s.querySelector('.step-icon').innerHTML = '<i class="fa-solid fa-check" style="font-size:11px;color:var(--ok);"></i>';
+                }
+            });
         }
 
         startScanAnimation() {
@@ -954,10 +1165,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const threatSpan = document.createElement('span');
                 if (isMalicious || isBlacklisted) {
                     threatSpan.style.color = 'var(--danger)';
-                    threatSpan.textContent = '⚠ Menace';
+                    threatSpan.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Menace';
                 } else {
                     threatSpan.style.color = 'var(--success)';
-                    threatSpan.textContent = '✓ Propre';
+                    threatSpan.innerHTML = '<i class="fa-solid fa-circle-check"></i> Propre';
                 }
                 threatEl.appendChild(threatSpan);
             }
@@ -1028,10 +1239,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 'robtex':         () => this.renderRobtex(d),
                 'html-intel':     () => this.renderHtmlIntel(d),
                 'observatory':    () => this.renderObservatory(d),
-                'cert-pinning':   () => this.renderCertPinning(d),
-                'abuseipdb':      () => this.renderAbuseIpdb(d),
-                'emailrep':       () => this.renderEmailRep(d),
-                'score-v6':       () => this.renderScoreV6(d),
+                'cert-pinning':       () => this.renderCertPinning(d),
+                'abuseipdb':          () => this.renderAbuseIpdb(d),
+                'emailrep':           () => this.renderEmailRep(d),
+                'score-v6':           () => this.renderScoreV6(d),
+                'subdomain-bruteforce': () => this.renderSubdomainBruteforce(d),
+                'cloud-storage':      () => this.renderCloudStorage(d),
+                'api-endpoints':      () => this.renderApiEndpoints(d),
+                'cms':                () => this.renderCms(d),
+                'leakix':             () => this.renderLeakix(d),
+                'github-dork':        () => this.renderGithubDork(d),
+                'hibp':               () => this.renderHibp(d),
+                'js-deps':            () => this.renderJsDeps(d),
+                'js-secrets':         () => this.renderJsSecrets(d),
+                'dnsbl':              () => this.renderDnsbl(d),
+                'paste-leaks':        () => this.renderPaste(d),
+                'censys':             () => this.renderCensys(d),
+                'nuclei':             () => this.renderNuclei(d),
             };
             if (renderers[tab]) renderers[tab]();
         }
@@ -1064,9 +1288,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 ${this.infoRow('Email', `<span class="grade grade-sm grade-${emailGrade === 'N/A' ? 'NA' : emailGrade}">${emailGrade}</span>`, 'fa-envelope')}
                 ${this.infoRow('Technologies', (d.technologies || []).map(t => `<span class="pill pill-neutral">${this.esc(t.name)}</span>`).join(' ') || 'Aucune', 'fa-microchip')}
                 ${takeover.length > 0 ? this.infoRow('Takeover', `<span class="pill pill-danger">${takeover.length} vulnérable(s)</span>`, 'fa-triangle-exclamation') : ''}
-                ${((d.threat_intel||{}).virustotal||{}).malicious > 0 ? this.infoRow('Threat Intel', `<span class="pill pill-danger">⚠ ${((d.threat_intel||{}).virustotal||{}).malicious} menaces VirusTotal</span>`, 'fa-biohazard') : this.infoRow('Threat Intel', '<span class="pill pill-success">Propre</span>', 'fa-biohazard')}
+                ${((d.threat_intel||{}).virustotal||{}).malicious > 0 ? this.infoRow('Threat Intel', `<span class="pill pill-danger"><i class="fa-solid fa-triangle-exclamation"></i> ${((d.threat_intel||{}).virustotal||{}).malicious} menaces VirusTotal</span>`, 'fa-biohazard') : this.infoRow('Threat Intel', '<span class="pill pill-success">Propre</span>', 'fa-biohazard')}
                 ${(d.email_blacklist||{}).is_blacklisted ? this.infoRow('Blacklist IP', `<span class="pill pill-danger">Blacklisté (${((d.email_blacklist||{}).listed_on||[]).length})</span>`, 'fa-ban') : ''}
-                ${(d.hsts_preload||{}).preloaded ? this.infoRow('HSTS Preload', '<span class="pill pill-success">Préchargé ✓</span>', 'fa-lock') : ''}
+                ${(d.hsts_preload||{}).preloaded ? this.infoRow('HSTS Preload', '<span class="pill pill-success">Préchargé <i class="fa-solid fa-check"></i></span>', 'fa-lock') : ''}
                 ${(d.wayback_data||{}).available ? this.infoRow('Wayback', `Archive : ${(d.wayback_data||{}).timestamp||'?'}`, 'fa-clock-rotate-left') : ''}
                 ${this.infoRow('Statut', `<span class="pill ${this.statusPill(d.status)}">${d.status}</span>`, 'fa-circle-check')}
             `;
@@ -1345,7 +1569,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 html += `<div class="data-card" style="margin-top:14px;border-color:var(--danger);">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                         <i class="fa-solid fa-skull-crossbones" style="color:var(--danger);"></i>
-                        <span style="font-size:13px;font-weight:700;color:var(--danger);">⚠ Fichiers sensibles exposés (${sensitiveFiles.length})</span>
+                        <span style="font-size:13px;font-weight:700;color:var(--danger);">Fichiers sensibles exposés (${sensitiveFiles.length})</span>
                     </div>
                     ${sensitiveFiles.map(f => `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border-light);">
                         <span class="pill pill-danger" style="font-size:10px;">HTTP ${f.status}</span>
@@ -1386,9 +1610,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                             <span class="pill ${missingFlags.length === 0 ? 'pill-success' : 'pill-warning'}">${missingFlags.length === 0 ? 'Sécurisé' : `${missingFlags.length} flag(s) manquant(s)`}</span>
                         </div>
                         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                            <span class="pill ${c.secure ? 'pill-success' : 'pill-danger'}">Secure: ${c.secure ? '✓' : '✗'}</span>
-                            <span class="pill ${c.httponly ? 'pill-success' : 'pill-danger'}">HttpOnly: ${c.httponly ? '✓' : '✗'}</span>
-                            <span class="pill ${c.samesite ? 'pill-success' : 'pill-danger'}">SameSite: ${c.samesite || '✗'}</span>
+                            <span class="pill ${c.secure ? 'pill-success' : 'pill-danger'}">Secure: ${c.secure ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'}</span>
+                            <span class="pill ${c.httponly ? 'pill-success' : 'pill-danger'}">HttpOnly: ${c.httponly ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'}</span>
+                            <span class="pill ${c.samesite ? 'pill-success' : 'pill-danger'}">SameSite: ${c.samesite || '<i class="fa-solid fa-xmark"></i>'}</span>
                         </div>
                     </div>`;
                 });
@@ -2054,7 +2278,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             let html = `<div class="data-card" style="margin-bottom:14px;border-color:${isMalicious ? 'var(--danger)' : 'var(--success)'};">
                 <div style="display:flex;align-items:center;gap:12px;">
                     <i class="fa-solid ${isMalicious ? 'fa-skull-crossbones' : 'fa-shield-check'}" style="font-size:24px;color:${isMalicious ? 'var(--danger)' : 'var(--success)'};"></i>
-                    <div><div style="font-size:15px;font-weight:700;color:${isMalicious ? 'var(--danger)' : 'var(--success)'};">${isMalicious ? '⚠ Domaine signalé comme malveillant' : '✓ Aucune menace connue'}</div>
+                    <div><div style="font-size:15px;font-weight:700;color:${isMalicious ? 'var(--danger)' : 'var(--success)'};">${isMalicious ? '<i class="fa-solid fa-triangle-exclamation"></i> Domaine signalé comme malveillant' : '<i class="fa-solid fa-circle-check"></i> Aucune menace connue'}</div>
                     <div style="font-size:12.5px;color:var(--text-tertiary);">${Object.keys(vt).length ? 'VirusTotal' : 'Aucune clé API configurée'}</div></div>
                 </div></div>`;
             if (Object.keys(vt).length) {
@@ -2146,7 +2370,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div style="display:flex;align-items:center;gap:12px;">
                     <i class="fa-solid ${isBlacklisted ? 'fa-ban' : 'fa-circle-check'}" style="font-size:24px;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};"></i>
                     <div>
-                        <div style="font-size:15px;font-weight:700;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};">${isBlacklisted ? `⚠ IP blacklistée (${listed.length} liste(s))` : '✓ IP propre — Aucune blacklist'}</div>
+                        <div style="font-size:15px;font-weight:700;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};">${isBlacklisted ? `<i class="fa-solid fa-triangle-exclamation"></i> IP blacklistée (${listed.length} liste(s))` : '<i class="fa-solid fa-circle-check"></i> IP propre — Aucune blacklist'}</div>
                         <div style="font-size:12.5px;color:var(--text-tertiary);">DNSBL vérifiées · ${d.ip_address || 'IP inconnue'}</div>
                     </div>
                 </div></div>`;
@@ -2163,14 +2387,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div style="display:flex;align-items:center;gap:12px;">
                     <i class="fa-solid ${h.preloaded ? 'fa-lock' : 'fa-lock-open'}" style="font-size:24px;color:${h.preloaded ? 'var(--success)' : 'var(--warning)'};"></i>
                     <div>
-                        <div style="font-size:15px;font-weight:700;">${h.preloaded ? '✓ Domaine HSTS Préchargé (Chromium)' : 'Non présent dans la liste HSTS Preload'}</div>
+                        <div style="font-size:15px;font-weight:700;">${h.preloaded ? '<i class="fa-solid fa-check" style="color:var(--success);"></i> Domaine HSTS Préchargé (Chromium)' : 'Non présent dans la liste HSTS Preload'}</div>
                         <div style="font-size:12.5px;color:var(--text-tertiary);">Statut : <b>${h.status || 'unknown'}</b></div>
                     </div>
                 </div></div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-                ${this.kv('Préchargé', h.preloaded ? '✓ Oui' : '✗ Non')}
-                ${this.kv('Include Subdomains', h.include_subdomains ? '✓ Oui' : '✗ Non')}
-                ${this.kv('Éligible', h.eligible ? '✓ Éligible' : '✗ Non éligible')}
+                ${this.kv('Préchargé', h.preloaded ? '<i class="fa-solid fa-check" style="color:var(--success);"></i> Oui' : '<i class="fa-solid fa-xmark" style="color:var(--danger);"></i> Non')}
+                ${this.kv('Include Subdomains', h.include_subdomains ? '<i class="fa-solid fa-check" style="color:var(--success);"></i> Oui' : '<i class="fa-solid fa-xmark" style="color:var(--danger);"></i> Non')}
+                ${this.kv('Éligible', h.eligible ? '<i class="fa-solid fa-check" style="color:var(--success);"></i> Éligible' : '<i class="fa-solid fa-xmark" style="color:var(--danger);"></i> Non éligible')}
             </div>
             <div class="data-card" style="margin-top:14px;">
                 <div style="font-size:12.5px;color:var(--text-secondary);">Le préchargement HSTS garantit que les navigateurs Chromium utilisent toujours HTTPS pour ce domaine, même lors de la première visite. C'est une protection forte contre les attaques de type SSL stripping.</div>
@@ -2180,65 +2404,115 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         }
 
         // SETTINGS
-        async renderSettings(targetEl) {
-            const el = targetEl || document.getElementById('settings-overlay-content');
+        async renderSettings(el, tab) {
+            el = el || document.getElementById('settings-overlay-content');
             if (!el) return;
-            const loadMsg = document.createElement('div');
-            loadMsg.style.cssText = 'padding:20px;text-align:center;color:var(--text-tertiary);';
-            loadMsg.textContent = 'Chargement…';
-            while (el.firstChild) el.removeChild(el.firstChild);
-            el.appendChild(loadMsg);
+            tab = tab || 'api';
+            el.innerHTML = '<div style="padding:48px;text-align:center;color:#252525;font-family:var(--mono);font-size:11px;letter-spacing:.15em;">LOADING…</div>';
             let s = {};
             try { const r = await fetch(`${this.apiBase}/settings`); if (r.ok) s = await r.json(); } catch(e) {}
-            const keys = [
-                { id:'shodan', name:'Shodan', desc:'Enrichissement ports/banners/CVEs — ports ouverts indexés, vulnérabilités connues, ASN/org', docs:'https://developer.shodan.io/', cur:s.shodan_key },
-                { id:'virustotal', name:'VirusTotal', desc:'Threat intelligence — détections malveillantes, réputation domaine/IP', docs:'https://developers.virustotal.com/', cur:s.virustotal_key },
-                { id:'securitytrails', name:'SecurityTrails', desc:'Subdomains avancés + historique DNS étendu', docs:'https://docs.securitytrails.com/', cur:s.securitytrails_key },
-                { id:'censys', name:'Censys', desc:'Recon alternatif — certificats & services indexés (ID + Secret)', docs:'https://search.censys.io/api', cur:s.censys_id, hasSecret:true, curSecret:s.censys_secret },
-                { id:'urlscan', name:'URLScan.io', desc:'Scans privés + résultats étendus (fonctionne en public sans clé)', docs:'https://urlscan.io/about-api/', cur:s.urlscan_key },
-                { id:'builtwith', name:'BuiltWith', desc:'Stack technologique passif — Analytics, CDN, CMS, Framework…', docs:'https://api.builtwith.com/', cur:s.builtwith_key },
-                { id:'abuseipdb', name:'AbuseIPDB', desc:'Score de réputation IP — compte gratuit sur abuseipdb.com', docs:'https://www.abuseipdb.com/account/api', cur:s.abuseipdb_key },
-            ];
-            let html = '<div class="settings-section"><div class="settings-section-title">Clés API</div>';
-            keys.forEach(k => {
-                const set = !!k.cur;
-                html += `<div class="api-key-row">
-                    <div class="api-key-status ${set?'ok':''}" id="status-dot-${k.id}"></div>
-                    <div class="api-key-info">
-                        <div class="api-key-name">${k.name} ${set?'<span class="badge-api">Configurée</span>':'<span class="badge-na">Non configurée</span>'}</div>
-                        <div class="api-key-desc">${k.desc} · <a href="${k.docs}" target="_blank" style="color:var(--info);">Docs↗</a></div>
+
+            if (tab === 'api') {
+                const groups = [
+                    { label: 'Threat Intel', keys: [
+                        { id:'shodan',     icon:'fa-solid fa-satellite-dish', name:'Shodan',     desc:'Ports ouverts, banners, CVEs, ASN/org', docs:'https://developer.shodan.io/', cur:s.shodan_key, canTest:true },
+                        { id:'virustotal', icon:'fa-solid fa-virus',          name:'VirusTotal', desc:'Réputation domaine/IP, détections malveillantes', docs:'https://developers.virustotal.com/', cur:s.virustotal_key, canTest:true },
+                        { id:'abuseipdb',  icon:'fa-solid fa-ban',            name:'AbuseIPDB',  desc:'Score réputation IP — gratuit sur abuseipdb.com', docs:'https://www.abuseipdb.com/account/api', cur:s.abuseipdb_key, canTest:true },
+                    ]},
+                    { label: 'Recon', keys: [
+                        { id:'securitytrails', icon:'fa-solid fa-shield-halved',       name:'SecurityTrails', desc:'Subdomains avancés + historique DNS', docs:'https://docs.securitytrails.com/', cur:s.securitytrails_key, canTest:true },
+                        { id:'censys',         icon:'fa-solid fa-magnifying-glass',    name:'Censys',         desc:'Certificats & services indexés', docs:'https://search.censys.io/api', cur:s.censys_id, hasSecret:true, secretId:'censys-secret', curSecret:s.censys_secret, ph:'API ID', phSecret:'API Secret', canTest:true },
+                        { id:'urlscan',        icon:'fa-solid fa-link',               name:'URLScan.io',     desc:'Screenshots + analyse DOM (fonctionne sans clé)', docs:'https://urlscan.io/about-api/', cur:s.urlscan_key, canTest:false },
+                        { id:'builtwith',      icon:'fa-solid fa-layer-group',        name:'BuiltWith',      desc:'Stack technologique — Analytics, CDN, CMS, Framework', docs:'https://api.builtwith.com/', cur:s.builtwith_key, canTest:true },
+                    ]},
+                    { label: 'Leaks & OSINT', keys: [
+                        { id:'intelx',  icon:'fa-solid fa-eye-slash',         name:'Intelligence X',  desc:'Credential leaks, stealer logs, redlines — gratuit sur intelx.io', docs:'https://intelx.io/account', cur:s.intelx_key, canTest:true },
+                        { id:'leakix',  icon:'fa-solid fa-droplet',           name:'LeakIX',          desc:'Services exposés & leaks (sans clé = rate limité)', docs:'https://leakix.net/', cur:s.leakix_key, canTest:false },
+                        { id:'github',  icon:'fa-brands fa-github',           name:'GitHub Token',    desc:'Code Search — détecte secrets publiés (10 req/min sans token)', docs:'https://github.com/settings/tokens', cur:s.github_token, canTest:false },
+                        { id:'google-cse', icon:'fa-brands fa-google',        name:'Google CSE Key',  desc:'Custom Search Engine — Paste Leaks étendu via Google', docs:'https://programmablesearchengine.google.com/', cur:s.google_cse_key, canTest:false },
+                        { id:'circl',   icon:'fa-solid fa-server',            name:'CIRCL PDNS',      desc:'Passive DNS historique — compte gratuit sur circl.lu', docs:'https://www.circl.lu/services/passive-dns/', cur:s.circl_user, hasSecret:true, secretId:'circl-password', curSecret:'', ph:'Username', phSecret:'Password', secretType:'password', canTest:false },
+                    ]},
+                    { label: 'Web Security', keys: [
+                        { id:'safebrowsing', icon:'fa-solid fa-shield-virus', name:'Google Safe Browsing', desc:'Signalements malware/phishing — gratuit Google Cloud Console', docs:'https://developers.google.com/safe-browsing/v4/get-started', cur:s.safebrowsing_key, canTest:true },
+                        { id:'phishtank',    icon:'fa-solid fa-fish',         name:'PhishTank',            desc:'Base phishing (100 req/h sans clé, gratuit sur phishtank.org)', docs:'https://www.phishtank.com/api_info.php', cur:s.phishtank_key, canTest:false },
+                    ]},
+                ];
+                let html = '';
+                groups.forEach(g => {
+                    html += `<div class="sp-cat-label">${g.label}</div>`;
+                    g.keys.forEach(k => {
+                        const set = !!k.cur;
+                        const badge = set ? 'ACTIVE' : 'NOT SET';
+                        const cls = set ? 'sk-ok' : 'sk-na';
+                        const testBtn = k.canTest ? `<button class="sp-test-btn" onclick="app.testKey('${k.id}')"><i class="fa-solid fa-plug-circle-check"></i> Test</button>` : '';
+                        if (k.hasSecret) {
+                            html += `<div class="sp-key-card ${cls}" id="card-${k.id}">
+                                <div class="sp-key-icon"><i class="${k.icon}"></i></div>
+                                <div class="sp-key-info">
+                                    <div class="sp-key-name">${k.name} <span class="sp-key-badge">${badge}</span></div>
+                                    <div class="sp-key-desc">${k.desc} · <a href="${k.docs}" target="_blank">Docs↗</a></div>
+                                </div>
+                                <div class="sp-key-right">
+                                    <div style="display:flex;gap:5px;">
+                                        <div class="sp-inp-wrap">
+                                            <input type="text" class="sp-inp narrow" id="input-${k.id}" placeholder="${k.ph||'Key'}" value="${k.cur||''}">
+                                        </div>
+                                        <div class="sp-inp-wrap">
+                                            <input type="${k.secretType||'password'}" class="sp-inp narrow" id="input-${k.secretId}" placeholder="${k.phSecret||'Secret'}" value="${k.curSecret||''}">
+                                            <button class="sp-inp-eye" onclick="app._toggleEye(this)"><i class="fa-solid fa-eye"></i></button>
+                                        </div>
+                                    </div>
+                                    ${testBtn}
+                                </div>
+                            </div>`;
+                        } else {
+                            html += `<div class="sp-key-card ${cls}" id="card-${k.id}">
+                                <div class="sp-key-icon"><i class="${k.icon}"></i></div>
+                                <div class="sp-key-info">
+                                    <div class="sp-key-name">${k.name} <span class="sp-key-badge">${badge}</span></div>
+                                    <div class="sp-key-desc">${k.desc} · <a href="${k.docs}" target="_blank">Docs↗</a></div>
+                                </div>
+                                <div class="sp-key-right">
+                                    <div class="sp-inp-wrap">
+                                        <input type="password" class="sp-inp" id="input-${k.id}" placeholder="API Key…" value="${k.cur||''}">
+                                        <button class="sp-inp-eye" onclick="app._toggleEye(this)"><i class="fa-solid fa-eye"></i></button>
+                                    </div>
+                                    ${testBtn}
+                                </div>
+                            </div>`;
+                        }
+                    });
+                });
+                el.innerHTML = html;
+
+            } else if (tab === 'scanner') {
+                el.innerHTML = `
+                    <div class="sp-toggle-row">
+                        <div>
+                            <div class="sp-toggle-label">Screenshot automatique</div>
+                            <div class="sp-toggle-sub">Nécessite Playwright — <code style="font-size:10px;background:#0a0a0a;padding:1px 5px;border-radius:3px;">pip install playwright && playwright install chromium</code></div>
+                        </div>
+                        <label class="toggle-switch"><input type="checkbox" id="toggle-screenshot" ${s.screenshot_enabled?'checked':''}><span class="toggle-slider"></span></label>
                     </div>
-                    <div class="api-key-inputs">
-                        ${k.hasSecret
-                            ? `<input type="password" class="api-key-input narrow" id="input-censys-id" placeholder="ID" value="${k.cur||''}"><input type="password" class="api-key-input narrow" id="input-censys-secret" placeholder="Secret" value="${k.curSecret||''}">`
-                            : `<input type="password" class="api-key-input" id="input-${k.id}" placeholder="Clé API…" value="${k.cur||''}">`}
-                        <button class="btn-test-key" onclick="app.testKey('${k.id}')"><i class="fa-solid fa-plug-circle-check"></i> Test</button>
+                    <div class="sp-toggle-row">
+                        <div>
+                            <div class="sp-toggle-label">Timeout Quick scan <span style="color:#383838;">(secondes)</span></div>
+                            <div class="sp-toggle-sub">Durée max par module en mode Quick — 10 à 120 s</div>
+                        </div>
+                        <input type="number" class="sp-num-inp" id="input-quick-timeout" value="${s.quick_timeout||30}" min="10" max="120">
                     </div>
-                </div>`;
-            });
-            html += `<div class="api-key-row">
-                <div class="api-key-status ${s.circl_user?'ok':''}" id="status-dot-circl"></div>
-                <div class="api-key-info">
-                    <div class="api-key-name">CIRCL PDNS ${s.circl_user?'<span class="badge-api">Configuré</span>':'<span class="badge-na">Non configuré</span>'}</div>
-                    <div class="api-key-desc">Passive DNS historique — compte gratuit sur <a href="https://www.circl.lu/services/passive-dns/" target="_blank" style="color:var(--info);">circl.lu↗</a></div>
-                </div>
-                <div class="api-key-inputs">
-                    <input type="text" class="api-key-input narrow" id="input-circl-user" placeholder="Username" value="${s.circl_user||''}">
-                    <input type="password" class="api-key-input narrow" id="input-circl-password" placeholder="Password">
-                </div>
-            </div>`;
-            html += `</div><div class="settings-section"><div class="settings-section-title">Scanner</div>
-                <div class="settings-toggle-row">
-                    <div><div style="font-size:13.5px;font-weight:600;">Screenshot automatique</div><div style="font-size:12px;color:var(--text-tertiary);">Nécessite Playwright (<code>pip install playwright && playwright install chromium</code>)</div></div>
-                    <label class="toggle-switch"><input type="checkbox" id="toggle-screenshot" ${s.screenshot_enabled?'checked':''}><span class="toggle-slider"></span></label>
-                </div>
-                <div class="settings-toggle-row">
-                    <div><div style="font-size:13.5px;font-weight:600;">Timeout par module (secondes)</div><div style="font-size:12px;color:var(--text-tertiary);">Durée max par module (10–300s)</div></div>
-                    <input type="number" class="settings-number-input" id="input-timeout" value="${s.scan_timeout||60}" min="10" max="300">
-                </div>
-            </div>
-            <div class="settings-save-bar"><button class="btn-settings-save" onclick="app.saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Enregistrer</button></div>`;
-            el.innerHTML = html;
+                    <div class="sp-toggle-row">
+                        <div>
+                            <div class="sp-toggle-label">Timeout Full scan <span style="color:#383838;">(secondes)</span></div>
+                            <div class="sp-toggle-sub">Durée max par module en mode Full — 30 à 600 s</div>
+                        </div>
+                        <input type="number" class="sp-num-inp" id="input-full-timeout" value="${s.full_timeout||180}" min="30" max="600">
+                    </div>`;
+
+            } else if (tab === 'vpn') {
+                el.innerHTML = `<div id="vpn-settings-block" style="padding:8px 0;"><div style="font-size:11px;color:#333;font-family:var(--mono);letter-spacing:.1em;">CHARGEMENT…</div></div>`;
+                this.renderVpnSettings();
+            }
         }
 
         async testKey(service) {
@@ -2247,33 +2521,130 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             try {
                 const r = await fetch(`${this.apiBase}/settings/test/${service}`, { method:'POST' });
                 const data = await r.json();
-                const dot = document.getElementById(`status-dot-${service}`);
-                if (dot) dot.className = `api-key-status ${data.valid?'ok':'invalid'}`;
-                this.showToast(`${service}: ${data.valid?'✓ Clé valide':'✗ '+data.detail}`, data.valid?'success':'error');
+                const card = document.getElementById(`card-${service}`);
+                if (card) {
+                    card.classList.remove('sk-ok','sk-err','sk-na');
+                    card.classList.add(data.valid ? 'sk-ok' : 'sk-err');
+                    const badge = card.querySelector('.sp-key-badge');
+                    if (badge) badge.textContent = data.valid ? 'ACTIVE' : 'INVALID';
+                }
+                this.showToast(`${service}: ${data.valid?'Clé valide':data.detail}`, data.valid?'success':'error');
             } catch(e) { this.showToast('Erreur réseau','error'); }
             finally { btn.innerHTML = orig; btn.disabled = false; }
         }
 
         async saveSettings() {
             const g = id => { const e = document.getElementById(id); return e ? e.value.trim() : null; };
+            const gn = (id, def) => { const e = document.getElementById(id); return e ? parseInt(e.value)||def : null; };
+            const gb = id => { const e = document.getElementById(id); return e ? e.checked : null; };
             const body = {
                 shodan_key: g('input-shodan'), virustotal_key: g('input-virustotal'),
                 securitytrails_key: g('input-securitytrails'), censys_id: g('input-censys-id'),
                 censys_secret: g('input-censys-secret'), urlscan_key: g('input-urlscan'),
-                builtwith_key: g('input-builtwith'),
-                abuseipdb_key: g('input-abuseipdb'),
-                circl_user: g('input-circl-user'),
-                circl_password: g('input-circl-password'),
-                screenshot_enabled: document.getElementById('toggle-screenshot')?.checked || false,
-                scan_timeout: parseInt(document.getElementById('input-timeout')?.value||'60'),
+                builtwith_key: g('input-builtwith'), abuseipdb_key: g('input-abuseipdb'),
+                intelx_key: g('input-intelx'), safebrowsing_key: g('input-safebrowsing'),
+                phishtank_key: g('input-phishtank'), circl_user: g('input-circl-user'),
+                circl_password: g('input-circl-password'), leakix_key: g('input-leakix'),
+                github_token: g('input-github'),
+                google_cse_key: g('input-google-cse'),
+                screenshot_enabled: gb('toggle-screenshot'),
+                quick_timeout: gn('input-quick-timeout', 30),
+                full_timeout: gn('input-full-timeout', 180),
             };
             Object.keys(body).forEach(k => { if (body[k] === null) delete body[k]; });
             try {
                 const r = await fetch(`${this.apiBase}/settings`, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
                 if (!r.ok) throw new Error(`HTTP ${r.status}`);
                 this.showToast('Paramètres enregistrés','success');
-                this.renderSettings();
             } catch(e) { this.showToast('Erreur : '+e.message,'error'); }
+        }
+
+        async updateVpnStatus() {
+            try {
+                const r = await fetch(`${this.apiBase}/vpn/status`);
+                if (!r.ok) return;
+                const d = await r.json();
+                const dot = document.getElementById('vpn-indicator');
+                const txt = document.getElementById('vpn-text');
+                if (!d.available) { if (dot) dot.style.background = 'var(--text-tertiary)'; if (txt) txt.textContent = 'VPN'; return; }
+                if (dot) dot.style.background = d.connected ? 'var(--success)' : 'var(--text-tertiary)';
+                if (txt) txt.textContent = d.connected ? (d.location || 'VPN ON') : 'VPN OFF';
+            } catch(e) {}
+        }
+
+        async renderVpnSettings() {
+            const block = document.getElementById('vpn-settings-block');
+            if (!block) return;
+            try {
+                const r = await fetch(`${this.apiBase}/vpn/status`);
+                const d = r.ok ? await r.json() : {};
+                const note = d.docker_note || '';
+                const noteHtml = note ? `<div style="margin-top:8px;font-size:11px;color:var(--text-tertiary);line-height:1.5;border-left:2px solid var(--border);padding-left:8px;">${note}</div>` : '';
+                if (!d.available) {
+                    // nosec: content is from our own backend, not user input
+                    block.innerHTML = `<div style="font-size:12px;color:var(--text-tertiary);">Mullvad VPN non détecté — installez <a href="https://mullvad.net/download" target="_blank" style="color:var(--info);">Mullvad VPN</a> sur la machine hôte.${noteHtml}</div>`;
+                    return;
+                }
+                const col = d.connected ? 'var(--success)' : 'var(--text-tertiary)';
+                const txt = d.connected ? 'Connecté — ' + (d.location || d.server || '') : 'Déconnecté';
+                const btnHtml = d.cli_control
+                    ? (d.connected
+                        ? '<button class="sp-test-btn" style="width:auto;padding:6px 14px;" onclick="app.vpnDisconnect()"><i class="fa-solid fa-power-off"></i> Déconnecter</button>'
+                        : '<button class="sp-test-btn" style="width:auto;padding:6px 14px;" onclick="app.vpnConnect()"><i class="fa-solid fa-plug"></i> Connecter</button>')
+                    : '<span style="font-size:11px;color:#333;">Lecture seule</span>';
+                const locHtml = d.cli_control
+                    ? '<div style="font-size:12px;color:var(--text-tertiary);margin-top:8px;margin-bottom:4px;">Pays de sortie :</div><div id="vpn-loc-list" style="font-size:12px;color:var(--text-tertiary);">Chargement\u2026</div>'
+                    : '';
+                // nosec: content is from our own backend, not user input
+                block.innerHTML = '<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;"><span style="font-size:12px;color:' + col + ';font-weight:600;">' + txt + '</span>' + btnHtml + '</div>' + noteHtml + locHtml;
+                if (d.cli_control) this.loadVpnLocations();
+            } catch(e) {
+                block.innerHTML = '<div style="font-size:12px;color:var(--text-tertiary);">Erreur VPN.</div>';
+            }
+        }
+
+        async loadVpnLocations() {
+            const el = document.getElementById('vpn-loc-list');
+            if (!el) return;
+            try {
+                const r = await fetch(`${this.apiBase}/vpn/locations`);
+                const countries = r.ok ? await r.json() : [];
+                if (!countries.length) { el.textContent = 'Aucun relais trouvé'; return; }
+                el.innerHTML = `<select id="vpn-country-select" style="background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-xs);padding:4px 8px;font-size:12px;margin-right:8px;max-width:220px;">
+                    ${countries.map(c => `<option value="${c.code}">${c.name} (${c.code.toUpperCase()})</option>`).join('')}
+                </select>
+                <button class="sp-test-btn" style="width:auto;padding:6px 14px;" onclick="app.vpnSetLocation()"><i class="fa-solid fa-location-dot"></i> Choisir</button>`;
+            } catch(e) { el.textContent = 'Impossible de charger les pays.'; }
+        }
+
+        async vpnConnect() {
+            this.showToast('Connexion VPN…', 'info');
+            try {
+                const r = await fetch(`${this.apiBase}/vpn/connect`, { method:'POST' });
+                const d = await r.json();
+                this.showToast(d.success ? 'VPN connecté' : 'Erreur: '+d.message, d.success?'success':'error');
+                setTimeout(() => { this.updateVpnStatus(); this.renderVpnSettings(); }, 3000);
+            } catch(e) { this.showToast('Erreur réseau', 'error'); }
+        }
+
+        async vpnDisconnect() {
+            try {
+                const r = await fetch(`${this.apiBase}/vpn/disconnect`, { method:'POST' });
+                const d = await r.json();
+                this.showToast(d.success ? 'VPN déconnecté' : 'Erreur: '+d.message, d.success?'success':'error');
+                setTimeout(() => { this.updateVpnStatus(); this.renderVpnSettings(); }, 2000);
+            } catch(e) { this.showToast('Erreur réseau', 'error'); }
+        }
+
+        async vpnSetLocation() {
+            const sel = document.getElementById('vpn-country-select');
+            if (!sel) return;
+            const code = sel.value;
+            try {
+                const r = await fetch(`${this.apiBase}/vpn/location`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({code}) });
+                const d = await r.json();
+                this.showToast(d.success ? `Relais défini: ${code.toUpperCase()}` : 'Erreur: '+d.message, d.success?'success':'error');
+            } catch(e) { this.showToast('Erreur réseau', 'error'); }
         }
 
         kv(label, value) {
@@ -2358,7 +2729,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             doc.text('En-têtes de Sécurité', 14, y); y += 8;
             const secH = d.security_headers || {};
             const allH = ["Strict-Transport-Security","X-Frame-Options","X-Content-Type-Options","Content-Security-Policy","X-XSS-Protection","Referrer-Policy","Permissions-Policy"];
-            const secRows = allH.map(h => [h, (secH.headers_found || {})[h] ? '✓ Présent' : '✗ Absent']);
+            const secRows = allH.map(h => [h, (secH.headers_found || {})[h] ? 'Présent' : 'Absent']);
             doc.autoTable({ startY: y, head: [['En-tête', 'Statut']], body: secRows, theme: 'striped', headStyles: { fillColor: [30, 30, 30] }, margin: { left: 14 }, styles: { fontSize: 9 } });
             y = doc.lastAutoTable.finalY + 10;
 
@@ -2383,6 +2754,90 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (ports.length) {
                 const portRows = ports.map(p => [String(p.port), p.service, p.state]);
                 doc.autoTable({ startY: y, head: [['Port', 'Service', 'État']], body: portRows, theme: 'striped', headStyles: { fillColor: [30, 30, 30] }, margin: { left: 14 }, styles: { fontSize: 9 } });
+                y = doc.lastAutoTable.finalY + 10;
+            }
+
+            // Email Security
+            const es = d.email_security || {};
+            if (es.spf || es.dmarc || es.dkim) {
+                addLine();
+                doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
+                doc.text('Sécurité Email', 14, y); y += 8;
+                const emailRows = [
+                    ['SPF', es.spf?.grade || 'N/A', es.spf?.record?.slice(0,60) || ''],
+                    ['DMARC', es.dmarc?.grade || 'N/A', es.dmarc?.policy || ''],
+                    ['DKIM', es.dkim?.found ? 'Trouvé' : 'Absent', (es.dkim?.selectors_found||[]).join(', ')],
+                    ['Global', es.overall_grade || 'N/A', ''],
+                ];
+                doc.autoTable({ startY:y, head:[['Protocol','Grade','Détail']], body:emailRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:9} });
+                y = doc.lastAutoTable.finalY + 10;
+            }
+
+            // HIBP
+            const hibp = d.hibp_data || {};
+            if (hibp.enriched && (hibp.breach_count||0) > 0) {
+                addLine();
+                doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
+                doc.text(`Have I Been Pwned (${hibp.breach_count} breach(es))`, 14, y); y += 8;
+                const hibpRows = (hibp.breaches||[]).slice(0,20).map(b => [b.title||b.name, b.date||'', (b.pwn_count||0).toLocaleString(), (b.data_classes||[]).slice(0,4).join(', ')]);
+                doc.autoTable({ startY:y, head:[['Breach','Date','Comptes','Données']], body:hibpRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
+                y = doc.lastAutoTable.finalY + 10;
+            }
+
+            // JS Dependencies
+            const jd = d.js_deps_data || {};
+            if (jd.enriched && (jd.vulnerable_count||0) > 0) {
+                addLine();
+                doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
+                doc.text(`Librairies JS vulnérables (${jd.vulnerable_count}/${jd.library_count})`, 14, y); y += 8;
+                const jdRows = (jd.libraries||[]).filter(l=>l.vulnerable).map(l => [l.name, l.version||'', l.severity, (l.vulnerabilities||[]).map(v=>v.cve).join(', ')]);
+                doc.autoTable({ startY:y, head:[['Librairie','Version','Sévérité','CVEs']], body:jdRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
+                y = doc.lastAutoTable.finalY + 10;
+            }
+
+            // Nuclei
+            const nuc = d.nuclei_data || {};
+            if (nuc.enriched && (nuc.total_count||0) > 0) {
+                addLine();
+                doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
+                doc.text(`Nuclei — ${nuc.total_count} finding(s)`, 14, y); y += 8;
+                const nucRows = (nuc.findings||[]).slice(0,30).map(f => [f.severity||'', f.name||f.template_id||'', f.matched_at||'']);
+                doc.autoTable({ startY:y, head:[['Sévérité','Finding','URL']], body:nucRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
+                y = doc.lastAutoTable.finalY + 10;
+            }
+
+            // Cloud Storage
+            const cs = d.cloud_storage || {};
+            const exposed = (cs.buckets||[]).filter(b=>b.status==='exposed');
+            if (exposed.length > 0) {
+                addLine();
+                doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
+                doc.text(`Cloud Storage Exposé (${exposed.length} bucket(s))`, 14, y); y += 8;
+                const csRows = exposed.map(b=>[b.provider||'', b.url||b.name||'', b.status]);
+                doc.autoTable({ startY:y, head:[['Provider','URL','Statut']], body:csRows, theme:'striped', headStyles:{fillColor:[199,80,80]}, margin:{left:14}, styles:{fontSize:8} });
+                y = doc.lastAutoTable.finalY + 10;
+            }
+
+            // LeakIX
+            const lx = d.leakix_data || {};
+            if (lx.enriched && ((lx.leak_count||0)+(lx.service_count||0)) > 0) {
+                addLine();
+                doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
+                doc.text(`LeakIX — ${lx.leak_count||0} leak(s), ${lx.service_count||0} service(s)`, 14, y); y += 8;
+                const lxAll = [...(lx.leaks||[]),...(lx.services||[])].slice(0,20);
+                const lxRows = lxAll.map(item=>[item.severity||'', `${item.host||''}:${item.port||''}`, item.summary||'']);
+                doc.autoTable({ startY:y, head:[['Sévérité','Host:Port','Résumé']], body:lxRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
+                y = doc.lastAutoTable.finalY + 10;
+            }
+
+            // GitHub
+            const gh = d.github_dork || {};
+            if (gh.enriched && (gh.results||[]).length > 0) {
+                addLine();
+                doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
+                doc.text(`GitHub Dork — ${gh.total_count||0} résultat(s)`, 14, y); y += 8;
+                const ghRows = (gh.results||[]).slice(0,20).map(r=>[r.severity||'', r.filename||'', r.repo||'']);
+                doc.autoTable({ startY:y, head:[['Sévérité','Fichier','Repo']], body:ghRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
                 y = doc.lastAutoTable.finalY + 10;
             }
 
@@ -2468,6 +2923,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             const panel = document.getElementById('main-' + mainTabId);
             if (!panel) return;
             panel.classList.remove('hidden');
+            panel.style.animation = 'none';
+            requestAnimationFrame(() => { panel.style.animation = 'contentFade .14s ease'; });
+            if (mainTabId === 'dashboard') { this.loadDashboard(); return; }
+            if (mainTabId === 'diff') { this.loadDiffSelects(); return; }
+            if (mainTabId === 'bulk') return;
             if (!this.currentScan) return;
             if (mainTabId === 'overview') {
                 this.renderOverview(this.currentScan);
@@ -2484,7 +2944,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (bar) bar.querySelectorAll('.sub-tab').forEach(t => t.classList.toggle('active', t === subTabEl));
             if (panel) panel.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             const content = document.getElementById('tab-' + subId);
-            if (content) content.classList.remove('hidden');
+            if (content) {
+                content.classList.remove('hidden');
+                content.style.animation = 'none';
+                requestAnimationFrame(() => { content.style.animation = 'contentFade .12s ease'; });
+            }
             if (this.currentScan) this.switchTab(subId);
         }
 
@@ -2689,7 +3153,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (!sd.enriched) {
                 const msg = mkEl('div', {cls:'v6-section'});
                 const icon = mkEl('div', {style:'font-size:32px;text-align:center;margin-bottom:12px;color:var(--text-tertiary);'});
-                icon.textContent = '🛰️';
+                icon.innerHTML = '<i class="fa-solid fa-satellite-dish" style="font-size:28px;"></i>';
                 const title = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;margin-bottom:8px;'});
                 title.textContent = sd.error || 'Shodan non configuré';
                 const hint = mkEl('p', {style:'text-align:center;font-size:12px;color:var(--text-tertiary);'});
@@ -2781,7 +3245,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if ((sd.vulns||[]).length) {
                 const sec = mkEl('div', {cls:'v6-section'});
                 const secTitle = mkEl('div', {style:'font-size:12px;font-weight:700;text-transform:uppercase;color:var(--danger);letter-spacing:.06em;margin-bottom:10px;'});
-                secTitle.textContent = `⚠ ${sd.vulns.length} Vulnérabilités détectées par Shodan`;
+                secTitle.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${sd.vulns.length} Vulnérabilités détectées par Shodan`;
                 sec.appendChild(secTitle);
                 sd.vulns.forEach(v => {
                     const row = mkEl('div', {style:'padding:10px 12px;border-left:3px solid var(--danger);background:rgba(255,71,71,.05);border-radius:0 6px 6px 0;margin-bottom:8px;'});
@@ -2820,20 +3284,185 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             const c = document.getElementById('typosquatting-content');
             clearEl(c);
             const typo = d.typosquatting || {};
-            if (typo.error) { c.appendChild(mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;', text:'Not available (Quick scan).'})); return; }
-            const hdr = mkEl('div', {style:'margin-bottom:10px;'});
-            hdr.appendChild(mkEl('span', {cls: (typo.count||0) > 0 ? 'badge-danger' : 'badge-ok', text: (typo.count||0) + ' typosquatting variants registered out of ' + (typo.variants_checked||0) + ' tested'}));
-            c.appendChild(hdr);
-            const registered = typo.registered || [];
-            if (registered.length) {
-                const ul = mkEl('ul', {style:'list-style:none;padding:0;'});
-                registered.forEach(v => {
-                    const li = mkEl('li', {style:'padding:5px 12px;border-bottom:1px solid var(--border-light);font-family:var(--mono);font-size:13px;color:var(--danger);'});
-                    li.textContent = v;
-                    ul.appendChild(li);
-                });
-                c.appendChild(ul);
+            if (!typo.enriched && !typo.active_count && !typo.variants_checked) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = typo.wildcard_detected ? 'Wildcard DNS détecté — scan ignoré.' : 'Aucun variant actif détecté.';
+                c.appendChild(p);
+                return;
             }
+            const hdr = mkEl('div', {style:'margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;'});
+            const chk = mkEl('span', {cls:'badge-info'});
+            chk.textContent = (typo.variants_checked || 0) + ' variantes vérifiées';
+            const act = mkEl('span', {cls:(typo.active_count||0) > 0 ? 'badge-warning' : 'badge-ok'});
+            act.textContent = (typo.active_count || 0) + ' actives';
+            const thr = mkEl('span', {cls:(typo.threat_count||0) > 0 ? 'badge-danger' : 'badge-ok'});
+            thr.textContent = (typo.threat_count || 0) + ' menaces potentielles';
+            hdr.appendChild(chk); hdr.appendChild(act); hdr.appendChild(thr);
+            c.appendChild(hdr);
+            const variants = typo.variants || [];
+            if (!variants.length) return;
+            const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:13px;'});
+            const thead = mkEl('thead');
+            const hrow = mkEl('tr', {style:'border-bottom:1px solid var(--border);'});
+            ['Domaine','Type','IP','Même IP','Registrar'].forEach(h => {
+                const th = mkEl('th', {style:'padding:6px 10px;text-align:left;font-size:11px;color:var(--text-tertiary);font-weight:600;'});
+                th.textContent = h;
+                hrow.appendChild(th);
+            });
+            thead.appendChild(hrow);
+            tbl.appendChild(thead);
+            const tbody = mkEl('tbody');
+            variants.forEach(v => {
+                const tr = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                ['domain','type','ip'].forEach(key => {
+                    const td = mkEl('td', {style:'padding:6px 10px;font-family:var(--mono);'});
+                    td.textContent = v[key] || '';
+                    tr.appendChild(td);
+                });
+                const tdSame = mkEl('td', {style:'padding:6px 10px;'});
+                const sameIcon = mkEl('i', {cls: v.same_ip === true ? 'fa-solid fa-circle-check' : v.same_ip === false ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-question'});
+                sameIcon.style.color = v.same_ip === true ? 'var(--success)' : v.same_ip === false ? 'var(--warning)' : 'var(--text-tertiary)';
+                tdSame.appendChild(sameIcon);
+                tr.appendChild(tdSame);
+                const tdReg = mkEl('td', {style:'padding:6px 10px;font-family:var(--mono);'});
+                tdReg.textContent = v.registrar || '-';
+                tr.appendChild(tdReg);
+                tbody.appendChild(tr);
+            });
+            tbl.appendChild(tbody);
+            c.appendChild(tbl);
+        }
+
+        renderJsSecrets(d) {
+            const c = document.getElementById('js-secrets-content');
+            clearEl(c);
+            const js = d.js_secrets_data || {};
+            if (!js.enriched) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = js.error ? 'Erreur: ' + js.error : 'Aucun secret détecté dans les fichiers JS.';
+                c.appendChild(p);
+                return;
+            }
+            const hdr = mkEl('div', {style:'margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;'});
+            [
+                ['Fichiers: ' + (js.files_scanned || 0), 'badge-info'],
+                [(js.critical_count || 0) + ' critiques', (js.critical_count||0) > 0 ? 'badge-danger' : 'badge-ok'],
+                [(js.high_count || 0) + ' hauts', (js.high_count||0) > 0 ? 'badge-warning' : 'badge-ok'],
+                ['Total: ' + (js.total_count || 0), 'badge-info'],
+            ].forEach(([txt, cls]) => { const s = mkEl('span', {cls}); s.textContent = txt; hdr.appendChild(s); });
+            c.appendChild(hdr);
+            const findings = js.findings || [];
+            if (!findings.length) return;
+            const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:13px;'});
+            const thead = mkEl('thead');
+            const hrow = mkEl('tr', {style:'border-bottom:1px solid var(--border);'});
+            ['Fichier','Pattern','Sévérité','Valeur','Ligne'].forEach(h => {
+                const th = mkEl('th', {style:'padding:6px 10px;text-align:left;font-size:11px;color:var(--text-tertiary);font-weight:600;'});
+                th.textContent = h; hrow.appendChild(th);
+            });
+            thead.appendChild(hrow); tbl.appendChild(thead);
+            const tbody = mkEl('tbody');
+            const sevC = {critical:'var(--danger)', high:'var(--warning)', medium:'var(--accent)', low:'var(--text-secondary)'};
+            findings.forEach(f => {
+                const tr = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                [(f.file_url||'').split('/').pop(), f.pattern||'', f.severity||'', f.value_redacted||'', String(f.line_hint||'')].forEach((val, i) => {
+                    const td = mkEl('td', {style:'padding:6px 10px;font-family:var(--mono);'});
+                    if (i === 2) { td.style.color = sevC[f.severity]||'inherit'; td.style.fontWeight='600'; }
+                    td.textContent = val; tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            tbl.appendChild(tbody); c.appendChild(tbl);
+        }
+
+        renderDnsbl(d) {
+            const c = document.getElementById('dnsbl-content');
+            clearEl(c);
+            const bl = d.dnsbl_data || {};
+            if (!bl.enriched) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = bl.reason === 'private_or_missing_ip' ? 'IP privée ou non résolue — DNSBL ignoré.' : 'Données DNSBL non disponibles.';
+                c.appendChild(p);
+                return;
+            }
+            const hdr = mkEl('div', {style:'margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;'});
+            const ipB = mkEl('span', {cls:'badge-info'}); ipB.textContent = 'IP: ' + (bl.ip||'?');
+            const sevB = mkEl('span', {cls: bl.listed_count===0 ? 'badge-ok' : (bl.severity==='critical'?'badge-danger':'badge-warning')});
+            sevB.textContent = (bl.listed_count||0) + '/' + (bl.checked_count||0) + ' listes — ' + (bl.severity||'');
+            hdr.appendChild(ipB); hdr.appendChild(sevB);
+            if (bl.whitelisted) {
+                const wl = mkEl('span', {cls:'badge-ok'});
+                const icon = mkEl('i', {cls:'fa-solid fa-circle-check'});
+                wl.appendChild(icon); wl.appendChild(document.createTextNode(' Whitelisté mailspike'));
+                hdr.appendChild(wl);
+            }
+            c.appendChild(hdr);
+            const listings = bl.listings || [];
+            if (!listings.length) {
+                const ok = mkEl('p', {style:'color:var(--success);font-size:13px;'});
+                const icon = mkEl('i', {cls:'fa-solid fa-circle-check'});
+                ok.appendChild(icon); ok.appendChild(document.createTextNode(' IP propre — aucune liste noire.'));
+                c.appendChild(ok);
+                return;
+            }
+            const tbl = mkEl('table', {style:'width:100%;border-collapse:collapse;font-size:13px;'});
+            const thead = mkEl('thead');
+            const hrow = mkEl('tr', {style:'border-bottom:1px solid var(--border);'});
+            ['DNSBL','Catégorie','Réponse'].forEach(h => {
+                const th = mkEl('th', {style:'padding:6px 10px;text-align:left;font-size:11px;color:var(--text-tertiary);font-weight:600;'});
+                th.textContent = h; hrow.appendChild(th);
+            });
+            thead.appendChild(hrow); tbl.appendChild(thead);
+            const tbody = mkEl('tbody');
+            listings.forEach(l => {
+                const tr = mkEl('tr', {style:'border-bottom:1px solid var(--border-light);'});
+                [l.dnsbl||'', l.category||'', l.response||''].forEach(val => {
+                    const td = mkEl('td', {style:'padding:6px 10px;font-family:var(--mono);'});
+                    td.textContent = val; tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            tbl.appendChild(tbody); c.appendChild(tbl);
+        }
+
+        renderPaste(d) {
+            const c = document.getElementById('paste-content');
+            clearEl(c);
+            const p = d.paste_data || {};
+            if (!p.enriched) {
+                const el = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                el.textContent = 'Aucune fuite trouvée dans les pastes publics.';
+                c.appendChild(el);
+                return;
+            }
+            const hdr = mkEl('div', {style:'margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;'});
+            const tot = mkEl('span', {cls:(p.total_found||0)>0?'badge-danger':'badge-ok'});
+            tot.textContent = (p.total_found||0) + ' paste(s) trouvé(s)';
+            hdr.appendChild(tot);
+            (p.sources_checked||[]).forEach(src => { const s=mkEl('span',{cls:'badge-info'}); s.textContent=src; hdr.appendChild(s); });
+            c.appendChild(hdr);
+            (p.pastes||[]).forEach(paste => {
+                const card = mkEl('div', {style:'border:1px solid var(--border);border-radius:var(--radius-xs);padding:10px 12px;margin-bottom:8px;'});
+                const top = mkEl('div', {style:'display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap;'});
+                const link = mkEl('a');
+                link.href = paste.url || '#';
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.style.fontFamily = 'var(--mono)';
+                link.style.fontSize = '12px';
+                link.textContent = paste.url || '(no url)';
+                const srcB = mkEl('span', {cls:'badge-info'}); srcB.textContent = paste.source||'';
+                const sevB = mkEl('span', {cls: paste.severity==='high'?'badge-danger':paste.severity==='medium'?'badge-warning':'badge-info'});
+                sevB.textContent = paste.severity||'low';
+                top.appendChild(link); top.appendChild(srcB); top.appendChild(sevB);
+                card.appendChild(top);
+                if (paste.snippet) {
+                    const snip = mkEl('p', {style:'font-family:var(--mono);font-size:12px;color:var(--text-secondary);margin:0;white-space:pre-wrap;word-break:break-all;'});
+                    snip.textContent = paste.snippet;
+                    card.appendChild(snip);
+                }
+                c.appendChild(card);
+            });
         }
 
         renderRobtex(d) {
@@ -2983,7 +3612,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             c.appendChild(sum);
             if ((cs.ct_only_count||0) > 0) {
                 const alert = mkEl('div', {style:'background:var(--warning-bg);border:1px solid rgba(212,162,78,.25);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;font-size:12.5px;color:var(--warning);'});
-                alert.textContent = `⚠ ${cs.ct_only_count} sous-domaine(s) trouvés uniquement via CT logs`;
+                alert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${cs.ct_only_count} sous-domaine(s) trouvés uniquement via CT logs`;
                 c.appendChild(alert);
                 const ctList = mkEl('div', {cls:'v6-section', style:'margin-bottom:14px;'});
                 const ctTitle = mkEl('div', {style:'font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:6px;'});
@@ -3042,7 +3671,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             c.appendChild(sev);
             if (!(dt.findings||[]).length) {
                 const ok = mkEl('div', {style:'text-align:center;padding:20px;color:var(--success);font-size:13px;'});
-                ok.textContent = '✓ Aucune exposition détectée'; c.appendChild(ok); return;
+                ok.innerHTML = '<i class="fa-solid fa-circle-check"></i> Aucune exposition détectée'; c.appendChild(ok); return;
             }
             const sevBorder = {high:'var(--danger)', medium:'var(--warning)', low:'var(--info)', info:'var(--border)'};
             dt.findings.forEach(f => {
@@ -3070,7 +3699,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (!bg.enriched) {
                 const msg = mkEl('div', {cls:'v6-section'});
                 const icon = mkEl('div', {style:'font-size:32px;text-align:center;margin-bottom:12px;color:var(--text-tertiary);'});
-                icon.textContent = '🌐';
+                icon.innerHTML = '<i class="fa-solid fa-globe" style="font-size:28px;"></i>';
                 const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
                 p.textContent = bg.error || 'BGPView disponible en mode Full scan uniquement.';
                 msg.appendChild(icon); msg.appendChild(p); c.appendChild(msg); return;
@@ -3213,11 +3842,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const tbody = mkEl('tbody');
                 Object.entries(ob.tests).forEach(([name, t]) => {
                     const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.04);'});
-                    const passIcon = t.pass ? '✅' : '❌';
+                    const passIconHTML = t.pass ? '<i class="fa-solid fa-check" style="color:var(--success);"></i>' : '<i class="fa-solid fa-xmark" style="color:var(--danger);"></i>';
                     const scoreColor = t.score_modifier >= 0 ? 'var(--ok)' : 'var(--error)';
-                    [name, passIcon, t.score_modifier >= 0 ? `+${t.score_modifier}` : `${t.score_modifier}`, t.score_description || ''].forEach((val, i) => {
+                    [name, passIconHTML, t.score_modifier >= 0 ? `+${t.score_modifier}` : `${t.score_modifier}`, t.score_description || ''].forEach((val, i) => {
                         const td = mkEl('td', {style:`padding:6px 8px;font-family:var(--mono);${i===2?`color:${scoreColor};`:''}`});
-                        td.textContent = val; tr.appendChild(td);
+                        if (i === 1) td.innerHTML = val; else td.textContent = val; tr.appendChild(td);
                     });
                     tbody.appendChild(tr);
                 });
@@ -3269,7 +3898,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             }
             if (cp.deprecated_warning) {
                 const warn = mkEl('div', {style:'margin-top:10px;padding:8px 12px;border-left:3px solid var(--warning);background:rgba(255,165,0,.08);border-radius:0 4px 4px 0;font-size:12px;color:var(--warning);'});
-                warn.textContent = '⚠ ' + cp.deprecated_warning; c.appendChild(warn);
+                const wIcon = mkEl('i', {cls:'fa-solid fa-triangle-exclamation'});
+                warn.appendChild(wIcon); warn.appendChild(document.createTextNode(' ' + cp.deprecated_warning)); c.appendChild(warn);
             }
         }
 
@@ -3295,10 +3925,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 [`Rapports: ${ab.total_reports || 0} (${ab.num_distinct_users || 0} users)`, 'var(--text-secondary)'],
                 [`ISP: ${ab.isp || '—'} (${ab.country_code || '—'})`, 'var(--text-secondary)'],
                 ab.last_reported_at ? [`Dernier rapport: ${ab.last_reported_at.slice(0,10)}`, 'var(--text-tertiary)'] : null,
-                ab.is_whitelisted ? ['✅ IP en whitelist AbuseIPDB', 'var(--ok)'] : null,
-            ].filter(Boolean).forEach(([text, color]) => {
+                ab.is_whitelisted ? ['<i class="fa-solid fa-circle-check"></i> IP en whitelist AbuseIPDB', 'var(--ok)', true] : null,
+            ].filter(Boolean).forEach(([text, color, isHtml]) => {
                 const row = mkEl('div', {style:`font-size:13px;margin-bottom:5px;color:${color};font-family:var(--mono);`});
-                row.textContent = text; info.appendChild(row);
+                if (isHtml) row.innerHTML = text; else row.textContent = text; info.appendChild(row);
             });
             header.appendChild(scoreBox); header.appendChild(info); c.appendChild(header);
             if (ab.usage_type) {
@@ -3328,19 +3958,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 rep.textContent = r.reputation || 'unknown';
                 title.appendChild(email); title.appendChild(rep); sec.appendChild(title);
                 const flags = [];
-                if (r.suspicious) flags.push(['⚠ Suspicious','var(--warning)']);
-                if (r.blacklisted) flags.push(['🚫 Blacklisté','var(--error)']);
-                if (r.credentials_leaked) flags.push(['🔑 Credentials leakés','var(--error)']);
-                if (r.data_breach) flags.push(['💀 Data breach','var(--error)']);
-                if (r.malicious_activity) flags.push(['☣ Activité malveillante','var(--error)']);
-                if (r.spam) flags.push(['📧 Spam','var(--warning)']);
-                if (r.disposable) flags.push(['🗑 Adresse jetable','var(--warning)']);
-                if (r.free_provider) flags.push(['📮 Fournisseur gratuit','var(--info)']);
-                if (flags.length === 0) flags.push(['✅ Aucun flag suspect','var(--ok)']);
+                if (r.suspicious) flags.push(['<i class="fa-solid fa-triangle-exclamation"></i> Suspicious','var(--warning)']);
+                if (r.blacklisted) flags.push(['<i class="fa-solid fa-ban"></i> Blacklisté','var(--error)']);
+                if (r.credentials_leaked) flags.push(['<i class="fa-solid fa-key"></i> Credentials leakés','var(--error)']);
+                if (r.data_breach) flags.push(['<i class="fa-solid fa-skull"></i> Data breach','var(--error)']);
+                if (r.malicious_activity) flags.push(['<i class="fa-solid fa-biohazard"></i> Activité malveillante','var(--error)']);
+                if (r.spam) flags.push(['<i class="fa-solid fa-envelope-circle-check"></i> Spam','var(--warning)']);
+                if (r.disposable) flags.push(['<i class="fa-solid fa-trash"></i> Adresse jetable','var(--warning)']);
+                if (r.free_provider) flags.push(['<i class="fa-solid fa-at"></i> Fournisseur gratuit','var(--info)']);
+                if (flags.length === 0) flags.push(['<i class="fa-solid fa-circle-check"></i> Aucun flag suspect','var(--ok)']);
                 const flagRow = mkEl('div', {style:'display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;'});
                 flags.forEach(([text, color]) => {
                     const chip = mkEl('span', {style:`font-size:11px;padding:2px 8px;border-radius:4px;background:${color}22;color:${color};`});
-                    chip.textContent = text; flagRow.appendChild(chip);
+                    chip.innerHTML = text; flagRow.appendChild(chip);
                 });
                 sec.appendChild(flagRow);
                 if (r.references !== undefined) {
@@ -3350,6 +3980,664 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 }
                 c.appendChild(sec);
             });
+        }
+
+        // ── HIBP, JS Deps, Censys, Nuclei renderers ────────────────────────
+
+        renderHibp(d) {
+            const c = document.getElementById('hibp-content');
+            clearEl(c);
+            const h = d.hibp_data || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            if (!h.enriched) {
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                if (h.reason === 'no_breaches') p.innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--success);"></i> Aucun breach connu pour ce domaine sur HIBP.';
+                else p.textContent = h.error || 'Données HIBP non disponibles.';
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const chips = mkEl('div', {style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;'});
+            [[`${h.breach_count} breach(es)`, 'var(--danger)'], [`${(h.total_pwned||0).toLocaleString()} comptes compromis`, 'var(--warning)'], [`${h.sensitive_count||0} sensibles`, 'var(--text-tertiary)']].forEach(([t,col]) => {
+                const chip = mkEl('span', {style:`font-size:12px;padding:3px 10px;border-radius:4px;background:${col}22;color:${col};font-weight:600;`});
+                chip.textContent = t; chips.appendChild(chip);
+            });
+            sec.appendChild(chips);
+            (h.breaches || []).forEach(b => {
+                const card = mkEl('div', {style:'padding:10px 14px;margin-bottom:8px;border-radius:6px;border-left:3px solid var(--danger);background:var(--surface-hover);'});
+                const top = mkEl('div', {style:'display:flex;align-items:center;gap:10px;margin-bottom:6px;'});
+                const name = mkEl('span', {style:'font-size:13px;font-weight:700;color:var(--text-primary);flex:1;'});
+                name.textContent = b.title || b.name;
+                const date = mkEl('span', {style:'font-size:11px;color:var(--text-tertiary);font-family:var(--mono);'});
+                date.textContent = b.date;
+                const count = mkEl('span', {style:'font-size:11px;color:var(--danger);font-family:var(--mono);'});
+                count.textContent = `${(b.pwn_count||0).toLocaleString()} comptes`;
+                top.appendChild(name); top.appendChild(count); top.appendChild(date); card.appendChild(top);
+                if (b.data_classes && b.data_classes.length) {
+                    const dc = mkEl('div', {style:'display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;'});
+                    b.data_classes.forEach(cls => {
+                        const chip = mkEl('span', {style:'font-size:10px;padding:2px 6px;border-radius:3px;background:var(--surface);border:1px solid var(--border);color:var(--text-secondary);'});
+                        chip.textContent = cls; dc.appendChild(chip);
+                    });
+                    card.appendChild(dc);
+                }
+                if (b.is_sensitive) {
+                    const s = mkEl('div', {style:'font-size:11px;color:var(--warning);margin-top:2px;'});
+                    s.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Breach sensible'; card.appendChild(s);
+                }
+                sec.appendChild(card);
+            });
+            c.appendChild(sec);
+        }
+
+        renderJsDeps(d) {
+            const c = document.getElementById('js-deps-content');
+            clearEl(c);
+            const jd = d.js_deps_data || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            if (!jd.enriched) {
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = jd.reason === 'no_cdn_libraries' ? 'Aucune librairie CDN détectée sur la page.' : (jd.error || 'Données non disponibles.');
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const sevColors = {critical:'var(--danger)',high:'var(--danger)',medium:'var(--warning)',low:'var(--info)',ok:'var(--ok)'};
+            const chips = mkEl('div', {style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;'});
+            [[`${jd.library_count||0} librairies`, 'var(--info)'], [`${jd.vulnerable_count||0} vulnérables`, 'var(--danger)']].forEach(([t,col]) => {
+                const chip = mkEl('span', {style:`font-size:12px;padding:3px 10px;border-radius:4px;background:${col}22;color:${col};font-weight:600;`});
+                chip.textContent = t; chips.appendChild(chip);
+            });
+            sec.appendChild(chips);
+            (jd.libraries || []).forEach(lib => {
+                const col = sevColors[lib.severity] || 'var(--text-tertiary)';
+                const card = mkEl('div', {style:`padding:8px 12px;margin-bottom:6px;border-radius:6px;border-left:3px solid ${col};background:var(--surface-hover);`});
+                const top = mkEl('div', {style:'display:flex;align-items:center;gap:10px;'});
+                const name = mkEl('span', {style:'font-size:13px;font-weight:700;color:var(--text-primary);font-family:var(--mono);flex:1;'});
+                name.textContent = `${lib.name} ${lib.version||''}`;
+                const sev = mkEl('span', {style:`font-size:10px;padding:2px 6px;border-radius:4px;background:${col}22;color:${col};font-weight:700;text-transform:uppercase;`});
+                sev.textContent = lib.severity;
+                top.appendChild(name); top.appendChild(sev); card.appendChild(top);
+                (lib.vulnerabilities||[]).forEach(v => {
+                    const row = mkEl('div', {style:'font-size:11px;color:var(--text-secondary);margin-top:3px;font-family:var(--mono);'});
+                    row.textContent = `${v.cve} — ${v.desc}`; card.appendChild(row);
+                });
+                sec.appendChild(card);
+            });
+            c.appendChild(sec);
+        }
+
+        renderCensys(d) {
+            const c = document.getElementById('censys-content');
+            clearEl(c);
+            const cs = d.censys_data || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            if (!cs.enriched) {
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = cs.reason === 'no_credentials' ? 'Clés Censys non configurées (Settings → Censys).' : (cs.error || 'Données Censys non disponibles.');
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            if (cs.cert_count > 0) {
+                const h = mkEl('div', {style:'font-size:13px;font-weight:600;margin-bottom:8px;color:var(--text-primary);'});
+                h.textContent = `${cs.cert_count} certificat(s) indexé(s)`;
+                sec.appendChild(h);
+                (cs.certificates||[]).forEach(cert => {
+                    const row = mkEl('div', {style:'padding:6px 10px;margin-bottom:4px;border-radius:4px;background:var(--surface-hover);font-family:var(--mono);font-size:11px;'});
+                    row.textContent = `${cert.subject_dn||cert.fingerprint||''} | ${cert.not_after||''}`;
+                    sec.appendChild(row);
+                });
+            }
+            if (cs.host_count > 0) {
+                const h = mkEl('div', {style:'font-size:13px;font-weight:600;margin:12px 0 8px;color:var(--text-primary);'});
+                h.textContent = `${cs.host_count} host(s) indexé(s)`;
+                sec.appendChild(h);
+                (cs.hosts||[]).forEach(host => {
+                    const card = mkEl('div', {style:'padding:8px 12px;margin-bottom:6px;border-radius:6px;background:var(--surface-hover);'});
+                    const ip = mkEl('div', {style:'font-size:12px;font-weight:700;font-family:var(--mono);color:var(--accent);margin-bottom:4px;'});
+                    ip.textContent = host.ip;
+                    card.appendChild(ip);
+                    (host.services||[]).forEach(svc => {
+                        const s = mkEl('span', {style:'font-size:11px;padding:2px 6px;border-radius:3px;background:var(--surface);border:1px solid var(--border);margin-right:4px;color:var(--text-secondary);font-family:var(--mono);'});
+                        s.textContent = `${svc.port}/${svc.transport_protocol||''} ${svc.service_name||''}`;
+                        card.appendChild(s);
+                    });
+                    sec.appendChild(card);
+                });
+            }
+            c.appendChild(sec);
+        }
+
+        renderNuclei(d) {
+            const c = document.getElementById('nuclei-content');
+            clearEl(c);
+            const n = d.nuclei_data || {};
+            const sec = mkEl('div', {cls:'v6-section'});
+            if (!n.enriched) {
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = n.reason === 'nuclei_not_installed' ? 'Nuclei non trouvé (devrait être inclus dans Docker).' : (n.error || 'Scan Nuclei non disponible.');
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const chips = mkEl('div', {style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;'});
+            [[`${n.critical_count||0} Critical`,'var(--danger)'],[`${n.high_count||0} High`,'var(--danger)'],[`${n.medium_count||0} Medium`,'var(--warning)'],[`${n.total_count||0} Total`,'var(--info)']].forEach(([t,col]) => {
+                const chip = mkEl('span', {style:`font-size:12px;padding:3px 10px;border-radius:4px;background:${col}22;color:${col};font-weight:600;`});
+                chip.textContent = t; chips.appendChild(chip);
+            });
+            sec.appendChild(chips);
+            if ((n.findings||[]).length === 0) {
+                const p = mkEl('p', {style:'color:var(--ok);font-size:13px;'});
+                p.innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--success);"></i> Aucune vulnérabilité détectée par Nuclei.'; sec.appendChild(p);
+            } else {
+                const sevCol = {critical:'var(--danger)',high:'var(--danger)',medium:'var(--warning)',low:'var(--info)'};
+                (n.findings||[]).forEach(f => {
+                    const col = sevCol[f.severity] || 'var(--text-tertiary)';
+                    const card = mkEl('div', {style:`padding:8px 12px;margin-bottom:6px;border-radius:6px;border-left:3px solid ${col};background:var(--surface-hover);`});
+                    const top = mkEl('div', {style:'display:flex;align-items:center;gap:8px;'});
+                    const sev = mkEl('span', {style:`font-size:10px;padding:2px 6px;border-radius:4px;background:${col}22;color:${col};font-weight:700;text-transform:uppercase;`});
+                    sev.textContent = f.severity;
+                    const name = mkEl('span', {style:'font-size:12px;color:var(--text-primary);flex:1;font-weight:600;'});
+                    name.textContent = f.name || f.template_id;
+                    top.appendChild(sev); top.appendChild(name); card.appendChild(top);
+                    if (f.matched_at) {
+                        const m = mkEl('div', {style:'font-size:11px;color:var(--accent);margin-top:3px;font-family:var(--mono);'});
+                        m.textContent = f.matched_at; card.appendChild(m);
+                    }
+                    if (f.description) {
+                        const desc = mkEl('div', {style:'font-size:11px;color:var(--text-secondary);margin-top:3px;'});
+                        desc.textContent = f.description; card.appendChild(desc);
+                    }
+                    sec.appendChild(card);
+                });
+            }
+            c.appendChild(sec);
+        }
+
+        // ── Dashboard ──────────────────────────────────────────────────────
+        async loadDashboard() {
+            const c = document.getElementById('dashboard-content');
+            if (!c) return;
+            c.innerHTML = '<div style="color:var(--text-tertiary);font-size:13px;">Chargement…</div>';
+            try {
+                const res = await fetch(`${this.apiBase}/history?limit=200`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                const scans = data.scans || [];
+                // Group by domain, keep latest per domain
+                const byDomain = {};
+                scans.forEach(s => {
+                    if (!byDomain[s.domain] || new Date(s.scan_timestamp) > new Date(byDomain[s.domain].scan_timestamp)) {
+                        byDomain[s.domain] = s;
+                    }
+                });
+                const domains = Object.values(byDomain).sort((a, b) => {
+                    const sa = (a.security_score||{}).total || 0;
+                    const sb = (b.security_score||{}).total || 0;
+                    return sa - sb;
+                });
+                if (domains.length === 0) {
+                    c.innerHTML = '<div style="color:var(--text-tertiary);font-size:13px;text-align:center;padding:40px;">Aucun scan dans l\'historique.</div>';
+                    return;
+                }
+                let html = `<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">
+                    <thead><tr style="color:var(--text-tertiary);text-align:left;">
+                        <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Domaine</th>
+                        <th style="padding:6px 10px;border-bottom:1px solid var(--border);">IP</th>
+                        <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Score</th>
+                        <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Cert expiry</th>
+                        <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Ports ouverts</th>
+                        <th style="padding:6px 10px;border-bottom:1px solid var(--border);">Dernière analyse</th>
+                        <th style="padding:6px 10px;border-bottom:1px solid var(--border);"></th>
+                    </tr></thead><tbody>`;
+                domains.forEach(s => {
+                    const score = (s.security_score||{}).total || 0;
+                    const sCol = score >= 75 ? 'var(--ok)' : score >= 50 ? 'var(--warning)' : 'var(--danger)';
+                    const tls = s.tls_certificate || {};
+                    const days = tls.days_remaining;
+                    const certStr = days == null ? '—' : days < 0 ? `<span style="color:var(--danger);">Expiré</span>` : days < 30 ? `<span style="color:var(--warning);">${days}j</span>` : `<span style="color:var(--ok);">${days}j</span>`;
+                    const ports = (s.open_ports||[]).length;
+                    const date = s.scan_timestamp ? new Date(s.scan_timestamp).toLocaleDateString('fr-FR') : '—';
+                    html += `<tr style="border-bottom:1px solid var(--border-light);">
+                        <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">${s.domain}</td>
+                        <td style="padding:7px 10px;font-family:var(--mono);color:var(--text-secondary);">${s.ip_address||'—'}</td>
+                        <td style="padding:7px 10px;font-weight:700;color:${sCol};">${score||'—'}</td>
+                        <td style="padding:7px 10px;">${certStr}</td>
+                        <td style="padding:7px 10px;color:${ports>5?'var(--warning)':'var(--text-secondary)'};">${ports}</td>
+                        <td style="padding:7px 10px;color:var(--text-tertiary);">${date}</td>
+                        <td style="padding:7px 10px;"><button class="btn-sm" onclick="app.loadScanById(${s.id})">Voir</button></td>
+                    </tr>`;
+                });
+                html += '</tbody></table></div>';
+                c.innerHTML = html;
+            } catch(e) { c.innerHTML = `<div style="color:var(--danger);font-size:13px;">Erreur: ${e.message}</div>`; }
+        }
+
+        // ── Diff ───────────────────────────────────────────────────────────
+        async loadDiffSelects() {
+            const selA = document.getElementById('diff-select-a');
+            const selB = document.getElementById('diff-select-b');
+            if (!selA || !selB) return;
+            if (selA.options.length > 1) return; // already loaded
+            try {
+                const res = await fetch(`${this.apiBase}/history?limit=200`);
+                if (!res.ok) return;
+                const data = await res.json();
+                const scans = (data.scans || []).slice(0, 100);
+                scans.forEach(s => {
+                    const label = `#${s.id} — ${s.domain} (${s.scan_timestamp ? new Date(s.scan_timestamp).toLocaleDateString('fr-FR') : '?'})`;
+                    [selA, selB].forEach(sel => {
+                        const opt = document.createElement('option');
+                        opt.value = s.id; opt.textContent = label;
+                        sel.appendChild(opt);
+                    });
+                });
+            } catch(e) {}
+        }
+
+        async runDiff() {
+            const idA = document.getElementById('diff-select-a')?.value;
+            const idB = document.getElementById('diff-select-b')?.value;
+            const out = document.getElementById('diff-results');
+            if (!idA || !idB) { this.showToast('Sélectionnez deux scans', 'error'); return; }
+            if (idA === idB) { this.showToast('Sélectionnez deux scans différents', 'error'); return; }
+            if (out) out.innerHTML = '<div style="color:var(--text-tertiary);font-size:13px;">Comparaison en cours…</div>';
+            try {
+                const res = await fetch(`${this.apiBase}/scan/${idA}/diff/${idB}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const diff = await res.json();
+                this._renderDiff(diff, out);
+            } catch(e) { if (out) out.innerHTML = `<div style="color:var(--danger);">${e.message}</div>`; }
+        }
+
+        _renderDiff(diff, container) {
+            clearEl(container);
+            const changes = diff.changes || diff;
+            const noChange = mkEl('div', {style:'color:var(--ok);font-size:13px;margin-bottom:8px;'});
+            let hasChange = false;
+            const addSec = (title, items) => {
+                if (!items || items.length === 0) return;
+                hasChange = true;
+                const sec = mkEl('div', {style:'margin-bottom:14px;'});
+                const h = mkEl('div', {style:'font-size:12px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;'});
+                h.textContent = title; sec.appendChild(h);
+                items.forEach(item => {
+                    const row = mkEl('div', {style:`padding:5px 10px;border-radius:4px;margin-bottom:3px;font-family:var(--mono);font-size:12px;background:${item.type==='added'?'var(--ok)18':item.type==='removed'?'var(--danger)18':'var(--warning)18'};color:${item.type==='added'?'var(--ok)':item.type==='removed'?'var(--danger)':'var(--warning)'};`});
+                    row.textContent = `${item.type==='added'?'+ ':item.type==='removed'?'- ':'~ '}${item.value||JSON.stringify(item)}`;
+                    sec.appendChild(row);
+                });
+                container.appendChild(sec);
+            };
+            // Render diff fields from the backend response
+            Object.entries(changes).forEach(([key, val]) => {
+                if (!val || (Array.isArray(val) && val.length === 0)) return;
+                if (typeof val === 'object' && (val.added || val.removed || val.changed)) {
+                    const items = [
+                        ...(val.added||[]).map(v => ({type:'added', value: typeof v === 'object' ? JSON.stringify(v) : String(v)})),
+                        ...(val.removed||[]).map(v => ({type:'removed', value: typeof v === 'object' ? JSON.stringify(v) : String(v)})),
+                        ...(val.changed ? [{type:'changed', value: JSON.stringify(val.changed)}] : []),
+                    ];
+                    addSec(key.replace(/_/g,' ').toUpperCase(), items);
+                } else if (val.old !== undefined || val.new !== undefined) {
+                    addSec(key.replace(/_/g,' ').toUpperCase(), [{type:'changed', value:`${val.old} → ${val.new}`}]);
+                }
+            });
+            if (!hasChange) { noChange.innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--success);"></i> Aucun changement détecté entre les deux scans.'; container.appendChild(noChange); }
+        }
+
+        // ── CSV Export ────────────────────────────────────────────────────
+        exportCSVSingle() {
+            if (!this.currentScan) return;
+            const d = this.currentScan;
+            const score = (d.security_score||{}).total || '';
+            const grade = (d.security_score||{}).grade || '';
+            const ports = (d.open_ports||[]).map(p => p.port||p).join(';');
+            const subs = ((d.subdomains||{}).subdomains||[]).join(';');
+            const tls = d.tls_certificate||{};
+            const rows = [
+                ['domain','ip','score','grade','tls_issuer','tls_days_remaining','open_ports','subdomains','scan_date'],
+                [d.domain, d.ip_address||'', score, grade, tls.issuer_org||'', tls.days_remaining||'', ports, subs, d.scan_timestamp||''],
+            ];
+            const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+            const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `domainrecon_${d.domain}_${Date.now()}.csv`;
+            a.click();
+            this.showToast('Export CSV téléchargé', 'success');
+        }
+
+        async exportCSV() {
+            // Export all domains from dashboard as CSV
+            try {
+                const res = await fetch(`${this.apiBase}/history?limit=500`);
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                const scans = data.scans || [];
+                const byDomain = {};
+                scans.forEach(s => {
+                    if (!byDomain[s.domain] || new Date(s.scan_timestamp) > new Date(byDomain[s.domain].scan_timestamp)) byDomain[s.domain] = s;
+                });
+                const rows = [['domain','ip','score','grade','tls_days','open_ports','last_scan']];
+                Object.values(byDomain).forEach(s => {
+                    rows.push([s.domain, s.ip_address||'', (s.security_score||{}).total||'', (s.security_score||{}).grade||'', (s.tls_certificate||{}).days_remaining||'', (s.open_ports||[]).length, s.scan_timestamp||'']);
+                });
+                const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+                const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+                const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+                a.download = `domainrecon_dashboard_${Date.now()}.csv`; a.click();
+                this.showToast('Export CSV téléchargé', 'success');
+            } catch(e) { this.showToast('Erreur export CSV', 'error'); }
+        }
+
+        // ── New module renderers ────────────────────────────────────────────
+
+        renderSubdomainBruteforce(d) {
+            const c = document.getElementById('subdomain-bruteforce-content');
+            clearEl(c);
+            const bf = d.subdomain_bruteforce || {};
+            if (!bf.enriched) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Brute-force DNS non exécuté ou aucun résultat.';
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const found = bf.found || [];
+            const sec = mkEl('div', {cls:'v6-section'});
+            const hdr = mkEl('div', {style:'display:flex;align-items:center;gap:10px;margin-bottom:12px;'});
+            const title = mkEl('span', {style:'font-size:14px;font-weight:700;color:var(--text-primary);'});
+            title.textContent = `Sous-domaines trouvés (${found.length} / ${bf.tested || 0} testés)`;
+            hdr.appendChild(title);
+            if (bf.wildcard_detected) {
+                const w = mkEl('span', {style:'font-size:11px;padding:2px 8px;border-radius:4px;background:var(--warning)22;color:var(--warning);'});
+                w.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Wildcard DNS détecté'; hdr.appendChild(w);
+            }
+            sec.appendChild(hdr);
+            if (found.length === 0) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun sous-domaine supplémentaire trouvé.';
+                sec.appendChild(p);
+            } else {
+                found.forEach(sub => {
+                    const row = mkEl('div', {style:'display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid var(--border-light);font-family:var(--mono);font-size:12px;'});
+                    const name = mkEl('span', {style:'color:var(--accent);flex:1;'});
+                    name.textContent = sub.hostname || sub;
+                    row.appendChild(name);
+                    if (sub.ip) {
+                        const ip = mkEl('span', {style:'color:var(--text-tertiary);'});
+                        ip.textContent = sub.ip; row.appendChild(ip);
+                    }
+                    sec.appendChild(row);
+                });
+            }
+            c.appendChild(sec);
+        }
+
+        renderCloudStorage(d) {
+            const c = document.getElementById('cloud-storage-content');
+            clearEl(c);
+            const cs = d.cloud_storage || {};
+            if (!cs.enriched) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun bucket cloud exposé détecté ou module non exécuté.';
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const buckets = cs.buckets || [];
+            const summary = mkEl('div', {cls:'v6-section'});
+            const counts = { exposed: 0, exists_private: 0, not_found: 0 };
+            buckets.forEach(b => { if (counts[b.status] !== undefined) counts[b.status]++; });
+            const chips = mkEl('div', {style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;'});
+            [['exposed','Exposés','var(--danger)'],['exists_private','Privés','var(--warning)'],['not_found','Non trouvés','var(--text-tertiary)']].forEach(([k,lbl,col]) => {
+                const chip = mkEl('span', {style:`font-size:12px;padding:3px 10px;border-radius:4px;background:${col}22;color:${col};`});
+                chip.textContent = `${lbl}: ${counts[k]}`; chips.appendChild(chip);
+            });
+            summary.appendChild(chips);
+            buckets.filter(b => b.status !== 'not_found').forEach(b => {
+                const row = mkEl('div', {style:`padding:8px 12px;margin-bottom:6px;border-radius:6px;border-left:3px solid ${b.status==='exposed'?'var(--danger)':'var(--warning)'};background:var(--surface-hover);`});
+                const top = mkEl('div', {style:'display:flex;align-items:center;gap:10px;'});
+                const badge = mkEl('span', {style:`font-size:11px;padding:2px 6px;border-radius:4px;background:${b.status==='exposed'?'var(--danger)':'var(--warning)'}22;color:${b.status==='exposed'?'var(--danger)':'var(--warning)'};font-weight:600;`});
+                badge.innerHTML = b.status === 'exposed' ? '<i class="fa-solid fa-circle-radiation"></i> EXPOSÉ' : '<i class="fa-solid fa-lock"></i> PRIVÉ';
+                const url = mkEl('span', {style:'font-family:var(--mono);font-size:12px;color:var(--text-primary);flex:1;'});
+                url.textContent = b.url || b.name;
+                top.appendChild(badge); top.appendChild(url); row.appendChild(top);
+                if (b.provider) {
+                    const prov = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);margin-top:4px;font-family:var(--mono);'});
+                    prov.textContent = `Provider: ${b.provider}`; row.appendChild(prov);
+                }
+                summary.appendChild(row);
+            });
+            if (buckets.filter(b => b.status !== 'not_found').length === 0) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun bucket accessible trouvé.'; summary.appendChild(p);
+            }
+            c.appendChild(summary);
+        }
+
+        renderApiEndpoints(d) {
+            const c = document.getElementById('api-endpoints-content');
+            clearEl(c);
+            const ae = d.api_endpoints || {};
+            if (!ae.enriched) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun endpoint API trouvé ou module non exécuté.';
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const endpoints = ae.endpoints || [];
+            const sec = mkEl('div', {cls:'v6-section'});
+            const severities = {critical:'var(--danger)',high:'var(--danger)',medium:'var(--warning)',low:'var(--info)'};
+            endpoints.forEach(ep => {
+                const col = severities[ep.severity] || 'var(--text-tertiary)';
+                const row = mkEl('div', {style:`padding:8px 12px;margin-bottom:6px;border-radius:6px;border-left:3px solid ${col};background:var(--surface-hover);`});
+                const top = mkEl('div', {style:'display:flex;align-items:center;gap:8px;'});
+                const badge = mkEl('span', {style:`font-size:10px;padding:2px 6px;border-radius:4px;background:${col}22;color:${col};font-weight:700;text-transform:uppercase;`});
+                badge.textContent = ep.severity || 'info';
+                const path = mkEl('span', {style:'font-family:var(--mono);font-size:12px;color:var(--text-primary);flex:1;'});
+                path.textContent = ep.path || ep.url;
+                const status = mkEl('span', {style:'font-size:11px;color:var(--text-tertiary);font-family:var(--mono);'});
+                status.textContent = `HTTP ${ep.status_code || '?'}`;
+                top.appendChild(badge); top.appendChild(path); top.appendChild(status); row.appendChild(top);
+                if (ep.type) {
+                    const t = mkEl('div', {style:'font-size:11px;color:var(--text-secondary);margin-top:3px;'});
+                    t.textContent = ep.type; row.appendChild(t);
+                }
+                sec.appendChild(row);
+            });
+            if (endpoints.length === 0) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun endpoint API exposé détecté.'; sec.appendChild(p);
+            }
+            c.appendChild(sec);
+        }
+
+        renderCms(d) {
+            const c = document.getElementById('cms-content');
+            clearEl(c);
+            const cms = d.cms_data || {};
+            if (!cms.enriched) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun CMS détecté ou module non exécuté.';
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const sec = mkEl('div', {cls:'v6-section'});
+            if (cms.cms) {
+                const hdr = mkEl('div', {style:'display:flex;align-items:center;gap:10px;margin-bottom:12px;'});
+                const name = mkEl('span', {style:'font-size:16px;font-weight:700;color:var(--accent);'});
+                name.textContent = cms.cms;
+                hdr.appendChild(name);
+                if (cms.version) {
+                    const v = mkEl('span', {style:'font-size:12px;color:var(--text-tertiary);font-family:var(--mono);'});
+                    v.textContent = `v${cms.version}`; hdr.appendChild(v);
+                }
+                sec.appendChild(hdr);
+            }
+            const findings = cms.findings || [];
+            findings.forEach(f => {
+                const sevCol = f.severity === 'critical' ? 'var(--danger)' : f.severity === 'high' ? 'var(--danger)' : f.severity === 'medium' ? 'var(--warning)' : 'var(--info)';
+                const row = mkEl('div', {style:`padding:8px 12px;margin-bottom:6px;border-radius:6px;border-left:3px solid ${sevCol};background:var(--surface-hover);`});
+                const top = mkEl('div', {style:'display:flex;align-items:center;gap:8px;'});
+                const badge = mkEl('span', {style:`font-size:10px;padding:2px 6px;border-radius:4px;background:${sevCol}22;color:${sevCol};font-weight:700;text-transform:uppercase;`});
+                badge.textContent = f.severity || 'info';
+                const desc = mkEl('span', {style:'font-size:12px;color:var(--text-primary);flex:1;'});
+                desc.textContent = f.description || f.type;
+                top.appendChild(badge); top.appendChild(desc); row.appendChild(top);
+                if (f.detail) {
+                    const det = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);margin-top:3px;font-family:var(--mono);'});
+                    det.textContent = f.detail; row.appendChild(det);
+                }
+                sec.appendChild(row);
+            });
+            if (findings.length === 0) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'CMS détecté mais aucune vulnérabilité ou plugin notable trouvé.'; sec.appendChild(p);
+            }
+            c.appendChild(sec);
+        }
+
+        renderLeakix(d) {
+            const c = document.getElementById('leakix-content');
+            clearEl(c);
+            const lx = d.leakix_data || {};
+            if (!lx.enriched) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = lx.error || 'Données LeakIX non disponibles.';
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const sec = mkEl('div', {cls:'v6-section'});
+            // Summary chips
+            const chips = mkEl('div', {style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;'});
+            [
+                [`${lx.leak_count||0} leaks`, 'var(--danger)'],
+                [`${lx.service_count||0} services`, 'var(--info)'],
+                [`${lx.critical_count||0} critiques`, 'var(--warning)'],
+            ].forEach(([text, col]) => {
+                const chip = mkEl('span', {style:`font-size:12px;padding:3px 10px;border-radius:4px;background:${col}22;color:${col};font-weight:600;`});
+                chip.textContent = text; chips.appendChild(chip);
+            });
+            sec.appendChild(chips);
+            const all = [...(lx.leaks||[]), ...(lx.services||[])];
+            all.forEach(item => {
+                const sevCol = item.severity === 'critical' ? 'var(--danger)' : item.severity === 'high' ? 'var(--danger)' : item.severity === 'medium' ? 'var(--warning)' : 'var(--info)';
+                const row = mkEl('div', {style:`padding:8px 12px;margin-bottom:6px;border-radius:6px;border-left:3px solid ${sevCol};background:var(--surface-hover);`});
+                const top = mkEl('div', {style:'display:flex;align-items:center;gap:8px;flex-wrap:wrap;'});
+                if (item.severity) {
+                    const sev = mkEl('span', {style:`font-size:10px;padding:2px 6px;border-radius:4px;background:${sevCol}22;color:${sevCol};font-weight:700;text-transform:uppercase;`});
+                    sev.textContent = item.severity; top.appendChild(sev);
+                }
+                const host = mkEl('span', {style:'font-family:var(--mono);font-size:12px;color:var(--text-primary);'});
+                host.textContent = `${item.host||''}:${item.port||''}`;
+                top.appendChild(host); row.appendChild(top);
+                if (item.summary) {
+                    const s = mkEl('div', {style:'font-size:11px;color:var(--text-secondary);margin-top:4px;'});
+                    s.textContent = item.summary; row.appendChild(s);
+                }
+                if (item.time) {
+                    const t = mkEl('div', {style:'font-size:10px;color:var(--text-tertiary);margin-top:2px;font-family:var(--mono);'});
+                    t.textContent = item.time.slice(0,10); row.appendChild(t);
+                }
+                sec.appendChild(row);
+            });
+            if (all.length === 0) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun service exposé ou leak trouvé sur LeakIX.'; sec.appendChild(p);
+            }
+            c.appendChild(sec);
+        }
+
+        renderGithubDork(d) {
+            const c = document.getElementById('github-dork-content');
+            clearEl(c);
+            const gh = d.github_dork || {};
+            if (!gh.enriched) {
+                const sec = mkEl('div', {cls:'v6-section'});
+                const p = mkEl('p', {style:'text-align:center;color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = gh.error || 'Données GitHub non disponibles.';
+                sec.appendChild(p); c.appendChild(sec); return;
+            }
+            const sec = mkEl('div', {cls:'v6-section'});
+            const results = gh.results || [];
+            const chips = mkEl('div', {style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;'});
+            [
+                [`${gh.total_count||0} résultats`, 'var(--info)'],
+                [`${results.filter(r=>r.severity==='high').length} risque élevé`, 'var(--danger)'],
+                [`${results.filter(r=>r.severity==='medium').length} risque moyen`, 'var(--warning)'],
+            ].forEach(([text, col]) => {
+                const chip = mkEl('span', {style:`font-size:12px;padding:3px 10px;border-radius:4px;background:${col}22;color:${col};font-weight:600;`});
+                chip.textContent = text; chips.appendChild(chip);
+            });
+            sec.appendChild(chips);
+            results.forEach(r => {
+                const sevCol = r.severity === 'high' ? 'var(--danger)' : r.severity === 'medium' ? 'var(--warning)' : 'var(--info)';
+                const card = mkEl('div', {style:`padding:8px 12px;margin-bottom:8px;border-radius:6px;border-left:3px solid ${sevCol};background:var(--surface-hover);`});
+                const top = mkEl('div', {style:'display:flex;align-items:center;gap:8px;margin-bottom:4px;'});
+                const sev = mkEl('span', {style:`font-size:10px;padding:2px 6px;border-radius:4px;background:${sevCol}22;color:${sevCol};font-weight:700;text-transform:uppercase;`});
+                sev.textContent = r.severity || 'low';
+                const fname = mkEl('span', {style:'font-family:var(--mono);font-size:12px;color:var(--text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'});
+                fname.textContent = r.filename || r.path;
+                top.appendChild(sev); top.appendChild(fname); card.appendChild(top);
+                if (r.repo) {
+                    const repo = mkEl('div', {style:'font-size:11px;color:var(--accent);font-family:var(--mono);margin-bottom:2px;'});
+                    repo.textContent = r.repo; card.appendChild(repo);
+                }
+                if (r.html_url) {
+                    const a = mkEl('a', {style:'font-size:11px;color:var(--info);text-decoration:none;'});
+                    a.href = r.html_url; a.target = '_blank'; a.textContent = '↗ Voir sur GitHub';
+                    card.appendChild(a);
+                }
+                sec.appendChild(card);
+            });
+            if (results.length === 0) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
+                p.textContent = 'Aucun résultat GitHub trouvé pour ce domaine.'; sec.appendChild(p);
+            }
+            c.appendChild(sec);
+        }
+
+        // ── Bulk Scan ───────────────────────────────────────────────────────
+        async runBulkScan() {
+            const ta = document.getElementById('bulk-domains-input');
+            if (!ta) return;
+            const domains = ta.value.split('\n').map(s => s.trim()).filter(Boolean);
+            if (domains.length === 0) { this.showToast('Entrez au moins un domaine', 'error'); return; }
+            if (domains.length > 20) { this.showToast('Maximum 20 domaines', 'error'); return; }
+            const btn = document.getElementById('bulk-scan-btn');
+            if (btn) { btn.disabled = true; btn.textContent = 'Scan en cours…'; }
+            const tbody = document.getElementById('bulk-results-body');
+            if (tbody) tbody.innerHTML = '';
+            const profile = (document.querySelector('input[name="bulk_profile"]:checked') || {value:'quick'}).value;
+            try {
+                const res = await fetch(`${this.apiBase}/scan/bulk`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ domains, profile })
+                });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                const results = data.results || [];
+                results.forEach(r => {
+                    const tr = document.createElement('tr');
+                    const score = (r.security_score || {}).total || 0;
+                    const scoreCol = score >= 75 ? 'var(--ok)' : score >= 50 ? 'var(--warning)' : 'var(--danger)';
+                    const status = r.status || 'success';
+                    tr.innerHTML = `
+                        <td style="font-family:var(--mono);color:var(--accent);">${r.domain || ''}</td>
+                        <td style="font-family:var(--mono);">${r.ip_address || '—'}</td>
+                        <td style="color:${scoreCol};font-weight:700;">${score || '—'}</td>
+                        <td>${status === 'error' ? `<span style="color:var(--danger);">${r.error_message||'Erreur'}</span>` : '<span style="color:var(--ok);"><i class="fa-solid fa-circle-check"></i> OK</span>'}</td>
+                        <td><button class="btn-sm" onclick="app.loadScanById(${r.id})">Voir</button></td>`;
+                    if (tbody) tbody.appendChild(tr);
+                });
+                this.showToast(`Bulk scan terminé: ${results.length} domaines`, 'success');
+                this.loadHistory();
+            } catch(e) { this.showToast(e.message, 'error'); }
+            finally { if (btn) { btn.disabled = false; btn.textContent = 'Lancer le scan bulk'; } }
+        }
+
+        async loadScanById(id) {
+            try {
+                const res = await fetch(`${this.apiBase}/scan/${id}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                this.currentScan = data;
+                this.displayResults(data);
+                this.switchMainTab('overview');
+            } catch(e) { this.showToast(e.message, 'error'); }
         }
 
         sleep(ms) { return new Promise(r => setTimeout(r, ms)); }

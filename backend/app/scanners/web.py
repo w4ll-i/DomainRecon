@@ -137,17 +137,112 @@ async def analyze_hsts_deep(domain: str) -> dict:
 
 
 async def discover_admin_panels(domain: str) -> dict:
+    """
+    Discover admin panels with false-positive reduction.
+
+    Strategy:
+      - 403/401: always real (access denied = path exists)
+      - 200: compare content length against a soft-404 baseline;
+             also check for admin-related keywords in body
+      - 301/302: skip if redirecting to homepage/root;
+                 keep if redirecting to a recognisable auth/admin URL
+    """
     found = []
+    base_url = f"https://{domain}"
+
     async with httpx.AsyncClient(
         verify=False, follow_redirects=False, timeout=10
     ) as client:
-        tasks = [client.get(f"https://{domain}{path}") for path in ADMIN_PATHS]
+        # ── Soft-404 baseline (guaranteed non-existent path) ────────────────
+        baseline_len: Optional[int] = None
+        baseline_status: Optional[int] = None
+        try:
+            probe = await client.get(f"{base_url}/dr-probe-notexist-xkq7z9a2b5/")
+            baseline_status = probe.status_code
+            baseline_len = len(probe.content)
+        except Exception:
+            pass
+
+        # ── Probe all admin paths ────────────────────────────────────────────
+        tasks = [client.get(f"{base_url}{path}") for path in ADMIN_PATHS]
         responses = await asyncio.gather(*tasks, return_exceptions=True)
+
+    _admin_kw = [
+        "login", "password", "username", "dashboard", "admin",
+        "sign in", "connexion", "mot de passe", "panel", "console",
+    ]
+    _home_suffixes = ("", "/", f"https://{domain}", f"https://{domain}/",
+                      f"http://{domain}", f"http://{domain}/")
+    _auth_kw = ["login", "auth", "signin", "sign-in", "admin", "dashboard",
+                "panel", "compte", "connect"]
+
     for path, resp in zip(ADMIN_PATHS, responses):
         if isinstance(resp, Exception):
             continue
-        if resp.status_code in (200, 301, 302, 403):
-            found.append({"path": path, "status": resp.status_code})
+
+        status = resp.status_code
+
+        # 403 / 401 — access denied: path definitively exists
+        if status in (403, 401):
+            found.append({
+                "path": path,
+                "status": status,
+                "confidence": "high",
+                "reason": "Access denied (path exists on server)",
+            })
+            continue
+
+        # 200 — potential soft-404
+        if status == 200:
+            content_len = len(resp.content)
+
+            # Skip if content is identical (or nearly identical) to soft-404 baseline
+            if baseline_len is not None and baseline_status == 200:
+                diff = abs(content_len - baseline_len)
+                ratio = diff / max(baseline_len, 1)
+                if ratio < 0.15:
+                    continue  # Soft-404 — skip
+
+            # Skip empty or near-empty responses
+            if content_len < 100:
+                continue
+
+            # Check for admin-related keywords in body
+            body_sample = resp.text[:5000].lower()
+            has_admin_kw = any(kw in body_sample for kw in _admin_kw)
+            confidence = "medium" if has_admin_kw else "low"
+            found.append({
+                "path": path,
+                "status": status,
+                "confidence": confidence,
+                "reason": "Unique content returned" + (" with admin keywords" if has_admin_kw else ""),
+            })
+            continue
+
+        # 301 / 302 / 307 / 308 — redirect
+        if status in (301, 302, 307, 308):
+            location = resp.headers.get("location", "")
+            loc_clean = location.rstrip("/").lower()
+
+            # Skip if redirecting back to homepage / root
+            if loc_clean in (s.lower().rstrip("/") for s in _home_suffixes):
+                continue
+
+            # Skip if location is an error/404 page
+            if any(x in loc_clean for x in ("404", "not-found", "notfound", "error")):
+                continue
+
+            # Keep if redirect goes to a recognisable auth/admin URL
+            is_auth_redirect = any(kw in loc_clean for kw in _auth_kw)
+            confidence = "high" if is_auth_redirect else "medium"
+            found.append({
+                "path": path,
+                "status": status,
+                "confidence": confidence,
+                "reason": f"Redirects to: {location[:120]}",
+                "redirect_to": location[:200],
+            })
+
     return {"panels_found": found, "count": len(found)}
 
 
@@ -194,6 +289,16 @@ async def check_http_methods(domain: str) -> dict:
 
 
 async def check_web_files(domain: str) -> dict:
+    """
+    Check for sensitive / interesting files exposed on the domain.
+
+    False-positive reduction:
+      - Only direct 200 responses are reported (no redirect follow)
+      - Content is compared against a soft-404 baseline: if size is within
+        15% of baseline, the result is discarded as a soft-404
+      - Per-file content validators verify that the response actually looks
+        like the expected file format before reporting
+    """
     paths = [
         "/robots.txt", "/sitemap.xml", "/.well-known/security.txt",
         "/security.txt", "/.htaccess", "/crossdomain.xml",
@@ -202,17 +307,72 @@ async def check_web_files(domain: str) -> dict:
         "/.DS_Store", "/thumbs.db", "/.svn/entries",
         "/.git/HEAD", "/phpinfo.php", "/info.php",
     ]
+
+    # Per-path content validators: return True if body looks like the real file
+    _validators: dict = {
+        "/robots.txt":                 lambda c: "user-agent" in c.lower(),
+        "/sitemap.xml":                lambda c: "<sitemap" in c.lower() or "<urlset" in c.lower(),
+        "/.well-known/security.txt":   lambda c: "contact" in c.lower() or "@" in c,
+        "/security.txt":               lambda c: "contact" in c.lower() or "@" in c,
+        "/.git/HEAD":                  lambda c: c.strip().startswith("ref:") or (len(c.strip()) == 40 and c.strip().isalnum()),
+        "/phpinfo.php":                lambda c: "php version" in c.lower(),
+        "/info.php":                   lambda c: "php version" in c.lower(),
+        "/backup.sql":                 lambda c: any(kw in c.lower() for kw in ("insert into", "create table", "mysqldump")),
+        "/dump.sql":                   lambda c: any(kw in c.lower() for kw in ("insert into", "create table", "mysqldump")),
+        "/.env.bak":                   lambda c: "=" in c and len(c.strip()) > 10,
+        "/config.php.bak":             lambda c: "<?" in c or "<?php" in c.lower(),
+        "/wp-config.php.bak":          lambda c: "db_name" in c.lower() or "<?php" in c.lower(),
+        "/.htaccess":                  lambda c: any(kw in c.lower() for kw in ("rewriterule", "options", "allow", "deny")),
+        "/.svn/entries":               lambda c: "svn" in c.lower() or "https://" in c,
+        "/crossdomain.xml":            lambda c: "<cross-domain-policy" in c.lower(),
+    }
+
     found = []
+
     async with httpx.AsyncClient(
         verify=False, follow_redirects=False, timeout=10
     ) as client:
+        # Soft-404 baseline
+        baseline_len: Optional[int] = None
+        try:
+            probe = await client.get(f"https://{domain}/dr-probe-notexist-xkq7z9a2b5.txt")
+            if probe.status_code == 200:
+                baseline_len = len(probe.content)
+        except Exception:
+            pass
+
         tasks = [client.get(f"https://{domain}{p}") for p in paths]
         responses = await asyncio.gather(*tasks, return_exceptions=True)
+
     for path, resp in zip(paths, responses):
         if isinstance(resp, Exception):
             continue
-        if resp.status_code in (200, 301, 302):
-            found.append({"path": path, "status": resp.status_code, "size": len(resp.content)})
+
+        # Only direct 200 — never follow redirects for file existence
+        if resp.status_code != 200:
+            continue
+
+        content_len = len(resp.content)
+
+        # Skip empty content
+        if content_len < 10:
+            continue
+
+        # Skip soft-404 (same size as baseline ±15%)
+        if baseline_len is not None and baseline_len > 0:
+            diff = abs(content_len - baseline_len)
+            if diff / baseline_len < 0.15:
+                continue
+
+        # Apply per-file content validator when available
+        validator = _validators.get(path)
+        if validator:
+            content_text = resp.text[:10000]
+            if not validator(content_text):
+                continue
+
+        found.append({"path": path, "status": resp.status_code, "size": content_len})
+
     return {"files": found}
 
 

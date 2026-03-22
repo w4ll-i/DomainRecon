@@ -183,35 +183,3 @@ async def capture_screenshot(domain: str) -> Optional[str]:
             return path
     except Exception:
         return None
-
-
-async def detect_typosquatting(domain: str) -> dict:
-    ext = tldextract.extract(domain)
-    base = ext.domain
-    tld = f".{ext.suffix}"
-
-    variants: set = set()
-    for i, char in enumerate(base):
-        if char in TYPO_SUBSTITUTIONS:
-            for sub in TYPO_SUBSTITUTIONS[char]:
-                variants.add(base[:i] + sub + base[i + 1:] + tld)
-    for i in range(len(base)):
-        variants.add(base[:i] + base[i + 1:] + tld)
-    for i, char in enumerate(base):
-        variants.add(base[:i] + char + char + base[i:] + tld)
-    for alt_tld in TYPO_TLDS:
-        if alt_tld != tld:
-            variants.add(base + alt_tld)
-
-    sem = asyncio.Semaphore(30)
-
-    async def check_variant(v: str) -> Optional[str]:
-        async with sem:
-            from .dns import resolve_ip
-            ip = await resolve_ip(v)
-            return v if ip else None
-
-    tasks = [check_variant(v) for v in list(variants)[:100]]
-    results = await asyncio.gather(*tasks, return_exceptions=True)
-    registered = [r for r in results if isinstance(r, str)]
-    return {"variants_checked": len(variants), "registered": registered, "count": len(registered)}
