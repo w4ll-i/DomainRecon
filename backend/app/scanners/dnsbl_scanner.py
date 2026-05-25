@@ -1,4 +1,4 @@
-"""Multi-DNSBL Scanner — checks IP against 28 DNS blocklists."""
+"""Multi-DNSBL Scanner - checks IP against 28 DNS blocklists."""
 import asyncio
 import socket
 import re

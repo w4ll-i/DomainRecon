@@ -1,6 +1,6 @@
 # backend/app/scanners/nuclei_scanner.py
 """
-Nuclei Scanner — run Project Discovery's nuclei against a domain and
+Nuclei Scanner - run Project Discovery's nuclei against a domain and
 parse JSON findings.
 """
 import asyncio
@@ -21,7 +21,7 @@ async def nuclei_scan(domain: str) -> dict:
     if shutil.which("nuclei") is None:
         return {"enriched": False, "reason": "nuclei_not_installed"}
 
-    # Arguments are passed as a list — no shell involved, no injection risk.
+    # Arguments are passed as a list - no shell involved, no injection risk.
     cmd = [
         "nuclei",
         "-target", f"https://{domain}",
@@ -54,7 +54,7 @@ async def nuclei_scan(domain: str) -> dict:
     except Exception as e:
         return {"enriched": False, "error": str(e)}
 
-    # Parse JSON findings — each stdout line is one JSON object
+    # Parse JSON findings - each stdout line is one JSON object
     findings = []
     for raw_line in stdout_bytes.splitlines():
         line = raw_line.strip()

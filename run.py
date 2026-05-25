@@ -21,7 +21,7 @@ def main():
         import uvicorn
 
     host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", "8000"))
+    port = int(os.getenv("PORT", "9000"))
     dev = os.getenv("ENV", "development") == "development"
 
     def open_browser():
@@ -32,7 +32,7 @@ def main():
 
     print(f"""
     ╔══════════════════════════════════════════╗
-    ║       DomainRecon — OSINT Scanner        ║
+    ║       DomainRecon - OSINT Scanner        ║
     ╠══════════════════════════════════════════╣
     ║  URL  : http://localhost:{port}             ║
     ║  API  : http://localhost:{port}/api/docs    ║

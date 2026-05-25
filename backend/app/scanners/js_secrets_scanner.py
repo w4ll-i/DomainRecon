@@ -1,4 +1,4 @@
-"""JS Secrets Scanner — finds hardcoded secrets in JS files."""
+"""JS Secrets Scanner - finds hardcoded secrets in JS files."""
 import re
 import asyncio
 import httpx
@@ -18,10 +18,20 @@ JS_SECRET_PATTERNS = [
     ("Google API Key",     "medium",   r"AIza[0-9A-Za-z_-]{35}"),
     ("Stripe Pub Key",     "low",      r"pk_live_[0-9A-Za-z]{24,}"),
     ("Firebase Config",    "low",      r"firebaseConfig\s*=\s*\{"),
-    ("Generic API Key",    "medium",   r"(?i)api[_\-]?key\s*[:=]\s*['\"][A-Za-z0-9_\-]{16,}['\"]"),
-    ("Hardcoded Password", "medium",   r"(?i)password\s*[=:]\s*['\"][^'\"]{8,}['\"]"),
+    # Generic patterns - more specific to reduce placeholder false positives:
+    # Require value to look like a real key (no common placeholder words)
+    ("Generic API Key",    "medium",   r"(?i)api[_\-]?key\s*[:=]\s*['\"][A-Za-z0-9_\-]{20,}['\"]"),
+    # Hardcoded password: skip obvious placeholders (yourPassword, changeme, etc.)
+    ("Hardcoded Password", "medium",   r"(?i)password\s*[=:]\s*['\"](?!.*(?:your|change|enter|insert|example|placeholder|xxx|test|dummy|sample|secret_here|password_here))[^'\"]{10,}['\"]"),
     ("Bearer Token",       "low",      r"Bearer\s+[A-Za-z0-9_\-\.]{20,}"),
 ]
+
+# Common placeholder values to skip (exact match after extraction)
+_PLACEHOLDER_VALUES = {
+    "changeme", "yourpassword", "password123", "secret", "mysecret",
+    "your_api_key", "your_key_here", "insert_key_here", "xxx", "yyy",
+    "todo", "fixme", "replace_me", "your_token", "sample_key",
+}
 
 CDN_WHITELIST = [
     "fonts.googleapis.com", "fonts.gstatic.com", "ajax.googleapis.com",
@@ -74,6 +84,10 @@ async def scan_js_secrets(domain: str, settings: dict = {}) -> dict:
             for pname, severity, pattern in JS_SECRET_PATTERNS:
                 for i, line in enumerate(lines):
                     for m in re.finditer(pattern, line):
+                        matched = m.group()
+                        # Skip if the matched value is a known placeholder
+                        if matched.lower().strip("'\"/= ") in _PLACEHOLDER_VALUES:
+                            continue
                         key = (url, pname)
                         if key not in seen:
                             seen.add(key)
@@ -81,7 +95,7 @@ async def scan_js_secrets(domain: str, settings: dict = {}) -> dict:
                                 "file_url": url,
                                 "pattern": pname,
                                 "severity": severity,
-                                "value_redacted": _redact(m.group()),
+                                "value_redacted": _redact(matched),
                                 "line_hint": i + 1,
                             })
         except Exception:

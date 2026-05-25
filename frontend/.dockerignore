@@ -1,5 +1,0 @@
-# Frontend Docker Ignore
-.git/
-.gitignore
-*.md
-.vscode/

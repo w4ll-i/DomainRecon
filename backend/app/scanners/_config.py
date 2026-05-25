@@ -7,16 +7,50 @@ SECURITY_HEADERS = [
     "X-Content-Type-Options",
     "Referrer-Policy",
     "Permissions-Policy",
+    "X-XSS-Protection",
+    "Cross-Origin-Opener-Policy",
+    "Cross-Origin-Embedder-Policy",
+    "Cross-Origin-Resource-Policy",
 ]
 
 COMMON_PORTS = [
     21, 22, 23, 25, 53, 80, 110, 143, 443, 445,
-    3306, 3389, 5432, 6379, 8080, 8443, 27017,
+    465, 587, 993, 995,                          # Mail TLS
+    1433, 1521,                                   # MSSQL, Oracle
+    2375, 2376,                                   # Docker (cleartext/TLS)
+    3000, 3001,                                   # Node.js / Grafana
+    3306, 3389,                                   # MySQL, RDP
+    4848,                                         # GlassFish admin
+    5000, 5001,                                   # Flask / Docker registry
+    5432, 5900,                                   # PostgreSQL, VNC
+    6379, 6380,                                   # Redis
+    7001, 7002,                                   # WebLogic
+    8000, 8001, 8080, 8081, 8443, 8888,          # Alt-HTTP
+    8500,                                         # Consul
+    9000, 9200, 9300,                             # PHP-FPM, Elasticsearch
+    11211,                                        # Memcached
+    27017, 27018,                                 # MongoDB
+    50000,                                        # SAP / Jenkins
 ]
 
 DKIM_SELECTORS = [
-    "default", "google", "mail", "dkim",
-    "selector1", "selector2", "k1", "smtp",
+    # Generic
+    "default", "dkim", "mail", "email", "key1", "key2",
+    # Google Workspace
+    "google", "google2048",
+    # Microsoft 365
+    "selector1", "selector2",
+    # SendGrid
+    "s1", "s2", "sm",
+    # Mailchimp / Mandrill
+    "k1", "k2", "mandrill",
+    # Mailgun
+    "mg", "mta",
+    # Amazon SES
+    "amazonses",
+    # Other providers
+    "sendgrid", "smtp", "zoho", "pm", "mxvault",
+    "sig1", "sig2", "mimecast", "protonmail",
 ]
 
 JS_SECRET_PATTERNS = [
@@ -27,28 +61,81 @@ JS_SECRET_PATTERNS = [
 ]
 
 DNSBL_SERVERS = [
+    # Spamhaus
     "zen.spamhaus.org",
+    "sbl.spamhaus.org",
+    "xbl.spamhaus.org",
+    "pbl.spamhaus.org",
+    "dbl.spamhaus.org",
+    # SpamCop
     "bl.spamcop.net",
+    # SORBS
     "dnsbl.sorbs.net",
+    "spam.sorbs.net",
+    "http.dnsbl.sorbs.net",
+    # Barracuda
     "b.barracudacentral.org",
+    # UCEPROTECT
+    "dnsbl-1.uceprotect.net",
+    "dnsbl-2.uceprotect.net",
+    # Passive Spam Block List
+    "psbl.surriel.com",
+    # Mailspike (reputation - also whitelist)
+    "bl.mailspike.net",
+    # NordSpam
+    "ix.dnsbl.manitu.net",
+    # DRONEBL
+    "dnsbl.dronebl.org",
 ]
 
 SUBDOMAIN_WORDLIST = [
-    "www", "mail", "ftp", "smtp", "pop", "imap", "webmail", "admin", "portal",
-    "api", "dev", "staging", "test", "beta", "demo", "app", "mobile", "secure",
-    "vpn", "remote", "cdn", "static", "media", "img", "images", "assets",
-    "blog", "shop", "store", "help", "support", "docs", "wiki", "forum",
-    "git", "gitlab", "jenkins", "ci", "build", "deploy", "monitor",
-    "grafana", "kibana", "elastic", "redis", "mysql", "db", "database",
-    "ns", "ns1", "ns2", "dns", "mx", "mx1", "mx2", "relay", "gateway",
-    "backup", "old", "new", "v1", "v2", "internal", "external", "intranet",
-    "corp", "office", "owa", "exchange", "autodiscover", "autoconfig",
-    "cpanel", "whm", "plesk", "webdisk", "ftp2", "ssh", "sftp",
-    "status", "health", "metrics", "logs", "analytics",
-    "search", "map", "auth", "login", "sso", "oauth", "id", "accounts",
-    "payment", "billing", "pay", "checkout", "cart", "order",
-    "download", "upload", "files", "storage",
-    "m", "en", "fr", "de", "es", "www2",
+    # Common services
+    "www", "www2", "www3", "mail", "webmail", "smtp", "pop", "imap",
+    "ftp", "sftp", "ssh", "vpn", "remote",
+    # Infrastructure
+    "ns", "ns1", "ns2", "ns3", "dns", "dns1", "dns2",
+    "mx", "mx1", "mx2", "relay", "gateway", "proxy",
+    # CDN / assets
+    "cdn", "static", "media", "img", "images", "assets", "files",
+    "download", "upload", "storage", "s3", "blob",
+    # Environments
+    "dev", "development", "staging", "stage", "test", "testing",
+    "qa", "uat", "prod", "production", "beta", "alpha", "demo", "sandbox",
+    "preview", "preprod", "pre-prod",
+    # Applications
+    "app", "app1", "app2", "api", "api2", "v1", "v2", "v3",
+    "mobile", "m", "ios", "android",
+    # Admin / management
+    "admin", "administrator", "portal", "manage", "management",
+    "dashboard", "panel", "control", "console",
+    "cpanel", "whm", "plesk", "webdisk", "directadmin",
+    # Monitoring / ops
+    "monitor", "monitoring", "status", "health", "metrics",
+    "logs", "log", "analytics", "grafana", "kibana",
+    "prometheus", "elastic", "elasticsearch", "logstash",
+    # CI/CD / DevOps
+    "git", "gitlab", "github", "bitbucket",
+    "jenkins", "ci", "cd", "build", "deploy", "runner",
+    "registry", "docker", "k8s", "kubernetes", "cluster",
+    "vault", "consul", "nomad",
+    # Database
+    "db", "database", "mysql", "postgres", "redis",
+    "mongo", "mongodb", "sql", "oracle",
+    # Communication
+    "chat", "slack", "jira", "confluence", "wiki", "docs",
+    "forum", "blog", "news", "support", "help", "desk", "ticket",
+    # E-commerce
+    "shop", "store", "cart", "checkout", "payment", "billing",
+    "pay", "order", "orders",
+    # Auth
+    "auth", "login", "signin", "sso", "oauth", "id", "accounts",
+    "identity", "idp", "saml",
+    # Exchange / email
+    "exchange", "owa", "autodiscover", "autoconfig",
+    # Geographic / misc
+    "corp", "office", "intranet", "internal", "external",
+    "en", "fr", "de", "es", "jp", "cn", "us", "uk", "eu",
+    "old", "new", "backup", "bak",
 ]
 
 ADMIN_PATHS = [
@@ -59,11 +146,19 @@ ADMIN_PATHS = [
     "/manager", "/management", "/console", "/system",
     "/login", "/signin", "/auth/login", "/user/login",
     "/cms", "/joomla/administrator", "/drupal/admin",
-    "/.env", "/.git/config", "/config", "/settings",
     "/api/v1/admin", "/api/admin",
+    "/sitemanager", "/filemanager", "/webadmin",
+    "/adm", "/adm/", "/administration",
+    # NOTE: /.env, /.git/config, /config, /settings are sensitive files, NOT admin panels.
+    # They are probed by check_web_files() in web.py - do NOT duplicate here.
 ]
 
-WEAK_CIPHERS = ["RC4", "DES", "3DES", "NULL", "EXPORT", "anon", "MD5"]
+WEAK_CIPHERS = [
+    "RC4", "RC2", "DES", "3DES", "NULL",
+    "EXPORT", "anon", "ADH", "AECDH",
+    "MD5", "SHA1",   # SHA1 in cipher name (not cert sig)
+    "PSK", "SRP",    # legacy key exchange
+]
 
 TYPO_SUBSTITUTIONS = {
     "a": ["@", "4"],
@@ -83,4 +178,6 @@ PRIVATE_IP_PATTERNS = [
     r"^::1$",
     r"^fc",
     r"^fd",
+    r"^169\.254\.",   # link-local
+    r"^0\.",          # this network
 ]

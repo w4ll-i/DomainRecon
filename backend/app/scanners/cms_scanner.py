@@ -5,7 +5,7 @@ CMS Fingerprinting & Vulnerability Detection.
 Detects WordPress, Drupal, Joomla, Magento and generic Laravel/PHP
 framework exposures. Runs all HTTP probes concurrently via asyncio.gather.
 
-No external API required — only httpx.
+No external API required - only httpx.
 """
 import asyncio
 import re
@@ -136,7 +136,7 @@ async def _detect_wordpress(client: httpx.AsyncClient, base: str) -> dict:
 
     result["cms"] = "WordPress"
 
-    # Deep analysis — all probes in parallel
+    # Deep analysis - all probes in parallel
     (
         readme_resp,
         version_php_resp,
@@ -265,7 +265,7 @@ async def _detect_drupal(client: httpx.AsyncClient, base: str) -> dict:
     if settings_resp and settings_resp.status_code == 403:
         issues.append({
             "severity": "medium",
-            "title": "settings.php exists (403 — not publicly readable, but present)",
+            "title": "settings.php exists (403 - not publicly readable, but present)",
             "path": "/sites/default/settings.php",
         })
     if admin_resp and admin_resp.status_code in (200, 302):
@@ -290,13 +290,21 @@ async def _detect_joomla(client: httpx.AsyncClient, base: str) -> dict:
     )
 
     is_joomla = False
-    if admin_resp and admin_resp.status_code in (200, 302):
-        is_joomla = True
+    # /administrator/ alone is not specific enough - any site could have this path.
+    # Require at least one Joomla-specific content signal.
     if readme_resp and readme_resp.status_code == 200:
         if re.search(r"Joomla", readme_resp.text, re.IGNORECASE):
             is_joomla = True
     if lang_resp and lang_resp.status_code == 200:
-        is_joomla = True
+        if re.search(r"joomla", lang_resp.text, re.IGNORECASE):
+            is_joomla = True
+    # /administrator/ is only counted when a content signal is already present
+    if not is_joomla and admin_resp and admin_resp.status_code in (200, 302):
+        # Weak signal alone - check body for Joomla keywords before accepting
+        if admin_resp.status_code == 200 and re.search(
+            r"joomla|com_login|task=login", admin_resp.text, re.IGNORECASE
+        ):
+            is_joomla = True
 
     if not is_joomla:
         return result
@@ -337,12 +345,23 @@ async def _detect_magento(client: httpx.AsyncClient, base: str) -> dict:
     )
 
     is_magento = False
-    if downloader_resp and downloader_resp.status_code in (200, 302):
-        is_magento = True
-    if pub_resp and pub_resp.status_code in (200, 403):
-        is_magento = True
+    # /pub/static/ returning 403 alone is not specific to Magento (any server can protect static dirs).
+    # Require a content-based signal: RELEASE_NOTES or downloader body.
     if release_resp and release_resp.status_code == 200:
         if re.search(r"Magento", release_resp.text, re.IGNORECASE):
+            is_magento = True
+    if downloader_resp and downloader_resp.status_code in (200, 302):
+        if downloader_resp.status_code == 200 and re.search(
+            r"magento|mage|varien", downloader_resp.text, re.IGNORECASE
+        ):
+            is_magento = True
+        elif downloader_resp.status_code == 302:
+            # Redirect from /downloader/ is a weak signal - only count with another signal
+            if is_magento:
+                pass  # already confirmed
+    # /pub/static/ is used as a confirming signal only when already detected
+    if not is_magento and pub_resp and pub_resp.status_code == 200:
+        if re.search(r"magento|mage|varien", pub_resp.text, re.IGNORECASE):
             is_magento = True
 
     if not is_magento:
@@ -382,7 +401,7 @@ async def _detect_laravel_generic(client: httpx.AsyncClient, base: str) -> list:
     if env_resp and env_resp.status_code == 200:
         issues.append({
             "severity": "critical",
-            "title": "Exposed .env file — may contain credentials and secrets",
+            "title": "Exposed .env file - may contain credentials and secrets",
             "path": "/.env",
         })
 
@@ -403,7 +422,7 @@ async def scan_cms(domain: str) -> dict:
     Deep CMS fingerprinting and vulnerability detection for *domain*.
 
     Returns a structured dict with cms, version, issues, plugins and a
-    letter grade. Never raises — all exceptions are caught internally.
+    letter grade. Never raises - all exceptions are caught internally.
     """
     empty: dict = {
         "enriched": False,

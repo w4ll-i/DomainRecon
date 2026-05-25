@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DomainRecon — OSINT Domain Intelligence</title>
+    <title>DomainRecon - OSINT Domain Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -17,19 +17,31 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root {
-            --bg: #090909;
-            --bg-warm: #0c0c0c;
-            --surface: #0e0e0e;
-            --surface-hover: #141414;
-            --border: #1e1e1e;
-            --border-light: #161616;
+            /* Backgrounds */
+            --bg: #111111;
+            --bg-warm: #141414;
+            --bg-deep: #0a0a0a;
+            --surface: #181818;
+            --surface-hover: #1f1f1f;
+            --surface-card: #0d0d0d;
+            --surface-input: #0d0d0d;
+            /* Borders */
+            --border: #262626;
+            --border-light: #1e1e1e;
+            --border-input: #222222;
+            /* Text */
             --text: #c8c8c8;
             --text-secondary: #777;
-            --text-tertiary: #444;
+            --text-tertiary: #555;
+            --text-dim: #3a3a3a;
+            --text-faint: #2e2e2e;
+            --text-ghost: #252525;
+            /* Accent */
             --accent: #e8e8e8;
             --accent-hover: #d0d0d0;
             --accent-light: rgba(255,255,255,.06);
             --accent-bg: rgba(255,255,255,.03);
+            /* Status */
             --success: #4a9e4e;
             --success-bg: rgba(74,158,78,.07);
             --warning: #c4903a;
@@ -38,6 +50,7 @@
             --danger-bg: rgba(199,80,80,.07);
             --info: #5a7fa8;
             --info-bg: rgba(90,127,168,.07);
+            /* Layout */
             --radius: 8px;
             --radius-sm: 6px;
             --radius-xs: 4px;
@@ -46,6 +59,32 @@
             --font: 'Inter', -apple-system, system-ui, sans-serif;
             --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
         }
+        [data-theme="light"] {
+            --bg: #f0ece3;
+            --bg-warm: #e8e3d8;
+            --bg-deep: #ddd8cc;
+            --surface: #f8f4ed;
+            --surface-hover: #f3ede3;
+            --surface-card: #f5f0e6;
+            --surface-input: #faf7f0;
+            --border: #d4cdc0;
+            --border-light: #e2ddd2;
+            --border-input: #c6bfb0;
+            --text: #1a1a1a;
+            --text-secondary: #555;
+            --text-tertiary: #777;
+            --text-dim: #888;
+            --text-faint: #999;
+            --text-ghost: #bbb;
+            --accent: #111111;
+            --accent-hover: #333333;
+            --accent-light: rgba(0,0,0,.07);
+            --accent-bg: rgba(0,0,0,.03);
+            --success-bg: rgba(74,158,78,.1);
+            --warning-bg: rgba(196,144,58,.1);
+            --danger-bg: rgba(199,80,80,.1);
+            --info-bg: rgba(90,127,168,.1);
+        }
         .mono { font-family: var(--mono); }
         a { color: var(--accent); text-decoration: none; }
         a:hover { text-decoration: underline; }
@@ -53,82 +92,82 @@
         /* Scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #1e1e1e; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #2a2a2a; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--border-input); }
 
         /* ── HEADER ─────────────────────────────────── */
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
-.header{background:#060606;border-bottom:1px solid #141414;position:sticky;top:0;z-index:40;height:48px;display:flex;align-items:center;padding:0 24px;gap:16px;}
+.header{background:var(--bg-deep);border-bottom:1px solid var(--border-light);position:sticky;top:0;z-index:40;height:48px;display:flex;align-items:center;padding:0 24px;gap:16px;}
 .logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .logo-icon{width:28px;height:28px;flex-shrink:0;}
 .logo-icon img{width:100%;height:100%;object-fit:contain;}
-.logo-text{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono);color:#888;}
+.logo-text{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono);color:var(--text-secondary);}
 .header-search{flex:1;display:none;max-width:400px;margin:0 auto;}
 .header-search.visible{display:flex;gap:8px;align-items:center;}
 .header-right{display:flex;align-items:center;gap:20px;margin-left:auto;flex-shrink:0;}
-.status-dot{width:6px;height:6px;border-radius:50%;background:#2a2a2a;display:inline-block;margin-right:5px;}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--text-ghost);display:inline-block;margin-right:5px;}
 .status-dot.online{background:var(--success);}
 .status-dot.offline{background:var(--danger);}
-.header-link{font-size:10.5px;font-family:var(--mono);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#333;transition:color .15s;display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;}
+.header-link{font-size:10.5px;font-family:var(--mono);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);transition:color .15s;display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;}
 #status-text{font-size:10.5px;font-family:var(--mono);}
-.header-link:hover{color:#888;text-decoration:none;}
+.header-link:hover{color:var(--text-secondary);text-decoration:none;}
 
 /* ── HERO SEARCH ─────────────────────────────── */
 #hero-section{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 24px;gap:36px;}
 #hero-section.hidden{display:none;}
-.hero-title{font-size:9.5px;font-family:var(--mono);color:#252525;letter-spacing:.22em;text-transform:uppercase;font-weight:700;}
+.hero-title{font-size:9.5px;font-family:var(--mono);color:var(--text-ghost);letter-spacing:.22em;text-transform:uppercase;font-weight:700;}
 .hero-search-wrap{width:100%;max-width:580px;display:flex;flex-direction:column;gap:10px;}
 .hero-input-row{display:flex;gap:8px;}
-.hero-input{flex:1;padding:12px 16px;border:1px solid #1a1a1a;border-radius:var(--radius-xs);font-size:14px;font-family:var(--mono);color:#bbb;background:#060606;outline:none;transition:border-color .15s;}
-.hero-input::placeholder{color:#252525;font-family:var(--font);}
-.hero-input:focus{border-color:#2e2e2e;}
+.hero-input{flex:1;padding:12px 16px;border:1px solid var(--border-input);border-radius:var(--radius-xs);font-size:14px;font-family:var(--mono);color:var(--text-secondary);background:var(--bg-deep);outline:none;transition:border-color .15s;}
+.hero-input::placeholder{color:var(--text-ghost);font-family:var(--font);}
+.hero-input:focus{border-color:var(--text-faint);}
 .btn-hero-scan{padding:12px 26px;background:#dcdcdc;color:#0a0a0a;border:none;border-radius:var(--radius-xs);font-size:12px;font-weight:700;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .15s;white-space:nowrap;}
 .btn-hero-scan:hover{background:#f0f0f0;}
-.btn-hero-scan:disabled{background:#1a1a1a;color:#333;cursor:not-allowed;}
+.btn-hero-scan:disabled{background:var(--border-input);color:var(--text-faint);cursor:not-allowed;}
 .hero-profile{display:flex;align-items:center;gap:20px;}
-.hero-profile-label{font-size:9.5px;font-family:var(--mono);color:#2a2a2a;letter-spacing:.1em;text-transform:uppercase;}
-.hero-profile label{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:#3a3a3a;cursor:pointer;}
-.hero-profile input[type="radio"]{accent-color:#888;cursor:pointer;}
+.hero-profile-label{font-size:9.5px;font-family:var(--mono);color:var(--text-ghost);letter-spacing:.1em;text-transform:uppercase;}
+.hero-profile label{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--text-dim);cursor:pointer;}
+.hero-profile input[type="radio"]{accent-color:var(--text-secondary);cursor:pointer;}
 
 /* ── HERO HISTORY ────────────────────────────── */
 .hero-history{width:100%;max-width:580px;}
-.hero-history-title{font-size:9.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:#252525;margin-bottom:6px;display:flex;align-items:center;gap:10px;}
-.hero-history-title::after{content:'';flex:1;height:1px;background:#141414;}
+.hero-history-title{font-size:9.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--text-ghost);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.hero-history-title::after{content:'';flex:1;height:1px;background:var(--border-light);}
 .hero-history-item{display:flex;align-items:center;padding:7px 10px;border-radius:var(--radius-xs);cursor:pointer;transition:background .1s;gap:10px;}
-.hero-history-item:hover{background:#0d0d0d;}
-.hero-history-domain{font-family:var(--mono);font-size:12px;color:#888;flex:1;}
-.hero-history-meta{font-size:10px;font-family:var(--mono);color:#2e2e2e;}
+.hero-history-item:hover{background:var(--surface-card);}
+.hero-history-domain{font-family:var(--mono);font-size:12px;color:var(--text-secondary);flex:1;}
+.hero-history-meta{font-size:10px;font-family:var(--mono);color:var(--text-faint);}
 
 /* ── POST-SCAN LAYOUT ────────────────────────── */
 #app-post{display:none;flex-direction:column;flex:1;}
 #app-post.visible{display:flex;}
-.compact-input{flex:1;padding:6px 11px;border:1px solid #1a1a1a;border-radius:var(--radius-xs);font-size:12px;font-family:var(--mono);color:#bbb;background:#060606;outline:none;transition:border-color .15s;}
-.compact-input::placeholder{color:#252525;font-family:var(--font);}
-.compact-input:focus{border-color:#2e2e2e;}
+.compact-input{flex:1;padding:6px 11px;border:1px solid var(--border-input);border-radius:var(--radius-xs);font-size:12px;font-family:var(--mono);color:var(--text-secondary);background:var(--bg-deep);outline:none;transition:border-color .15s;}
+.compact-input::placeholder{color:var(--text-ghost);font-family:var(--font);}
+.compact-input:focus{border-color:var(--text-faint);}
 .btn-compact-scan{padding:6px 10px;background:#d8d8d8;color:#0a0a0a;border:none;border-radius:var(--radius-xs);font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;transition:background .15s;flex-shrink:0;}
 .btn-compact-scan:hover{background:#f0f0f0;}
-.btn-compact-scan:disabled{background:#181818;color:#333;cursor:not-allowed;}
+.btn-compact-scan:disabled{background:var(--surface);color:var(--text-faint);cursor:not-allowed;}
 .compact-profile{display:flex;align-items:center;gap:10px;}
-.compact-profile label{display:flex;align-items:center;gap:4px;font-size:10px;font-family:var(--mono);color:#333;cursor:pointer;white-space:nowrap;}
-.compact-profile input[type="radio"]{accent-color:#777;cursor:pointer;}
+.compact-profile label{display:flex;align-items:center;gap:4px;font-size:10px;font-family:var(--mono);color:var(--text-faint);cursor:pointer;white-space:nowrap;}
+.compact-profile input[type="radio"]{accent-color:var(--text-secondary);cursor:pointer;}
 
 /* Metrics bar */
-.metrics-bar{background:var(--bg);border-bottom:1px solid #141414;padding:0 24px;height:32px;display:flex;align-items:center;opacity:0;transition:opacity .3s;}
+.metrics-bar{background:var(--bg);border-bottom:1px solid var(--border-light);padding:0 24px;height:32px;display:flex;align-items:center;opacity:0;transition:opacity .3s;}
 .metrics-bar.loaded{opacity:1;}
 .metric-item{display:flex;align-items:center;gap:7px;cursor:pointer;padding:0 14px;height:100%;transition:background .12s;}
 .metric-item:first-child{padding-left:0;}
-.metric-item:hover{background:rgba(255,255,255,.02);}
-.metric-sep{color:#1a1a1a;font-size:14px;font-family:var(--mono);user-select:none;}
-.metric-label{font-size:9px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;color:#2e2e2e;}
+.metric-item:hover{background:var(--accent-bg);}
+.metric-sep{color:var(--border-input);font-size:14px;font-family:var(--mono);user-select:none;}
+.metric-label{font-size:9px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--text-faint);}
 .metric-value{font-size:11.5px;font-weight:600;font-family:var(--mono);}
 .metric-value.mono{font-family:var(--mono);font-weight:500;font-size:11px;}
 
 /* Main tabs */
-.main-tabs{background:var(--bg);border-bottom:1px solid #141414;display:flex;align-items:center;padding:0 24px;gap:0;overflow-x:auto;scrollbar-width:none;}
+.main-tabs{background:var(--bg);border-bottom:1px solid var(--border-light);display:flex;align-items:center;padding:0 24px;gap:0;overflow-x:auto;scrollbar-width:none;}
 .main-tabs::-webkit-scrollbar{display:none;}
-.main-tab{padding:0 14px;height:40px;display:flex;align-items:center;font-size:10.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.09em;color:#333;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;user-select:none;}
-.main-tab:hover{color:#666;}
-.main-tab.active{color:#c0c0c0;border-bottom-color:#555;}
+.main-tab{padding:0 14px;height:40px;display:flex;align-items:center;font-size:10.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.09em;color:var(--text-faint);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;user-select:none;}
+.main-tab:hover{color:var(--text-secondary);}
+.main-tab.active{color:var(--text);border-bottom-color:var(--text-tertiary);}
 
 /* Content area */
 .content-area{flex:1;display:flex;flex-direction:column;min-height:0;}
@@ -136,11 +175,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .main-panel.hidden{display:none;}
 
 /* Sub-tabs */
-.sub-tabs-bar{padding:0 24px;display:flex;gap:0;border-bottom:1px solid #141414;background:var(--bg);height:34px;align-items:center;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.sub-tabs-bar{padding:0 24px;display:flex;gap:0;border-bottom:1px solid var(--border-light);background:var(--bg);height:34px;align-items:center;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
 .sub-tabs-bar::-webkit-scrollbar{display:none;}
-.sub-tab{padding:0;margin-right:18px;border-radius:0;font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#2e2e2e;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;height:34px;display:inline-flex;align-items:center;transition:color .12s,border-color .12s;white-space:nowrap;user-select:none;flex-shrink:0;}
-.sub-tab:hover{color:#5a5a5a;}
-.sub-tab.active{color:#999;border-bottom-color:#444;}
+.sub-tab{padding:0;margin-right:18px;border-radius:0;font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;height:34px;display:inline-flex;align-items:center;transition:color .12s,border-color .12s;white-space:nowrap;user-select:none;flex-shrink:0;}
+.sub-tab:hover{color:var(--text-tertiary);}
+.sub-tab.active{color:var(--text-secondary);border-bottom-color:var(--text-tertiary);}
 
 /* Tab content */
 .tab-content{padding:24px;}
@@ -149,16 +188,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 /* Loading panel */
 .loading-panel{padding:24px;display:none;}
 .loading-panel.visible{display:block;}
-.loading-progress{height:1px;background:#161616;margin-bottom:20px;overflow:hidden;}
-.loading-progress-bar{height:100%;background:#4a9e4e;width:0%;transition:width .3s;box-shadow:0 0 8px rgba(74,158,78,.4);}
-.loading-header-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.spinner{width:14px;height:14px;border:1.5px solid #1e1e1e;border-top-color:#4a9e4e;border-radius:50%;animation:spin .7s linear infinite;}
+.loading-progress{height:6px;background:var(--border-light);margin-bottom:16px;overflow:hidden;border-radius:3px;}
+.loading-progress-bar{height:100%;background:#4a9e4e;width:0%;transition:width .4s ease;box-shadow:0 0 10px rgba(74,158,78,.35);}
+.loading-header-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.spinner{width:14px;height:14px;border:1.5px solid var(--border);border-top-color:#4a9e4e;border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-title{font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:#555;}
-.loading-timer{font-size:10px;color:#333;font-family:var(--mono);margin-left:auto;letter-spacing:.08em;}
-.scan-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;}
-.scan-step{display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:var(--radius-xs);font-size:10.5px;font-family:var(--mono);color:#252525;opacity:0;transform:translateX(-4px);transition:all .25s;}
-.scan-step.active{opacity:1;transform:translateX(0);color:#555;}
+.loading-title{font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--text-tertiary);}
+.loading-progress-count{font-size:10px;color:var(--text-dim);font-family:var(--mono);letter-spacing:.08em;margin-left:auto;}
+.loading-timer{font-size:10px;color:var(--text-ghost);font-family:var(--mono);letter-spacing:.08em;}
+.scan-current-module{font-size:9px;font-family:var(--mono);color:var(--text-dim);letter-spacing:.06em;margin-bottom:14px;min-height:13px;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.scan-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:3px;}
+.scan-step{display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:var(--radius-xs);font-size:10.5px;font-family:var(--mono);color:var(--text-ghost);opacity:0;transform:translateX(-4px);transition:all .25s;}
+.scan-step.active{opacity:1;transform:translateX(0);color:var(--text-tertiary);}
 .scan-step.done{color:#4a9e4e;}
 .scan-step.done .step-icon i{color:#4a9e4e;}
 .step-icon{width:12px;text-align:center;flex-shrink:0;}
@@ -168,112 +209,112 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .error-panel.visible{display:flex;}
 .error-panel i{color:var(--danger);margin-top:1px;font-size:12px;}
 .error-panel h3{font-size:11px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--danger);}
-.error-panel p{font-size:11.5px;color:#888;margin-top:3px;font-family:var(--mono);}
+.error-panel p{font-size:11.5px;color:var(--text-secondary);margin-top:3px;font-family:var(--mono);}
 
 /* Content fade animation */
 @keyframes contentFade { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:translateY(0); } }
 
 /* Content footer */
-.content-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 24px;border-top:1px solid #141414;font-size:10px;font-family:var(--mono);color:#2e2e2e;}
-.btn-export{background:none;border:1px solid #1e1e1e;border-radius:var(--radius-xs);padding:4px 12px;font-size:10px;font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3a3a3a;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;}
-.btn-export:hover{border-color:#333;color:#aaa;}
+.content-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 24px;border-top:1px solid var(--border-light);font-size:10px;font-family:var(--mono);color:var(--text-faint);}
+.btn-export{background:none;border:1px solid var(--border);border-radius:var(--radius-xs);padding:4px 12px;font-size:10px;font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;}
+.btn-export:hover{border-color:var(--text-faint);color:var(--text-secondary);}
 
-/* History (post-scan full panel) */
-.history-card{background:#070707;border:1px solid #141414;border-radius:var(--radius-xs);overflow:hidden;margin:0 24px 24px;}
-.history-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #141414;}
-.history-header h2{font-size:9.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:#383838;}
-.btn-refresh{background:none;border:none;font-size:10px;font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#2e2e2e;cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:5px;}
-.btn-refresh:hover{color:#888;}
-.history-search{padding:7px 16px;border-bottom:1px solid #111;}
+/* History */
+.history-card{background:var(--surface-card);border:1px solid var(--border-light);border-radius:var(--radius-xs);overflow:hidden;margin:0 24px 24px;}
+.history-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border-light);}
+.history-header h2{font-size:9.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--text-dim);}
+.btn-refresh{background:none;border:none;font-size:10px;font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:5px;}
+.btn-refresh:hover{color:var(--text-secondary);}
+.history-search{padding:7px 16px;border-bottom:1px solid var(--border-light);}
 .history-search-wrap{position:relative;}
-.history-search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#2a2a2a;font-size:10px;}
-.history-search-input{width:100%;padding:6px 12px 6px 28px;border:1px solid #1a1a1a;border-radius:var(--radius-xs);font-size:11.5px;font-family:var(--mono);color:#aaa;background:#060606;outline:none;transition:border-color .15s;}
-.history-search-input:focus{border-color:#2e2e2e;}
-.history-search-input::placeholder{color:#252525;font-family:var(--font);}
-.history-item{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid #0f0f0f;cursor:pointer;transition:background .1s;}
+.history-search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-ghost);font-size:10px;}
+.history-search-input{width:100%;padding:6px 12px 6px 28px;border:1px solid var(--border-input);border-radius:var(--radius-xs);font-size:11.5px;font-family:var(--mono);color:var(--text-secondary);background:var(--bg-deep);outline:none;transition:border-color .15s;}
+.history-search-input:focus{border-color:var(--text-faint);}
+.history-search-input::placeholder{color:var(--text-ghost);font-family:var(--font);}
+.history-item{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--border-light);cursor:pointer;transition:background .1s;}
 .history-item:last-child{border-bottom:none;}
-.history-item:hover{background:#0c0c0c;}
-.history-domain{font-family:var(--mono);font-size:11.5px;font-weight:500;color:#888;}
-.history-ip{font-size:10px;font-family:var(--mono);color:#2e2e2e;margin-left:8px;}
+.history-item:hover{background:var(--bg-warm);}
+.history-domain{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--text-secondary);}
+.history-ip{font-size:10px;font-family:var(--mono);color:var(--text-faint);margin-left:8px;}
 .history-right{display:flex;align-items:center;gap:8px;}
-.history-meta{font-size:10px;font-family:var(--mono);color:#2e2e2e;}
-.btn-delete{background:none;border:none;color:#2a2a2a;cursor:pointer;opacity:0;transition:all .15s;font-size:10px;padding:3px;}
+.history-meta{font-size:10px;font-family:var(--mono);color:var(--text-faint);}
+.btn-delete{background:none;border:none;color:var(--text-ghost);cursor:pointer;opacity:0;transition:all .15s;font-size:10px;padding:3px;}
 .history-item:hover .btn-delete{opacity:1;}
 .btn-delete:hover{color:var(--danger);}
 
-/* Settings overlay — redesigned */
+/* Settings overlay */
 .settings-overlay{position:fixed;inset:0;z-index:200;display:flex;}
 .settings-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);opacity:0;transition:opacity .3s ease;}
 .settings-backdrop.sopen{opacity:1;}
-.settings-panel{position:relative;z-index:1;background:#0c0c0c;border-left:1px solid #1e1e1e;width:680px;max-width:100%;margin-left:auto;display:flex;flex-direction:column;transform:translateX(110%);transition:transform .38s cubic-bezier(.16,1,.3,1);box-shadow:-32px 0 80px rgba(0,0,0,.7);}
+.settings-panel{position:relative;z-index:1;background:var(--bg-warm);border-left:1px solid var(--border);width:680px;max-width:100%;margin-left:auto;display:flex;flex-direction:column;transform:translateX(110%);transition:transform .38s cubic-bezier(.16,1,.3,1);box-shadow:-32px 0 80px rgba(0,0,0,.5);}
 .settings-panel.sopen{transform:translateX(0);}
-.sp-header{padding:0 28px;border-bottom:1px solid #181818;flex-shrink:0;}
+.sp-header{padding:0 28px;border-bottom:1px solid var(--border-light);flex-shrink:0;}
 .sp-header-top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 18px;}
-.sp-title{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#444;}
-.sp-title em{font-style:normal;color:#bbb;margin-left:6px;letter-spacing:.12em;}
-.sp-close{width:30px;height:30px;background:none;border:1px solid #222;border-radius:5px;color:#555;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;}
-.sp-close:hover{border-color:#3a3a3a;color:#ccc;background:#181818;}
+.sp-title{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--text-tertiary);}
+.sp-title em{font-style:normal;color:var(--text);margin-left:6px;letter-spacing:.12em;}
+.sp-close{width:30px;height:30px;background:none;border:1px solid var(--border);border-radius:5px;color:var(--text-tertiary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;}
+.sp-close:hover{border-color:var(--text-dim);color:var(--text);background:var(--surface);}
 .sp-tabs{display:flex;gap:0;}
-.sp-tab{padding:11px 0;margin-right:26px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#444;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;user-select:none;}
-.sp-tab:hover{color:#888;}
-.sp-tab.active{color:#ddd;border-bottom-color:#ddd;}
-.sp-content{flex:1;overflow-y:auto;padding:26px 28px;scrollbar-width:thin;scrollbar-color:#222 transparent;}
+.sp-tab{padding:11px 0;margin-right:26px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-tertiary);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;user-select:none;}
+.sp-tab:hover{color:var(--text-secondary);}
+.sp-tab.active{color:var(--text);border-bottom-color:var(--text);}
+.sp-content{flex:1;overflow-y:auto;padding:26px 28px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
 .sp-content::-webkit-scrollbar{width:3px;}
-.sp-content::-webkit-scrollbar-thumb{background:#252525;border-radius:4px;}
-.sp-cat-label{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#383838;display:flex;align-items:center;gap:10px;margin-bottom:10px;margin-top:28px;}
+.sp-content::-webkit-scrollbar-thumb{background:var(--text-ghost);border-radius:4px;}
+.sp-cat-label{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text-dim);display:flex;align-items:center;gap:10px;margin-bottom:10px;margin-top:28px;}
 .sp-cat-label:first-child{margin-top:0;}
-.sp-cat-label::after{content:'';flex:1;height:1px;background:#181818;}
-.sp-key-card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:8px;padding:13px 15px 13px 18px;margin-bottom:7px;display:flex;align-items:center;gap:14px;transition:border-color .2s,background .2s;position:relative;overflow:hidden;}
-.sp-key-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#1e1e1e;transition:background .25s,box-shadow .25s;}
+.sp-cat-label::after{content:'';flex:1;height:1px;background:var(--border-light);}
+.sp-key-card{background:var(--surface-card);border:1px solid var(--border-input);border-radius:8px;padding:13px 15px 13px 18px;margin-bottom:7px;display:flex;align-items:center;gap:14px;transition:border-color .2s,background .2s;position:relative;overflow:hidden;}
+.sp-key-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border);transition:background .25s,box-shadow .25s;}
 .sp-key-card.sk-ok::before{background:#4a9e4e;box-shadow:0 0 10px rgba(74,158,78,.35);}
 .sp-key-card.sk-err::before{background:#c75050;box-shadow:0 0 10px rgba(199,80,80,.3);}
-.sp-key-card:hover{border-color:#242424;background:#111;}
-.sp-key-icon{width:32px;height:32px;flex-shrink:0;border-radius:6px;background:#141414;border:1px solid #1e1e1e;display:flex;align-items:center;justify-content:center;font-size:13px;color:#3a3a3a;transition:color .2s;}
+.sp-key-card:hover{border-color:var(--border);background:var(--surface);}
+.sp-key-icon{width:32px;height:32px;flex-shrink:0;border-radius:6px;background:var(--surface-hover);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-dim);transition:color .2s;}
 .sp-key-card.sk-ok .sp-key-icon{color:#4a9e4e;}
 .sp-key-info{flex:1;min-width:0;}
-.sp-key-name{font-size:13px;font-weight:600;color:#ccc;display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.sp-key-name{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;margin-bottom:2px;}
 .sp-key-badge{font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
 .sk-ok .sp-key-badge{background:rgba(74,158,78,.12);color:#4a9e4e;}
-.sk-na .sp-key-badge{background:rgba(255,255,255,.04);color:#383838;}
+.sk-na .sp-key-badge{background:var(--accent-bg);color:var(--text-dim);}
 .sk-err .sp-key-badge{background:rgba(199,80,80,.12);color:#c75050;}
-.sp-key-desc{font-size:11.5px;color:#444;line-height:1.45;}
-.sp-key-desc a{color:#4a4a4a;text-decoration:none;}
-.sp-key-desc a:hover{color:#888;}
+.sp-key-desc{font-size:11.5px;color:var(--text-tertiary);line-height:1.45;}
+.sp-key-desc a{color:var(--text-dim);text-decoration:none;}
+.sp-key-desc a:hover{color:var(--text-secondary);}
 .sp-key-right{display:flex;flex-direction:column;gap:5px;align-items:flex-end;flex-shrink:0;}
 .sp-inp-wrap{position:relative;display:flex;}
-.sp-inp{padding:7px 34px 7px 11px;background:#080808;border:1px solid #1e1e1e;border-radius:5px;font-size:12px;font-family:var(--mono);color:#bbb;width:215px;outline:none;transition:border-color .15s;}
-.sp-inp:focus{border-color:#363636;background:#0c0c0c;}
-.sp-inp::placeholder{color:#2a2a2a;font-family:var(--font);}
+.sp-inp{padding:7px 34px 7px 11px;background:var(--surface-input);border:1px solid var(--border);border-radius:5px;font-size:12px;font-family:var(--mono);color:var(--text-secondary);width:215px;outline:none;transition:border-color .15s;}
+.sp-inp:focus{border-color:var(--text-faint);background:var(--bg-warm);}
+.sp-inp::placeholder{color:var(--text-ghost);font-family:var(--font);}
 .sp-inp.narrow{width:130px;}
-.sp-inp-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#333;cursor:pointer;font-size:11px;transition:color .15s;padding:2px;}
-.sp-inp-eye:hover{color:#777;}
-.sp-test-btn{padding:5px 12px;background:none;border:1px solid #1e1e1e;border-radius:5px;font-size:11px;font-weight:500;color:#444;cursor:pointer;font-family:var(--font);transition:all .15s;white-space:nowrap;width:100%;}
-.sp-test-btn:hover{border-color:#333;color:#aaa;}
-.sp-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #141414;}
+.sp-inp-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:11px;transition:color .15s;padding:2px;}
+.sp-inp-eye:hover{color:var(--text-secondary);}
+.sp-test-btn{padding:5px 12px;background:none;border:1px solid var(--border);border-radius:5px;font-size:11px;font-weight:500;color:var(--text-tertiary);cursor:pointer;font-family:var(--font);transition:all .15s;white-space:nowrap;width:100%;}
+.sp-test-btn:hover{border-color:var(--text-faint);color:var(--text-secondary);}
+.sp-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border-light);}
 .sp-toggle-row:last-child{border-bottom:none;}
-.sp-toggle-label{font-size:13px;font-weight:500;color:#bbb;}
-.sp-toggle-sub{font-size:11.5px;color:#3a3a3a;margin-top:3px;}
-.sp-num-inp{width:72px;padding:7px 10px;border:1px solid #1e1e1e;border-radius:5px;font-size:12px;font-family:var(--mono);color:#bbb;background:#080808;text-align:center;outline:none;transition:border-color .15s;}
-.sp-num-inp:focus{border-color:#363636;}
-.sp-footer{padding:16px 28px;border-top:1px solid #181818;background:#0c0c0c;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
-.sp-footer-hint{font-size:10px;color:#2a2a2a;font-family:var(--mono);letter-spacing:.06em;}
-.sp-save-btn{padding:9px 26px;background:#e8e8e8;color:#0a0a0a;border:none;border-radius:6px;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .18s;letter-spacing:.01em;}
-.sp-save-btn:hover{background:#fff;transform:translateY(-1px);}
+.sp-toggle-label{font-size:13px;font-weight:500;color:var(--text-secondary);}
+.sp-toggle-sub{font-size:11.5px;color:var(--text-dim);margin-top:3px;}
+.sp-num-inp{width:72px;padding:7px 10px;border:1px solid var(--border);border-radius:5px;font-size:12px;font-family:var(--mono);color:var(--text-secondary);background:var(--surface-input);text-align:center;outline:none;transition:border-color .15s;}
+.sp-num-inp:focus{border-color:var(--text-faint);}
+.sp-footer{padding:16px 28px;border-top:1px solid var(--border-light);background:var(--bg-warm);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
+.sp-footer-hint{font-size:10px;color:var(--text-ghost);font-family:var(--mono);letter-spacing:.06em;}
+.sp-save-btn{padding:9px 26px;background:var(--accent);color:var(--bg-deep);border:none;border-radius:6px;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .18s;letter-spacing:.01em;}
+.sp-save-btn:hover{background:var(--accent-hover);transform:translateY(-1px);}
 .sp-save-btn:active{transform:translateY(0);}
 
 /* App footer */
-.app-footer{text-align:center;padding:12px;font-size:9.5px;font-family:var(--mono);letter-spacing:.08em;color:#252525;border-top:1px solid #141414;}
+.app-footer{text-align:center;padding:12px;font-size:9.5px;font-family:var(--mono);letter-spacing:.08em;color:var(--text-ghost);border-top:1px solid var(--border-light);}
 
 /* Common components */
-.section-title { font-size: 9.5px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; letter-spacing: .14em; color: #383838; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.section-title::after { content: ''; flex: 1; height: 1px; background: #161616; }
-.section-title i { color: #2a2a2a; font-size: 10px; flex-shrink: 0; }
+.section-title { font-size: 9.5px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--text-dim); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
+.section-title i { color: var(--text-ghost); font-size: 10px; flex-shrink: 0; }
 .info-row { display: flex; align-items: flex-start; padding: 7px 12px; border-radius: var(--radius-xs); font-size: 12.5px; gap: 10px; }
-.info-row:nth-child(odd) { background: rgba(255,255,255,.012); }
-.info-row .row-icon { color: #2e2e2e; width: 14px; text-align: center; flex-shrink: 0; margin-top: 1px; font-size: 11px; }
-.info-row .row-label { color: #3a3a3a; width: 110px; flex-shrink: 0; font-size: 11px; font-family: var(--mono); letter-spacing: .03em; }
-.info-row .row-value { color: #aaa; font-size: 12.5px; min-width: 0; word-break: break-word; }
-.data-card { background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); padding: 16px; }
+.info-row:nth-child(odd) { background: var(--accent-bg); }
+.info-row .row-icon { color: var(--text-faint); width: 14px; text-align: center; flex-shrink: 0; margin-top: 1px; font-size: 11px; }
+.info-row .row-label { color: var(--text-dim); width: 110px; flex-shrink: 0; font-size: 11px; font-family: var(--mono); letter-spacing: .03em; }
+.info-row .row-value { color: var(--text-secondary); font-size: 12.5px; min-width: 0; word-break: break-word; }
+.data-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: 16px; }
 
 /* Responsive */
 @media(max-width:900px){
@@ -299,7 +340,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .grade-C { background: var(--warning-bg); color: var(--warning); border: 2px solid var(--warning); }
         .grade-D { background: rgba(199,120,50,.06); color: #C7783A; border: 2px solid #C7783A; }
         .grade-F { background: var(--danger-bg); color: var(--danger); border: 2px solid var(--danger); }
-        .grade-NA { background: rgba(255,255,255,.03); color: var(--text-tertiary); border: 2px solid var(--border); }
+        .grade-NA { background: var(--accent-bg); color: var(--text-tertiary); border: 2px solid var(--border); }
 
         /* Pill tags */
         .pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 100px; font-size: 11.5px; font-weight: 500; gap: 4px; }
@@ -307,25 +348,25 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .pill-warning { background: var(--warning-bg); color: var(--warning); }
         .pill-danger { background: var(--danger-bg); color: var(--danger); }
         .pill-info { background: var(--info-bg); color: var(--info); }
-        .pill-neutral { background: rgba(255,255,255,.05); color: var(--text-secondary); }
+        .pill-neutral { background: var(--accent-light); color: var(--text-secondary); }
 
         /* DNS Record blocks */
-        .dns-block { background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); padding: 12px 14px; margin-bottom: 8px; }
-        .dns-type { display: inline-block; padding: 1px 7px; background: rgba(255,255,255,.04); color: #888; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .05em; margin-right: 8px; }
-        .dns-count { font-size: 10px; font-family: var(--mono); color: #2e2e2e; }
-        .dns-value { font-family: var(--mono); font-size: 12px; color: #666; padding: 3px 0; }
+        .dns-block { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: 12px 14px; margin-bottom: 8px; }
+        .dns-type { display: inline-block; padding: 1px 7px; background: var(--accent-bg); color: var(--text-secondary); border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .05em; margin-right: 8px; }
+        .dns-count { font-size: 10px; font-family: var(--mono); color: var(--text-faint); }
+        .dns-value { font-family: var(--mono); font-size: 12px; color: var(--text-tertiary); padding: 3px 0; }
 
         /* Network graph */
-        #network-graph { background: #060606; border: 1px solid #161616; border-radius: var(--radius-xs); height: 400px; width: 100%; }
+        #network-graph { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: var(--radius-xs); height: 400px; width: 100%; }
         .graph-controls { display: flex; gap: 5px; margin-top: 8px; }
-        .graph-btn { background: none; border: 1px solid #1e1e1e; border-radius: var(--radius-xs); padding: 4px 12px; font-size: 10px; font-family: var(--mono); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #333; cursor: pointer; transition: all .15s; }
-        .graph-btn:hover { color: #aaa; border-color: #333; }
+        .graph-btn { background: none; border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 4px 12px; font-size: 10px; font-family: var(--mono); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-faint); cursor: pointer; transition: all .15s; }
+        .graph-btn:hover { color: var(--text-secondary); border-color: var(--text-faint); }
 
         /* Leaflet overrides */
-        .leaflet-container { background: #060606 !important; border-radius: var(--radius-xs); border: 1px solid #161616; }
+        .leaflet-container { background: var(--surface-card) !important; border-radius: var(--radius-xs); border: 1px solid var(--border-light); }
 
         /* Tooltip */
-        .tooltip-el { position: fixed; background: #333; color: #D4D4D4; font-size: 12px; padding: 4px 10px; border-radius: 4px; pointer-events: none; z-index: 100; max-width: 280px; }
+        .tooltip-el { position: fixed; background: var(--surface-hover); color: var(--text); font-size: 12px; padding: 4px 10px; border-radius: 4px; pointer-events: none; z-index: 100; max-width: 280px; border: 1px solid var(--border); }
 
         /* Security Score Gauge */
         .score-gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
@@ -343,7 +384,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
         /* Toast Notifications */
         .toast-container { position: fixed; top: 64px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
-        .toast { pointer-events: auto; display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: var(--radius-xs); font-size: 11px; font-family: var(--mono); background: #0c0c0c; border: 1px solid #1e1e1e; color: #aaa; min-width: 260px; max-width: 380px; opacity: 0; transform: translateX(20px); transition: all .25s ease; }
+        .toast { pointer-events: auto; display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: var(--radius-xs); font-size: 11px; font-family: var(--mono); background: var(--bg-warm); border: 1px solid var(--border); color: var(--text-secondary); min-width: 260px; max-width: 380px; opacity: 0; transform: translateX(20px); transition: all .25s ease; }
         .toast.show { opacity: 1; transform: translateX(0); }
         .toast.hide { opacity: 0; transform: translateX(20px); }
         .toast-success { border-color: rgba(110,192,114,.3); }
@@ -389,7 +430,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
         /* Source badges */
         .badge-api  { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; font-family: var(--mono); background: var(--info-bg); color: var(--info); margin-left: 4px; vertical-align: middle; }
-        .badge-na   { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; font-family: var(--mono); background: rgba(255,255,255,.04); color: var(--text-tertiary); margin-left: 4px; vertical-align: middle; }
+        .badge-na   { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; font-family: var(--mono); background: var(--accent-bg); color: var(--text-tertiary); margin-left: 4px; vertical-align: middle; }
 
         .service-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
         .service-table th { text-align: left; padding: 7px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text-tertiary); border-bottom: 1px solid var(--border); }
@@ -401,8 +442,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         /* Toggle switch (settings scanner tab) */
         .toggle-switch { position: relative; width: 36px; height: 20px; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .toggle-slider { position: absolute; inset: 0; background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 10px; cursor: pointer; transition: background .2s; }
-        .toggle-slider::before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; bottom: 2px; background: #444; border-radius: 50%; transition: transform .2s,background .2s; }
+        .toggle-slider { position: absolute; inset: 0; background: var(--border); border: 1px solid var(--border-input); border-radius: 10px; cursor: pointer; transition: background .2s; }
+        .toggle-slider::before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; bottom: 2px; background: var(--text-tertiary); border-radius: 50%; transition: transform .2s,background .2s; }
         .toggle-switch input:checked + .toggle-slider { background: #1e3d20; border-color: #2d5c30; }
         .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: #4a9e4e; }
 
@@ -411,24 +452,49 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             .main { padding: 16px; }
         }
         /* additions */
-        .profile-selector { display: flex; align-items: center; gap: 20px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #161616; }
-        .profile-selector label { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); color: #3a3a3a; cursor: pointer; }
-        .profile-selector input[type="radio"] { accent-color: #888; cursor: pointer; }
-        .profile-label { font-size: 10px; font-family: var(--mono); color: #2a2a2a; margin-right: 4px; text-transform: uppercase; letter-spacing: .08em; }
+        .profile-selector { display: flex; align-items: center; gap: 20px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-light); }
+        .profile-selector label { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); color: var(--text-dim); cursor: pointer; }
+        .profile-selector input[type="radio"] { accent-color: var(--text-secondary); cursor: pointer; }
+        .profile-label { font-size: 10px; font-family: var(--mono); color: var(--text-ghost); margin-right: 4px; text-transform: uppercase; letter-spacing: .08em; }
         .badge-danger { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .04em; background: var(--danger-bg); color: var(--danger); }
         .badge-ok { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .04em; background: var(--success-bg); color: var(--success); }
         .badge-warn { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; font-family: var(--mono); letter-spacing: .04em; background: var(--warning-bg); color: var(--warning); }
-        .v6-section { margin-bottom: 10px; padding: 10px 14px; background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); }
-        .v6-row { display: flex; align-items: flex-start; padding: 5px 0; font-size: 12px; gap: 10px; border-bottom: 1px solid #111; }
+        .v6-section { margin-bottom: 10px; padding: 10px 14px; background: var(--surface-card); border: 1px solid var(--border-light); border-radius: var(--radius-xs); }
+        .v6-row { display: flex; align-items: flex-start; padding: 5px 0; font-size: 12px; gap: 10px; border-bottom: 1px solid var(--border-light); }
         .v6-row:last-child { border-bottom: none; }
-        .v6-label { color: #3a3a3a; width: 130px; flex-shrink: 0; font-size: 10.5px; font-family: var(--mono); letter-spacing: .03em; }
-        .v6-value { color: #aaa; flex: 1; word-break: break-word; font-size: 12px; }
+        .v6-label { color: var(--text-dim); width: 130px; flex-shrink: 0; font-size: 10.5px; font-family: var(--mono); letter-spacing: .03em; }
+        .v6-value { color: var(--text-secondary); flex: 1; word-break: break-word; font-size: 12px; }
         .rec-item { display: flex; align-items: baseline; gap: 10px; padding: 7px 12px; border-radius: var(--radius-xs); background: rgba(199,80,80,.04); border: 1px solid rgba(199,80,80,.1); margin-bottom: 5px; }
         .rec-points { font-size: 11px; font-weight: 700; color: var(--danger); font-family: var(--mono); white-space: nowrap; }
-        .rec-reason { font-size: 12.5px; color: #666; }
-        .score-v6-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: #070707; border: 1px solid #161616; border-radius: var(--radius-xs); margin-bottom: 14px; }
+        .rec-reason { font-size: 12.5px; color: var(--text-secondary); }
+        .score-v6-header { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: var(--surface-card); border: 1px solid var(--border-light); border-radius: var(--radius-xs); margin-bottom: 14px; }
         .grade-v6 { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; font-weight: 700; font-size: 20px; }
         .profile-note { margin-top: 10px; padding: 9px 14px; background: rgba(90,127,168,.05); border: 1px solid rgba(90,127,168,.12); border-radius: var(--radius-xs); font-size: 12px; color: #5a7fa8; }
+        /* btn primary light-mode fix */
+        .btn-primary { background: var(--accent); border: none; border-radius: var(--radius-xs); padding: 7px 18px; font-size: 11px; font-weight: 700; font-family: var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--bg-deep); cursor: pointer; transition: background .15s; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-primary:disabled { background: var(--border-input); color: var(--text-faint); cursor: not-allowed; }
+        .btn-save-notes { padding: 8px 20px; background: var(--accent); color: var(--bg-deep); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all .15s; }
+        .btn-save-notes:hover { background: var(--accent-hover); }
+
+        /* ── LIGHT THEME OVERRIDES ────────────────── */
+        [data-theme="light"] .header { box-shadow: 0 1px 0 var(--border-light); }
+        [data-theme="light"] .btn-hero-scan,
+        [data-theme="light"] .btn-compact-scan { background: #1a1a1a; color: #f0f0f0; }
+        [data-theme="light"] .btn-hero-scan:hover,
+        [data-theme="light"] .btn-compact-scan:hover { background: #333; }
+        [data-theme="light"] .settings-backdrop { background: rgba(0,0,0,.45); }
+        [data-theme="light"] .sp-save-btn { background: #1a1a1a; color: #f0f0f0; }
+        [data-theme="light"] .sp-save-btn:hover { background: #333; }
+        [data-theme="light"] .btn-primary { background: #1a1a1a; color: #f0f0f0; }
+        [data-theme="light"] .btn-primary:hover { background: #333; }
+        [data-theme="light"] .btn-save-notes { background: #1a1a1a; color: #f0f0f0; }
+        [data-theme="light"] .btn-save-notes:hover { background: #333; }
+        [data-theme="light"] .btn-sm:hover { background: #1a1a1a; color: #f0f0f0; border-color: #1a1a1a; }
+        [data-theme="light"] .scan-step.active { color: var(--text-secondary); }
+        [data-theme="light"] .notes-textarea { color: var(--text); }
+        [data-theme="light"] .tag-input { color: var(--text); }
+        [data-theme="light"] .sp-toggle-label { color: var(--text); }
     </style>
 </head>
 
@@ -456,6 +522,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <span class="status-dot" id="vpn-indicator" style="background:var(--text-tertiary);"></span>
                 <span id="vpn-text">VPN</span>
             </button>
+            <button id="btn-theme" class="header-link" title="Thème clair" onclick="app.toggleTheme()"><i id="theme-icon" class="fa-solid fa-sun"></i></button>
             <button id="btn-open-settings" class="header-link"><i class="fa-solid fa-gear"></i> Paramètres</button>
             <div class="header-link">
                 <span class="status-dot" id="status-indicator"></span>
@@ -471,7 +538,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <p class="hero-title">OSINT Domain Intelligence</p>
         <div class="hero-search-wrap">
             <div class="hero-input-row">
-                <input type="text" id="domain-input" class="hero-input" placeholder="Entrez un domaine — ex: google.com" autocomplete="off">
+                <input type="text" id="domain-input" class="hero-input" placeholder="Entrez un domaine - ex: google.com" autocomplete="off">
                 <button id="scan-button" class="btn-hero-scan">
                     <i class="fa-solid fa-satellite-dish" style="font-size:13px;margin-right:6px;"></i>Analyser
                 </button>
@@ -495,22 +562,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <div class="metrics-bar" id="metrics-bar">
             <div class="metric-item" id="metric-score" onclick="app.switchMainTab('securite')">
                 <span class="metric-label">Score</span>
-                <span class="metric-value" id="mval-score">—</span>
+                <span class="metric-value" id="mval-score">-</span>
             </div>
             <span class="metric-sep">·</span>
             <div class="metric-item" onclick="app.switchMainTab('overview')">
                 <span class="metric-label">IP</span>
-                <span class="metric-value mono" id="mval-ip">—</span>
+                <span class="metric-value mono" id="mval-ip">-</span>
             </div>
             <span class="metric-sep">·</span>
             <div class="metric-item" onclick="app.switchMainTab('dns')">
                 <span class="metric-label">Ports</span>
-                <span class="metric-value" id="mval-ports">—</span>
+                <span class="metric-value" id="mval-ports">-</span>
             </div>
             <span class="metric-sep">·</span>
             <div class="metric-item" onclick="app.switchMainTab('osint')">
                 <span class="metric-label">Threat</span>
-                <span class="metric-value" id="mval-threat">—</span>
+                <span class="metric-value" id="mval-threat">-</span>
             </div>
         </div>
 
@@ -536,29 +603,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div class="loading-header-row">
                     <div class="spinner"></div>
                     <span class="loading-title">Analyse en cours…</span>
+                    <span id="scan-progress-count" class="loading-progress-count">0 / 58</span>
                     <span id="scan-timer" class="loading-timer">0.0s</span>
                 </div>
-                <div id="scan-steps" class="scan-steps">
-                    <div class="scan-step" data-step="dns"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Résolution DNS</div>
-                    <div class="scan-step" data-step="sub"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Sous-domaines</div>
-                    <div class="scan-step" data-step="sec"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>En-têtes sécurité</div>
-                    <div class="scan-step" data-step="tls"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Certificat TLS</div>
-                    <div class="scan-step" data-step="ports"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Scan de ports</div>
-                    <div class="scan-step" data-step="geo"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Géolocalisation</div>
-                    <div class="scan-step" data-step="whois"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>WHOIS</div>
-                    <div class="scan-step" data-step="tech"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Technologies</div>
-                    <div class="scan-step" data-step="email"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Sécurité email</div>
-                    <div class="scan-step" data-step="waf"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Détection WAF</div>
-                    <div class="scan-step" data-step="redirect"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Redirections</div>
-                    <div class="scan-step" data-step="files"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Fichiers web</div>
-                    <div class="scan-step" data-step="cookies"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Cookies</div>
-                    <div class="scan-step" data-step="cors"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>CORS</div>
-                    <div class="scan-step" data-step="rdns"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Reverse DNS</div>
-                    <div class="scan-step" data-step="takeover"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Subdomain takeover</div>
-                    <div class="scan-step" data-step="network-ext"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Réseau étendu</div>
-                    <div class="scan-step" data-step="screenshot"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Capture d'écran</div>
-                    <div class="scan-step" data-step="score"><span class="step-icon"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:10px;"></i></span>Score de sécurité</div>
-                </div>
+                <div id="scan-current-module" class="scan-current-module"></div>
+                <div id="scan-steps" class="scan-steps"></div>
             </div>
 
             <!-- Error panel -->
@@ -601,7 +650,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="certsh">Cert Transparency</button>
                     <button class="sub-tab" data-sub="subdomain-bruteforce">Brute-force DNS</button>
                 </div>
-                <div id="tab-certsh" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-certificate"></i> Certificate Transparency — crt.sh</div><div id="certsh-content"></div></div>
+                <div id="tab-certsh" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-certificate"></i> Certificate Transparency - crt.sh</div><div id="certsh-content"></div></div>
                 <div id="tab-subdomain-bruteforce" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Brute-force DNS</div><div id="subdomain-bruteforce-content"></div></div>
                 <div id="tab-dns" class="tab-content"><div class="section-title"><i class="fa-solid fa-server"></i> Enregistrements DNS</div><div id="dns-content"></div></div>
                 <div id="tab-subdomains" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-sitemap"></i> Sous-domaines découverts</div><span id="sub-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div id="subdomains-content" style="max-height:500px;overflow-y:auto;"></div></div>
@@ -638,7 +687,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-score-v6" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-star"></i> Security Score</div><div id="score-v6-content"></div></div>
                 <div id="tab-tls" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-lock"></i> Certificat TLS / SSL</div><div id="tls-content"></div></div>
                 <div id="tab-tls-deep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-layer-group"></i> TLS Protocol &amp; Cipher Audit</div><div id="tls-deep-content"></div></div>
-                <div id="tab-email" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-envelope-circle-check"></i> Email — SPF / DKIM / DMARC</div><div id="email-content"></div></div>
+                <div id="tab-email" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-envelope-circle-check"></i> Email - SPF / DKIM / DMARC</div><div id="email-content"></div></div>
                 <div id="tab-cookies" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-cookie-bite"></i> Cookies</div><div id="cookies-content"></div></div>
                 <div id="tab-cors" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-arrows-left-right"></i> CORS</div><div id="cors-content"></div></div>
                 <div id="tab-waf" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-shield"></i> WAF / CDN</div><div id="waf-content"></div></div>
@@ -646,10 +695,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-hsts" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-lock-open"></i> HSTS Preload</div><div id="hsts-content"></div></div>
                 <div id="tab-hsts-deep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-shield-halved"></i> HSTS Deep</div><div id="hsts-deep-content"></div></div>
                 <div id="tab-csp-grade" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-shield"></i> CSP Grade</div><div id="csp-grade-content"></div></div>
-                <div id="tab-dast" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-bug"></i> DAST-lite — Passive Checks</div><div id="dast-content"></div></div>
-                <div id="tab-observatory" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flask"></i> Mozilla Observatory — HTTP Security</div><div id="observatory-content"></div></div>
-                <div id="tab-cert-pinning" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-thumbtack"></i> Certificate Pinning — HPKP / Expect-CT</div><div id="cert-pinning-content"></div></div>
-                <div id="tab-js-secrets" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-key"></i> JS Secrets — Hardcoded Credentials</div><div id="js-secrets-content"></div></div>
+                <div id="tab-dast" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-bug"></i> DAST-lite - Passive Checks</div><div id="dast-content"></div></div>
+                <div id="tab-observatory" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flask"></i> Mozilla Observatory - HTTP Security</div><div id="observatory-content"></div></div>
+                <div id="tab-cert-pinning" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-thumbtack"></i> Certificate Pinning - HPKP / Expect-CT</div><div id="cert-pinning-content"></div></div>
+                <div id="tab-js-secrets" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-key"></i> JS Secrets - Hardcoded Credentials</div><div id="js-secrets-content"></div></div>
             </div>
 
             <!-- Infrastructure -->
@@ -667,17 +716,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <button class="sub-tab" data-sub="nuclei">Nuclei</button>
                     <button class="sub-tab" data-sub="dnsbl">DNSBL</button>
                 </div>
-                <div id="tab-bgpview" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-route"></i> BGP Routing — ASN / Prefixes / Peers</div><div id="bgpview-content"></div></div>
+                <div id="tab-bgpview" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-route"></i> BGP Routing - ASN / Prefixes / Peers</div><div id="bgpview-content"></div></div>
                 <div id="tab-whois" class="tab-content"><div class="section-title"><i class="fa-solid fa-address-card"></i> WHOIS</div><div id="whois-content"></div></div>
                 <div id="tab-geo" class="tab-content hidden"><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;"><div><div class="section-title"><i class="fa-solid fa-earth-americas"></i> Géolocalisation</div><div id="geo-details"></div></div><div><div class="section-title"><i class="fa-solid fa-map"></i> Carte</div><div id="geo-map" style="height:300px;border-radius:var(--radius-sm);border:1px solid var(--border-light);"></div></div></div></div>
                 <div id="tab-tech" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-microchip"></i> Technologies</div><div id="tech-content" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div><div id="builtwith-content" style="margin-top:16px;"></div></div>
                 <div id="tab-admin-panels" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-door-open"></i> Admin Panel Discovery</div><div id="admin-panels-content"></div></div>
                 <div id="tab-banners" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-flag"></i> Banners</div><div id="banners-content"></div></div>
                 <div id="tab-shodan" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-satellite-dish"></i> Shodan</div><div id="shodan-content"></div></div>
-                <div id="tab-abuseipdb" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-skull-crossbones"></i> AbuseIPDB — IP Reputation</div><div id="abuseipdb-content"></div></div>
-                <div id="tab-censys" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-eye"></i> Censys — Certificates &amp; Hosts</div><div id="censys-content"></div></div>
-                <div id="tab-nuclei" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-radiation"></i> Nuclei — Vulnerability Scan</div><div id="nuclei-content"></div></div>
-                <div id="tab-dnsbl" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-list-check"></i> Multi-DNSBL — Réputation IP</div><div id="dnsbl-content"></div></div>
+                <div id="tab-abuseipdb" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-skull-crossbones"></i> AbuseIPDB - IP Reputation</div><div id="abuseipdb-content"></div></div>
+                <div id="tab-censys" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-eye"></i> Censys - Certificates &amp; Hosts</div><div id="censys-content"></div></div>
+                <div id="tab-nuclei" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-radiation"></i> Nuclei - Vulnerability Scan</div><div id="nuclei-content"></div></div>
+                <div id="tab-dnsbl" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-list-check"></i> Multi-DNSBL - Réputation IP</div><div id="dnsbl-content"></div></div>
             </div>
 
             <!-- Web -->
@@ -727,21 +776,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 </div>
                 <div id="tab-urlscan" class="tab-content"><div class="section-title"><i class="fa-solid fa-magnifying-glass-chart"></i> URLScan.io</div><div id="urlscan-content"></div></div>
                 <div id="tab-wayback" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Wayback Machine</div><div id="wayback-content"></div></div>
-                <div id="tab-threatintel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-biohazard"></i> Threat Intel — OTX</div><div id="threatintel-content"></div></div>
+                <div id="tab-threatintel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-biohazard"></i> Threat Intel - OTX</div><div id="threatintel-content"></div></div>
                 <div id="tab-favicon" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-image"></i> Favicon Hash</div><div id="favicon-content"></div></div>
                 <div id="tab-emailbl" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-ban"></i> Blacklists IP / DNSBL</div><div id="emailbl-content"></div></div>
                 <div id="tab-robtex" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-diagram-project"></i> Robtex</div><div id="robtex-content"></div></div>
-                <div id="tab-pdns" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-database"></i> Passive DNS — CIRCL</div><div id="pdns-content"></div></div>
-                <div id="tab-emailrep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-envelope-open-text"></i> EmailRep.io — Email Reputation</div><div id="emailrep-content"></div></div>
+                <div id="tab-pdns" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-database"></i> Passive DNS - CIRCL</div><div id="pdns-content"></div></div>
+                <div id="tab-emailrep" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-envelope-open-text"></i> EmailRep.io - Email Reputation</div><div id="emailrep-content"></div></div>
                 <div id="tab-typosquatting" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-spell-check"></i> Typosquatting</div><div id="typosquatting-content"></div></div>
                 <div id="tab-html-intel" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-file-code"></i> HTML Intel</div><div id="html-intel-content"></div></div>
                 <div id="tab-smtp-security" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-at"></i> SMTP Security</div><div id="smtp-security-content"></div></div>
                 <div id="tab-notes" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-sticky-note"></i> Notes &amp; Tags</div><div id="notes-content"></div></div>
-                <div id="tab-leakix" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> LeakIX — Services & Leaks</div><div id="leakix-content"></div></div>
+                <div id="tab-leakix" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> LeakIX - Services & Leaks</div><div id="leakix-content"></div></div>
                 <div id="tab-github-dork" class="tab-content hidden"><div class="section-title"><i class="fa-brands fa-github"></i> GitHub Dork</div><div id="github-dork-content"></div></div>
                 <div id="tab-hibp" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-database"></i> Have I Been Pwned</div><div id="hibp-content"></div></div>
-                <div id="tab-js-deps" class="tab-content hidden"><div class="section-title"><i class="fa-brands fa-js"></i> JS Dependencies — CVE Check</div><div id="js-deps-content"></div></div>
-                <div id="tab-paste-leaks" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-paste"></i> Paste Leaks — Fuites de Données</div><div id="paste-content"></div></div>
+                <div id="tab-js-deps" class="tab-content hidden"><div class="section-title"><i class="fa-brands fa-js"></i> JS Dependencies - CVE Check</div><div id="js-deps-content"></div></div>
+                <div id="tab-paste-leaks" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-paste"></i> Paste Leaks - Fuites de Données</div><div id="paste-content"></div></div>
             </div>
 
             <div id="main-bulk" class="main-panel hidden" style="padding:24px;">
@@ -782,13 +831,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                         <div>
                             <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:4px;">Scan de référence (ancien)</div>
                             <select id="diff-select-a" class="settings-input" style="min-width:240px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);color:var(--text-primary);padding:6px 10px;font-family:var(--mono);font-size:12px;">
-                                <option value="">— Sélectionner —</option>
+                                <option value="">- Sélectionner -</option>
                             </select>
                         </div>
                         <div>
                             <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:4px;">Scan à comparer (récent)</div>
                             <select id="diff-select-b" class="settings-input" style="min-width:240px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);color:var(--text-primary);padding:6px 10px;font-family:var(--mono);font-size:12px;">
-                                <option value="">— Sélectionner —</option>
+                                <option value="">- Sélectionner -</option>
                             </select>
                         </div>
                         <button class="btn-primary" onclick="app.runDiff()">Comparer</button>
@@ -800,7 +849,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             <!-- Dashboard panel -->
             <div id="main-dashboard" class="main-panel hidden" style="padding:24px;">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
-                    <div style="font-size:15px;font-weight:700;">Dashboard — tous les domaines</div>
+                    <div style="font-size:15px;font-weight:700;">Dashboard - tous les domaines</div>
                     <div style="display:flex;gap:8px;">
                         <button class="btn-sm" onclick="app.loadDashboard()"><i class="fa-solid fa-arrows-rotate"></i> Actualiser</button>
                         <button class="btn-sm" onclick="app.exportCSV()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
@@ -813,7 +862,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
             <!-- Content footer -->
             <div class="content-footer" id="content-footer" style="display:none;">
-                <span>Scan #<span id="result-id">—</span> · <span id="result-domain-footer" style="color:var(--accent);">—</span> · <span id="result-timestamp">—</span></span>
+                <span>Scan #<span id="result-id">-</span> · <span id="result-domain-footer" style="color:var(--accent);">-</span> · <span id="result-timestamp">-</span></span>
                 <div style="display:flex;align-items:center;gap:8px;">
                     <button id="export-pdf-btn" class="btn-pdf"><i class="fa-solid fa-file-pdf"></i> PDF</button>
                     <button id="export-csv-btn" class="btn-export"><i class="fa-solid fa-file-csv"></i> CSV</button>
@@ -845,7 +894,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
     </main>
 
     <footer class="app-footer">
-        DomainRecon — 50+ modules OSINT · <a href="/api/docs">Documentation API</a>
+        DomainRecon - 50+ modules OSINT · <a href="/api/docs">Documentation API</a>
     </footer>
 
     <div id="toast-container" class="toast-container"></div>
@@ -890,7 +939,29 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             this.scanStart = null;
             this.cy = null;
             this.historyData = [];
+            this.initTheme();
             this.init();
+        }
+
+        initTheme() {
+            const saved = localStorage.getItem('dr-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            this._updateThemeIcon(saved);
+        }
+
+        toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('dr-theme', next);
+            this._updateThemeIcon(next);
+        }
+
+        _updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            const btn = document.getElementById('btn-theme');
+            if (icon) icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            if (btn) btn.title = theme === 'dark' ? 'Thème clair' : 'Thème sombre';
         }
 
         init() {
@@ -1036,7 +1107,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                         let msg;
                         try { msg = JSON.parse(evt.data); } catch { return; }
                         if (msg.type === 'progress' && msg.module) {
-                            this._wsUpdateModule(msg.module, msg.status);
+                            this._wsUpdateModule(msg.module, msg.status, msg.wave || 1);
                         } else if (msg.type === 'result') {
                             this.currentScan = msg.data;
                             resolve();
@@ -1089,36 +1160,121 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             }
         }
 
-        _wsUpdateModule(module, status) {
-            // Try to highlight the nearest scan step label
-            const steps = document.querySelectorAll('.scan-step');
-            steps.forEach(s => {
-                const label = s.querySelector('.step-label');
-                if (label && label.textContent.toLowerCase().includes(module.replace(/_/g, ' ').toLowerCase().slice(0, 6))) {
-                    s.classList.add('done');
-                    s.querySelector('.step-icon').innerHTML = '<i class="fa-solid fa-check" style="font-size:11px;color:var(--ok);"></i>';
-                }
-            });
+        _setStepIcon(stepEl, iconClass, color) {
+            const wrap = stepEl.querySelector('.step-icon');
+            if (!wrap) return;
+            while (wrap.firstChild) wrap.removeChild(wrap.firstChild);
+            const i = document.createElement('i');
+            i.className = iconClass;
+            i.style.fontSize = '10px';
+            if (color) i.style.color = color;
+            wrap.appendChild(i);
+        }
+
+        _wsUpdateModule(module, status, wave) {
+            const TOTAL = 58;
+            if (!this._completedModules) this._completedModules = 0;
+            // Only count Wave 1 modules toward the progress bar
+            if (wave !== 2 && (status === 'done' || status === 'error')) this._completedModules++;
+
+            // Progress bar + counter (Wave 1 only)
+            if (wave !== 2) {
+                const pct = Math.min(100, Math.round(this._completedModules / TOTAL * 100));
+                const bar = document.getElementById('loading-bar');
+                if (bar) bar.style.width = pct + '%';
+                const counter = document.getElementById('scan-progress-count');
+                if (counter) counter.textContent = this._completedModules + ' / ' + TOTAL;
+            }
+
+            // Mark the individual module step done (data-step = module key)
+            const step = document.querySelector('.scan-step[data-step="' + module + '"]');
+            if (step) {
+                const isDone = status === 'done';
+                step.classList.add('done');
+                this._setStepIcon(step, isDone ? 'fa-solid fa-check' : 'fa-solid fa-xmark', isDone ? 'var(--success)' : 'var(--danger)');
+            }
+
+            // Show last completed module label
+            const currentEl = document.getElementById('scan-current-module');
+            if (currentEl && step) {
+                const txt = step.textContent.trim();
+                if (txt) currentEl.textContent = '\u21b3 ' + txt;
+            }
         }
 
         startScanAnimation() {
             this.scanStart = Date.now();
-            const steps = document.querySelectorAll('.scan-step');
-            steps.forEach(s => { s.classList.remove('active', 'done'); s.querySelector('.step-icon').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin" style="font-size:11px;"></i>'; });
-            let i = 0;
-            const show = () => { if (i < steps.length) { steps[i].classList.add('active'); i++; setTimeout(show, 200 + Math.random() * 400); } };
-            show();
+            this._completedModules = 0;
+
+            const bar = document.getElementById('loading-bar');
+            if (bar) bar.style.width = '0%';
+            const counter = document.getElementById('scan-progress-count');
+            if (counter) counter.textContent = '0 / 58';
+            const currentEl = document.getElementById('scan-current-module');
+            if (currentEl) currentEl.textContent = '';
+
+            // Build the full 58-module grid
+            const ALL_MODULES = [
+                ['dns_records','Enregistrements DNS'], ['zone_transfer','Zone Transfer'], ['wildcard','Wildcard DNS'],
+                ['catch_all','Catch-all DNS'], ['dns_rebinding','DNS Rebinding'], ['dnssec','DNSSEC'], ['doh_comparison','DNS-over-HTTPS'],
+                ['subdomains','Sous-domaines'], ['certsh','Cert Transparency'], ['subdomain_bruteforce','Brute-force DNS'],
+                ['tls_certificate','Certificat TLS'], ['hsts_preload','HSTS Preload'], ['hsts_deep','HSTS avancé'],
+                ['cert_pinning','Cert Pinning'], ['crypto_audit','Crypto TLS'], ['http_versions','HTTP/2 · HTTP/3'],
+                ['security_headers','En-têtes sécurité'], ['http_methods','Méthodes HTTP'], ['dast','Scan DAST'],
+                ['observatory','Mozilla Observatory'], ['html_intel','Intelligence HTML'],
+                ['ports','Scan de ports'], ['geo','Géolocalisation'],
+                ['whois','WHOIS'], ['pdns','DNS passif (CIRCL)'],
+                ['technologies','Technologies'], ['builtwith','BuiltWith'], ['favicon_hash','Favicon hash'], ['cms','CMS'],
+                ['email_security','SPF / DKIM / DMARC'], ['email_blacklist','Blacklists email'], ['mta_sts','MTA-STS'], ['bimi','BIMI'],
+                ['waf','Détection WAF'], ['redirects','Redirections'],
+                ['web_files','Fichiers web'], ['linked_domains','Domaines liés'], ['js_analysis','Analyse JS'],
+                ['cloud_storage','Cloud storage'], ['js_dependencies','Dépendances JS'], ['js_secrets_data','Secrets JS'], ['api_endpoints','API endpoints'],
+                ['cookies','Cookies'], ['cors','CORS'],
+                ['reverse_dns','Reverse DNS'], ['reverse_ip','Reverse IP'],
+                ['typosquatting','Typosquatting'],
+                ['robtex','Robtex'], ['network_ext','Réseau étendu'], ['bgpview','BGP / ASN'],
+                ['censys','Censys'], ['wayback','Wayback Machine'],
+                ['urlscan','URLScan.io'],
+                ['threat_intel','Threat Intel'], ['safebrowsing','Safe Browsing'], ['phishtank','PhishTank'],
+                ['hibp','HaveIBeenPwned'], ['paste_data','Paste sites'],
+            ];
+
+            const container = document.getElementById('scan-steps');
+            if (container) {
+                container.textContent = '';
+                ALL_MODULES.forEach(([key, label]) => {
+                    const div = document.createElement('div');
+                    div.className = 'scan-step active';
+                    div.setAttribute('data-step', key);
+                    const iconWrap = document.createElement('span');
+                    iconWrap.className = 'step-icon';
+                    const ic = document.createElement('i');
+                    ic.className = 'fa-solid fa-circle-notch fa-spin';
+                    ic.style.fontSize = '10px';
+                    iconWrap.appendChild(ic);
+                    div.appendChild(iconWrap);
+                    div.appendChild(document.createTextNode(label));
+                    container.appendChild(div);
+                });
+            }
+
             this.scanTimer = setInterval(() => {
-                document.getElementById('scan-timer').textContent = `${((Date.now() - this.scanStart) / 1000).toFixed(1)}s`;
+                const el = document.getElementById('scan-timer');
+                if (el) el.textContent = ((Date.now() - this.scanStart) / 1000).toFixed(1) + 's';
             }, 100);
         }
 
         stopScanAnimation() { if (this.scanTimer) clearInterval(this.scanTimer); }
 
         completeScanSteps() {
-            document.querySelectorAll('.scan-step').forEach(s => {
-                s.classList.add('active', 'done');
-                s.querySelector('.step-icon').innerHTML = '<i class="fa-solid fa-check" style="font-size:11px;"></i>';
+            const bar = document.getElementById('loading-bar');
+            if (bar) bar.style.width = '100%';
+            const currentEl = document.getElementById('scan-current-module');
+            if (currentEl) currentEl.textContent = '';
+            // Mark any remaining (not yet done) steps as done
+            document.querySelectorAll('.scan-step:not(.done)').forEach(s => {
+                s.classList.add('done');
+                this._setStepIcon(s, 'fa-solid fa-check', 'var(--success)');
             });
         }
 
@@ -1146,11 +1302,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     scoreEl.appendChild(numSpan);
                     scoreEl.appendChild(gradeSpan);
                 } else {
-                    scoreEl.textContent = '—';
+                    scoreEl.textContent = '-';
                 }
             }
             const ipEl = document.getElementById('mval-ip');
-            if (ipEl) ipEl.textContent = d.ip_address || '—';
+            if (ipEl) ipEl.textContent = d.ip_address || '-';
             const portsArr = Array.isArray(d.open_ports) ? d.open_ports : ((d.open_ports || {}).open_ports || []);
             const portsEl = document.getElementById('mval-ports');
             if (portsEl) {
@@ -1281,7 +1437,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 ${this.infoRow('Domaine', d.domain, 'fa-globe')}
                 ${this.infoRow('Adresse IP', d.ip_address || 'N/A', 'fa-location-dot')}
                 ${this.infoRow('Localisation', geo.city ? `${geo.city}, ${geo.country}` : 'N/A', 'fa-map-pin')}
-                ${this.infoRow('ISP / ASN', `${geo.isp || 'N/A'} — ${geo.as_info || ''}`, 'fa-building')}
+                ${this.infoRow('ISP / ASN', `${geo.isp || 'N/A'} - ${geo.as_info || ''}`, 'fa-building')}
                 ${this.infoRow('Registrar', whois.registrar || 'N/A', 'fa-id-card')}
                 ${this.infoRow('TLS', tls.protocol ? `${tls.protocol} · ${tls.cipher || '?'}` : 'N/A', 'fa-lock')}
                 ${this.infoRow('WAF / CDN', waf.detected ? `<span class="pill pill-success">${this.esc(waf.waf_name)}</span>` : '<span class="pill pill-neutral">Non détecté</span>', 'fa-shield')}
@@ -1407,7 +1563,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             document.getElementById('email-content').innerHTML = html;
         }
 
-        emailGradeDesc(g) { return {'A':'Excellent — SPF, DKIM et DMARC bien configurés','B':'Bon — protection solide avec améliorations possibles','C':'Moyen — protection partielle','D':'Faible — protection insuffisante','F':'Critique — aucune protection email','N/A':'Données non disponibles'}[g] || 'Non évalué'; }
+        emailGradeDesc(g) { return {'A':'Excellent - SPF, DKIM et DMARC bien configurés','B':'Bon - protection solide avec améliorations possibles','C':'Moyen - protection partielle','D':'Faible - protection insuffisante','F':'Critique - aucune protection email','N/A':'Données non disponibles'}[g] || 'Non évalué'; }
 
         renderWAF(d) {
             const waf = d.waf || {};
@@ -1562,7 +1718,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
             html += fileCard('robots.txt', !!robotsFile, robotsFile ? `<div style="font-size:12px;color:var(--text-tertiary);">HTTP ${robotsFile.status} · ${robotsFile.size} bytes</div>` : '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé</div>');
             html += fileCard('sitemap.xml', !!sitemapFile, sitemapFile ? `<div style="font-size:12px;color:var(--text-tertiary);">HTTP ${sitemapFile.status} · ${sitemapFile.size} bytes</div>` : '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé</div>');
-            html += fileCard('security.txt', !!securityFile, securityFile ? `<div style="font-size:12px;color:var(--success);">HTTP ${securityFile.status} · ${securityFile.size} bytes</div>` : '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé — <span style="color:var(--warning);">Recommandé</span></div>');
+            html += fileCard('security.txt', !!securityFile, securityFile ? `<div style="font-size:12px;color:var(--success);">HTTP ${securityFile.status} · ${securityFile.size} bytes</div>` : '<div style="font-size:12.5px;color:var(--text-tertiary);">Non trouvé - <span style="color:var(--warning);">Recommandé</span></div>');
             html += '</div>';
 
             if (sensitiveFiles.length > 0) {
@@ -1715,7 +1871,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         }
 
         // =================================================================
-        // NEW RENDERERS — Score, Network Ext, Timeline, Screenshot, Notes
+        // NEW RENDERERS - Score, Network Ext, Timeline, Screenshot, Notes
         // =================================================================
 
         renderSecurityScore(d) {
@@ -1784,7 +1940,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
             // RDAP Info
             html += `<div class="data-card" style="margin-bottom:16px;">
-                <div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:10px;">RDAP — Informations IP</div>
+                <div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:10px;">RDAP - Informations IP</div>
                 ${this.infoRow('Nom réseau', rdap.name || 'N/A', 'fa-network-wired')}
                 ${this.infoRow('Handle', rdap.handle || 'N/A', 'fa-fingerprint')}
                 ${this.infoRow('Type', rdap.type || 'N/A', 'fa-tag')}
@@ -2288,7 +2444,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     {label:'Inoffensif', key:'harmless', cls:'pill-success'},
                     {label:'Non détecté', key:'undetected', cls:'pill-neutral'},
                 ];
-                html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:12px;">VirusTotal — Résultats d'analyse</div>
+                html += `<div class="data-card" style="margin-bottom:12px;"><div style="font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:12px;">VirusTotal - Résultats d'analyse</div>
                     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">`;
                 stats.forEach(s => {
                     const val = vt[s.key] || 0;
@@ -2313,7 +2469,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             </div>`;
             if (secrets.length) {
                 html += `<div class="data-card" style="margin-bottom:12px;border-color:var(--warning);">
-                    <div style="font-size:13px;font-weight:700;color:var(--warning);margin-bottom:8px;"><i class="fa-solid fa-key"></i> Patterns secrets détectés — Vérification manuelle requise</div>
+                    <div style="font-size:13px;font-weight:700;color:var(--warning);margin-bottom:8px;"><i class="fa-solid fa-key"></i> Patterns secrets détectés - Vérification manuelle requise</div>
                     ${secrets.map(s2 => `<div style="padding:6px 0;border-top:1px solid var(--border-light);">
                         <div class="mono" style="font-size:12px;color:var(--accent);word-break:break-all;">${this.esc(s2.url||'')}</div>
                         <div style="font-size:12px;color:var(--text-tertiary);margin-top:3px;">Pattern : <span class="pill pill-warning">${this.esc((s2.pattern||'').substring(0,60))}</span> · ${s2.matches_count||0} correspondance(s)</div>
@@ -2370,7 +2526,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div style="display:flex;align-items:center;gap:12px;">
                     <i class="fa-solid ${isBlacklisted ? 'fa-ban' : 'fa-circle-check'}" style="font-size:24px;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};"></i>
                     <div>
-                        <div style="font-size:15px;font-weight:700;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};">${isBlacklisted ? `<i class="fa-solid fa-triangle-exclamation"></i> IP blacklistée (${listed.length} liste(s))` : '<i class="fa-solid fa-circle-check"></i> IP propre — Aucune blacklist'}</div>
+                        <div style="font-size:15px;font-weight:700;color:${isBlacklisted ? 'var(--danger)' : 'var(--success)'};">${isBlacklisted ? `<i class="fa-solid fa-triangle-exclamation"></i> IP blacklistée (${listed.length} liste(s))` : '<i class="fa-solid fa-circle-check"></i> IP propre - Aucune blacklist'}</div>
                         <div style="font-size:12.5px;color:var(--text-tertiary);">DNSBL vérifiées · ${d.ip_address || 'IP inconnue'}</div>
                     </div>
                 </div></div>`;
@@ -2417,23 +2573,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     { label: 'Threat Intel', keys: [
                         { id:'shodan',     icon:'fa-solid fa-satellite-dish', name:'Shodan',     desc:'Ports ouverts, banners, CVEs, ASN/org', docs:'https://developer.shodan.io/', cur:s.shodan_key, canTest:true },
                         { id:'virustotal', icon:'fa-solid fa-virus',          name:'VirusTotal', desc:'Réputation domaine/IP, détections malveillantes', docs:'https://developers.virustotal.com/', cur:s.virustotal_key, canTest:true },
-                        { id:'abuseipdb',  icon:'fa-solid fa-ban',            name:'AbuseIPDB',  desc:'Score réputation IP — gratuit sur abuseipdb.com', docs:'https://www.abuseipdb.com/account/api', cur:s.abuseipdb_key, canTest:true },
+                        { id:'abuseipdb',  icon:'fa-solid fa-ban',            name:'AbuseIPDB',  desc:'Score réputation IP - gratuit sur abuseipdb.com', docs:'https://www.abuseipdb.com/account/api', cur:s.abuseipdb_key, canTest:true },
                     ]},
                     { label: 'Recon', keys: [
                         { id:'securitytrails', icon:'fa-solid fa-shield-halved',       name:'SecurityTrails', desc:'Subdomains avancés + historique DNS', docs:'https://docs.securitytrails.com/', cur:s.securitytrails_key, canTest:true },
                         { id:'censys',         icon:'fa-solid fa-magnifying-glass',    name:'Censys',         desc:'Certificats & services indexés', docs:'https://search.censys.io/api', cur:s.censys_id, hasSecret:true, secretId:'censys-secret', curSecret:s.censys_secret, ph:'API ID', phSecret:'API Secret', canTest:true },
                         { id:'urlscan',        icon:'fa-solid fa-link',               name:'URLScan.io',     desc:'Screenshots + analyse DOM (fonctionne sans clé)', docs:'https://urlscan.io/about-api/', cur:s.urlscan_key, canTest:false },
-                        { id:'builtwith',      icon:'fa-solid fa-layer-group',        name:'BuiltWith',      desc:'Stack technologique — Analytics, CDN, CMS, Framework', docs:'https://api.builtwith.com/', cur:s.builtwith_key, canTest:true },
+                        { id:'builtwith',      icon:'fa-solid fa-layer-group',        name:'BuiltWith',      desc:'Stack technologique - Analytics, CDN, CMS, Framework', docs:'https://api.builtwith.com/', cur:s.builtwith_key, canTest:true },
                     ]},
                     { label: 'Leaks & OSINT', keys: [
-                        { id:'intelx',  icon:'fa-solid fa-eye-slash',         name:'Intelligence X',  desc:'Credential leaks, stealer logs, redlines — gratuit sur intelx.io', docs:'https://intelx.io/account', cur:s.intelx_key, canTest:true },
+                        { id:'intelx',  icon:'fa-solid fa-eye-slash',         name:'Intelligence X',  desc:'Credential leaks, stealer logs, redlines - gratuit sur intelx.io', docs:'https://intelx.io/account', cur:s.intelx_key, canTest:true },
                         { id:'leakix',  icon:'fa-solid fa-droplet',           name:'LeakIX',          desc:'Services exposés & leaks (sans clé = rate limité)', docs:'https://leakix.net/', cur:s.leakix_key, canTest:false },
-                        { id:'github',  icon:'fa-brands fa-github',           name:'GitHub Token',    desc:'Code Search — détecte secrets publiés (10 req/min sans token)', docs:'https://github.com/settings/tokens', cur:s.github_token, canTest:false },
-                        { id:'google-cse', icon:'fa-brands fa-google',        name:'Google CSE Key',  desc:'Custom Search Engine — Paste Leaks étendu via Google', docs:'https://programmablesearchengine.google.com/', cur:s.google_cse_key, canTest:false },
-                        { id:'circl',   icon:'fa-solid fa-server',            name:'CIRCL PDNS',      desc:'Passive DNS historique — compte gratuit sur circl.lu', docs:'https://www.circl.lu/services/passive-dns/', cur:s.circl_user, hasSecret:true, secretId:'circl-password', curSecret:'', ph:'Username', phSecret:'Password', secretType:'password', canTest:false },
+                        { id:'github',  icon:'fa-brands fa-github',           name:'GitHub Token',    desc:'Code Search - détecte secrets publiés (10 req/min sans token)', docs:'https://github.com/settings/tokens', cur:s.github_token, canTest:false },
+                        { id:'google-cse', icon:'fa-brands fa-google',        name:'Google CSE Key',  desc:'Custom Search Engine - Paste Leaks étendu via Google', docs:'https://programmablesearchengine.google.com/', cur:s.google_cse_key, canTest:false },
+                        { id:'circl',   icon:'fa-solid fa-server',            name:'CIRCL PDNS',      desc:'Passive DNS historique - compte gratuit sur circl.lu', docs:'https://www.circl.lu/services/passive-dns/', cur:s.circl_user, hasSecret:true, secretId:'circl-password', curSecret:'', ph:'Username', phSecret:'Password', secretType:'password', canTest:false },
                     ]},
                     { label: 'Web Security', keys: [
-                        { id:'safebrowsing', icon:'fa-solid fa-shield-virus', name:'Google Safe Browsing', desc:'Signalements malware/phishing — gratuit Google Cloud Console', docs:'https://developers.google.com/safe-browsing/v4/get-started', cur:s.safebrowsing_key, canTest:true },
+                        { id:'safebrowsing', icon:'fa-solid fa-shield-virus', name:'Google Safe Browsing', desc:'Signalements malware/phishing - gratuit Google Cloud Console', docs:'https://developers.google.com/safe-browsing/v4/get-started', cur:s.safebrowsing_key, canTest:true },
                         { id:'phishtank',    icon:'fa-solid fa-fish',         name:'PhishTank',            desc:'Base phishing (100 req/h sans clé, gratuit sur phishtank.org)', docs:'https://www.phishtank.com/api_info.php', cur:s.phishtank_key, canTest:false },
                     ]},
                 ];
@@ -2490,21 +2646,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     <div class="sp-toggle-row">
                         <div>
                             <div class="sp-toggle-label">Screenshot automatique</div>
-                            <div class="sp-toggle-sub">Nécessite Playwright — <code style="font-size:10px;background:#0a0a0a;padding:1px 5px;border-radius:3px;">pip install playwright && playwright install chromium</code></div>
+                            <div class="sp-toggle-sub">Nécessite Playwright - <code style="font-size:10px;background:#0a0a0a;padding:1px 5px;border-radius:3px;">pip install playwright && playwright install chromium</code></div>
                         </div>
                         <label class="toggle-switch"><input type="checkbox" id="toggle-screenshot" ${s.screenshot_enabled?'checked':''}><span class="toggle-slider"></span></label>
                     </div>
                     <div class="sp-toggle-row">
                         <div>
                             <div class="sp-toggle-label">Timeout Quick scan <span style="color:#383838;">(secondes)</span></div>
-                            <div class="sp-toggle-sub">Durée max par module en mode Quick — 10 à 120 s</div>
+                            <div class="sp-toggle-sub">Durée max par module en mode Quick - 10 à 120 s</div>
                         </div>
                         <input type="number" class="sp-num-inp" id="input-quick-timeout" value="${s.quick_timeout||30}" min="10" max="120">
                     </div>
                     <div class="sp-toggle-row">
                         <div>
                             <div class="sp-toggle-label">Timeout Full scan <span style="color:#383838;">(secondes)</span></div>
-                            <div class="sp-toggle-sub">Durée max par module en mode Full — 30 à 600 s</div>
+                            <div class="sp-toggle-sub">Durée max par module en mode Full - 30 à 600 s</div>
                         </div>
                         <input type="number" class="sp-num-inp" id="input-full-timeout" value="${s.full_timeout||180}" min="30" max="600">
                     </div>`;
@@ -2582,11 +2738,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const noteHtml = note ? `<div style="margin-top:8px;font-size:11px;color:var(--text-tertiary);line-height:1.5;border-left:2px solid var(--border);padding-left:8px;">${note}</div>` : '';
                 if (!d.available) {
                     // nosec: content is from our own backend, not user input
-                    block.innerHTML = `<div style="font-size:12px;color:var(--text-tertiary);">Mullvad VPN non détecté — installez <a href="https://mullvad.net/download" target="_blank" style="color:var(--info);">Mullvad VPN</a> sur la machine hôte.${noteHtml}</div>`;
+                    block.innerHTML = `<div style="font-size:12px;color:var(--text-tertiary);">Mullvad VPN non détecté - installez <a href="https://mullvad.net/download" target="_blank" style="color:var(--info);">Mullvad VPN</a> sur la machine hôte.${noteHtml}</div>`;
                     return;
                 }
                 const col = d.connected ? 'var(--success)' : 'var(--text-tertiary)';
-                const txt = d.connected ? 'Connecté — ' + (d.location || d.server || '') : 'Déconnecté';
+                const txt = d.connected ? 'Connecté - ' + (d.location || d.server || '') : 'Déconnecté';
                 const btnHtml = d.cli_control
                     ? (d.connected
                         ? '<button class="sp-test-btn" style="width:auto;padding:6px 14px;" onclick="app.vpnDisconnect()"><i class="fa-solid fa-power-off"></i> Déconnecter</button>'
@@ -2676,7 +2832,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('DomainRecon — Rapport OSINT', 14, 18);
+            doc.text('DomainRecon - Rapport OSINT', 14, 18);
             doc.setFontSize(10);
             doc.setFont('helvetica', 'normal');
             doc.text(`Domaine: ${d.domain} | IP: ${d.ip_address || 'N/A'} | ${this.formatDate(d.scan_timestamp)}`, 14, 28);
@@ -2800,7 +2956,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (nuc.enriched && (nuc.total_count||0) > 0) {
                 addLine();
                 doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
-                doc.text(`Nuclei — ${nuc.total_count} finding(s)`, 14, y); y += 8;
+                doc.text(`Nuclei - ${nuc.total_count} finding(s)`, 14, y); y += 8;
                 const nucRows = (nuc.findings||[]).slice(0,30).map(f => [f.severity||'', f.name||f.template_id||'', f.matched_at||'']);
                 doc.autoTable({ startY:y, head:[['Sévérité','Finding','URL']], body:nucRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
                 y = doc.lastAutoTable.finalY + 10;
@@ -2823,7 +2979,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (lx.enriched && ((lx.leak_count||0)+(lx.service_count||0)) > 0) {
                 addLine();
                 doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
-                doc.text(`LeakIX — ${lx.leak_count||0} leak(s), ${lx.service_count||0} service(s)`, 14, y); y += 8;
+                doc.text(`LeakIX - ${lx.leak_count||0} leak(s), ${lx.service_count||0} service(s)`, 14, y); y += 8;
                 const lxAll = [...(lx.leaks||[]),...(lx.services||[])].slice(0,20);
                 const lxRows = lxAll.map(item=>[item.severity||'', `${item.host||''}:${item.port||''}`, item.summary||'']);
                 doc.autoTable({ startY:y, head:[['Sévérité','Host:Port','Résumé']], body:lxRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
@@ -2835,7 +2991,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (gh.enriched && (gh.results||[]).length > 0) {
                 addLine();
                 doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(40,40,40);
-                doc.text(`GitHub Dork — ${gh.total_count||0} résultat(s)`, 14, y); y += 8;
+                doc.text(`GitHub Dork - ${gh.total_count||0} résultat(s)`, 14, y); y += 8;
                 const ghRows = (gh.results||[]).slice(0,20).map(r=>[r.severity||'', r.filename||'', r.repo||'']);
                 doc.autoTable({ startY:y, head:[['Sévérité','Fichier','Repo']], body:ghRows, theme:'striped', headStyles:{fillColor:[30,30,30]}, margin:{left:14}, styles:{fontSize:8} });
                 y = doc.lastAutoTable.finalY + 10;
@@ -2847,7 +3003,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 doc.setPage(i);
                 doc.setFontSize(8);
                 doc.setTextColor(150, 150, 150);
-                doc.text(`DomainRecon — Rapport OSINT pour ${d.domain} — Page ${i}/${pageCount}`, w / 2, 290, { align: 'center' });
+                doc.text(`DomainRecon - Rapport OSINT pour ${d.domain} - Page ${i}/${pageCount}`, w / 2, 290, { align: 'center' });
             }
 
             doc.save(`domainrecon_${d.domain}_${Date.now()}.pdf`);
@@ -2895,7 +3051,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 document.querySelectorAll('.main-panel').forEach(p => p.classList.add('hidden'));
                 ['mval-score','mval-ip','mval-ports','mval-threat'].forEach(id => {
                     const el = document.getElementById(id);
-                    if (el) el.textContent = '—';
+                    if (el) el.textContent = '-';
                 });
                 document.getElementById('metrics-bar').classList.remove('loaded');
             } else if (name === 'results') {
@@ -2976,7 +3132,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             clearEl(c);
             const zt = d.zone_transfer || {};
             const sec = mkEl('div', {cls:'v6-section'});
-            const badge = mkEl('span', {cls: zt.vulnerable ? 'badge-danger' : 'badge-ok', text: zt.vulnerable ? 'VULNERABLE — Zone Transfer Open' : 'Secure — AXFR Disabled'});
+            const badge = mkEl('span', {cls: zt.vulnerable ? 'badge-danger' : 'badge-ok', text: zt.vulnerable ? 'VULNERABLE - Zone Transfer Open' : 'Secure - AXFR Disabled'});
             sec.appendChild(badge);
             const attempted = zt.attempted || zt.nameservers || [];
             if (attempted.length) {
@@ -3124,7 +3280,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             const smtpRaw = smtp.smtp || {};
             if (smtpRaw.open_relay) {
                 const warn = mkEl('div', {style:'margin-top:8px;'});
-                warn.appendChild(mkEl('span', {cls:'badge-danger', text:'OPEN RELAY DETECTED — critical vulnerability'}));
+                warn.appendChild(mkEl('span', {cls:'badge-danger', text:'OPEN RELAY DETECTED - critical vulnerability'}));
                 sec.appendChild(warn);
             }
             c.appendChild(sec);
@@ -3176,13 +3332,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             sum.appendChild(mkMetric('Ports Shodan', (sd.ports||[]).length, 'var(--info)'));
             sum.appendChild(mkMetric('Services', sd.total_services||0, 'var(--accent)'));
             sum.appendChild(mkMetric('CVEs', sd.vuln_count||0, sd.vuln_count>0?'var(--danger)':'var(--success)'));
-            sum.appendChild(mkMetric('Mise à jour', sd.last_update ? sd.last_update.split('T')[0] : '—', 'var(--text-secondary)'));
+            sum.appendChild(mkMetric('Mise à jour', sd.last_update ? sd.last_update.split('T')[0] : '-', 'var(--text-secondary)'));
             c.appendChild(sum);
 
             // Org/ASN info
             const infoGrid = mkEl('div', {style:'display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;'});
-            [[sd.org||'—','Organisation'],[sd.isp||'—','ISP'],[sd.asn||'—','ASN'],
-             [sd.country||'—','Pays'],[sd.city||'—','Ville'],[sd.os||'—','OS détecté']].forEach(([val,lbl]) => {
+            [[sd.org||'-','Organisation'],[sd.isp||'-','ISP'],[sd.asn||'-','ASN'],
+             [sd.country||'-','Pays'],[sd.city||'-','Ville'],[sd.os||'-','OS détecté']].forEach(([val,lbl]) => {
                 const card = mkEl('div', {cls:'data-card'});
                 const l = mkEl('div', {style:'font-size:11px;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:4px;font-weight:600;'});
                 l.textContent = lbl;
@@ -3225,14 +3381,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     const protoTd = mkEl('td', {style:'padding:6px 8px;color:var(--text-secondary);'});
                     protoTd.textContent = svc.protocol||'tcp';
                     const prodTd = mkEl('td', {style:'padding:6px 8px;'});
-                    prodTd.textContent = svc.product||'—';
+                    prodTd.textContent = svc.product||'-';
                     const verTd = mkEl('td', {style:'padding:6px 8px;color:var(--text-tertiary);font-family:var(--mono);font-size:11px;'});
-                    verTd.textContent = svc.version||'—';
+                    verTd.textContent = svc.version||'-';
                     const cpeTd = mkEl('td', {style:'padding:6px 8px;color:var(--text-tertiary);font-size:11px;font-family:var(--mono);'});
-                    cpeTd.textContent = (svc.cpe||[]).join(', ')||'—';
+                    cpeTd.textContent = (svc.cpe||[]).join(', ')||'-';
                     const bannerTd = mkEl('td', {style:'padding:6px 8px;max-width:260px;overflow:hidden;'});
                     const bannerCode = mkEl('code', {style:'font-size:11px;color:var(--text-secondary);font-family:var(--mono);white-space:pre-wrap;word-break:break-all;display:block;max-height:60px;overflow:hidden;'});
-                    bannerCode.textContent = svc.banner ? svc.banner.substring(0,200) : '—';
+                    bannerCode.textContent = svc.banner ? svc.banner.substring(0,200) : '-';
                     bannerTd.appendChild(bannerCode);
                     tr.appendChild(portTd); tr.appendChild(protoTd); tr.appendChild(prodTd);
                     tr.appendChild(verTd); tr.appendChild(cpeTd); tr.appendChild(bannerTd);
@@ -3286,7 +3442,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             const typo = d.typosquatting || {};
             if (!typo.enriched && !typo.active_count && !typo.variants_checked) {
                 const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
-                p.textContent = typo.wildcard_detected ? 'Wildcard DNS détecté — scan ignoré.' : 'Aucun variant actif détecté.';
+                p.textContent = typo.wildcard_detected ? 'Wildcard DNS détecté - scan ignoré.' : 'Aucun variant actif détecté.';
                 c.appendChild(p);
                 return;
             }
@@ -3381,14 +3537,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             const bl = d.dnsbl_data || {};
             if (!bl.enriched) {
                 const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;'});
-                p.textContent = bl.reason === 'private_or_missing_ip' ? 'IP privée ou non résolue — DNSBL ignoré.' : 'Données DNSBL non disponibles.';
+                p.textContent = bl.reason === 'private_or_missing_ip' ? 'IP privée ou non résolue - DNSBL ignoré.' : 'Données DNSBL non disponibles.';
                 c.appendChild(p);
                 return;
             }
             const hdr = mkEl('div', {style:'margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;'});
             const ipB = mkEl('span', {cls:'badge-info'}); ipB.textContent = 'IP: ' + (bl.ip||'?');
             const sevB = mkEl('span', {cls: bl.listed_count===0 ? 'badge-ok' : (bl.severity==='critical'?'badge-danger':'badge-warning')});
-            sevB.textContent = (bl.listed_count||0) + '/' + (bl.checked_count||0) + ' listes — ' + (bl.severity||'');
+            sevB.textContent = (bl.listed_count||0) + '/' + (bl.checked_count||0) + ' listes - ' + (bl.severity||'');
             hdr.appendChild(ipB); hdr.appendChild(sevB);
             if (bl.whitelisted) {
                 const wl = mkEl('span', {cls:'badge-ok'});
@@ -3401,7 +3557,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (!listings.length) {
                 const ok = mkEl('p', {style:'color:var(--success);font-size:13px;'});
                 const icon = mkEl('i', {cls:'fa-solid fa-circle-check'});
-                ok.appendChild(icon); ok.appendChild(document.createTextNode(' IP propre — aucune liste noire.'));
+                ok.appendChild(icon); ok.appendChild(document.createTextNode(' IP propre - aucune liste noire.'));
                 c.appendChild(ok);
                 return;
             }
@@ -3644,7 +3800,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const tbody = mkEl('tbody');
                 cs.certs.slice(0,50).forEach(cert => {
                     const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.04);'});
-                    [cert.logged_at||'—', cert.not_after||'—', (cert.issuer_name||'').slice(0,30), cert.common_name||'—', (cert.san||[]).length+''].forEach((val,i) => {
+                    [cert.logged_at||'-', cert.not_after||'-', (cert.issuer_name||'').slice(0,30), cert.common_name||'-', (cert.san||[]).length+''].forEach((val,i) => {
                         const td = mkEl('td', {style:`padding:6px 8px;font-size:12px;${i<2?'font-family:var(--mono);color:var(--text-tertiary);':''}`});
                         td.textContent = val; tr.appendChild(td);
                     });
@@ -3705,7 +3861,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 msg.appendChild(icon); msg.appendChild(p); c.appendChild(msg); return;
             }
             const sum = mkEl('div', {style:'display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;'});
-            [[bg.asn||'—','ASN','var(--accent)'],[bg.asn_description||'—','Organisation','var(--info)'],[bg.peer_count||0,'Peers','var(--text-secondary)']].forEach(([val,lbl,color]) => {
+            [[bg.asn||'-','ASN','var(--accent)'],[bg.asn_description||'-','Organisation','var(--info)'],[bg.peer_count||0,'Peers','var(--text-secondary)']].forEach(([val,lbl,color]) => {
                 const card = mkEl('div', {cls:'data-card', style:'text-align:center;'});
                 const v = mkEl('div', {style:`font-size:18px;font-weight:700;font-family:var(--mono);color:${color};`});
                 v.textContent = val;
@@ -3714,7 +3870,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             });
             c.appendChild(sum);
             const info = mkEl('div', {cls:'v6-section', style:'margin-bottom:14px;'});
-            [[bg.prefix||'—','Prefix'],[bg.rir_allocation||'—','RIR'],[bg.country_code||'—','Pays']].forEach(([val,lbl]) => info.appendChild(v6Row(lbl, val)));
+            [[bg.prefix||'-','Prefix'],[bg.rir_allocation||'-','RIR'],[bg.country_code||'-','Pays']].forEach(([val,lbl]) => info.appendChild(v6Row(lbl, val)));
             c.appendChild(info);
             const mkTable = (title, rows, cols) => {
                 if (!rows || !rows.length) return;
@@ -3729,7 +3885,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const tbody = mkEl('tbody');
                 rows.forEach(row => {
                     const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.03);'});
-                    Object.values(row).forEach(val => { const td = mkEl('td', {style:'padding:5px 8px;font-family:var(--mono);font-size:12px;color:var(--text-secondary);'}); td.textContent = val||'—'; tr.appendChild(td); });
+                    Object.values(row).forEach(val => { const td = mkEl('td', {style:'padding:5px 8px;font-family:var(--mono);font-size:12px;color:var(--text-secondary);'}); td.textContent = val||'-'; tr.appendChild(td); });
                     tbody.appendChild(tr);
                 });
                 tbl.appendChild(tbody); sec.appendChild(tbl); c.appendChild(sec);
@@ -3803,7 +3959,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const tbody = mkEl('tbody');
                 pd.records.slice(0,50).forEach(rec => {
                     const tr = mkEl('tr', {style:'border-bottom:1px solid rgba(255,255,255,.04);'});
-                    [rec.rrname||'—', rec.rrtype||'—', rec.rdata||'—', (rec.time_last||'').slice(0,10), rec.count||''].forEach((val,i) => {
+                    [rec.rrname||'-', rec.rrtype||'-', rec.rdata||'-', (rec.time_last||'').slice(0,10), rec.count||''].forEach((val,i) => {
                         const td = mkEl('td', {style:`padding:6px 8px;font-family:var(--mono);font-size:12px;${i===1?'color:var(--info);font-weight:600;':i===4?'color:var(--text-tertiary);':''}`});
                         td.textContent = val; tr.appendChild(td);
                     });
@@ -3868,7 +4024,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (!hasAny) {
                 const none = mkEl('div', {cls:'v6-section'});
                 const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;text-align:center;'});
-                p.textContent = 'Aucun en-tête de certificate pinning détecté (HPKP/Expect-CT absent — normal pour la plupart des sites).';
+                p.textContent = 'Aucun en-tête de certificate pinning détecté (HPKP/Expect-CT absent - normal pour la plupart des sites).';
                 none.appendChild(p); c.appendChild(none); return;
             }
             const items = [
@@ -3920,10 +4076,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             scoreBox.textContent = score + '%';
             const info = mkEl('div');
             [
-                [`IP: ${ab.ip || '—'}`, 'var(--text-primary)'],
-                [`Risque: ${ab.risk_level || '—'}`, scoreColor],
+                [`IP: ${ab.ip || '-'}`, 'var(--text-primary)'],
+                [`Risque: ${ab.risk_level || '-'}`, scoreColor],
                 [`Rapports: ${ab.total_reports || 0} (${ab.num_distinct_users || 0} users)`, 'var(--text-secondary)'],
-                [`ISP: ${ab.isp || '—'} (${ab.country_code || '—'})`, 'var(--text-secondary)'],
+                [`ISP: ${ab.isp || '-'} (${ab.country_code || '-'})`, 'var(--text-secondary)'],
                 ab.last_reported_at ? [`Dernier rapport: ${ab.last_reported_at.slice(0,10)}`, 'var(--text-tertiary)'] : null,
                 ab.is_whitelisted ? ['<i class="fa-solid fa-circle-check"></i> IP en whitelist AbuseIPDB', 'var(--ok)', true] : null,
             ].filter(Boolean).forEach(([text, color, isHtml]) => {
@@ -4056,7 +4212,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 top.appendChild(name); top.appendChild(sev); card.appendChild(top);
                 (lib.vulnerabilities||[]).forEach(v => {
                     const row = mkEl('div', {style:'font-size:11px;color:var(--text-secondary);margin-top:3px;font-family:var(--mono);'});
-                    row.textContent = `${v.cve} — ${v.desc}`; card.appendChild(row);
+                    row.textContent = `${v.cve} - ${v.desc}`; card.appendChild(row);
                 });
                 sec.appendChild(card);
             });
@@ -4188,13 +4344,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     const sCol = score >= 75 ? 'var(--ok)' : score >= 50 ? 'var(--warning)' : 'var(--danger)';
                     const tls = s.tls_certificate || {};
                     const days = tls.days_remaining;
-                    const certStr = days == null ? '—' : days < 0 ? `<span style="color:var(--danger);">Expiré</span>` : days < 30 ? `<span style="color:var(--warning);">${days}j</span>` : `<span style="color:var(--ok);">${days}j</span>`;
+                    const certStr = days == null ? '-' : days < 0 ? `<span style="color:var(--danger);">Expiré</span>` : days < 30 ? `<span style="color:var(--warning);">${days}j</span>` : `<span style="color:var(--ok);">${days}j</span>`;
                     const ports = (s.open_ports||[]).length;
-                    const date = s.scan_timestamp ? new Date(s.scan_timestamp).toLocaleDateString('fr-FR') : '—';
+                    const date = s.scan_timestamp ? new Date(s.scan_timestamp).toLocaleDateString('fr-FR') : '-';
                     html += `<tr style="border-bottom:1px solid var(--border-light);">
                         <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">${s.domain}</td>
-                        <td style="padding:7px 10px;font-family:var(--mono);color:var(--text-secondary);">${s.ip_address||'—'}</td>
-                        <td style="padding:7px 10px;font-weight:700;color:${sCol};">${score||'—'}</td>
+                        <td style="padding:7px 10px;font-family:var(--mono);color:var(--text-secondary);">${s.ip_address||'-'}</td>
+                        <td style="padding:7px 10px;font-weight:700;color:${sCol};">${score||'-'}</td>
                         <td style="padding:7px 10px;">${certStr}</td>
                         <td style="padding:7px 10px;color:${ports>5?'var(--warning)':'var(--text-secondary)'};">${ports}</td>
                         <td style="padding:7px 10px;color:var(--text-tertiary);">${date}</td>
@@ -4218,7 +4374,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 const data = await res.json();
                 const scans = (data.scans || []).slice(0, 100);
                 scans.forEach(s => {
-                    const label = `#${s.id} — ${s.domain} (${s.scan_timestamp ? new Date(s.scan_timestamp).toLocaleDateString('fr-FR') : '?'})`;
+                    const label = `#${s.id} - ${s.domain} (${s.scan_timestamp ? new Date(s.scan_timestamp).toLocaleDateString('fr-FR') : '?'})`;
                     [selA, selB].forEach(sel => {
                         const opt = document.createElement('option');
                         opt.value = s.id; opt.textContent = label;
@@ -4617,8 +4773,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     const status = r.status || 'success';
                     tr.innerHTML = `
                         <td style="font-family:var(--mono);color:var(--accent);">${r.domain || ''}</td>
-                        <td style="font-family:var(--mono);">${r.ip_address || '—'}</td>
-                        <td style="color:${scoreCol};font-weight:700;">${score || '—'}</td>
+                        <td style="font-family:var(--mono);">${r.ip_address || '-'}</td>
+                        <td style="color:${scoreCol};font-weight:700;">${score || '-'}</td>
                         <td>${status === 'error' ? `<span style="color:var(--danger);">${r.error_message||'Erreur'}</span>` : '<span style="color:var(--ok);"><i class="fa-solid fa-circle-check"></i> OK</span>'}</td>
                         <td><button class="btn-sm" onclick="app.loadScanById(${r.id})">Voir</button></td>`;
                     if (tbody) tbody.appendChild(tr);

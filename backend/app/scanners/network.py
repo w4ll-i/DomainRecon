@@ -40,7 +40,7 @@ async def extended_network_scan(ip: str) -> dict:
 
 
 async def robtex_lookup(domain: str) -> dict:
-    """Robtex passive DNS — free, no API key required."""
+    """Robtex passive DNS - free, no API key required."""
     try:
         async with httpx.AsyncClient(timeout=15) as client:
             r = await client.get(f"https://freeapi.robtex.com/pdns/forward/{domain}")
@@ -57,3 +57,30 @@ async def robtex_lookup(domain: str) -> dict:
     except Exception as e:
         return {"error": str(e)}
     return {}
+
+
+async def reverse_ip_lookup(ip: str) -> dict:
+    """
+    Find other domains hosted on the same IP using HackerTarget API.
+    Free tier: 100 requests/day, no key required.
+    """
+    if not ip:
+        return {"domains": [], "count": 0}
+    try:
+        async with httpx.AsyncClient(timeout=15) as client:
+            r = await client.get(
+                f"https://api.hackertarget.com/reverseiplookup/?q={ip}"
+            )
+            if r.status_code == 200:
+                text = r.text.strip()
+                if "error" in text.lower() or "API count" in text:
+                    return {"domains": [], "count": 0, "note": text[:100]}
+                domains = [d.strip() for d in text.splitlines() if d.strip() and "." in d]
+                return {
+                    "domains": domains[:50],
+                    "count": len(domains),
+                    "truncated": len(domains) > 50,
+                }
+    except Exception as e:
+        return {"domains": [], "count": 0, "error": str(e)}
+    return {"domains": [], "count": 0}

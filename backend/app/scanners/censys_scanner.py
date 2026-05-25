@@ -1,6 +1,6 @@
 # backend/app/scanners/censys_scanner.py
 """
-Censys Search v2 — certificate and host intelligence via REST API.
+Censys Search v2 - certificate and host intelligence via REST API.
 API credentials required: https://search.censys.io/account/api
 """
 import asyncio

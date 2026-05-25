@@ -1,6 +1,6 @@
 # backend/app/scanners/observatory_scanner.py
 """
-Mozilla Observatory — HTTP security scan and grade.
+Mozilla Observatory - HTTP security scan and grade.
 Public API, no key required.
 API: https://http-observatory.security.mozilla.org/api/v1/
 """
@@ -28,7 +28,7 @@ async def observatory_scan(domain: str) -> dict:
 
             data = r.json()
 
-            # Poll until FINISHED — max 6 retries × 3s = 18s wait
+            # Poll until FINISHED - max 6 retries × 3s = 18s wait
             for _ in range(6):
                 state = data.get("state", "")
                 if state in ("FINISHED", "ABORTED", "FAILED"):

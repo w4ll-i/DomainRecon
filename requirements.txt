@@ -3,6 +3,7 @@ fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
 sqlalchemy>=2.0.36
 pydantic>=2.10.0
+alembic>=1.13.0
 
 # Scanning
 httpx>=0.27.0
@@ -11,5 +12,5 @@ python-whois>=0.9.4
 dnspython>=2.7.0
 cryptography>=42.0.0
 
-# Screenshot (optionnel — activer dans les settings)
+# Screenshot (optionnel - activer dans les settings)
 # playwright>=1.40.0

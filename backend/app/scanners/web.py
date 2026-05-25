@@ -182,7 +182,7 @@ async def discover_admin_panels(domain: str) -> dict:
 
         status = resp.status_code
 
-        # 403 / 401 — access denied: path definitively exists
+        # 403 / 401 - access denied: path definitively exists
         if status in (403, 401):
             found.append({
                 "path": path,
@@ -192,7 +192,7 @@ async def discover_admin_panels(domain: str) -> dict:
             })
             continue
 
-        # 200 — potential soft-404
+        # 200 - potential soft-404
         if status == 200:
             content_len = len(resp.content)
 
@@ -201,7 +201,7 @@ async def discover_admin_panels(domain: str) -> dict:
                 diff = abs(content_len - baseline_len)
                 ratio = diff / max(baseline_len, 1)
                 if ratio < 0.15:
-                    continue  # Soft-404 — skip
+                    continue  # Soft-404 - skip
 
             # Skip empty or near-empty responses
             if content_len < 100:
@@ -219,7 +219,7 @@ async def discover_admin_panels(domain: str) -> dict:
             })
             continue
 
-        # 301 / 302 / 307 / 308 — redirect
+        # 301 / 302 / 307 / 308 - redirect
         if status in (301, 302, 307, 308):
             location = resp.headers.get("location", "")
             loc_clean = location.rstrip("/").lower()
@@ -348,7 +348,7 @@ async def check_web_files(domain: str) -> dict:
         if isinstance(resp, Exception):
             continue
 
-        # Only direct 200 — never follow redirects for file existence
+        # Only direct 200 - never follow redirects for file existence
         if resp.status_code != 200:
             continue
 
@@ -382,16 +382,40 @@ async def analyze_cookies(domain: str) -> dict:
             verify=False, follow_redirects=True, timeout=10
         ) as client:
             r = await client.get(f"https://{domain}")
-            set_cookie_raw = str(r.headers.get("set-cookie", "")).lower()
+            # Parse each Set-Cookie header individually to avoid applying
+            # flags from one cookie to all cookies.
+            raw_headers = r.headers.get_list("set-cookie") if hasattr(r.headers, "get_list") else []
+            if not raw_headers:
+                # httpx merges Set-Cookie into a single header - split on cookie boundaries
+                raw_combined = r.headers.get("set-cookie", "")
+                # heuristic split: each cookie starts with "name=" at word boundary
+                raw_headers = [raw_combined] if raw_combined else []
+
             cookies = []
-            for name in r.cookies.keys():
-                samesite_match = re.search(r"samesite=(\w+)", set_cookie_raw, re.IGNORECASE)
-                cookies.append({
-                    "name": name,
-                    "secure": "secure" in set_cookie_raw,
-                    "httponly": "httponly" in set_cookie_raw,
-                    "samesite": samesite_match.group(1) if samesite_match else None,
-                })
+            cookie_names = list(r.cookies.keys())
+
+            if raw_headers and len(raw_headers) == len(cookie_names):
+                # One header per cookie - parse individually (most accurate)
+                for name, hdr in zip(cookie_names, raw_headers):
+                    hdr_lower = hdr.lower()
+                    samesite_match = re.search(r"samesite=(\w+)", hdr_lower)
+                    cookies.append({
+                        "name": name,
+                        "secure": "secure" in hdr_lower,
+                        "httponly": "httponly" in hdr_lower,
+                        "samesite": samesite_match.group(1) if samesite_match else None,
+                    })
+            else:
+                # Fallback: parse combined header (less accurate but better than nothing)
+                combined = " ".join(raw_headers).lower()
+                samesite_match = re.search(r"samesite=(\w+)", combined)
+                for name in cookie_names:
+                    cookies.append({
+                        "name": name,
+                        "secure": "secure" in combined,
+                        "httponly": "httponly" in combined,
+                        "samesite": samesite_match.group(1) if samesite_match else None,
+                    })
             return {"cookies": cookies, "count": len(cookies)}
     except Exception as e:
         return {"error": str(e), "cookies": []}

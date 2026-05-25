@@ -1,6 +1,6 @@
 # backend/app/vpn_manager.py
 """
-VPN Manager — Control Mullvad VPN via its CLI + status via am.i.mullvad.net.
+VPN Manager - Control Mullvad VPN via its CLI + status via am.i.mullvad.net.
 
 Detection strategy (in order):
   1. Mullvad CLI available → full control (status, connect, disconnect, locations).
@@ -29,7 +29,7 @@ _MULLVAD_PATHS = [
     "/Applications/Mullvad VPN.app/Contents/Resources/mullvad",      # macOS
 ]
 
-# Linux Mullvad daemon socket — present on host, mountable into container
+# Linux Mullvad daemon socket - present on host, mountable into container
 _MULLVAD_SOCKET = "/var/run/mullvad-vpn"
 
 _VALID_LOC = re.compile(r"^[a-z]{2}(-[a-z0-9]+)?$")
@@ -91,9 +91,9 @@ async def _check_mullvad_net() -> dict:
                     "available": True,
                     "connected": connected,
                     "status_text": (
-                        f"Connected via host VPN — {location or server or ip}"
+                        f"Connected via host VPN - {location or server or ip}"
                         if connected else
-                        f"Not connected — exit IP: {ip}"
+                        f"Not connected - exit IP: {ip}"
                     ),
                     "server": server,
                     "location": location,
@@ -115,7 +115,7 @@ async def get_status() -> dict:
     binary = _find_mullvad()
 
     if not binary:
-        # No CLI — try am.i.mullvad.net for read-only status (all platforms)
+        # No CLI - try am.i.mullvad.net for read-only status (all platforms)
         net_status = await _check_mullvad_net()
         if net_status:
             return net_status
@@ -130,30 +130,56 @@ async def get_status() -> dict:
             "location": None,
             "cli_control": False,
             "docker_note": (
-                "Running in Docker — install Mullvad VPN on the host to protect scans. "
+                "Running in Docker - install Mullvad VPN on the host to protect scans. "
                 "To enable connect/disconnect controls (Linux only), mount the CLI "
                 "by uncommenting the volume lines in docker-compose.yml."
             ) if in_docker else None,
             "socket_mounted": os.path.exists(_MULLVAD_SOCKET),
         }
 
-    # CLI available — full control
+    # CLI available - full control
     code, output = await _run("status")
     lines = output.splitlines()
-    first_line = lines[0] if lines else ""
-    connected = (
-        "connected" in first_line.lower()
-        and first_line.lower().startswith("connected")
-    )
+    first_line = lines[0].strip() if lines else ""
+    connected = first_line.lower().startswith("connected")
 
     server = None
     location = None
+    exit_ip = None
+
     if connected:
-        # "Connected to se-got-001 in Gothenburg, SE"
-        m = re.search(r"Connected to (\S+) in (.+)", first_line, re.IGNORECASE)
-        if m:
-            server = m.group(1)
-            location = m.group(2).strip()
+        # New Mullvad CLI format (2024+):
+        #   Connected
+        #       Relay:            fr-mrs-wg-002
+        #       Features:         Quantum Resistance
+        #       Visible location: France, Marseille. IPv4: 138.199.15.153
+        #
+        # Old format (pre-2024):
+        #   Connected to se-got-001 in Gothenburg, SE
+
+        # Try old single-line format first
+        m_old = re.search(r"Connected to (\S+) in (.+)", first_line, re.IGNORECASE)
+        if m_old:
+            server = m_old.group(1)
+            location = m_old.group(2).strip()
+        else:
+            # Parse new multi-line format
+            for line in lines[1:]:
+                line = line.strip()
+                m_relay = re.match(r"Relay\s*:\s*(.+)", line, re.IGNORECASE)
+                if m_relay:
+                    server = m_relay.group(1).strip()
+                m_loc = re.match(r"Visible location\s*:\s*(.+)", line, re.IGNORECASE)
+                if m_loc:
+                    # "France, Marseille. IPv4: 138.199.15.153"
+                    loc_raw = m_loc.group(1).strip()
+                    # Extract IP if present
+                    ip_match = re.search(r"IPv(?:4|6):\s*([\d.:a-fA-F]+)", loc_raw)
+                    if ip_match:
+                        exit_ip = ip_match.group(1)
+                        # Strip everything from " IPv4:" onward
+                        loc_raw = re.sub(r"\s*IPv(?:4|6):.*$", "", loc_raw)
+                    location = loc_raw.rstrip(". ")
 
     return {
         "available": True,
@@ -161,6 +187,7 @@ async def get_status() -> dict:
         "status_text": first_line,
         "server": server,
         "location": location,
+        "exit_ip": exit_ip,
         "cli_control": True,
         "docker_note": None,
         "socket_mounted": os.path.exists(_MULLVAD_SOCKET),

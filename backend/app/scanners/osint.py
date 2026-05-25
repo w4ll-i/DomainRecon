@@ -69,23 +69,43 @@ async def check_threat_intelligence(
     domain: str, ip: str, vt_key: Optional[str] = None
 ) -> dict:
     result = {}
-    if vt_key:
-        try:
-            async with httpx.AsyncClient(timeout=15) as client:
-                r = await client.get(
-                    f"https://www.virustotal.com/api/v3/domains/{domain}",
-                    headers={"x-apikey": vt_key},
+    if not vt_key:
+        return result
+    try:
+        async with httpx.AsyncClient(timeout=15) as client:
+            headers = {"x-apikey": vt_key}
+
+            # Domain reputation
+            r_domain = await client.get(
+                f"https://www.virustotal.com/api/v3/domains/{domain}",
+                headers=headers,
+            )
+            if r_domain.status_code == 200:
+                attrs = r_domain.json().get("data", {}).get("attributes", {})
+                result["virustotal"] = {
+                    **attrs.get("last_analysis_stats", {}),
+                    "reputation": attrs.get("reputation", 0),
+                    "categories": attrs.get("categories", {}),
+                    "last_analysis_date": attrs.get("last_analysis_date"),
+                }
+
+            # IP reputation (if available)
+            if ip:
+                r_ip = await client.get(
+                    f"https://www.virustotal.com/api/v3/ip_addresses/{ip}",
+                    headers=headers,
                 )
-                if r.status_code == 200:
-                    stats = (
-                        r.json()
-                        .get("data", {})
-                        .get("attributes", {})
-                        .get("last_analysis_stats", {})
-                    )
-                    result["virustotal"] = stats
-        except Exception:
-            pass
+                if r_ip.status_code == 200:
+                    ip_attrs = r_ip.json().get("data", {}).get("attributes", {})
+                    result["virustotal_ip"] = {
+                        **ip_attrs.get("last_analysis_stats", {}),
+                        "reputation": ip_attrs.get("reputation", 0),
+                        "country": ip_attrs.get("country"),
+                        "as_owner": ip_attrs.get("as_owner"),
+                        "last_analysis_date": ip_attrs.get("last_analysis_date"),
+                    }
+    except Exception:
+        pass
     return result
 
 

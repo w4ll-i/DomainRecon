@@ -41,15 +41,27 @@ async def resolve_ip(domain: str) -> Optional[str]:
 
 def _scan_dns_sync(domain: str) -> dict:
     records = {}
-    for rtype in ["A", "AAAA", "MX", "NS", "TXT", "CNAME", "SOA"]:
+    for rtype in ["A", "AAAA", "MX", "NS", "TXT", "CNAME", "SOA", "CAA", "SRV"]:
         try:
             r = dns.resolver.resolve(domain, rtype, lifetime=5)
             if rtype == "MX":
                 records[rtype] = [{"priority": x.preference, "value": str(x.exchange).rstrip(".")} for x in r]
+            elif rtype == "CAA":
+                records[rtype] = [{"flags": x.flags, "tag": x.tag.decode() if isinstance(x.tag, bytes) else str(x.tag), "value": x.value.decode() if isinstance(x.value, bytes) else str(x.value)} for x in r]
+            elif rtype == "SRV":
+                records[rtype] = [{"priority": x.priority, "weight": x.weight, "port": x.port, "target": str(x.target).rstrip(".")} for x in r]
             else:
                 records[rtype] = [str(x) for x in r]
         except Exception:
             records[rtype] = []
+
+    # Check TLSA (DANE) on port 443
+    try:
+        tlsa_answers = dns.resolver.resolve(f"_443._tcp.{domain}", "TLSA", lifetime=5)
+        records["TLSA"] = [str(x) for x in tlsa_answers]
+    except Exception:
+        records["TLSA"] = []
+
     return records
 
 
@@ -85,15 +97,27 @@ async def check_zone_transfer(domain: str) -> dict:
 
 
 def _check_wildcard_sync(domain: str) -> dict:
-    """Resolve a random subdomain to detect wildcard DNS."""
-    test_sub = f"randomxyz_no_exist_abc.{domain}"
-    try:
-        dns.resolver.resolve(test_sub, "A", lifetime=5)
-        return {"wildcard": True, "test_subdomain": test_sub}
-    except dns.resolver.NXDOMAIN:
-        return {"wildcard": False}
-    except Exception:
-        return {"wildcard": None, "error": "timeout"}
+    """Resolve multiple random subdomains to detect wildcard DNS (multi-probe for accuracy)."""
+    import random
+    import string
+    probes = [
+        "".join(random.choices(string.ascii_lowercase, k=12)) + f".{domain}"
+        for _ in range(3)
+    ]
+    positive = 0
+    for test_sub in probes:
+        try:
+            dns.resolver.resolve(test_sub, "A", lifetime=5)
+            positive += 1
+        except dns.resolver.NXDOMAIN:
+            pass
+        except Exception:
+            pass
+    if positive >= 2:
+        return {"wildcard": True, "test_subdomains": probes}
+    elif positive == 1:
+        return {"wildcard": True, "test_subdomains": probes, "note": "1/3 probes resolved - possible intermittent wildcard"}
+    return {"wildcard": False}
 
 
 async def check_wildcard(domain: str) -> dict:
@@ -134,7 +158,7 @@ async def _permute_subdomains(domain: str, wordlist: list) -> list:
     """Resolve all wordlist permutations concurrently via dedicated thread pool.
 
     Uses dns.resolver.resolve(lifetime=3) instead of loop.getaddrinfo so each
-    lookup is capped at 3 seconds — prevents thread pool saturation in Docker.
+    lookup is capped at 3 seconds - prevents thread pool saturation in Docker.
     """
     loop = asyncio.get_event_loop()
     sem = asyncio.Semaphore(100)
@@ -174,18 +198,56 @@ async def find_subdomains(domain: str, scan_profile: str = "full") -> dict:
             )
             found.update(permuted)
         except (asyncio.TimeoutError, TimeoutError):
-            pass  # best-effort — keep whatever crt.sh found
-    # Quick scan: crt.sh only — no brute-force
+            pass  # best-effort - keep whatever crt.sh found
+    # Quick scan: crt.sh only - no brute-force
 
     return {"subdomains": sorted(found), "count": len(found)}
 
 
 TAKEOVER_CNAMES = {
-    "github.io": "There isn't a GitHub Pages site here.",
-    "herokuapp.com": "No such app",
-    "netlify.app": "Not found",
-    "surge.sh": "project not found",
-    "azurewebsites.net": "404 Web Site not found",
+    # GitHub Pages
+    "github.io":              "There isn't a GitHub Pages site here.",
+    # Heroku
+    "herokuapp.com":          "No such app",
+    "herokudns.com":          "No such app",
+    # Netlify
+    "netlify.app":            "Not Found",
+    "netlify.com":            "Not Found",
+    # Surge
+    "surge.sh":               "project not found",
+    # Azure
+    "azurewebsites.net":      "404 Web Site not found",
+    "azure-api.net":          "404 Web Site not found",
+    "cloudapp.azure.com":     "404 Web Site not found",
+    "trafficmanager.net":     "404 Web Site not found",
+    # AWS
+    "s3.amazonaws.com":       "NoSuchBucket",
+    "s3-website":             "NoSuchBucket",
+    "elasticbeanstalk.com":   "NXDOMAIN",
+    # Fastly
+    "fastly.net":             "Fastly error: unknown domain",
+    # Shopify
+    "myshopify.com":          "Sorry, this shop is currently unavailable.",
+    # Tumblr
+    "tumblr.com":             "There's nothing here.",
+    # Ghost
+    "ghost.io":               "The thing you were looking for is no longer here",
+    # Helpjuice
+    "helpjuice.com":          "We could not find what you're looking for.",
+    # Help Scout
+    "helpscoutdocs.com":      "No settings were found for this company",
+    # Cargo
+    "cargocollective.com":    "404",
+    # UserVoice
+    "uservoice.com":          "This UserVoice subdomain is currently available",
+    # Statuspage
+    "statuspage.io":          "You are being redirected",
+    # Readme
+    "readme.io":              "Project doesnt exist",
+    # Pantheon
+    "pantheonsite.io":        "The gods are wise",
+    # Webflow
+    "webflow.io":             "The page you are looking for doesn't exist",
 }
 
 

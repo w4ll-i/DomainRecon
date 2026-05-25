@@ -115,6 +115,101 @@ async def check_catch_all(domain: str) -> dict:
     return await loop.run_in_executor(None, _check_catch_all_sync, domain)
 
 
+def _parse_spf_mechanisms(spf_record: str) -> dict:
+    """Extract and categorize mechanisms from an SPF record."""
+    if not spf_record:
+        return {}
+    includes, ip4s, ip6s = [], [], []
+    all_mechanism = None
+    for part in spf_record.split():
+        part_lower = part.lower()
+        if part_lower.startswith("include:"):
+            includes.append(part[8:])
+        elif part_lower.startswith("ip4:"):
+            ip4s.append(part[4:])
+        elif part_lower.startswith("ip6:"):
+            ip6s.append(part[4:])
+        elif part_lower in ("-all", "~all", "+all", "?all"):
+            all_mechanism = part_lower
+    return {
+        "includes": includes,
+        "ip4": ip4s,
+        "ip6": ip6s,
+        "all_mechanism": all_mechanism,
+        "strict": all_mechanism == "-all",
+    }
+
+
+def _check_mta_sts_sync(domain: str) -> dict:
+    """Check for MTA-STS policy (RFC 8461) - DNS + HTTP."""
+    result = {"enabled": False, "mode": None, "max_age": None, "error": None}
+    # Step 1: DNS TXT record _mta-sts.<domain>
+    try:
+        answers = dns.resolver.resolve(f"_mta-sts.{domain}", "TXT", lifetime=5)
+        for rdata in answers:
+            txt = str(rdata).strip('"')
+            if txt.startswith("v=STSv1"):
+                result["dns_record"] = txt
+                break
+        else:
+            return result  # No MTA-STS DNS record
+    except Exception:
+        return result
+
+    # Step 2: Fetch policy file from https://mta-sts.<domain>/.well-known/mta-sts.txt
+    import urllib.request
+    try:
+        resp = urllib.request.urlopen(
+            f"https://mta-sts.{domain}/.well-known/mta-sts.txt", timeout=8
+        )
+        policy_text = resp.read(4096).decode(errors="ignore")
+        result["policy_text"] = policy_text
+        for line in policy_text.splitlines():
+            line = line.strip()
+            if line.startswith("mode:"):
+                result["mode"] = line.split(":", 1)[1].strip()
+            elif line.startswith("max_age:"):
+                try:
+                    result["max_age"] = int(line.split(":", 1)[1].strip())
+                except ValueError:
+                    pass
+        result["enabled"] = bool(result["mode"])
+    except Exception as e:
+        result["error"] = str(e)[:100]
+    return result
+
+
+async def check_mta_sts(domain: str) -> dict:
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(None, _check_mta_sts_sync, domain)
+
+
+def _check_bimi_sync(domain: str) -> dict:
+    """Check for BIMI record (Brand Indicators for Message Identification)."""
+    try:
+        answers = dns.resolver.resolve(f"default._bimi.{domain}", "TXT", lifetime=5)
+        for rdata in answers:
+            txt = str(rdata).strip('"')
+            if txt.startswith("v=BIMI1"):
+                # Extract logo URL and VMC URL
+                l_match = re.search(r"l=([^;]+)", txt)
+                a_match = re.search(r"a=([^;]+)", txt)
+                return {
+                    "enabled": True,
+                    "record": txt,
+                    "logo_url": l_match.group(1).strip() if l_match else None,
+                    "vmc_url": a_match.group(1).strip() if a_match else None,
+                }
+    except Exception:
+        pass
+    return {"enabled": False}
+
+
+async def check_bimi(domain: str) -> dict:
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(None, _check_bimi_sync, domain)
+
+
 def compute_spoofability(email_data: dict, catch_all_data: dict) -> dict:
     """Pure calculation, no network. Score starts at 100 (fully spoofable)."""
     score = 100
@@ -124,13 +219,18 @@ def compute_spoofability(email_data: dict, catch_all_data: dict) -> dict:
     catch_all = catch_all_data.get("catch_all")
 
     if spf:
-        score -= 30
-    if dmarc:
-        score -= 35
-        if "p=reject" in dmarc:
+        score -= 25
+        # Extra credit for strict SPF enforcement
+        if "-all" in spf:
             score -= 10
-        elif "p=quarantine" in dmarc:
+        elif "~all" in spf:
             score -= 5
+    if dmarc:
+        score -= 30
+        if "p=reject" in dmarc.lower():
+            score -= 15
+        elif "p=quarantine" in dmarc.lower():
+            score -= 8
     if dkim:
         score -= 20
     if catch_all is False:
@@ -143,14 +243,20 @@ def compute_spoofability(email_data: dict, catch_all_data: dict) -> dict:
         risk = "High"
     elif score >= 40:
         risk = "Medium"
-    else:
+    elif score >= 20:
         risk = "Low"
+    else:
+        risk = "Minimal"
+
+    spf_mechanisms = _parse_spf_mechanisms(spf) if spf else {}
 
     return {
         "spoofability_score": score,
         "risk_level": risk,
         "details": {
             "spf_present": bool(spf),
+            "spf_strict": spf_mechanisms.get("strict", False),
+            "spf_mechanisms": spf_mechanisms,
             "dmarc_present": bool(dmarc),
             "dkim_present": bool(dkim),
             "catch_all": catch_all,

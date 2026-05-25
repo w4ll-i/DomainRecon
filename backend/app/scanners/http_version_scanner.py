@@ -1,6 +1,6 @@
 # backend/app/scanners/http_version_scanner.py
 """
-HTTP Version Scanner — Detect HTTP/1.1, HTTP/2, HTTP/3 (QUIC) support.
+HTTP Version Scanner - Detect HTTP/1.1, HTTP/2, HTTP/3 (QUIC) support.
 
 HTTP/2 : ALPN negotiation in TLS handshake (checks for 'h2').
 HTTP/3 : Alt-Svc response header (looks for 'h3' or 'h3-xx').

@@ -42,7 +42,7 @@ class TTLCache:
         return len(self._store)
 
 
-# Global singleton — import this in main.py and scanner.py
+# Global singleton - import this in main.py and scanner.py
 _cache = TTLCache()
 
 
@@ -59,6 +59,6 @@ async def cache_delete(key: str) -> None:
 
 
 # TTL constants
-TTL_SHORT  = 300    # 5 min  — VPN status, health checks
-TTL_MEDIUM = 3600   # 1 hour — Shodan, VirusTotal, BGPView, threat intel
-TTL_LONG   = 86400  # 24h   — WHOIS, cert data, passive DNS
+TTL_SHORT  = 300    # 5 min  - VPN status, health checks
+TTL_MEDIUM = 3600   # 1 hour - Shodan, VirusTotal, BGPView, threat intel
+TTL_LONG   = 86400  # 24h   - WHOIS, cert data, passive DNS

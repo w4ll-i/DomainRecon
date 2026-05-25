@@ -112,7 +112,7 @@ async def bruteforce_subdomains(domain: str) -> dict:
     Brute-force subdomain enumeration for *domain* using the embedded wordlist.
 
     DNS queries run in a thread-pool executor in batches of _BATCH_SIZE to
-    avoid overwhelming the resolver. Never raises — all exceptions are caught.
+    avoid overwhelming the resolver. Never raises - all exceptions are caught.
 
     Returns a dict with subdomains_found, count, and wordlist_size.
     Deduplication against passive-scan results is expected to happen upstream

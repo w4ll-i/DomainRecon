@@ -1,6 +1,6 @@
 # backend/app/scanners/doh_scanner.py
 """
-DNS over HTTPS Comparison — Resolve domain via Cloudflare, Google, Quad9.
+DNS over HTTPS Comparison - Resolve domain via Cloudflare, Google, Quad9.
 Detects: split-horizon DNS, censorship, DNS poisoning, DNSSEC validation status.
 No external API key required. Uses httpx (already in requirements).
 """
@@ -71,11 +71,11 @@ async def doh_comparison(domain: str) -> dict:
         nxdomains = [p for p, v in result["providers"].items() if v.get("status") == 3]
         if nxdomains and len(nxdomains) < len(result["providers"]):
             result["issues"].append(
-                f"NXDOMAIN from {', '.join(nxdomains)} but others resolve — possible DNS censorship/blocking"
+                f"NXDOMAIN from {', '.join(nxdomains)} but others resolve - possible DNS censorship/blocking"
             )
         else:
             result["issues"].append(
-                "Different IPs returned by different resolvers — possible split-horizon DNS or CDN geo-routing"
+                "Different IPs returned by different resolvers - possible split-horizon DNS or CDN geo-routing"
             )
 
     # DNSSEC validation across providers

@@ -1,6 +1,6 @@
 # backend/app/scanners/js_dependency_scanner.py
 """
-JS Dependency Scanner — detect CDN-hosted JS/CSS libraries and flag
+JS Dependency Scanner - detect CDN-hosted JS/CSS libraries and flag
 outdated/vulnerable versions.
 """
 import re
@@ -51,25 +51,67 @@ def _fallback_compare(v1: str, v2: str) -> bool:
 KNOWN_VULNS = {
     "jquery": [
         {"max_version": "1.12.4", "cve": "CVE-2019-11358", "severity": "medium", "desc": "Prototype pollution"},
-        {"max_version": "3.4.0", "cve": "CVE-2019-11358", "severity": "medium", "desc": "Prototype pollution"},
-        {"max_version": "1.6.4", "cve": "CVE-2011-4969", "severity": "medium", "desc": "XSS vulnerability"},
+        {"max_version": "3.4.0",  "cve": "CVE-2019-11358", "severity": "medium", "desc": "Prototype pollution"},
+        {"max_version": "1.6.4",  "cve": "CVE-2011-4969",  "severity": "medium", "desc": "XSS vulnerability"},
+        {"max_version": "3.5.0",  "cve": "CVE-2020-11022", "severity": "medium", "desc": "XSS via HTML manipulation"},
+        {"max_version": "3.5.0",  "cve": "CVE-2020-11023", "severity": "medium", "desc": "XSS via HTML manipulation"},
     ],
     "bootstrap": [
-        {"max_version": "3.4.0", "cve": "CVE-2019-8331", "severity": "medium", "desc": "XSS in tooltip/popover"},
-        {"max_version": "4.0.0", "cve": "CVE-2018-14040", "severity": "medium", "desc": "XSS"},
+        {"max_version": "3.4.1", "cve": "CVE-2019-8331",  "severity": "medium", "desc": "XSS in tooltip/popover"},
+        {"max_version": "4.3.1", "cve": "CVE-2019-8331",  "severity": "medium", "desc": "XSS in tooltip/popover"},
+        {"max_version": "4.0.0", "cve": "CVE-2018-14040", "severity": "medium", "desc": "XSS via data-target"},
+        {"max_version": "4.0.0", "cve": "CVE-2018-14041", "severity": "medium", "desc": "XSS via data-target"},
+        {"max_version": "3.4.0", "cve": "CVE-2016-10735", "severity": "medium", "desc": "XSS in data-template"},
     ],
     "angular": [
-        {"max_version": "1.8.0", "cve": "CVE-2020-7676", "severity": "medium", "desc": "XSS"},
+        {"max_version": "1.8.0",  "cve": "CVE-2020-7676",  "severity": "medium", "desc": "XSS via ng-attr-srcdoc"},
+        {"max_version": "1.6.0",  "cve": "CVE-2019-14863", "severity": "medium", "desc": "Prototype pollution"},
+        {"max_version": "1.5.11", "cve": "CVE-2018-35312", "severity": "medium", "desc": "ReDoS"},
     ],
     "lodash": [
-        {"max_version": "4.17.20", "cve": "CVE-2021-23337", "severity": "high", "desc": "Command injection via template"},
-        {"max_version": "4.17.20", "cve": "CVE-2020-8203", "severity": "high", "desc": "Prototype pollution"},
+        {"max_version": "4.17.20", "cve": "CVE-2021-23337", "severity": "high",     "desc": "Command injection via template"},
+        {"max_version": "4.17.20", "cve": "CVE-2020-8203",  "severity": "high",     "desc": "Prototype pollution via zipObjectDeep"},
+        {"max_version": "4.17.15", "cve": "CVE-2019-10744", "severity": "critical", "desc": "Prototype pollution via defaultsDeep"},
+        {"max_version": "4.17.11", "cve": "CVE-2018-16487", "severity": "high",     "desc": "Prototype pollution via merge"},
+        {"max_version": "4.17.4",  "cve": "CVE-2018-3721",  "severity": "medium",   "desc": "Prototype pollution via defaultsDeep"},
     ],
     "moment": [
-        {"max_version": "2.29.1", "cve": "CVE-2022-24785", "severity": "high", "desc": "Path traversal"},
+        {"max_version": "2.29.1", "cve": "CVE-2022-24785", "severity": "high",   "desc": "Path traversal"},
+        {"max_version": "2.29.3", "cve": "CVE-2022-31129", "severity": "high",   "desc": "ReDoS - OOM crash"},
+        {"max_version": "2.19.2", "cve": "CVE-2016-4055",  "severity": "medium", "desc": "ReDoS"},
     ],
     "handlebars": [
         {"max_version": "4.7.6", "cve": "CVE-2021-23369", "severity": "critical", "desc": "RCE via prototype pollution"},
+        {"max_version": "4.7.6", "cve": "CVE-2021-23383", "severity": "critical", "desc": "Prototype pollution"},
+        {"max_version": "4.5.3", "cve": "CVE-2019-20920", "severity": "high",     "desc": "Prototype pollution"},
+        {"max_version": "4.5.2", "cve": "CVE-2019-19919", "severity": "critical", "desc": "Prototype pollution - RCE"},
+    ],
+    "underscore": [
+        {"max_version": "1.12.1", "cve": "CVE-2021-23358", "severity": "high", "desc": "Arbitrary code execution via template"},
+    ],
+    "vue": [
+        {"max_version": "2.6.12", "cve": "CVE-2021-28091", "severity": "medium", "desc": "XSS in v-bind"},
+    ],
+    "axios": [
+        {"max_version": "0.21.1", "cve": "CVE-2021-3749",  "severity": "high",   "desc": "ReDoS"},
+        {"max_version": "0.18.0", "cve": "CVE-2019-10742", "severity": "medium", "desc": "Denial of service"},
+    ],
+    "highlight.js": [
+        {"max_version": "10.4.0", "cve": "CVE-2021-23346", "severity": "medium", "desc": "ReDoS"},
+    ],
+    "marked": [
+        {"max_version": "1.1.1", "cve": "CVE-2022-21681", "severity": "high",   "desc": "ReDoS"},
+        {"max_version": "4.0.9", "cve": "CVE-2022-21680", "severity": "medium", "desc": "ReDoS"},
+    ],
+    "dompurify": [
+        {"max_version": "2.3.0", "cve": "CVE-2021-26539", "severity": "medium", "desc": "mXSS bypass"},
+        {"max_version": "2.2.8", "cve": "CVE-2020-26870", "severity": "medium", "desc": "mXSS bypass"},
+    ],
+    "chart.js": [
+        {"max_version": "2.9.4", "cve": "CVE-2020-7746", "severity": "high", "desc": "ReDoS"},
+    ],
+    "three.js": [
+        {"max_version": "0.125.0", "cve": "CVE-2020-28480", "severity": "medium", "desc": "Prototype pollution"},
     ],
 }
 
@@ -85,7 +127,7 @@ _HREF_RE = re.compile(
     re.IGNORECASE,
 )
 
-# CDN URL patterns — each yields (lib_name, version) or None
+# CDN URL patterns - each yields (lib_name, version) or None
 _CDN_PATTERNS = [
     # cdnjs.cloudflare.com/ajax/libs/{lib}/{version}/
     re.compile(r"cdnjs\.cloudflare\.com/ajax/libs/([^/]+)/([^/]+)/", re.IGNORECASE),
@@ -175,6 +217,50 @@ def _highest_severity(vulns: list) -> str:
     return max(vulns, key=lambda v: _SEVERITY_RANK.get(v["severity"], 0))["severity"]
 
 
+async def _osv_lookup(lib_name: str, version: str) -> list:
+    """
+    Query the OSV (Open Source Vulnerabilities) API for npm packages.
+    Free, no API key required. https://osv.dev/docs/
+    """
+    try:
+        async with httpx.AsyncClient(timeout=8) as client:
+            r = await client.post(
+                "https://api.osv.dev/v1/query",
+                json={"version": version, "package": {"name": lib_name, "ecosystem": "npm"}},
+            )
+            if r.status_code == 200:
+                vulns = r.json().get("vulns", [])
+                results = []
+                for v in vulns[:5]:  # cap at 5 per lib
+                    aliases = v.get("aliases", [])
+                    cve = next((a for a in aliases if a.startswith("CVE-")), v.get("id", ""))
+                    severity = "medium"
+                    for sev_entry in v.get("severity", []):
+                        score_str = sev_entry.get("score", "")
+                        try:
+                            score = float(score_str)
+                            if score >= 9.0:
+                                severity = "critical"
+                            elif score >= 7.0:
+                                severity = "high"
+                            elif score >= 4.0:
+                                severity = "medium"
+                            else:
+                                severity = "low"
+                        except (ValueError, TypeError):
+                            pass
+                    results.append({
+                        "cve": cve,
+                        "severity": severity,
+                        "desc": v.get("summary", "")[:120],
+                        "source": "osv.dev",
+                    })
+                return results
+    except Exception:
+        pass
+    return []
+
+
 async def scan_js_dependencies(domain: str) -> dict:
     """
     Fetch the homepage, detect CDN-hosted JS/CSS libraries, and flag
@@ -198,7 +284,7 @@ async def scan_js_dependencies(domain: str) -> dict:
     # Collect all candidate URLs
     urls = _SRC_RE.findall(html) + _HREF_RE.findall(html)
 
-    # SRI check — external scripts without integrity attribute
+    # SRI check - external scripts without integrity attribute
     sri_missing = []
     _SCRIPT_TAG_RE = re.compile(r'<script([^>]+)>', re.I)
     exempt_hosts = ["localhost", "127.0.0.1", domain]
@@ -226,11 +312,11 @@ async def scan_js_dependencies(domain: str) -> dict:
         if u.startswith("//"):
             u = "https:" + u
         elif u.startswith("/") or not u.startswith("http"):
-            # skip relative paths — they are not CDN references
+            # skip relative paths - they are not CDN references
             continue
         resolved.append(u)
 
-    # Extract lib/version pairs — skip URLs we cannot identify
+    # Extract lib/version pairs - skip URLs we cannot identify
     libraries = []
     seen_lib_url: set = set()
 
@@ -254,6 +340,7 @@ async def scan_js_dependencies(domain: str) -> dict:
             "vulnerable": bool(vulns),
             "vulnerabilities": vulns,
             "severity": severity,
+            "_osv_pending": len(vulns) == 0,  # flag for OSV enrichment
         })
 
     if not libraries and not polyfill_detected:
@@ -270,6 +357,24 @@ async def scan_js_dependencies(domain: str) -> dict:
         vulnerable_count = 0
         all_vulns = []
         highest = "ok"
+
+    # Enrich with OSV for libs not in local KNOWN_VULNS (max 5 OSV lookups per scan)
+    osv_candidates = [lib for lib in libraries if lib.pop("_osv_pending", False)][:5]
+    if osv_candidates:
+        import asyncio as _asyncio
+        osv_results = await _asyncio.gather(
+            *[_osv_lookup(lib["name"], lib["version"]) for lib in osv_candidates],
+            return_exceptions=True,
+        )
+        for lib, osv_vulns in zip(osv_candidates, osv_results):
+            if isinstance(osv_vulns, list) and osv_vulns:
+                lib["vulnerabilities"] = osv_vulns
+                lib["vulnerable"] = True
+                lib["severity"] = _highest_severity(osv_vulns)
+                lib["source"] = "osv.dev"
+    # Clean up pending flags from remaining libs
+    for lib in libraries:
+        lib.pop("_osv_pending", None)
 
     vulnerable_count = sum(1 for lib in libraries if lib["vulnerable"])
     all_vulns = [v for lib in libraries for v in lib["vulnerabilities"]]

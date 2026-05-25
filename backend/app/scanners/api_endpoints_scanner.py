@@ -1,6 +1,6 @@
 # backend/app/scanners/api_endpoints_scanner.py
 """
-API Endpoints Scanner — discover exposed API / developer endpoints on a domain.
+API Endpoints Scanner - discover exposed API / developer endpoints on a domain.
 
 Probes a curated list of well-known paths and classifies each hit by type and
 severity:
@@ -132,7 +132,13 @@ def _is_swagger_body(body: dict | list | None) -> bool:
 def _is_actuator_body(body: dict | list | None) -> bool:
     if not isinstance(body, dict):
         return False
-    return "_links" in body or "status" in body
+    # "_links" with "self" key is specific to Spring HATEOAS (Actuator)
+    # "status" alone is too generic - require it alongside Actuator-specific keys
+    if "_links" in body:
+        return True
+    if "status" in body and any(k in body for k in ("components", "details", "groups")):
+        return True
+    return False
 
 
 def _is_graphql_body(body: dict | list | None) -> bool:
@@ -182,24 +188,24 @@ async def _probe_path(
 
         status = r.status_code
 
-        # ── 401 / 403 — endpoint exists but requires auth ──────────────────
+        # ── 401 / 403 - endpoint exists but requires auth ──────────────────
         if status in (401, 403):
             return {
                 "path":     path,
                 "status":   status,
                 "type":     "Protected endpoint",
                 "severity": "low",
-                "note":     f"Endpoint returned HTTP {status} — exists but requires authentication",
+                "note":     f"Endpoint returned HTTP {status} - exists but requires authentication",
             }
 
         if status != 200:
             return None
 
-        # ── HTTP 200 — classify by path and body ───────────────────────────
+        # ── HTTP 200 - classify by path and body ───────────────────────────
         is_json = _is_json_response(r)
         body = _try_parse_json(r) if is_json else None
 
-        # GraphQL — path hint or body hint
+        # GraphQL - path hint or body hint
         if path in _GRAPHQL_PATHS or _is_graphql_body(body):
             introspection = await _graphql_introspection(client, base_url, path)
             if introspection:
@@ -209,7 +215,7 @@ async def _probe_path(
                     "type":                 "GraphQL",
                     "introspection_enabled": True,
                     "severity":             "critical",
-                    "note":                 "GraphQL introspection is enabled — schema fully exposed",
+                    "note":                 "GraphQL introspection is enabled - schema fully exposed",
                 }
             return {
                 "path":                 path,
@@ -217,7 +223,7 @@ async def _probe_path(
                 "type":                 "GraphQL",
                 "introspection_enabled": False,
                 "severity":             "medium",
-                "note":                 "GraphQL endpoint found — introspection disabled",
+                "note":                 "GraphQL endpoint found - introspection disabled",
             }
 
         # Swagger / OpenAPI
@@ -237,7 +243,7 @@ async def _probe_path(
                 "status":   200,
                 "type":     "Spring Actuator",
                 "severity": "high",
-                "note":     "Spring Boot Actuator endpoint exposed — may leak env/metrics/beans",
+                "note":     "Spring Boot Actuator endpoint exposed - may leak env/metrics/beans",
             }
 
         # Auth / OAuth
@@ -260,7 +266,7 @@ async def _probe_path(
                 "note":     "JSON API endpoint accessible without authentication",
             }
 
-        # 200 but not JSON / recognised — low value, skip to reduce noise
+        # 200 but not JSON / recognised - low value, skip to reduce noise
         return None
 
 

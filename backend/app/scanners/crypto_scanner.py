@@ -1,6 +1,6 @@
 # backend/app/scanners/crypto_scanner.py
 """
-Crypto Audit — Deep cryptographic certificate analysis.
+Crypto Audit - Deep cryptographic certificate analysis.
 
 Uses: ssl + socket (stdlib) + cryptography library (free/open-source).
 No external API required.
@@ -82,7 +82,7 @@ def _get_chain_ders(domain: str) -> list:
                         chain_ders.append(leaf)
 
     except ssl.SSLCertVerificationError:
-        # Self-signed or invalid cert — retrieve anyway (no verification)
+        # Self-signed or invalid cert - retrieve anyway (no verification)
         ctx2 = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
         ctx2.check_hostname = False
         ctx2.verify_mode = ssl.CERT_NONE
@@ -312,7 +312,7 @@ def _audit_sync(domain: str) -> dict:
     leaf = result["leaf"]
 
     if leaf.get("self_signed"):
-        issues.append({"severity": "critical", "message": "Self-signed certificate — not trusted by browsers"})
+        issues.append({"severity": "critical", "message": "Self-signed certificate - not trusted by browsers"})
 
     val = leaf.get("validity", {})
     if val.get("expired"):
@@ -327,25 +327,25 @@ def _audit_sync(domain: str) -> dict:
 
     sig = leaf.get("signature_algorithm", {})
     if sig.get("weak"):
-        issues.append({"severity": "critical", "message": f"Weak signature algorithm: {sig.get('name')} (deprecated — use SHA-256 or better)"})
+        issues.append({"severity": "critical", "message": f"Weak signature algorithm: {sig.get('name')} (deprecated - use SHA-256 or better)"})
 
     pk = leaf.get("public_key", {})
     if pk and not pk.get("secure", True):
         issues.append({"severity": "high", "message": f"Weak public key: {pk.get('type')} {pk.get('bits')} bits (min 2048 RSA / 256 EC)"})
     elif pk.get("type") == "RSA" and 2048 <= (pk.get("bits") or 0) < 4096:
-        issues.append({"severity": "low", "message": f"RSA {pk.get('bits')} bits — consider upgrading to 4096 for long-term security"})
+        issues.append({"severity": "low", "message": f"RSA {pk.get('bits')} bits - consider upgrading to 4096 for long-term security"})
 
     if HAS_CRYPTOGRAPHY and not leaf.get("ct_embedded_scts", True):
-        issues.append({"severity": "medium", "message": "No embedded SCTs — Certificate Transparency not enforced via TLS extension"})
+        issues.append({"severity": "medium", "message": "No embedded SCTs - Certificate Transparency not enforced via TLS extension"})
 
     if HAS_CRYPTOGRAPHY and not leaf.get("ocsp_url"):
-        issues.append({"severity": "low", "message": "No OCSP URL in certificate — online revocation checking unavailable"})
+        issues.append({"severity": "low", "message": "No OCSP URL in certificate - online revocation checking unavailable"})
 
     if leaf.get("wildcard"):
-        issues.append({"severity": "info", "message": "Wildcard certificate (*.domain) — valid for all subdomains"})
+        issues.append({"severity": "info", "message": "Wildcard certificate (*.domain) - valid for all subdomains"})
 
     if len(chain_ders) == 1 and not leaf.get("self_signed"):
-        issues.append({"severity": "medium", "message": "Incomplete chain — intermediate CA certificate not served by server"})
+        issues.append({"severity": "medium", "message": "Incomplete chain - intermediate CA certificate not served by server"})
 
     result["issues"] = issues
 
@@ -382,6 +382,6 @@ def _audit_sync(domain: str) -> dict:
 
 
 async def crypto_audit(domain: str) -> dict:
-    """Async wrapper — runs the blocking SSL/crypto audit in a thread pool."""
+    """Async wrapper - runs the blocking SSL/crypto audit in a thread pool."""
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(None, _audit_sync, domain)

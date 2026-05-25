@@ -1,6 +1,6 @@
 # backend/app/scanners/github_dork_scanner.py
 """
-GitHub Code Search — finds public repositories mentioning a domain.
+GitHub Code Search - finds public repositories mentioning a domain.
 Useful for detecting credential leaks, hardcoded secrets, config files, etc.
 Unauthenticated: 10 req/min. With token: 30 req/min + higher result limits.
 https://docs.github.com/en/rest/search/search#search-code
@@ -42,12 +42,39 @@ _EXTRACT_PATTERNS = [
 ]
 
 
-def _extract_secrets(item: dict, headers: dict) -> list:
-    """Try to synchronously read cached content from item — no extra HTTP call."""
+async def _fetch_raw_content(client: "httpx.AsyncClient", item: dict, headers: dict) -> str:
+    """
+    Fetch the raw file content from GitHub using the raw content API.
+    Only fetches the first 32KB to avoid large binary files.
+    """
+    # item["git_url"] points to the blob API - use raw URL instead
+    html_url = item.get("html_url", "")
+    if not html_url:
+        return ""
+    # Convert github.com/user/repo/blob/branch/path → raw.githubusercontent.com/user/repo/branch/path
+    raw_url = html_url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/")
+    try:
+        r = await client.get(raw_url, timeout=8, headers=headers)
+        if r.status_code == 200:
+            return r.text[:32768]
+    except Exception:
+        pass
+    return ""
+
+
+def _scan_content_for_secrets(content: str) -> list:
+    """Scan file content for secret patterns. Returns list of findings."""
     found = []
-    # GitHub API search result items don't include file content; extraction
-    # would require a separate authenticated API call. Return empty for now.
-    # Callers can check item["url"] (raw git API) for async fetch if needed.
+    seen = set()
+    for name, pattern in _EXTRACT_PATTERNS:
+        import re
+        for m in re.finditer(pattern, content):
+            val = m.group()
+            if val not in seen:
+                seen.add(val)
+                # Redact middle of the value
+                redacted = val[:6] + "****" + val[-4:] if len(val) > 12 else "****"
+                found.append({"type": name, "value_redacted": redacted})
     return found
 
 
@@ -117,7 +144,7 @@ async def github_dork(domain: str, github_token: str = None) -> dict:
                         return {
                             "enriched": False,
                             "rate_limited": True,
-                            "note": "GitHub rate limit — add a token in settings for more results",
+                            "note": "GitHub rate limit - add a token in settings for more results",
                         }
 
                     if r.status_code != 200:
@@ -134,10 +161,14 @@ async def github_dork(domain: str, github_token: str = None) -> dict:
                             continue
                         seen_urls.add(url)
                         norm = _normalize_item(item)
-                        # Attempt content extraction for secret redaction
-                        extracted = _extract_secrets(item, headers)
-                        if extracted:
-                            norm["extracted_secrets"] = extracted
+                        # Fetch and scan content for high-severity files only
+                        if norm["severity"] == "high" and github_token:
+                            content = await _fetch_raw_content(client, item, headers)
+                            if content:
+                                extracted = _scan_content_for_secrets(content)
+                                if extracted:
+                                    norm["extracted_secrets"] = extracted
+                                    norm["severity"] = "critical"
                         all_results.append(norm)
 
                     if len(items) < 100:
@@ -147,12 +178,14 @@ async def github_dork(domain: str, github_token: str = None) -> dict:
             return {"enriched": False, "rate_limited": False, "total_count": 0}
 
         high_count = sum(1 for r in all_results if r["severity"] == "high")
+        critical_count = sum(1 for r in all_results if r["severity"] == "critical")
 
         return {
             "enriched": True,
             "results": all_results,
             "total_count": len(all_results),
             "high_count": high_count,
+            "critical_count": critical_count,
             "rate_limited": False,
         }
 

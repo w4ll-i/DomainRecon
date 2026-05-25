@@ -1,6 +1,6 @@
 # backend/app/scanners/cloud_storage_scanner.py
 """
-Cloud Storage Bucket Scanner — detect exposed S3, Azure Blob, GCS, and
+Cloud Storage Bucket Scanner - detect exposed S3, Azure Blob, GCS, and
 DigitalOcean Spaces buckets associated with a domain.
 
 Checks:
@@ -22,7 +22,7 @@ def _generate_candidates(domain: str) -> list[str]:
     e.g. "app.example.com"  → base = "example", parts include "app"
          "example.com"      → base = "example"
     """
-    # Strip common TLDs — take everything up to the last two labels
+    # Strip common TLDs - take everything up to the last two labels
     labels = domain.lower().split(".")
     # base = second-to-last label (the registered name)
     base = labels[-2] if len(labels) >= 2 else labels[0]
@@ -95,6 +95,46 @@ def _build_urls(bucket: str) -> list[tuple[str, str]]:
 
 # ─── Single URL probe ────────────────────────────────────────────────────────
 
+def _is_real_bucket_response(provider: str, url: str, body: str, status: int) -> bool:
+    """
+    Validate that a 200 response is actually an exposed bucket, not a homepage.
+    Firebase App and Backblaze return 200 for non-existent/private buckets.
+    """
+    body_lower = body.lower()
+
+    # Firebase App - a 200 from firebaseapp.com is usually just the hosted app homepage
+    if "Firebase App" in provider or "firebaseapp.com" in url:
+        return False  # Skip - not a storage bucket
+
+    # Firebase RTDB - real exposures return JSON with data or null
+    if "Firebase RTDB" in provider:
+        stripped = body.strip()
+        # "null" is a valid empty RTDB (not necessarily dangerous but exists)
+        return stripped in ("null",) or stripped.startswith("{") or stripped.startswith("[")
+
+    # Backblaze B2 - real exposed bucket shows XML listing or file list
+    if "Backblaze" in provider:
+        return "<listbucketresult" in body_lower or "<contents>" in body_lower
+
+    # AWS S3 XML listing
+    if "AWS S3" in provider:
+        return "<listbucketresult" in body_lower or "<contents>" in body_lower or "<?xml" in body_lower
+
+    # GCS XML listing
+    if "GCS" in provider:
+        return "<listbucketresult" in body_lower or "<?xml" in body_lower
+
+    # Azure Blob - container listing
+    if "Azure" in provider:
+        return "<enumerationresults" in body_lower or "<?xml" in body_lower
+
+    # DigitalOcean Spaces (S3-compatible)
+    if "DigitalOcean" in provider:
+        return "<listbucketresult" in body_lower or "<?xml" in body_lower
+
+    return status == 200
+
+
 async def _probe(client: httpx.AsyncClient, bucket: str, provider: str, url: str) -> dict | None:
     """
     Probe one URL.  Returns a finding dict or None if nothing interesting.
@@ -102,21 +142,29 @@ async def _probe(client: httpx.AsyncClient, bucket: str, provider: str, url: str
     try:
         r = await client.get(url)
         if r.status_code == 200:
+            body = r.text[:4096]
+            if not _is_real_bucket_response(provider, url, body, 200):
+                return None
+            # Count approximate number of exposed files
+            file_count = body.count("<Key>") + body.count("<Contents>")
             return {
-                "name":     bucket,
-                "provider": provider,
-                "url":      url,
-                "status":   "exposed",
-                "severity": "high",
+                "name":       bucket,
+                "provider":   provider,
+                "url":        url,
+                "status":     "exposed",
+                "severity":   "high",
+                "file_count": file_count if file_count > 0 else None,
             }
         if r.status_code == 403:
-            return {
-                "name":     bucket,
-                "provider": provider,
-                "url":      url,
-                "status":   "exists_private",
-                "severity": "medium",
-            }
+            # 403 = bucket exists but private - only valid for real storage providers
+            if any(p in provider for p in ["AWS S3", "GCS", "Azure", "DigitalOcean", "Backblaze"]):
+                return {
+                    "name":     bucket,
+                    "provider": provider,
+                    "url":      url,
+                    "status":   "exists_private",
+                    "severity": "medium",
+                }
     except Exception:
         pass
     return None

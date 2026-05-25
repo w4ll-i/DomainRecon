@@ -1,6 +1,6 @@
 # backend/app/scanners/dnssec_scanner.py
 """
-DNSSEC Scanner — Verify DNSSEC signing status.
+DNSSEC Scanner - Verify DNSSEC signing status.
 No external API. Uses dnspython (already in requirements).
 
 Checks: DNSKEY, DS, RRSIG, NSEC/NSEC3, AD flag (chain validation).
@@ -88,9 +88,9 @@ def _dnssec_sync(domain: str) -> dict:
 
     # Issues
     if not result["signed"]:
-        result["issues"].append("DNSSEC not configured — zone is unsigned")
+        result["issues"].append("DNSSEC not configured - zone is unsigned")
     elif result["dnskey_found"] and not result["ds_found"]:
-        result["issues"].append("DNSKEY present but no DS — chain of trust broken (not verifiable from parent)")
+        result["issues"].append("DNSKEY present but no DS - chain of trust broken (not verifiable from parent)")
     elif result["signed"] and not result["rrsig_found"]:
         result["issues"].append("Zone appears signed but RRSIG missing on A records")
 

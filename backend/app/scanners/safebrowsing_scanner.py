@@ -1,6 +1,6 @@
 # backend/app/scanners/safebrowsing_scanner.py
 """
-Google Safe Browsing v4 — Check if domain is flagged as malware/phishing.
+Google Safe Browsing v4 - Check if domain is flagged as malware/phishing.
 Free API key available from Google Cloud Console (generous quota).
 """
 from typing import Optional

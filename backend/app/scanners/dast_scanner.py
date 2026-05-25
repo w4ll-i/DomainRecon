@@ -23,7 +23,7 @@ _FINGERPRINTS = [
 
 async def dast_scan(domain: str) -> dict:
     """
-    Passive DAST checks — version/debug header disclosure + verbose 404 detection.
+    Passive DAST checks - version/debug header disclosure + verbose 404 detection.
     Full profile only. Makes 2 benign HTTP requests.
     """
     findings = []
@@ -94,7 +94,7 @@ async def dast_scan(domain: str) -> dict:
         severity_summary[s] = severity_summary.get(s, 0) + 1
 
     return {
-        "enriched": True,
+        "enriched": bool(findings),
         "findings": findings,
         "finding_count": len(findings),
         "severity_summary": severity_summary,

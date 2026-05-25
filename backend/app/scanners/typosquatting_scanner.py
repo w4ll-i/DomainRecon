@@ -1,14 +1,16 @@
-"""Typosquatting Scanner — generates and DNS-checks domain variants."""
+"""Typosquatting Scanner - generates and DNS-checks domain variants."""
 import asyncio
 import socket
 import random
 import string
+from datetime import datetime, timezone
 from typing import Optional
 
 EXTENDED_TLDS = [
     "com", "net", "org", "io", "co", "app", "dev", "online",
     "site", "store", "club", "xyz", "tech", "ai", "security",
-    "cloud", "network", "info", "biz", "me",
+    "cloud", "network", "info", "biz", "me", "us", "uk", "ca",
+    "de", "fr", "eu", "finance", "bank", "support", "help",
 ]
 
 TYPO_SUBSTITUTIONS = {
@@ -16,7 +18,18 @@ TYPO_SUBSTITUTIONS = {
     "o": ["0"], "s": ["5", "$"], "t": ["7"],
 }
 
-HOMOGLYPHS = {"rn": "m", "vv": "w", "cl": "d"}
+# Extended homoglyphs - visual lookalikes
+HOMOGLYPHS = {
+    "rn": "m",    # rn → m
+    "vv": "w",    # vv → w
+    "cl": "d",    # cl → d
+    "m": "rn",    # m → rn
+    "w": "vv",    # w → vv
+    "nn": "m",    # nn → m
+    "li": "li",   # for cases where l looks like i
+    "1": "l",     # 1 → l
+    "0": "o",     # 0 → o
+}
 
 
 def _variants(domain: str) -> list:
@@ -67,13 +80,25 @@ async def _resolve(domain: str) -> Optional[str]:
         return None
 
 
-async def _whois_registrar(domain: str) -> Optional[str]:
+async def _whois_age(domain: str) -> Optional[int]:
+    """Return domain age in days, or None if unavailable."""
     try:
         import whois
-        w = whois.whois(domain)
-        return w.registrar
+        loop = asyncio.get_event_loop()
+        w = await asyncio.wait_for(
+            loop.run_in_executor(None, whois.whois, domain),
+            timeout=8,
+        )
+        creation = w.creation_date
+        if isinstance(creation, list):
+            creation = creation[0]
+        if creation:
+            if creation.tzinfo is None:
+                creation = creation.replace(tzinfo=timezone.utc)
+            return (datetime.now(timezone.utc) - creation).days
     except Exception:
-        return None
+        pass
+    return None
 
 
 async def scan_typosquatting(domain: str, settings: dict = {}) -> dict:
@@ -84,25 +109,40 @@ async def scan_typosquatting(domain: str, settings: dict = {}) -> dict:
     async def check(variant):
         async with sem:
             ip = await _resolve(variant)
-            if ip:
-                same_ip = (ip == target_ip) if target_ip else None
-                registrar = await _whois_registrar(variant)
-                if "." in variant and "." in domain:
-                    vtld = variant.rsplit(".", 1)[1]
-                    dtld = domain.rsplit(".", 1)[1]
-                    typ = "tld_swap" if vtld != dtld else "char_variant"
-                else:
-                    typ = "char_variant"
-                return {
-                    "domain": variant, "type": typ,
-                    "active": True, "ip": ip,
-                    "same_ip": same_ip, "registrar": registrar,
-                }
-        return None
+            if not ip:
+                return None
+            same_ip = (ip == target_ip) if target_ip else None
+            if "." in variant and "." in domain:
+                vtld = variant.rsplit(".", 1)[1]
+                dtld = domain.rsplit(".", 1)[1]
+                typ = "tld_swap" if vtld != dtld else "char_variant"
+            else:
+                typ = "char_variant"
+            return {
+                "domain": variant, "type": typ,
+                "active": True, "ip": ip, "same_ip": same_ip,
+            }
 
     results = await asyncio.gather(*[check(v) for v in variants])
     active = [r for r in results if r]
-    threat_count = sum(1 for r in active if r.get("same_ip") is False)
+
+    # WHOIS age check - only for suspicious variants (different IP, not CDN)
+    # Limit to 15 lookups max to avoid timeout
+    suspicious = [r for r in active if r.get("same_ip") is False][:15]
+    if suspicious:
+        age_results = await asyncio.gather(
+            *[_whois_age(r["domain"]) for r in suspicious],
+            return_exceptions=True,
+        )
+        for entry, age in zip(suspicious, age_results):
+            if isinstance(age, int):
+                entry["age_days"] = age
+                entry["recently_registered"] = age < 90
+
+    threat_count = sum(
+        1 for r in active
+        if r.get("same_ip") is False or r.get("recently_registered")
+    )
 
     return {
         "enriched": bool(active),

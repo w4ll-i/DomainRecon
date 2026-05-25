@@ -1,6 +1,6 @@
 # backend/app/scanners/phishtank_scanner.py
 """
-PhishTank — Check if domain is in PhishTank phishing database.
+PhishTank - Check if domain is in PhishTank phishing database.
 Free without API key (100 req/hour per IP). Optional free key available
 at phishtank.org for higher limits.
 """
@@ -41,7 +41,7 @@ async def phishtank_check(domain: str, api_key: Optional[str] = None) -> dict:
                 if result["in_database"]:
                     result["phish_detail_page"] = res.get("phish_detail_page", "")
             elif resp.status_code == 429:
-                result["error"] = "Rate limited — configure a PhishTank API key for higher limits"
+                result["error"] = "Rate limited - configure a PhishTank API key for higher limits"
     except Exception as e:
         result["error"] = str(e)[:200]
 

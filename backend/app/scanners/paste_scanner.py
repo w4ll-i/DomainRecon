@@ -1,4 +1,4 @@
-"""Paste Leak Scanner — psbdmp, GitHub code search, optional Google CSE."""
+"""Paste Leak Scanner - psbdmp, GitHub code search, optional Google CSE."""
 import re
 import httpx
 import asyncio
@@ -64,7 +64,7 @@ async def _github_code(domain: str, github_token: str, client: httpx.AsyncClient
                 "url": item.get("html_url", ""),
                 "source": "github_code",
                 "date": "",
-                "snippet": f"{repo} — {path}",
+                "snippet": f"{repo} - {path}",
                 "severity": "medium",
             })
     except Exception:

@@ -1,9 +1,9 @@
 # backend/app/scanners/intelx_scanner.py
 """
-IntelX Scanner — Search Intelligence X for credential leaks.
+IntelX Scanner - Search Intelligence X for credential leaks.
 
 Triggered only when admin panels are confirmed found.
-Requires a free IntelX API key (register at intelx.io — free tier available).
+Requires a free IntelX API key (register at intelx.io - free tier available).
 
 Flow:
   1. POST /intelligent/search  → search ID
@@ -27,13 +27,13 @@ async def intelx_search(domain: str, api_key: Optional[str]) -> dict:
     Search IntelX for credential leaks related to the domain.
 
     Returns:
-      enriched         bool   — True if API call succeeded
+      enriched         bool   - True if API call succeeded
       domain           str
-      search_terms     list   — terms queried
-      total_found      int    — number of records returned
-      has_credentials  bool   — True if any results found
-      results          list   — sanitized record summaries
-      error            str    — present only on failure
+      search_terms     list   - terms queried
+      total_found      int    - number of records returned
+      has_credentials  bool   - True if any results found
+      results          list   - sanitized record summaries
+      error            str    - present only on failure
     """
     result: dict = {
         "enriched": False,
@@ -53,7 +53,7 @@ async def intelx_search(domain: str, api_key: Optional[str]) -> dict:
 
     try:
         async with httpx.AsyncClient(timeout=_TIMEOUT) as client:
-            # Step 1 — submit search
+            # Step 1 - submit search
             post_resp = await client.post(
                 f"{_BASE}/intelligent/search",
                 json={
@@ -82,10 +82,10 @@ async def intelx_search(domain: str, api_key: Optional[str]) -> dict:
                 result["error"] = "IntelX returned no search ID"
                 return result
 
-            # Step 2 — wait for indexing (IntelX search is async)
+            # Step 2 - wait for indexing (IntelX search is async)
             await asyncio.sleep(2)
 
-            # Step 3 — retrieve results
+            # Step 3 - retrieve results
             get_resp = await client.get(
                 f"{_BASE}/intelligent/search/result",
                 params={"id": search_id, "limit": 10, "k": api_key},
@@ -102,7 +102,7 @@ async def intelx_search(domain: str, api_key: Optional[str]) -> dict:
             result["total_found"] = len(records)
             result["has_credentials"] = len(records) > 0
 
-            # Sanitize records — never expose raw content, only metadata
+            # Sanitize records - never expose raw content, only metadata
             for rec in records:
                 result["results"].append({
                     "name":      rec.get("name", ""),

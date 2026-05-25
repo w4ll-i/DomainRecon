@@ -1,6 +1,6 @@
 # backend/app/scanners/abuseipdb_scanner.py
 """
-AbuseIPDB — IP reputation and abuse confidence score.
+AbuseIPDB - IP reputation and abuse confidence score.
 Free API key required: https://www.abuseipdb.com/
 """
 import httpx

@@ -1,6 +1,6 @@
 # backend/app/scanners/leakix_scanner.py
 """
-LeakIX — exposed services and data leak detection.
+LeakIX - exposed services and data leak detection.
 No auth required for basic use; provide an API key for higher rate limits.
 https://leakix.net/
 """
@@ -36,7 +36,7 @@ async def leakix_lookup(domain: str, api_key: str = None) -> dict:
             )
 
             if r.status_code == 429:
-                return {"enriched": False, "error": "LeakIX rate limit reached — provide an API key for higher limits"}
+                return {"enriched": False, "error": "LeakIX rate limit reached - provide an API key for higher limits"}
             if r.status_code == 404:
                 return {"enriched": False, "error": "No LeakIX data for this domain"}
             if r.status_code != 200:

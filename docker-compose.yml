@@ -4,13 +4,13 @@ services:
     container_name: domainrecon
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "9000:8000"
     volumes:
       - domainrecon_data:/app/data
       - nuclei_templates:/root/nuclei-templates
       # ── VPN Mullvad (Linux uniquement) ────────────────────────────────────
       # Décommentez ces lignes pour activer le contrôle VPN depuis le conteneur.
-      # Sur Windows/macOS Docker Desktop : non nécessaire — si Mullvad est actif
+      # Sur Windows/macOS Docker Desktop : non nécessaire - si Mullvad est actif
       # sur l'hôte, le trafic du conteneur passe déjà par le VPN automatiquement.
       # - /usr/bin/mullvad:/usr/local/bin/mullvad:ro
       # - /var/run/mullvad-vpn:/var/run/mullvad-vpn

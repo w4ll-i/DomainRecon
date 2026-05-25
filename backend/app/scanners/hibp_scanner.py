@@ -1,6 +1,6 @@
 # backend/app/scanners/hibp_scanner.py
 """
-Have I Been Pwned (HIBP) — public breach lookup by domain.
+Have I Been Pwned (HIBP) - public breach lookup by domain.
 No API key required for the /breaches endpoint.
 https://haveibeenpwned.com/API/v3
 """

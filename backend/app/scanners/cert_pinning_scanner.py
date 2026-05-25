@@ -1,6 +1,6 @@
 # backend/app/scanners/cert_pinning_scanner.py
 """
-Certificate Pinning — detect HPKP and Expect-CT response headers.
+Certificate Pinning - detect HPKP and Expect-CT response headers.
 Checks: Public-Key-Pins, Public-Key-Pins-Report-Only, Expect-CT.
 """
 import httpx
@@ -58,7 +58,7 @@ async def check_cert_pinning(domain: str) -> dict:
                 result["report_uri"] = report_uri
                 result["include_subdomains"] = include_sub
                 result["deprecated_warning"] = (
-                    "HPKP is deprecated since Chrome 72 — consider removing"
+                    "HPKP is deprecated since Chrome 72 - consider removing"
                 )
 
             # HPKP Report-Only

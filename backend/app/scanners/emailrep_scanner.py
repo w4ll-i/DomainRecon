@@ -1,6 +1,6 @@
 # backend/app/scanners/emailrep_scanner.py
 """
-EmailRep.io — email reputation lookup.
+EmailRep.io - email reputation lookup.
 Free tier (public, no key): 10 req/day per IP.
 """
 import asyncio
@@ -40,7 +40,7 @@ async def emailrep_lookup(emails: list) -> dict:
                 elif r.status_code == 400:
                     results.append({"email": email, "error": "invalid_email"})
                 elif r.status_code == 429:
-                    # Rate limited — stop querying
+                    # Rate limited - stop querying
                     break
             except Exception:
                 continue
