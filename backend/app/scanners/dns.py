@@ -31,12 +31,21 @@ except Exception:
 
 
 async def resolve_ip(domain: str) -> Optional[str]:
+    """Resolve a domain to an IP, preferring IPv4 (A) over IPv6 (AAAA).
+
+    Most downstream modules (geo, ports, DNSBL, BGPView) expect an IPv4
+    address, so we return the first IPv4 result and only fall back to IPv6
+    when no A record exists.
+    """
     loop = asyncio.get_event_loop()
     try:
         info = await loop.getaddrinfo(domain, None)
-        return info[0][4][0]
     except Exception:
         return None
+    ipv4 = [item[4][0] for item in info if item[0] == socket.AF_INET]
+    if ipv4:
+        return ipv4[0]
+    return info[0][4][0] if info else None
 
 
 def _scan_dns_sync(domain: str) -> dict:

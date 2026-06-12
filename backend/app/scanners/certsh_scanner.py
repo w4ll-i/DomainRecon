@@ -1,7 +1,10 @@
 # backend/app/scanners/certsh_scanner.py
 import httpx
 
+from ..cache import TTL_MEDIUM, cached
 
+
+@cached(ttl=TTL_MEDIUM)
 async def certsh_lookup(domain: str) -> dict:
     """
     Certificate Transparency lookup via crt.sh.

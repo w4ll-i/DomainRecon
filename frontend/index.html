@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DomainRecon - OSINT Domain Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -17,73 +18,92 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root {
-            /* Backgrounds */
-            --bg: #111111;
-            --bg-warm: #141414;
-            --bg-deep: #0a0a0a;
-            --surface: #181818;
-            --surface-hover: #1f1f1f;
-            --surface-card: #0d0d0d;
-            --surface-input: #0d0d0d;
+            /* Backgrounds - deep navy intelligence console */
+            --bg: #0c1322;
+            --bg-warm: #0f1728;
+            --bg-deep: #080d18;
+            --surface: #131d31;
+            --surface-hover: #1a2438;
+            --surface-card: #0e1626;
+            --surface-input: #0a1120;
             /* Borders */
-            --border: #262626;
-            --border-light: #1e1e1e;
-            --border-input: #222222;
-            /* Text */
-            --text: #c8c8c8;
-            --text-secondary: #777;
-            --text-tertiary: #555;
-            --text-dim: #3a3a3a;
-            --text-faint: #2e2e2e;
-            --text-ghost: #252525;
-            /* Accent */
-            --accent: #e8e8e8;
-            --accent-hover: #d0d0d0;
-            --accent-light: rgba(255,255,255,.06);
-            --accent-bg: rgba(255,255,255,.03);
+            --border: #243149;
+            --border-light: #1a2438;
+            --border-input: #2c3c58;
+            /* Text - cool slate */
+            --text: #c8d2e6;
+            --text-secondary: #8a97b3;
+            --text-tertiary: #6b7896;
+            --text-dim: #51607e;
+            --text-faint: #3e4c68;
+            --text-ghost: #2b3750;
+            /* Accent - soft gold */
+            --accent: #e3c179;
+            --accent-hover: #efce8a;
+            --accent-light: rgba(227,193,121,.10);
+            --accent-bg: rgba(227,193,121,.045);
+            /* Secondary accent - cyan */
+            --cyan: #5fd3e0;
+            --cyan-bg: rgba(95,211,224,.08);
             /* Status */
-            --success: #4a9e4e;
-            --success-bg: rgba(74,158,78,.07);
-            --warning: #c4903a;
-            --warning-bg: rgba(196,144,58,.07);
-            --danger: #c75050;
-            --danger-bg: rgba(199,80,80,.07);
-            --info: #5a7fa8;
-            --info-bg: rgba(90,127,168,.07);
+            --success: #57c98a;
+            --success-bg: rgba(87,201,138,.09);
+            --warning: #e0b34d;
+            --warning-bg: rgba(224,179,77,.09);
+            --danger: #e0676b;
+            --danger-bg: rgba(224,103,107,.09);
+            --info: #5fa8e0;
+            --info-bg: rgba(95,168,224,.09);
+            /* Aliases used by some result panels */
+            --text-primary: #c8d2e6;
+            --ok: #57c98a;
+            --error: #e0676b;
             /* Layout */
-            --radius: 8px;
-            --radius-sm: 6px;
-            --radius-xs: 4px;
-            --shadow: none;
-            --shadow-md: none;
-            --font: 'Inter', -apple-system, system-ui, sans-serif;
-            --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+            --radius: 10px;
+            --radius-sm: 7px;
+            --radius-xs: 5px;
+            --shadow: 0 1px 2px rgba(0,0,0,.35);
+            --shadow-md: 0 12px 40px rgba(0,0,0,.45);
+            --font: 'Hanken Grotesk', -apple-system, system-ui, sans-serif;
+            --display: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
+            --mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
         }
         [data-theme="light"] {
-            --bg: #f0ece3;
-            --bg-warm: #e8e3d8;
-            --bg-deep: #ddd8cc;
-            --surface: #f8f4ed;
-            --surface-hover: #f3ede3;
-            --surface-card: #f5f0e6;
-            --surface-input: #faf7f0;
-            --border: #d4cdc0;
-            --border-light: #e2ddd2;
-            --border-input: #c6bfb0;
-            --text: #1a1a1a;
-            --text-secondary: #555;
-            --text-tertiary: #777;
-            --text-dim: #888;
-            --text-faint: #999;
-            --text-ghost: #bbb;
-            --accent: #111111;
-            --accent-hover: #333333;
-            --accent-light: rgba(0,0,0,.07);
-            --accent-bg: rgba(0,0,0,.03);
-            --success-bg: rgba(74,158,78,.1);
-            --warning-bg: rgba(196,144,58,.1);
-            --danger-bg: rgba(199,80,80,.1);
-            --info-bg: rgba(90,127,168,.1);
+            --bg: #eef1f7;
+            --bg-warm: #e7ebf4;
+            --bg-deep: #f7f9fc;
+            --surface: #ffffff;
+            --surface-hover: #f0f3f9;
+            --surface-card: #f9fafd;
+            --surface-input: #ffffff;
+            --border: #d3dae8;
+            --border-light: #e4e9f2;
+            --border-input: #c2ccde;
+            --text: #18223a;
+            --text-secondary: #46536e;
+            --text-tertiary: #5e6b86;
+            --text-dim: #7a8499;
+            --text-faint: #9aa3b5;
+            --text-ghost: #c2cad8;
+            --accent: #b07d24;
+            --accent-hover: #946718;
+            --accent-light: rgba(176,125,36,.12);
+            --accent-bg: rgba(176,125,36,.05);
+            --cyan: #1f97a8;
+            --cyan-bg: rgba(31,151,168,.08);
+            --success: #2f9e63;
+            --warning: #c08a1e;
+            --danger: #cf4f54;
+            --info: #2f7fc0;
+            --success-bg: rgba(47,158,99,.1);
+            --warning-bg: rgba(192,138,30,.1);
+            --danger-bg: rgba(207,79,84,.1);
+            --info-bg: rgba(47,127,192,.1);
+            --text-primary: #18223a;
+            --ok: #2f9e63;
+            --error: #cf4f54;
+            --shadow: 0 1px 2px rgba(20,30,55,.08);
+            --shadow-md: 0 12px 40px rgba(20,30,55,.14);
         }
         .mono { font-family: var(--mono); }
         a { color: var(--accent); text-decoration: none; }
@@ -96,12 +116,23 @@
         ::-webkit-scrollbar-thumb:hover { background: var(--border-input); }
 
         /* ── HEADER ─────────────────────────────────── */
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
-.header{background:var(--bg-deep);border-bottom:1px solid var(--border-light);position:sticky;top:0;z-index:40;height:48px;display:flex;align-items:center;padding:0 24px;gap:16px;}
-.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.logo-icon{width:28px;height:28px;flex-shrink:0;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;position:relative;}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(900px 600px at 12% -8%, rgba(227,193,121,.07), transparent 60%),
+    radial-gradient(1000px 700px at 100% 0%, rgba(95,211,224,.06), transparent 55%),
+    radial-gradient(800px 800px at 50% 120%, rgba(95,168,224,.05), transparent 60%);
+    pointer-events:none;}
+body::after{content:'';position:fixed;inset:0;z-index:-1;opacity:.4;pointer-events:none;
+    background-image:linear-gradient(var(--border-light) 1px, transparent 1px),linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
+    background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, #000 0%, transparent 75%);
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, #000 0%, transparent 75%);}
+[data-theme="light"] body::after{opacity:.6;}
+.header{background:color-mix(in srgb, var(--bg-deep) 82%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border-light);position:sticky;top:0;z-index:40;height:54px;display:flex;align-items:center;padding:0 26px;gap:18px;}
+.logo{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.logo-icon{width:34px;height:34px;flex-shrink:0;border-radius:9px;background:linear-gradient(150deg, var(--surface), var(--surface-input));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 0 18px rgba(227,193,121,.10);}
 .logo-icon img{width:100%;height:100%;object-fit:contain;}
-.logo-text{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono);color:var(--text-secondary);}
+.logo-text{font-size:14px;font-weight:700;letter-spacing:.01em;font-family:var(--display);color:var(--text);}
+.logo-text b{color:var(--accent);font-weight:700;}
 .header-search{flex:1;display:none;max-width:400px;margin:0 auto;}
 .header-search.visible{display:flex;gap:8px;align-items:center;}
 .header-right{display:flex;align-items:center;gap:20px;margin-left:auto;flex-shrink:0;}
@@ -113,16 +144,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .header-link:hover{color:var(--text-secondary);text-decoration:none;}
 
 /* ── HERO SEARCH ─────────────────────────────── */
-#hero-section{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 24px;gap:36px;}
+#hero-section{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 24px;gap:30px;}
 #hero-section.hidden{display:none;}
-.hero-title{font-size:9.5px;font-family:var(--mono);color:var(--text-ghost);letter-spacing:.22em;text-transform:uppercase;font-weight:700;}
+#hero-section > *{animation:heroIn .6s cubic-bezier(.16,1,.3,1) backwards;}
+#hero-section > *:nth-child(1){animation-delay:.04s;}
+#hero-section > *:nth-child(2){animation-delay:.12s;}
+#hero-section > *:nth-child(3){animation-delay:.2s;}
+@keyframes heroIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.hero-title{font-family:var(--display);font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.1;text-align:center;color:var(--text);}
+.hero-title b{background:linear-gradient(120deg, var(--accent), var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-kicker{font-size:10px;font-family:var(--mono);color:var(--text-faint);letter-spacing:.28em;text-transform:uppercase;font-weight:600;text-align:center;margin-bottom:-14px;}
 .hero-search-wrap{width:100%;max-width:580px;display:flex;flex-direction:column;gap:10px;}
 .hero-input-row{display:flex;gap:8px;}
 .hero-input{flex:1;padding:12px 16px;border:1px solid var(--border-input);border-radius:var(--radius-xs);font-size:14px;font-family:var(--mono);color:var(--text-secondary);background:var(--bg-deep);outline:none;transition:border-color .15s;}
 .hero-input::placeholder{color:var(--text-ghost);font-family:var(--font);}
 .hero-input:focus{border-color:var(--text-faint);}
-.btn-hero-scan{padding:12px 26px;background:#dcdcdc;color:#0a0a0a;border:none;border-radius:var(--radius-xs);font-size:12px;font-weight:700;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .15s;white-space:nowrap;}
-.btn-hero-scan:hover{background:#f0f0f0;}
+.btn-hero-scan{padding:12px 28px;background:linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 86%, #000));color:var(--bg-deep);border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:700;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .18s;white-space:nowrap;box-shadow:0 6px 20px rgba(227,193,121,.18);}
+.btn-hero-scan:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 8px 26px rgba(227,193,121,.28);}
 .btn-hero-scan:disabled{background:var(--border-input);color:var(--text-faint);cursor:not-allowed;}
 .hero-profile{display:flex;align-items:center;gap:20px;}
 .hero-profile-label{font-size:9.5px;font-family:var(--mono);color:var(--text-ghost);letter-spacing:.1em;text-transform:uppercase;}
@@ -144,8 +182,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .compact-input{flex:1;padding:6px 11px;border:1px solid var(--border-input);border-radius:var(--radius-xs);font-size:12px;font-family:var(--mono);color:var(--text-secondary);background:var(--bg-deep);outline:none;transition:border-color .15s;}
 .compact-input::placeholder{color:var(--text-ghost);font-family:var(--font);}
 .compact-input:focus{border-color:var(--text-faint);}
-.btn-compact-scan{padding:6px 10px;background:#d8d8d8;color:#0a0a0a;border:none;border-radius:var(--radius-xs);font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;transition:background .15s;flex-shrink:0;}
-.btn-compact-scan:hover{background:#f0f0f0;}
+.btn-compact-scan{padding:6px 11px;background:var(--accent);color:var(--bg-deep);border:none;border-radius:var(--radius-xs);font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;transition:background .15s;flex-shrink:0;}
+.btn-compact-scan:hover{background:var(--accent-hover);}
 .btn-compact-scan:disabled{background:var(--surface);color:var(--text-faint);cursor:not-allowed;}
 .compact-profile{display:flex;align-items:center;gap:10px;}
 .compact-profile label{display:flex;align-items:center;gap:4px;font-size:10px;font-family:var(--mono);color:var(--text-faint);cursor:pointer;white-space:nowrap;}
@@ -167,7 +205,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .main-tabs::-webkit-scrollbar{display:none;}
 .main-tab{padding:0 14px;height:40px;display:flex;align-items:center;font-size:10.5px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.09em;color:var(--text-faint);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;user-select:none;}
 .main-tab:hover{color:var(--text-secondary);}
-.main-tab.active{color:var(--text);border-bottom-color:var(--text-tertiary);}
+.main-tab.active{color:var(--text);border-bottom-color:var(--accent);}
 
 /* Content area */
 .content-area{flex:1;display:flex;flex-direction:column;min-height:0;}
@@ -179,7 +217,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .sub-tabs-bar::-webkit-scrollbar{display:none;}
 .sub-tab{padding:0;margin-right:18px;border-radius:0;font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;height:34px;display:inline-flex;align-items:center;transition:color .12s,border-color .12s;white-space:nowrap;user-select:none;flex-shrink:0;}
 .sub-tab:hover{color:var(--text-tertiary);}
-.sub-tab.active{color:var(--text-secondary);border-bottom-color:var(--text-tertiary);}
+.sub-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
 /* Tab content */
 .tab-content{padding:24px;}
@@ -189,9 +227,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .loading-panel{padding:24px;display:none;}
 .loading-panel.visible{display:block;}
 .loading-progress{height:6px;background:var(--border-light);margin-bottom:16px;overflow:hidden;border-radius:3px;}
-.loading-progress-bar{height:100%;background:#4a9e4e;width:0%;transition:width .4s ease;box-shadow:0 0 10px rgba(74,158,78,.35);}
+.loading-progress-bar{height:100%;background:linear-gradient(90deg, var(--cyan), var(--accent));width:0%;transition:width .4s ease;box-shadow:0 0 12px rgba(95,211,224,.4);}
 .loading-header-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
-.spinner{width:14px;height:14px;border:1.5px solid var(--border);border-top-color:#4a9e4e;border-radius:50%;animation:spin .7s linear infinite;}
+.spinner{width:14px;height:14px;border:1.5px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-title{font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--text-tertiary);}
 .loading-progress-count{font-size:10px;color:var(--text-dim);font-family:var(--mono);letter-spacing:.08em;margin-left:auto;}
@@ -200,8 +238,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .scan-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:3px;}
 .scan-step{display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:var(--radius-xs);font-size:10.5px;font-family:var(--mono);color:var(--text-ghost);opacity:0;transform:translateX(-4px);transition:all .25s;}
 .scan-step.active{opacity:1;transform:translateX(0);color:var(--text-tertiary);}
-.scan-step.done{color:#4a9e4e;}
-.scan-step.done .step-icon i{color:#4a9e4e;}
+.scan-step.done{color:var(--success);}
+.scan-step.done .step-icon i{color:var(--success);}
 .step-icon{width:12px;text-align:center;flex-shrink:0;}
 
 /* Error panel */
@@ -266,15 +304,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .sp-cat-label::after{content:'';flex:1;height:1px;background:var(--border-light);}
 .sp-key-card{background:var(--surface-card);border:1px solid var(--border-input);border-radius:8px;padding:13px 15px 13px 18px;margin-bottom:7px;display:flex;align-items:center;gap:14px;transition:border-color .2s,background .2s;position:relative;overflow:hidden;}
 .sp-key-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border);transition:background .25s,box-shadow .25s;}
-.sp-key-card.sk-ok::before{background:#4a9e4e;box-shadow:0 0 10px rgba(74,158,78,.35);}
+.sp-key-card.sk-ok::before{background:var(--success);box-shadow:0 0 10px rgba(87,201,138,.4);}
 .sp-key-card.sk-err::before{background:#c75050;box-shadow:0 0 10px rgba(199,80,80,.3);}
 .sp-key-card:hover{border-color:var(--border);background:var(--surface);}
 .sp-key-icon{width:32px;height:32px;flex-shrink:0;border-radius:6px;background:var(--surface-hover);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-dim);transition:color .2s;}
-.sp-key-card.sk-ok .sp-key-icon{color:#4a9e4e;}
+.sp-key-card.sk-ok .sp-key-icon{color:var(--success);}
 .sp-key-info{flex:1;min-width:0;}
 .sp-key-name{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;margin-bottom:2px;}
 .sp-key-badge{font-size:9px;font-weight:700;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
-.sk-ok .sp-key-badge{background:rgba(74,158,78,.12);color:#4a9e4e;}
+.sk-ok .sp-key-badge{background:var(--success-bg);color:var(--success);}
 .sk-na .sp-key-badge{background:var(--accent-bg);color:var(--text-dim);}
 .sk-err .sp-key-badge{background:rgba(199,80,80,.12);color:#c75050;}
 .sp-key-desc{font-size:11.5px;color:var(--text-tertiary);line-height:1.45;}
@@ -308,13 +346,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 /* Common components */
 .section-title { font-size: 9.5px; font-weight: 700; font-family: var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--text-dim); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
 .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
-.section-title i { color: var(--text-ghost); font-size: 10px; flex-shrink: 0; }
+.section-title i { color: var(--accent); opacity: .7; font-size: 10px; flex-shrink: 0; }
 .info-row { display: flex; align-items: flex-start; padding: 7px 12px; border-radius: var(--radius-xs); font-size: 12.5px; gap: 10px; }
 .info-row:nth-child(odd) { background: var(--accent-bg); }
 .info-row .row-icon { color: var(--text-faint); width: 14px; text-align: center; flex-shrink: 0; margin-top: 1px; font-size: 11px; }
 .info-row .row-label { color: var(--text-dim); width: 110px; flex-shrink: 0; font-size: 11px; font-family: var(--mono); letter-spacing: .03em; }
 .info-row .row-value { color: var(--text-secondary); font-size: 12.5px; min-width: 0; word-break: break-word; }
-.data-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: 16px; }
+.data-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); transition: border-color .18s; }
+.data-card:hover { border-color: var(--border); }
 
 /* Responsive */
 @media(max-width:900px){
@@ -336,9 +375,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .grade { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; font-weight: 700; font-size: 15px; }
         .grade-sm { width: 24px; height: 24px; font-size: 11px; }
         .grade-A { background: var(--success-bg); color: var(--success); border: 2px solid var(--success); }
-        .grade-B { background: rgba(110,192,114,.06); color: #8CC88F; border: 2px solid #8CC88F; }
+        .grade-B { background: rgba(127,214,163,.07); color: #7fd6a3; border: 2px solid #7fd6a3; }
         .grade-C { background: var(--warning-bg); color: var(--warning); border: 2px solid var(--warning); }
-        .grade-D { background: rgba(199,120,50,.06); color: #C7783A; border: 2px solid #C7783A; }
+        .grade-D { background: rgba(224,148,90,.07); color: #e0945a; border: 2px solid #e0945a; }
         .grade-F { background: var(--danger-bg); color: var(--danger); border: 2px solid var(--danger); }
         .grade-NA { background: var(--accent-bg); color: var(--text-tertiary); border: 2px solid var(--border); }
 
@@ -426,6 +465,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .btn-sm:hover { background: var(--accent); color: #000; border-color: var(--accent); }
         .btn-primary { background: #d8d8d8; border: none; border-radius: var(--radius-xs); padding: 7px 18px; font-size: 11px; font-weight: 700; font-family: var(--mono); letter-spacing: .07em; text-transform: uppercase; color: #0a0a0a; cursor: pointer; transition: background .15s; }
         .btn-primary:hover { background: #f0f0f0; }
+        /* (overridden below in the additions block to use the gold accent) */
         .btn-primary:disabled { background: #1a1a1a; color: #333; cursor: not-allowed; }
 
         /* Source badges */
@@ -444,8 +484,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .toggle-slider { position: absolute; inset: 0; background: var(--border); border: 1px solid var(--border-input); border-radius: 10px; cursor: pointer; transition: background .2s; }
         .toggle-slider::before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; bottom: 2px; background: var(--text-tertiary); border-radius: 50%; transition: transform .2s,background .2s; }
-        .toggle-switch input:checked + .toggle-slider { background: #1e3d20; border-color: #2d5c30; }
-        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: #4a9e4e; }
+        .toggle-switch input:checked + .toggle-slider { background: rgba(87,201,138,.18); border-color: var(--success); }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); background: var(--success); }
 
         @media (max-width: 640px) {
             .search-form { flex-direction: column; }
@@ -495,6 +535,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         [data-theme="light"] .notes-textarea { color: var(--text); }
         [data-theme="light"] .tag-input { color: var(--text); }
         [data-theme="light"] .sp-toggle-label { color: var(--text); }
+
+        .tab-search-wrap{position:relative;margin-bottom:12px;}
+        .tab-search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-ghost);font-size:11px;}
+        .tab-search-input{width:100%;padding:7px 12px 7px 28px;border:1px solid var(--border-input);border-radius:var(--radius-xs);font-size:12px;font-family:var(--font);color:var(--text-secondary);background:var(--bg-deep);outline:none;transition:border-color .15s;}
+        .tab-search-input:focus{border-color:var(--text-faint);}
+        .tab-search-input::placeholder{color:var(--text-ghost);}
     </style>
 </head>
 
@@ -503,7 +549,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
     <header class="header">
         <div class="logo">
             <div class="logo-icon"><img src="https://i.ibb.co/HLGGw0X0/Logo-DR3.png" alt="DomainRecon"></div>
-            <span class="logo-text">DomainRecon</span>
+            <span class="logo-text">Domain<b>Recon</b></span>
         </div>
 
         <div class="header-search" id="header-search">
@@ -535,7 +581,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
     <!-- HERO (pre-scan) -->
     <section id="hero-section">
-        <p class="hero-title">OSINT Domain Intelligence</p>
+        <div style="display:flex;flex-direction:column;gap:16px;align-items:center;">
+            <p class="hero-kicker">OSINT · Domain Intelligence</p>
+            <h1 class="hero-title">Cartographiez <b>la surface</b> d'un domaine</h1>
+        </div>
         <div class="hero-search-wrap">
             <div class="hero-input-row">
                 <input type="text" id="domain-input" class="hero-input" placeholder="Entrez un domaine - ex: google.com" autocomplete="off">
@@ -653,9 +702,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 <div id="tab-certsh" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-certificate"></i> Certificate Transparency - crt.sh</div><div id="certsh-content"></div></div>
                 <div id="tab-subdomain-bruteforce" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Brute-force DNS</div><div id="subdomain-bruteforce-content"></div></div>
                 <div id="tab-dns" class="tab-content"><div class="section-title"><i class="fa-solid fa-server"></i> Enregistrements DNS</div><div id="dns-content"></div></div>
-                <div id="tab-subdomains" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-sitemap"></i> Sous-domaines découverts</div><span id="sub-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div id="subdomains-content" style="max-height:500px;overflow-y:auto;"></div></div>
+                <div id="tab-subdomains" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-sitemap"></i> Sous-domaines découverts</div><span id="sub-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div class="tab-search-wrap"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="subdomains-search" class="tab-search-input" placeholder="Filtrer par sous-domaine ou IP..." oninput="app.filterSubdomains(this.value)"></div><div id="subdomains-content" style="max-height:500px;overflow-y:auto;"></div></div>
                 <div id="tab-timeline" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-timeline"></i> Timeline DNS</div><div id="timeline-content"></div></div>
-                <div id="tab-ports" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-door-open"></i> Ports ouverts</div><div id="ports-content"></div></div>
+                <div id="tab-ports" class="tab-content hidden"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="section-title" style="margin:0;"><i class="fa-solid fa-door-open"></i> Ports ouverts</div><span id="ports-count" style="font-size:12px;color:var(--text-tertiary);">0</span></div><div class="tab-search-wrap"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="ports-search" class="tab-search-input" placeholder="Filtrer par port ou service..." oninput="app.filterPorts(this.value)"></div><div id="ports-content"></div></div>
                 <div id="tab-rdns" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-rotate-left"></i> Reverse DNS (PTR)</div><div id="rdns-content"></div></div>
                 <div id="tab-network-ext" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-network-wired"></i> Réseau Étendu</div><div id="network-ext-content"></div></div>
                 <div id="tab-zone-transfer" class="tab-content hidden"><div class="section-title"><i class="fa-solid fa-arrows-rotate"></i> Zone Transfer (AXFR)</div><div id="zone-transfer-content"></div></div>
@@ -1111,13 +1160,39 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                         } else if (msg.type === 'result') {
                             this.currentScan = msg.data;
                             resolve();
+                        } else if (msg.type === 'complete') {
+                            const scanId = msg.scan_id;
+                            if (scanId) {
+                                fetch(`${this.apiBase}/scan/${scanId}`)
+                                    .then(res => {
+                                        if (!res.ok) throw new Error('Erreur de chargement');
+                                        return res.json();
+                                    })
+                                    .then(data => {
+                                        this.currentScan = data;
+                                        resolve();
+                                    })
+                                    .catch(reject);
+                            } else {
+                                fetch(`${this.apiBase}/history?limit=1&domain=${domain}`)
+                                    .then(res => res.json())
+                                    .then(h => {
+                                        if (h.scans && h.scans.length) {
+                                            this.currentScan = h.scans[0];
+                                            resolve();
+                                        } else {
+                                            reject(new Error('Scan terminé sans résultat'));
+                                        }
+                                    })
+                                    .catch(reject);
+                            }
                         } else if (msg.type === 'error') {
-                            reject(new Error(msg.detail || 'Erreur scan'));
+                            reject(new Error(msg.detail || msg.message || 'Erreur scan'));
                         }
                     };
                     ws.onerror = () => reject(new Error('WebSocket error'));
                     ws.onclose = (e) => {
-                        if (e.code !== 1000 && e.code !== 1001) reject(new Error('WebSocket fermé'));
+                        reject(new Error('WebSocket fermé avec le code ' + e.code));
                     };
                 });
                 ws.close();
@@ -1283,6 +1358,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         // =====================================================================
         displayResults(data) {
             const d = data;
+            // Reset search inputs
+            const subSearch = document.getElementById('subdomains-search');
+            if (subSearch) subSearch.value = '';
+            const portSearch = document.getElementById('ports-search');
+            if (portSearch) portSearch.value = '';
+
             // Metrics bar update
             const secScore = d.security_score || {};
             const displayScore = secScore.total != null ? secScore.total : (secScore.score != null ? secScore.score : null);
@@ -1348,7 +1429,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             const renderers = {
                 overview: () => this.renderOverview(d),
                 dns: () => this.renderDNS(d),
-                subdomains: () => this.renderSubdomains(d),
+                subdomains: () => {
+                    const q = document.getElementById('subdomains-search')?.value || '';
+                    this.renderSubdomains(d, q);
+                },
                 security: () => this.renderSecurity(d),
                 score: () => this.renderSecurityScore(d),
                 email: () => this.renderEmailSecurity(d),
@@ -1356,7 +1440,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 whois: () => this.renderWhois(d),
                 geo: () => this.renderGeo(d),
                 tls: () => this.renderTLS(d),
-                ports: () => this.renderPorts(d),
+                ports: () => {
+                    const q = document.getElementById('ports-search')?.value || '';
+                    this.renderPorts(d, q);
+                },
                 tech: () => { this.renderTech(d); this.renderBuiltWith(d); },
                 redirects: () => this.renderRedirects(d),
                 webfiles: () => this.renderWebFiles(d),
@@ -1469,21 +1556,37 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             document.getElementById('dns-content').innerHTML = html || '<p style="color:var(--text-tertiary);font-size:13px;">Aucun enregistrement DNS trouvé</p>';
         }
 
-        renderSubdomains(d) {
+        renderSubdomains(d, query = '') {
             // subdomains may be {subdomains:[...]} or legacy array
             const subs = Array.isArray(d.subdomains) ? d.subdomains : ((d.subdomains || {}).subdomains || []);
-            document.getElementById('sub-count').textContent = `${subs.length} trouvé(s)`;
-            if (!subs.length) { const p = mkEl('p',{style:'color:var(--text-tertiary);font-size:13px;',text:'Aucun sous-domaine découvert'}); clearEl(document.getElementById('subdomains-content')); document.getElementById('subdomains-content').appendChild(p); return; }
+            const queryLower = (query || '').toLowerCase().trim();
+            const filtered = subs.filter(s => {
+                const name = typeof s === 'string' ? s : (s && s.subdomain ? s.subdomain : String(s || ''));
+                const ip   = (s && typeof s === 'object') ? (s.ip || '') : '';
+                return name.toLowerCase().includes(queryLower) || ip.toLowerCase().includes(queryLower);
+            });
+            document.getElementById('sub-count').textContent = queryLower ? `${filtered.length} / ${subs.length} trouvé(s)` : `${subs.length} trouvé(s)`;
             const container = document.getElementById('subdomains-content');
             clearEl(container);
-            subs.forEach(s => {
-                const name = typeof s === 'string' ? s : (s.subdomain || String(s));
-                const ip   = typeof s === 'object' ? (s.ip || '') : '';
+            if (!filtered.length) {
+                const p = mkEl('p', {style:'color:var(--text-tertiary);font-size:13px;padding:8px 0;', text: queryLower ? 'Aucun résultat' : 'Aucun sous-domaine découvert'});
+                container.appendChild(p);
+                return;
+            }
+            filtered.forEach(s => {
+                const name = typeof s === 'string' ? s : (s && s.subdomain ? s.subdomain : String(s || ''));
+                const ip   = (s && typeof s === 'object') ? (s.ip || '') : '';
                 const row  = mkEl('div', {style:'display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-radius:var(--radius-xs);font-size:13px;border-bottom:1px solid var(--border-light);'});
                 const nm   = mkEl('span', {cls:'mono', style:'color:var(--accent);', text: name});
                 const ipm  = mkEl('span', {cls:'mono', style:'font-size:12px;color:' + (ip ? 'var(--success)' : 'var(--text-tertiary)'), text: ip || 'N/A'});
                 row.appendChild(nm); row.appendChild(ipm); container.appendChild(row);
             });
+        }
+
+        filterSubdomains(query) {
+            if (this.currentScan) {
+                this.renderSubdomains(this.currentScan, query);
+            }
         }
 
         renderSecurity(d) {
@@ -1509,7 +1612,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             if (this.securityChart) this.securityChart.destroy();
             this.securityChart = new Chart(document.getElementById('security-chart').getContext('2d'), {
                 type: 'radar',
-                data: { labels, datasets: [{ label: 'Score', data: values, backgroundColor: 'rgba(255,255,255,.04)', borderColor: '#888', borderWidth: 1.5, pointBackgroundColor: values.map(v => v ? '#6EC072' : '#C75050'), pointRadius: 4 }] },
+                data: { labels, datasets: [{ label: 'Score', data: values, backgroundColor: 'rgba(255,255,255,.04)', borderColor: '#888', borderWidth: 1.5, pointBackgroundColor: values.map(v => v ? '#57c98a' : '#e0676b'), pointRadius: 4 }] },
                 options: { responsive: false, scales: { r: { beginAtZero: true, max: 1, min: 0, ticks: { display: false, stepSize: 1 }, grid: { color: 'rgba(255,255,255,.04)' }, pointLabels: { color: '#999', font: { size: 10, family: 'Inter' } }, angleLines: { color: 'rgba(255,255,255,.04)' } } }, plugins: { legend: { display: false } } }
             });
         }
@@ -1640,18 +1743,40 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
             </div>`;
         }
 
-        renderPorts(d) {
+        renderPorts(d, query = '') {
             // : open_ports may be {open_ports:[...]} or legacy array
             const ports = Array.isArray(d.open_ports) ? d.open_ports : ((d.open_ports || {}).open_ports || []);
-            if (!ports.length) { document.getElementById('ports-content').innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Aucun port ouvert détecté</p>'; return; }
-            document.getElementById('ports-content').innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">${ports.map(p =>
+            const queryLower = (query || '').toLowerCase().trim();
+            const filtered = ports.filter(p => {
+                const portStr = String(p && p.port != null ? p.port : '');
+                const serviceStr = String(p && p.service ? p.service : '');
+                return portStr.toLowerCase().includes(queryLower) || serviceStr.toLowerCase().includes(queryLower);
+            });
+
+            const countEl = document.getElementById('ports-count');
+            if (countEl) {
+                countEl.textContent = queryLower ? `${filtered.length} / ${ports.length}` : String(ports.length);
+            }
+
+            if (!filtered.length) {
+                document.getElementById('ports-content').innerHTML = `<p style="color:var(--text-tertiary);font-size:13px;padding:8px 0;">${queryLower ? 'Aucun résultat' : 'Aucun port ouvert détecté'}</p>`;
+                return;
+            }
+
+            document.getElementById('ports-content').innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">${filtered.map(p =>
                 `<div class="data-card" style="display:flex;align-items:center;gap:10px;padding:10px 14px;">
                     <span style="width:7px;height:7px;background:var(--success);border-radius:50%;flex-shrink:0;"></span>
-                    <span class="mono" style="font-size:14px;font-weight:700;color:var(--accent);">${p.port}</span>
-                    <span style="font-size:13px;color:var(--text-secondary);">${this.esc(p.service)}</span>
-                    <span class="pill pill-success" style="margin-left:auto;">${p.state}</span>
+                    <span class="mono" style="font-size:14px;font-weight:700;color:var(--accent);">${p && p.port != null ? p.port : ''}</span>
+                    <span style="font-size:13px;color:var(--text-secondary);">${this.esc(p && p.service ? p.service : '')}</span>
+                    <span class="pill pill-success" style="margin-left:auto;">${p && p.state ? p.state : ''}</span>
                 </div>`
             ).join('')}</div>`;
+        }
+
+        filterPorts(query) {
+            if (this.currentScan) {
+                this.renderPorts(this.currentScan, query);
+            }
         }
 
         renderTech(d) {
@@ -2021,7 +2146,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                                 borderWidth: 2,
                                 fill: true,
                                 tension: 0.3,
-                                pointBackgroundColor: scores.map(t => t.security_score >= 75 ? '#6EC072' : t.security_score >= 50 ? '#D4A24E' : '#C75050'),
+                                pointBackgroundColor: scores.map(t => t.security_score >= 75 ? '#57c98a' : t.security_score >= 50 ? '#e0b34d' : '#e0676b'),
                                 pointRadius: 5,
                             }]
                         },
@@ -2158,13 +2283,39 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                 elements.push({ data: { source: 'domain', target: sid } });
             });
             // Port nodes (attached to IP)
-            const ports = (d.open_ports || []).slice(0, 20);
+            const _portsArr = Array.isArray(d.open_ports) ? d.open_ports : ((d.open_ports || {}).open_ports || []);
+            const ports = _portsArr.slice(0, 20);
             if (d.ip_address && ports.length) {
                 ports.forEach((p, i) => {
                     const pid = `port-${i}`;
                     elements.push({ data: { id: pid, label: `${p.port}/${p.service}`, nodeType: 'port' } });
                     elements.push({ data: { source: 'ip', target: pid } });
                 });
+            }
+            // MX and NS nodes from dns_records
+            const records = d.dns_records || {};
+            if (records.MX && Array.isArray(records.MX)) {
+                records.MX.slice(0, 5).forEach((mx, i) => {
+                    const mxId = `mx-${i}`;
+                    const label = typeof mx === 'object' ? `${mx.value} (${mx.priority})` : String(mx);
+                    elements.push({ data: { id: mxId, label: label, nodeType: 'mx' } });
+                    elements.push({ data: { source: 'domain', target: mxId } });
+                });
+            }
+            if (records.NS && Array.isArray(records.NS)) {
+                records.NS.slice(0, 5).forEach((ns, i) => {
+                    const nsId = `ns-${i}`;
+                    elements.push({ data: { id: nsId, label: String(ns), nodeType: 'ns' } });
+                    elements.push({ data: { source: 'domain', target: nsId } });
+                });
+            }
+            // WAF node
+            const waf = d.waf || {};
+            if (waf.detected) {
+                const wafName = waf.waf_name || 'WAF';
+                elements.push({ data: { id: 'waf', label: wafName, nodeType: 'waf' } });
+                const targetNode = d.ip_address ? 'ip' : 'domain';
+                elements.push({ data: { source: targetNode, target: 'waf' } });
             }
 
             this.cy = cytoscape({
@@ -2212,12 +2363,36 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                         'border-color': '#3A4560',
                     }},
                     { selector: 'node[nodeType="port"]', style: {
-                        'background-color': '#D4A24E',
-                        'border-color': '#D4A24E',
+                        'background-color': '#e0b34d',
+                        'border-color': '#e0b34d',
                         'width': 14,
                         'height': 14,
                         'font-size': '8px',
-                        'color': '#D4A24E',
+                        'color': '#e0b34d',
+                    }},
+                    { selector: 'node[nodeType="mx"]', style: {
+                        'background-color': '#ff4d4d',
+                        'border-color': '#ff4d4d',
+                        'width': 18,
+                        'height': 18,
+                        'font-size': '8.5px',
+                        'color': '#ff4d4d',
+                    }},
+                    { selector: 'node[nodeType="ns"]', style: {
+                        'background-color': '#a855f7',
+                        'border-color': '#a855f7',
+                        'width': 18,
+                        'height': 18,
+                        'font-size': '8.5px',
+                        'color': '#a855f7',
+                    }},
+                    { selector: 'node[nodeType="waf"]', style: {
+                        'background-color': '#10b981',
+                        'border-color': '#10b981',
+                        'width': 22,
+                        'height': 22,
+                        'font-size': '9px',
+                        'color': '#10b981',
                     }},
                     { selector: 'edge', style: {
                         'width': 1,
@@ -2235,8 +2410,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
                     name: 'concentric',
                     concentric: (node) => {
                         const t = node.data('nodeType');
-                        if (t === 'domain') return 3;
-                        if (t === 'ip') return 2;
+                        if (t === 'domain') return 4;
+                        if (t === 'ip') return 3;
+                        if (t === 'waf') return 2;
+                        if (t === 'sub-resolved' || t === 'sub-unresolved') return 2;
+                        if (t === 'mx' || t === 'ns') return 1;
                         if (t === 'port') return 0;
                         return 1;
                     },

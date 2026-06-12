@@ -4,8 +4,9 @@ Simple TTL in-memory cache for expensive external API calls.
 Avoids re-querying Shodan/VirusTotal/etc. for the same domain within the TTL window.
 """
 import asyncio
+import functools
 import time
-from typing import Any, Optional
+from typing import Any, Callable, Optional
 
 
 class TTLCache:
@@ -62,3 +63,30 @@ async def cache_delete(key: str) -> None:
 TTL_SHORT  = 300    # 5 min  - VPN status, health checks
 TTL_MEDIUM = 3600   # 1 hour - Shodan, VirusTotal, BGPView, threat intel
 TTL_LONG   = 86400  # 24h   - WHOIS, cert data, passive DNS
+
+
+def cached(ttl: int = TTL_MEDIUM, key_prefix: Optional[str] = None) -> Callable:
+    """Decorator that memoises an async scanner keyed on its positional args.
+
+    Only successful results are cached: a dict carrying an ``error`` key, or a
+    falsy result, is returned but not stored, so transient failures don't stick.
+    Intended for idempotent passive lookups that depend solely on the target
+    (e.g. whois/wayback/crt.sh by domain).
+    """
+    def decorator(func: Callable) -> Callable:
+        prefix = key_prefix or func.__name__
+
+        @functools.wraps(func)
+        async def wrapper(*args, **kwargs):
+            cache_key = prefix + ":" + ":".join(str(a) for a in args)
+            hit = await cache_get(cache_key)
+            if hit is not None:
+                return hit
+            result = await func(*args, **kwargs)
+            if result and not (isinstance(result, dict) and result.get("error")):
+                await cache_set(cache_key, result, ttl)
+            return result
+
+        return wrapper
+
+    return decorator

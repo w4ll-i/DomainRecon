@@ -11,11 +11,13 @@ Business logic lives in:
   * scanner.py   - scan orchestrator
 """
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .auth import ApiKeyAuthMiddleware
 from .database import Base, engine
 from .migrations import apply_legacy_migrations
 from .routers import misc, scans, settings, vpn
@@ -41,13 +43,23 @@ app = FastAPI(
     openapi_url="/api/openapi.json",
 )
 
+# CORS origins are configurable via CORS_ORIGINS (comma-separated). Default to
+# same-origin only; "*" is allowed but credentials stay disabled because the
+# browser forbids the wildcard+credentials combination and the API is keyed via
+# headers, not cookies.
+_origins_env = os.getenv("CORS_ORIGINS", "").strip()
+_allow_origins = [o.strip() for o in _origins_env.split(",") if o.strip()] or ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=_allow_origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Optional API-key gate (no-op unless DOMAINRECON_API_KEY is set).
+app.add_middleware(ApiKeyAuthMiddleware)
 
 app.include_router(misc.router)
 app.include_router(scans.router)

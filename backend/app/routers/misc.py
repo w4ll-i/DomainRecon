@@ -29,8 +29,11 @@ async def health_check(db: Session = Depends(get_db)):
 @router.get("/api/screenshot/{filename}", tags=["API"])
 async def serve_screenshot(filename: str):
     """Serve a captured screenshot image."""
-    filepath = SCREENSHOTS_DIR / filename
-    if not filepath.exists():
+    # Collapse any path components - only a bare filename inside SCREENSHOTS_DIR
+    # is ever served (defends against ../ traversal).
+    safe_name = Path(filename).name
+    filepath = SCREENSHOTS_DIR / safe_name
+    if safe_name != filename or not filepath.is_file():
         raise HTTPException(status_code=404, detail="Screenshot non trouvé")
     return FileResponse(str(filepath), media_type="image/png")
 

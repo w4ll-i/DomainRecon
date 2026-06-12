@@ -4,6 +4,7 @@
 
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Text, JSON, Boolean
+from .crypto import EncryptedString
 from .database import Base
 
 
@@ -13,27 +14,27 @@ class Settings(Base):
     __tablename__ = "settings"
 
     id                  = Column(Integer, primary_key=True, default=1)
-    shodan_key          = Column(String(100), nullable=True)
-    virustotal_key      = Column(String(100), nullable=True)
-    securitytrails_key  = Column(String(100), nullable=True)
-    censys_id           = Column(String(100), nullable=True)
-    censys_secret       = Column(String(100), nullable=True)
-    urlscan_key         = Column(String(100), nullable=True)
+    shodan_key          = Column(EncryptedString(500), nullable=True)
+    virustotal_key      = Column(EncryptedString(500), nullable=True)
+    securitytrails_key  = Column(EncryptedString(500), nullable=True)
+    censys_id           = Column(EncryptedString(500), nullable=True)
+    censys_secret       = Column(EncryptedString(500), nullable=True)
+    urlscan_key         = Column(EncryptedString(500), nullable=True)
     screenshot_enabled  = Column(Boolean, default=False)
     scan_timeout        = Column(Integer, default=60)
     updated_at          = Column(DateTime, nullable=True)
     quick_timeout       = Column(Integer, default=30)
     full_timeout        = Column(Integer, default=180)
-    builtwith_key       = Column(String(100), nullable=True)
-    circl_user          = Column(String(100), nullable=True)
-    circl_password      = Column(String(200), nullable=True)
-    abuseipdb_key       = Column(String(100), nullable=True)
-    intelx_key          = Column(String(100), nullable=True)
-    safebrowsing_key    = Column(String(100), nullable=True)
-    phishtank_key       = Column(String(100), nullable=True)
-    leakix_key          = Column(String(100), nullable=True)
-    github_token        = Column(String(200), nullable=True)
-    google_cse_key      = Column(String(100), nullable=True)
+    builtwith_key       = Column(EncryptedString(500), nullable=True)
+    circl_user          = Column(EncryptedString(500), nullable=True)
+    circl_password      = Column(EncryptedString(500), nullable=True)
+    abuseipdb_key       = Column(EncryptedString(500), nullable=True)
+    intelx_key          = Column(EncryptedString(500), nullable=True)
+    safebrowsing_key    = Column(EncryptedString(500), nullable=True)
+    phishtank_key       = Column(EncryptedString(500), nullable=True)
+    leakix_key          = Column(EncryptedString(500), nullable=True)
+    github_token        = Column(EncryptedString(500), nullable=True)
+    google_cse_key      = Column(EncryptedString(500), nullable=True)
 
     def __repr__(self):
         return "<Settings>"

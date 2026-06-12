@@ -18,9 +18,12 @@ Design notes:
     entire Wave 1 to cap worst case.
 """
 import asyncio
+import logging
 import re
 from datetime import datetime
 from typing import Awaitable, Callable, Optional
+
+logger = logging.getLogger("domainrecon")
 
 # ─── Normalization constants ───────────────────────────────────────────────────
 _SH_KEYS = [
@@ -197,9 +200,11 @@ async def _tracked(
         result = await asyncio.wait_for(coro, timeout=_timeout_for(name))
         status = "done"
     except asyncio.TimeoutError:
+        logger.debug("module '%s' timed out after %ss", name, _timeout_for(name))
         result = {"error": f"module timeout after {_timeout_for(name)}s"}
         status = "error"
     except Exception as e:
+        logger.debug("module '%s' failed: %s", name, e, exc_info=True)
         result = {"error": str(e)[:200]}
         status = "error"
     if progress_cb:
@@ -558,10 +563,16 @@ async def run_scan(
         "as_info":      _g.get("as", _g.get("as_info", "")),
     } if _g else {}
 
-    # technologies
+    # technologies - flatten {name, confidence, score} entries to a stable shape
+    # ({"name": <str>, ...}); detect_technologies may yield dicts or bare strings.
     _tech = technologies or {}
+    def _tech_entry(t):
+        if isinstance(t, dict):
+            return {"name": t.get("name", ""), "category": "Technologie",
+                    "confidence": t.get("confidence"), "score": t.get("score")}
+        return {"name": t, "category": "Technologie"}
     techs_out = (
-        [{"name": t, "category": "Technologie"} for t in _tech.get("technologies", [])]
+        [_tech_entry(t) for t in _tech.get("technologies", [])]
         if isinstance(_tech, dict) else _tech
     )
 

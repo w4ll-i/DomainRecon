@@ -7,9 +7,11 @@ from typing import Optional
 import httpx
 import tldextract
 
+from ..cache import TTL_LONG, TTL_MEDIUM, cached
 from ._config import JS_SECRET_PATTERNS, TYPO_SUBSTITUTIONS, TYPO_TLDS
 
 
+@cached(ttl=TTL_LONG)
 async def get_whois_data(domain: str) -> dict:
     try:
         import whois
@@ -30,6 +32,7 @@ async def get_whois_data(domain: str) -> dict:
         return {"error": str(e)}
 
 
+@cached(ttl=TTL_MEDIUM)
 async def check_wayback_machine(domain: str) -> dict:
     try:
         async with httpx.AsyncClient(timeout=15) as client:
@@ -191,15 +194,29 @@ async def check_hsts_preload(domain: str) -> dict:
 
 
 async def capture_screenshot(domain: str) -> Optional[str]:
+    """Capture a homepage screenshot into data/screenshots; return the filename.
+
+    The returned value is a bare filename (not a path) so it can be served via
+    GET /api/screenshot/{filename}. Returns None if Playwright is unavailable
+    or the capture fails.
+    """
     try:
+        from pathlib import Path as _Path
+
         from playwright.async_api import async_playwright
+
+        screenshots_dir = _Path(__file__).resolve().parents[3] / "data" / "screenshots"
+        screenshots_dir.mkdir(parents=True, exist_ok=True)
+        safe = re.sub(r"[^A-Za-z0-9._-]", "_", domain)
+        filename = f"screenshot_{safe}.png"
+        dest = screenshots_dir / filename
+
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
             page = await browser.new_page()
             await page.goto(f"https://{domain}", timeout=30000)
-            path = f"/tmp/screenshot_{domain}.png"
-            await page.screenshot(path=path)
+            await page.screenshot(path=str(dest))
             await browser.close()
-            return path
+        return filename
     except Exception:
         return None
