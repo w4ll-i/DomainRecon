@@ -1,0 +1,255 @@
+/* Onglets soulignés : filet gris sous la rangée, trait de l'accent sous l'onglet actif
+   (aria-selected). Quand la rangée ne tient pas, elle défile sans barre native : fondu
+   au bord où des onglets restent cachés, boutons précédent / suivant et menu « Tous ». */
+.root {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.list {
+  --fade-start: 0px;
+  --fade-end: 0px;
+  /* Contexte de positionnement : l'offsetLeft des onglets se lit dans la rangée, et le
+     texte .visually-hidden (position absolue) reste dans la zone qui défile. */
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  gap: var(--space-1);
+  min-width: 0;
+  /* Le trait de l'onglet actif recouvre le filet gris de .root. */
+  margin-bottom: -1px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fondu des bords où il reste des onglets (le masque ne joue que sur l'opacité). */
+.root[data-start] .list {
+  --fade-start: 32px;
+}
+
+.root[data-end] .list {
+  --fade-end: 32px;
+}
+
+.root[data-overflow] .list {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start),
+    #000 calc(100% - var(--fade-end)),
+    transparent 100%
+  );
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  transition: color var(--dur-fast);
+}
+
+/* Trait de l'onglet actif, dans la boîte de l'onglet : la rangée qui défile ne le rogne pas. */
+.tab::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: transparent;
+  transition: background-color var(--dur-fast);
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--text);
+}
+
+.tab[aria-selected="true"]::after {
+  background: var(--accent);
+}
+
+/* Libellé et pastille sur la même ligne médiane, quelle que soit la police. */
+.label {
+  display: block;
+}
+
+/* Le focus reste visible dans la liste, qui rogne ce qui déborde. */
+.tab:focus-visible {
+  outline-offset: -2px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+/* Boutons précédent / suivant, aux bords de la rangée. */
+.scroll {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  transition: color var(--dur-fast);
+}
+
+.scroll svg {
+  width: 16px;
+  height: 16px;
+}
+
+.scroll:hover:not(:disabled) {
+  color: var(--text);
+  background: var(--neutral-bg);
+}
+
+.scroll:disabled {
+  color: var(--text-dim);
+  cursor: default;
+}
+
+/* Menu « Tous les onglets », après la rangée, séparé d'un filet. */
+.more {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  margin-left: var(--space-1);
+  padding-left: var(--space-1);
+  border-left: 1px solid var(--border);
+}
+
+.moreButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 4px 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    color var(--dur-fast),
+    background-color var(--dur-fast);
+}
+
+.moreButton:hover,
+.moreButton[aria-expanded="true"] {
+  color: var(--text);
+  background: var(--neutral-bg);
+}
+
+.chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--dur-fast);
+}
+
+.moreButton[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Liste complète : plusieurs colonnes sur grand écran, une seule sur mobile. */
+.menu {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 4px);
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2px var(--space-1);
+  width: min(680px, calc(100vw - 32px));
+  max-height: min(60vh, 520px);
+  margin: 0;
+  padding: var(--space-1);
+  overflow-y: auto;
+  list-style: none;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  scrollbar-width: thin;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.item:hover,
+.item:focus-visible {
+  color: var(--text);
+  background: var(--neutral-bg);
+}
+
+.item:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Onglet affiché : texte plein sur le fond d'accent, comme la page courante du menu. */
+.item[aria-checked="true"] {
+  color: var(--text);
+  background: var(--accent-bg);
+  font-weight: 600;
+}
+
+/* Les libellés longs passent à la ligne au lieu d'être coupés. */
+.itemLabel {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Sur mobile, le doigt fait défiler la rangée : pas de boutons précédent / suivant. */
+@media (max-width: 560px) {
+  .scroll {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+}

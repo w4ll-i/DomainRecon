@@ -1,0 +1,78 @@
+/* Note A à F : lettre en Inter, couleur des jetons de note (--grade-a à
+   --grade-f, gris N/A) posée par data-grade. Les formats md et sm sont des pastilles :
+   bordure fine de la note et fond teinté, sans halo. */
+.grade {
+  --grade-color: var(--grade-na);
+  /* Teinte : 8 % de la couleur de la note dans --surface-card. Le fond est opaque, donc
+     le contraste du texte de la note ne dépend pas de ce qui se trouve derrière la
+     pastille (ligne survolée, carte, fond de page) : tokens.test.ts le vérifie dans les
+     deux thèmes en lisant ce pourcentage. */
+  --grade-bg: color-mix(in srgb, var(--grade-color) 8%, var(--surface-card));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--grade-color);
+  font-family: var(--font-display);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.grade[data-grade="A"] {
+  --grade-color: var(--grade-a);
+}
+
+.grade[data-grade="B"] {
+  --grade-color: var(--grade-b);
+}
+
+.grade[data-grade="C"] {
+  --grade-color: var(--grade-c);
+}
+
+.grade[data-grade="D"] {
+  --grade-color: var(--grade-d);
+}
+
+.grade[data-grade="F"] {
+  --grade-color: var(--grade-f);
+}
+
+.grade[data-grade="NA"] {
+  --grade-color: var(--grade-na);
+}
+
+/* Grande note typographique : 64 à 96 px, sans halo. */
+.xl {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.md {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 8px;
+  border: 1px solid var(--grade-color);
+  border-radius: var(--radius);
+  background: var(--grade-bg);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sm {
+  min-width: 26px;
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid var(--grade-color);
+  border-radius: var(--radius-sm);
+  background: var(--grade-bg);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* « N/A » : texte secondaire (AA), bordure pointillée. */
+.md[data-grade="NA"],
+.sm[data-grade="NA"] {
+  color: var(--text-secondary);
+  border-style: dashed;
+}

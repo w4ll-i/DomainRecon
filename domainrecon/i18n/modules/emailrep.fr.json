@@ -1,0 +1,19 @@
+{
+  "emailrep.key_missing": "Clé EmailRep non renseignée (Réglages)",
+  "emailrep.key_rejected": "Clé EmailRep refusée par le service",
+  "emailrep.no_address": "Aucune adresse e-mail du domaine publiée sur le site",
+  "emailrep.score_breached": "{count} adresse(s) dans une brèche",
+  "emailrep.score_clean": "Aucune alerte sur les adresses publiées",
+  "emailrep.score_leaked": "{count} adresse(s) avec identifiants divulgués",
+  "emailrep.score_malicious": "{count} adresse(s) à activité malveillante",
+  "emailrep.unreadable": "Réponse illisible du service EmailRep",
+  "finding.emailrep.breached": "{count} adresse(s) publiée(s) présente(s) dans une brèche de données (EmailRep)",
+  "finding.emailrep.leaked": "{count} adresse(s) publiée(s) du domaine avec des identifiants divulgués (EmailRep)",
+  "finding.emailrep.malicious": "{count} adresse(s) publiée(s) liée(s) à une activité malveillante ou en liste noire (EmailRep)",
+  "module.emailrep.checks": "Relève les adresses e-mail du domaine publiées sur le site (5 au plus) et interroge EmailRep (clé requise) : fuite d'identifiants, brèche, activité malveillante. Adresses masquées dans le résultat.",
+  "module.emailrep.fix": "Pour chaque adresse dont les identifiants ont fuité : depuis un appareil sain, changez le mot de passe de la boîte, puis révoquez les sessions ouvertes, les jetons et les mots de passe d'application ; si le même mot de passe sert ailleurs, changez-le aussi.\nVérifiez que personne n'a laissé de porte dérobée dans la boîte : règles de transfert ou de redirection automatiques, délégations, applications autorisées (extrait PowerShell pour Microsoft 365 ci-dessous ; mêmes contrôles dans la console d'administration de Google Workspace ou de votre hébergeur).\nActivez l'authentification multifacteur sur ces boîtes ; préférez les clés de sécurité ou les passkeys (FIDO2) aux codes envoyés par SMS.\nAdresse présente dans une brèche : la fuite vient souvent d'un service tiers où elle a servi à s'inscrire ; changez le mot de passe s'il a été réutilisé et demandez à la personne de ne plus utiliser son adresse professionnelle pour des services externes.\nAdresse liée à une activité malveillante ou en liste noire : contrôlez le journal des messages envoyés pour détecter des envois de spam depuis la boîte, et vérifiez que SPF, DKIM et DMARC protègent le domaine afin que personne ne puisse usurper l'adresse.\nRéduisez les adresses nominatives publiées sur le site (accueil, page de contact, security.txt) : préférez des adresses de fonction comme `contact@example.com` ou `security@example.com` et un formulaire de contact, car les robots collectent ces adresses pour l'hameçonnage.\nSensibilisez les personnes concernées à l'hameçonnage (courriels qui demandent un mot de passe, un code ou un virement) : une adresse dont les identifiants ont fuité est une cible prioritaire.\nRelancez l'analyse : EmailRep n'interroge que 5 adresses au plus et la clé gratuite est limitée à 10 requêtes par jour ; si le quota est atteint, réessayez le lendemain.",
+  "module.emailrep.fix_ref": "https://messervices.cyber.gouv.fr/documents-guides/anssi-guide-authentification_multifacteur_et_mots_de_passe.pdf",
+  "module.emailrep.fix_snippet": "# PowerShell (Microsoft 365)\nConnect-ExchangeOnline\nGet-InboxRule -Mailbox user@example.com | Format-List Name,Enabled,ForwardTo,ForwardAsAttachmentTo,RedirectTo\nGet-Mailbox user@example.com | Format-List ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward\nConnect-MgGraph -Scopes \"User.RevokeSessions.All\"\nRevoke-MgUserSignInSession -UserId user@example.com",
+  "module.emailrep.title": "EmailRep (réputation des adresses)",
+  "module.emailrep.why": "Une adresse publiée dont les identifiants ont fuité est une porte d'entrée pour l'hameçonnage et la prise de compte."
+}

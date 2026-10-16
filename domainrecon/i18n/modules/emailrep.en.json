@@ -1,0 +1,19 @@
+{
+  "emailrep.key_missing": "EmailRep key not set (Settings)",
+  "emailrep.key_rejected": "EmailRep key rejected by the service",
+  "emailrep.no_address": "No email address of the domain published on the site",
+  "emailrep.score_breached": "{count} address(es) in a breach",
+  "emailrep.score_clean": "No alert on published addresses",
+  "emailrep.score_leaked": "{count} address(es) with leaked credentials",
+  "emailrep.score_malicious": "{count} address(es) with malicious activity",
+  "emailrep.unreadable": "Unreadable response from the EmailRep service",
+  "finding.emailrep.breached": "{count} published address(es) present in a data breach (EmailRep)",
+  "finding.emailrep.leaked": "{count} published domain address(es) with leaked credentials (EmailRep)",
+  "finding.emailrep.malicious": "{count} published address(es) linked to malicious activity or blacklisted (EmailRep)",
+  "module.emailrep.checks": "Collects the domain's email addresses published on the site (at most 5) and queries EmailRep (key required): credential leaks, breaches, malicious activity. Addresses are masked in the result.",
+  "module.emailrep.fix": "For each address whose credentials leaked: from a clean device, change the mailbox password, then revoke the open sessions, tokens and app passwords; if the same password is used elsewhere, change it too.\nCheck that nobody left a backdoor in the mailbox: automatic forwarding or redirect rules, delegations, authorized apps (PowerShell snippet for Microsoft 365 below; same checks in the Google Workspace admin console or your host's console).\nTurn on multi-factor authentication on these mailboxes; prefer security keys or passkeys (FIDO2) over codes sent by SMS.\nAddress found in a breach: the leak often comes from a third-party service where it was used to sign up; change the password if it was reused and ask the person to stop using their work address for external services.\nAddress linked to malicious activity or on a blocklist: check the sent-mail log for spam sent from the mailbox, and make sure SPF, DKIM and DMARC protect the domain so nobody can spoof the address.\nReduce the personal addresses published on the site (home page, contact page, security.txt): prefer role addresses such as `contact@example.com` or `security@example.com` and a contact form, because bots harvest these addresses for phishing.\nTrain the people concerned about phishing (emails asking for a password, a code or a transfer): an address whose credentials leaked is a priority target.\nRun the scan again: EmailRep checks at most 5 addresses and the free key is limited to 10 requests per day; if the quota is reached, try again the next day.",
+  "module.emailrep.fix_ref": "https://www.cisa.gov/audiences/small-and-medium-businesses/secure-your-business/require-multifactor-authentication",
+  "module.emailrep.fix_snippet": "# PowerShell (Microsoft 365)\nConnect-ExchangeOnline\nGet-InboxRule -Mailbox user@example.com | Format-List Name,Enabled,ForwardTo,ForwardAsAttachmentTo,RedirectTo\nGet-Mailbox user@example.com | Format-List ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward\nConnect-MgGraph -Scopes \"User.RevokeSessions.All\"\nRevoke-MgUserSignInSession -UserId user@example.com",
+  "module.emailrep.title": "EmailRep (address reputation)",
+  "module.emailrep.why": "A published address whose credentials leaked is an entry point for phishing and account takeover."
+}

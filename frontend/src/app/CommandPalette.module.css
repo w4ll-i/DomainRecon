@@ -1,0 +1,77 @@
+/* Palette de commandes : champ en tête, liste groupée, rappel des touches. Surfaces
+   plates, filets de 1 px ; l'option choisie prend le fond surélevé (l'accent est réservé
+   au focus, aux liens, à la sélection et à la progression : ici c'est une sélection). */
+.palette {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  padding: 14px var(--space-4);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input:focus-visible {
+  outline-offset: -2px;
+}
+
+.list {
+  max-height: 320px;
+  padding: var(--space-2);
+  overflow-y: auto;
+}
+
+.group {
+  padding: var(--space-2) var(--space-2) var(--space-1);
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 8px var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.option svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+}
+
+.option[aria-selected="true"] {
+  background: var(--surface-raised);
+}
+
+.option[aria-selected="true"] svg {
+  color: var(--accent-text);
+}
+
+.empty {
+  padding: var(--space-4) var(--space-2);
+  color: var(--text-secondary);
+}
+
+.hint {
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--border);
+  color: var(--text-tertiary);
+  font-size: 12px;
+}

@@ -1,0 +1,173 @@
+DomainRecon Source-Available License, version 1.0
+
+Copyright (c) 2025-2026 W4ll-I. All rights reserved.
+
+The English text below is the binding version. A French translation, for
+convenience only, follows it.
+
+1. What you may do, without asking
+
+   a) Read, study and audit the source code.
+   b) Download the official releases of DomainRecon and run them, for your own
+      use, to audit domains and systems that you own or are explicitly
+      authorized to test.
+   c) Report problems and propose changes (issues, pull requests, patches)
+      to the copyright holder, under section 4.
+
+2. What you may NOT do without prior written permission
+
+   a) Use, copy or reuse the source code, in whole or in part, in another
+      project, product, script or service.
+   b) Sell, rent, sublicense, host as a service, or otherwise make money
+      from DomainRecon, its code, or anything derived from it.
+   c) Modify the code for any other purpose than preparing a contribution
+      under section 4, or distribute a modified version (including a public
+      fork that is distributed, published or deployed).
+   d) Duplicate or redistribute the source code or the releases, in any form
+      and even for free: no public fork, mirror, re-upload, repackaging or
+      sharing with third parties. Only the copies needed for your own use
+      (your devices, your backups) are allowed.
+   e) Remove or alter copyright notices, this license, or the origin of the
+      software.
+   f) File, or help anyone file, a patent, utility model, design right or
+      other registration of an industrial property right that covers
+      DomainRecon, its code, its design or its logo, or anything derived from
+      them. Any right obtained in breach of this clause is, to the extent
+      permitted by law, held for the copyright holder and must be transferred
+      to them on request.
+
+   Permission may be requested from the copyright holder. A permission is
+   valid only if it is written, names what it allows, and comes from the
+   copyright holder.
+
+3. Responsible use
+
+   DomainRecon contains active modules (port scan, subdomain takeover checks
+   and others). You are solely responsible for having the right to test every
+   target. Scanning systems without authorization may be illegal. Nothing in
+   this license authorizes any scan.
+
+4. Contributions
+
+   If you send a contribution (code, text, translation, data), you confirm
+   that you have the right to do so, and you grant the copyright holder a
+   perpetual, worldwide, free, irrevocable and sublicensable license to use,
+   modify and distribute it, in DomainRecon and in any other work. The copyright
+   holder is free to accept, change or refuse any contribution. Sending a
+   contribution gives you no right on DomainRecon.
+
+5. Third-party components
+
+   DomainRecon includes components written by others, each under its own
+   license (see THIRD_PARTY_NOTICES.md). This license does not apply to them
+   and does not reduce the rights you have on them.
+
+6. No warranty, no liability
+
+   DomainRecon is provided "as is", without warranty of any kind. The
+   copyright holder is not liable for any damage, loss of data, or legal
+   consequence resulting from its use, to the extent permitted by law.
+
+7. Termination
+
+   Any breach of section 2 ends your rights under this license
+   automatically. You must then stop using and delete your copies of the code
+   and of anything derived from it.
+
+8. Nature of this license
+
+   This is a "source-available" license: the code is visible, but it is not
+   free software nor open source in the sense of the Open Source Definition.
+   All rights not expressly granted are reserved. If you publish this project
+   on a platform whose terms give users some rights over public repositories
+   (for example the right to view and to fork inside that platform), those
+   rights come from the platform's terms and stop there.
+
+--------------------------------------------------------------------------
+Traduction française (indicative, seul le texte anglais fait foi)
+--------------------------------------------------------------------------
+
+Licence « code source disponible » DomainRecon, version 1.0
+
+Copyright (c) 2025-2026 W4ll-I. Tous droits réservés.
+
+1. Ce que vous pouvez faire sans demander
+
+   a) Lire, étudier et auditer le code source.
+   b) Télécharger les versions officielles de DomainRecon et les utiliser, pour
+      votre usage, afin d'auditer des domaines et des systèmes qui vous
+      appartiennent ou que vous êtes explicitement autorisé à tester.
+   c) Signaler des problèmes et proposer des modifications (tickets, demandes
+      de fusion, correctifs) au titulaire des droits, selon l'article 4.
+
+2. Ce que vous ne pouvez PAS faire sans autorisation écrite préalable
+
+   a) Utiliser, copier ou réutiliser le code source, en tout ou partie, dans
+      un autre projet, produit, script ou service.
+   b) Vendre, louer, sous-licencier, proposer comme service hébergé, ou
+      tirer un revenu de DomainRecon, de son code ou de tout ce qui en dérive.
+   c) Modifier le code à une autre fin que préparer une contribution selon
+      l'article 4, ou distribuer une version modifiée (y compris une copie
+      publique distribuée, publiée ou déployée).
+   d) Dupliquer ou redistribuer le code source ou les versions officielles,
+      sous quelque forme que ce soit, même gratuitement : ni copie publique,
+      ni miroir, ni nouvelle mise en ligne, ni reconditionnement, ni partage
+      avec des tiers. Seules les copies nécessaires à votre propre usage (vos
+      appareils, vos sauvegardes) sont permises.
+   e) Retirer ou modifier les mentions de droits d'auteur, cette licence ou
+      l'origine du logiciel.
+   f) Déposer, ou aider quiconque à déposer, un brevet, un modèle d'utilité,
+      un dessin ou modèle ou tout autre titre de propriété industrielle qui
+      couvre DomainRecon, son code, son design ou son logo, ou tout ce qui en
+      dérive. Tout droit obtenu en violation de cet article est, dans la
+      mesure permise par la loi, détenu pour le titulaire et doit lui être
+      transféré sur demande.
+
+   L'autorisation se demande au titulaire des droits. Elle n'est valable que
+   si elle est écrite, précise ce qu'elle permet et vient du titulaire.
+
+3. Usage responsable
+
+   DomainRecon contient des modules actifs (scan de ports, vérification de
+   prise de contrôle de sous-domaines, etc.). Vous êtes seul responsable
+   d'avoir le droit de tester chaque cible. Scanner des systèmes sans
+   autorisation peut être illégal. Rien dans cette licence n'autorise un scan.
+
+4. Contributions
+
+   Si vous envoyez une contribution (code, texte, traduction, données), vous
+   confirmez en avoir le droit et vous accordez au titulaire une licence
+   perpétuelle, mondiale, gratuite, irrévocable et sous-licenciable pour
+   l'utiliser, la modifier et la distribuer, dans DomainRecon et dans toute
+   autre oeuvre. Le titulaire est libre d'accepter, modifier ou refuser toute
+   contribution. Envoyer une contribution ne vous donne aucun droit sur
+   DomainRecon.
+
+5. Composants tiers
+
+   DomainRecon inclut des composants écrits par d'autres, chacun sous sa propre
+   licence (voir THIRD_PARTY_NOTICES.md). Cette licence ne s'y applique pas et
+   ne réduit pas vos droits sur eux.
+
+6. Aucune garantie, aucune responsabilité
+
+   DomainRecon est fourni « en l'état », sans garantie d'aucune sorte. Le
+   titulaire n'est pas responsable des dommages, pertes de données ou
+   conséquences juridiques liés à son utilisation, dans la mesure permise par
+   la loi.
+
+7. Fin de la licence
+
+   Toute violation de l'article 2 met fin automatiquement à vos droits. Vous
+   devez alors cesser d'utiliser et supprimer vos copies du code et de tout ce
+   qui en dérive.
+
+8. Nature de cette licence
+
+   Il s'agit d'une licence « code source disponible » : le code est visible,
+   mais ce n'est ni un logiciel libre ni de l'open source au sens de l'Open
+   Source Definition. Tous les droits non expressément accordés sont réservés.
+   Si ce projet est publié sur une plateforme dont les conditions donnent aux
+   utilisateurs certains droits sur les dépôts publics (par exemple voir et
+   copier un dépôt dans la plateforme), ces droits viennent des conditions de la
+   plateforme et s'arrêtent là.

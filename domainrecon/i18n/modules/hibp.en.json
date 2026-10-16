@@ -1,0 +1,13 @@
+{
+  "finding.hibp.accounts": "{count} account(s) of the domain appear in {breaches} breach(es) (Have I Been Pwned)",
+  "finding.hibp.breaches": "{count} public data breach(es) involve this domain: {names}",
+  "hibp.score_accounts": "{count} domain account(s) in breaches",
+  "hibp.score_breaches": "{count} public breach(es) of the domain",
+  "hibp.score_clean": "No known public breach",
+  "hibp.unreadable": "Unreadable response from the Have I Been Pwned service",
+  "module.hibp.checks": "Looks up the domain in the public Have I Been Pwned breach catalog (free) and, with an optional key, the domain accounts found in leaks. Addresses are masked.",
+  "module.hibp.fix": "From a clean device, force a password change right now for the domain accounts affected by the breach (all accounts if you do not know which ones), then revoke their open sessions, access tokens and app passwords; also change any identical password reused on another service.\nOpen the haveibeenpwned.com page of each breach named in the finding to learn its date, origin and exposed data (addresses, passwords, phone numbers…) and adjust your response.\nTurn on multi-factor authentication on every account, starting with email and administration; prefer security keys or passkeys (FIDO2) over codes sent by SMS.\nReject already-compromised passwords when accounts are created (for example by checking them against the Pwned Passwords list) and encourage long passphrases, unique for each service, kept in a password manager.\nIf the breach comes from your own service (the domain is listed as the hacked site): fix the original flaw first, replace the API keys, tokens and session secrets it held, and store passwords hashed with Argon2id, bcrypt or scrypt, never in clear text.\nIf personal data of customers, employees or users is involved: document the incident and, if the risk is real, notify the data protection authority (the CNIL in France) within 72 hours, then inform the people concerned when the risk is high.\nTo also list the domain accounts found in breaches: verify domain ownership in your Have I Been Pwned dashboard, enter the HIBP key in DomainRecon Settings, then run the scan again.\nRun the scan again after fixing: a public breach stays listed forever, but the risk goes away once passwords are changed and multi-factor authentication is active.",
+  "module.hibp.fix_ref": "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-92022-personal-data-breach-notification-under_en",
+  "module.hibp.title": "Have I Been Pwned (breaches)",
+  "module.hibp.why": "A breach exposing passwords enables credential stuffing and targeted phishing against the domain's accounts."
+}

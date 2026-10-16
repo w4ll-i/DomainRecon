@@ -1,0 +1,93 @@
+/* Fenêtre modale : voile uni (le fond de page, plus ou moins opaque, jamais une
+   couleur en dur), panneau plat à filet de 1 px. L'ombre est la seule avec celle des
+   notifications. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--bg-deep) 75%, transparent);
+}
+
+/* Le panneau ne dépasse jamais l'écran : largeur bornée, hauteur bornée avec défilement
+   interne, et son contenu ne peut pas l'élargir (min-width: 0 des enfants, mots longs coupés). */
+.panel {
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100vh - 2 * var(--space-4));
+  max-height: calc(100dvh - 2 * var(--space-4));
+  overflow-y: auto;
+  /* Si le panneau défile (petit écran), barre fine aux couleurs du thème. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  overflow-wrap: break-word;
+  padding: var(--space-5);
+  background: var(--surface-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  outline: none;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.title svg {
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+}
+
+.text {
+  margin-bottom: var(--space-3);
+  overflow-wrap: anywhere;
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-family: var(--font-mono);
+}
+
+/* Le focus garde l'anneau global (global.css) ; le filet passe à l'accent. */
+.input:focus {
+  border-color: var(--accent);
+}
+
+.error {
+  margin-top: var(--space-2);
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+/* Palette de commandes : collée en haut de la fenêtre, large, sans marge intérieure. */
+.top {
+  align-items: flex-start;
+  padding-top: 12vh;
+}
+
+.wide {
+  max-width: 560px;
+  padding: 0;
+}

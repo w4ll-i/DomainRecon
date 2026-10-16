@@ -1,0 +1,13 @@
+{
+  "finding.paste.credentials": "{count} public paste(s) or dump(s) mention this domain near sensitive words (password, token…)",
+  "finding.paste.mentions": "{count} public paste(s) or dump(s) mention this domain",
+  "module.paste.checks": "Looks for the domain in dumps and logs of public code (Sourcegraph), on GitHub (optional token) and in Intelligence X pastes (optional key). Excerpts are masked.",
+  "module.paste.fix": "Revoke and replace every secret visible in the paste or dump (password, token, API key, private key): a copy may have been made before any deletion, and such content stays readable for a long time (archives, search engines).\nOpen the addresses named in the result to identify where the content comes from (application log, database export, configuration file, pasted email) and who or what published it, then list the data and accounts involved.\nHave the content removed at the source: delete the file or make the repository private if it comes from GitHub or from code indexed by Sourcegraph, or use the report link of the paste service; a third-party archive may still keep a copy.\nIf the dump contains personal data (customers, employees): treat it as a data breach, document it and, if the risk is real, notify the data protection authority (the CNIL in France) within 72 hours.\nPrevent a repeat: never paste raw logs, configurations or database extracts into a public service; mask sensitive values first, or use an internal sharing tool.\nIf the result only shows plain mentions of the domain: check that they are legitimate (documentation, public discussion) and reveal no internal server name or private address; otherwise, have them removed.\nTo cover more sources, set a GitHub token and an Intelligence X key (both optional) in Settings, then run the scan again after the fixes.",
+  "module.paste.fix_ref": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+  "module.paste.title": "Pastes and public code",
+  "module.paste.why": "Public pastes and dumps often contain credentials or configurations copied by mistake; they remain readable long after removal.",
+  "paste.no_source": "No paste source answered (set a GitHub token or an Intelligence X key)",
+  "paste.score_clean": "No mention in the pastes queried",
+  "paste.score_credentials": "{count} paste(s) with sensitive words",
+  "paste.score_mentions": "{count} mention(s) in pastes or dumps"
+}

@@ -1,0 +1,19 @@
+{
+  "finding.nuclei.critical": "Nuclei: {count} critical vulnerability(ies) ({names}).",
+  "finding.nuclei.high": "Nuclei: {count} high vulnerability(ies) ({names}).",
+  "finding.nuclei.medium": "Nuclei: {count} medium-severity finding(s) ({names}).",
+  "module.nuclei.checks": "Runs the Nuclei template engine (CVEs, exposures, misconfigurations, takeovers) against the target and reports the findings with their severity.",
+  "module.nuclei.fix": "If a finding shows an exposed secret, key, configuration file or administration console, first revoke the secrets involved and take the exposure off the Internet (delete the file, IP filtering, authentication) before dealing with the rest.\nFor each finding, note the template name, the CVE if any and the affected address, then reproduce it by hand (a request with `curl`) to rule out a false positive.\nFor vulnerable software (CVE), install the vendor's update or patch; if that is not possible right away, apply the workaround from the security advisory and restrict access (firewall, VPN, IP filtering).\nFor default credentials or a misconfiguration, change the passwords, disable demo accounts and features, then close the services that should not be public.\nFor a subdomain takeover, delete the orphaned DNS record or recreate the matching resource at the provider.\nWork through them in order: critical, high, then medium. Keep Nuclei and its templates up to date with `nuclei -update-templates` so recent flaws are not missed.\nIf the module says Nuclei is not installed, install the binary or set its path in the `DOMAINRECON_NUCLEI_PATH` variable.\nRun the scan again after each fix until there are zero findings.",
+  "module.nuclei.fix_ref": "https://docs.projectdiscovery.io/opensource/nuclei/overview",
+  "module.nuclei.title": "Nuclei (vulnerability scan)",
+  "module.nuclei.why": "Nuclei applies thousands of known-flaw templates: it is the tool's only real vulnerability check. It requires the binary installed and authorization of the target.",
+  "nuclei.cap": "Critical vulnerability reported by Nuclei",
+  "nuclei.failed": "Nuclei failed: {detail}",
+  "nuclei.launch_failed": "Could not launch Nuclei ({error}).",
+  "nuclei.not_installed": "Nuclei binary not installed: module not applicable. Set its path in DOMAINRECON_NUCLEI_PATH.",
+  "nuclei.score_clean": "No vulnerability reported by Nuclei",
+  "nuclei.score_critical": "Critical vulnerability reported by Nuclei",
+  "nuclei.score_findings": "{count} medium-severity Nuclei finding(s)",
+  "nuclei.score_high": "High vulnerability reported by Nuclei",
+  "nuclei.timeout": "Nuclei did not finish within {seconds} s."
+}

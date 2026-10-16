@@ -1,0 +1,367 @@
+name: Release
+
+# Tag v* : construit, teste et publie les livrables en release BROUILLON
+# (publication manuelle par l'auteur). Lancement manuel (Actions > Release >
+# Run workflow) : mêmes builds et tests, artefacts téléchargeables, sans release.
+# Dossiers (comme en local) : travail dans private/build/, application dans
+# private/build/dist/DomainRecon, livrables dans release/<version>/.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+# Aucun droit par défaut : chaque job déclare les siens.
+permissions: {}
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PYTHONUTF8: "1"
+
+jobs:
+  version:
+    name: Version (tag = domainrecon.__version__)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Lire la version du code
+        id: version
+        # Variable intermédiaire : dans « echo "…$(…)" », l'échec de build.py serait
+        # masqué par le code de retour d'echo (bash -e ne s'arrêterait pas).
+        run: |
+          version="$(python packaging/build.py --print-version)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Vérifier le tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: python packaging/build.py --check-tag "$GITHUB_REF_NAME"
+
+  frontend:
+    name: Interface (build, artefact « web »)
+    needs: version
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - name: Construire l'interface
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: web
+          path: domainrecon/web
+          if-no-files-found: error
+          retention-days: 7
+
+  windows:
+    name: Windows (installeur + portables)
+    needs: [version, frontend]
+    runs-on: windows-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: web
+          path: domainrecon/web
+
+      - name: Paquets npm (textes de licence de THIRD_PARTY_NOTICES.md)
+        working-directory: frontend
+        run: npm ci --ignore-scripts
+
+      - name: Dépendances de construction (versions figées)
+        run: python -m pip install --require-hashes -r packaging/requirements.lock
+
+      - name: Vérifier Inno Setup (préinstallé sur l'image, sinon Chocolatey)
+        # Repli épinglé (Dependabot ne suit pas Chocolatey : mise à jour manuelle).
+        run: |
+          $candidates = @("${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe", "$env:ProgramFiles\Inno Setup 7\ISCC.exe")
+          if (-not (Get-Command ISCC.exe -ErrorAction SilentlyContinue) -and -not ($candidates | Where-Object { Test-Path $_ })) {
+            choco install innosetup --version 6.7.1 --no-progress -y
+          }
+
+      - name: Construire
+        run: python packaging/build.py --target windows --skip-frontend
+
+      - name: Test de fumée - dossier de l'application (console, capture d'écran)
+        run: >-
+          python packaging/smoke_test.py
+          --exe private/build/dist/DomainRecon/DomainRecon-console.exe
+          --expect-version $env:VERSION
+          --data-dir "$env:RUNNER_TEMP/smoke-console"
+          --version-flag --scan example.com
+
+      - name: Test de fumée - exécutable fenêtré (sans console, journal dans les données)
+        run: >-
+          python packaging/smoke_test.py
+          --exe private/build/dist/DomainRecon/DomainRecon.exe
+          --expect-version $env:VERSION
+          --data-dir "$env:RUNNER_TEMP/smoke-gui"
+          --no-capture
+          --expect-file "$env:RUNNER_TEMP/smoke-gui/logs/domainrecon.log"
+
+      - name: Test de fumée - zip portable (données à côté de l'exécutable)
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $target = Join-Path $env:RUNNER_TEMP "portable"
+          Expand-Archive "release/$env:VERSION/DomainRecon-$env:VERSION-portable-win64.zip" -DestinationPath $target
+          $app = Join-Path $target "DomainRecon"
+          if (-not (Test-Path (Join-Path $app "portable.flag"))) { throw "portable.flag absent du zip" }
+          if (-not (Test-Path (Join-Path $app "Lancer DomainRecon.bat"))) { throw "Lanceur .bat absent du zip" }
+          python packaging/smoke_test.py --exe (Join-Path $app "DomainRecon-console.exe") --expect-version $env:VERSION --expect-file (Join-Path $app "data/domainrecon.db")
+
+      - name: Test de fumée - exécutable portable monofichier (données à côté, aucune trace dans LOCALAPPDATA)
+        # Fenêtré, sans console : sortie non capturée, scan complet (capture d'écran du Chromium embarqué).
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $target = Join-Path $env:RUNNER_TEMP "onefile"
+          New-Item -ItemType Directory -Force $target | Out-Null
+          $exe = Join-Path $target "DomainRecon-$env:VERSION-portable.exe"
+          Copy-Item "release/$env:VERSION/DomainRecon-$env:VERSION-portable.exe" $exe
+          $localData = Join-Path $env:LOCALAPPDATA "DomainRecon"
+          if (Test-Path $localData) { Remove-Item -Recurse -Force $localData }
+          python packaging/smoke_test.py --exe $exe --expect-version $env:VERSION --no-capture --scan example.com --expect-file (Join-Path $target "DomainRecon-data/domainrecon.db")
+          if (Test-Path $localData) { throw "Le portable monofichier ne doit rien écrire dans LOCALAPPDATA" }
+
+      - name: Test de fumée - installeur (installation, lancement, désinstallation)
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $dir = Join-Path $env:RUNNER_TEMP "installed"
+          $log = Join-Path $env:RUNNER_TEMP "setup.log"
+          $setupExe = (Resolve-Path "release/$env:VERSION/DomainRecon-$env:VERSION-setup.exe").Path
+          $setup = Start-Process $setupExe -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/DIR=`"$dir`"", "/LOG=`"$log`"" -Wait -PassThru
+          if ($setup.ExitCode -ne 0) { Get-Content $log; throw "Installation en échec (code $($setup.ExitCode))" }
+          if (Test-Path (Join-Path $dir "portable.flag")) { throw "portable.flag ne doit pas être installé" }
+          $db = Join-Path $env:LOCALAPPDATA "DomainRecon/domainrecon.db"
+          python packaging/smoke_test.py --exe (Join-Path $dir "DomainRecon-console.exe") --expect-version $env:VERSION --expect-file $db
+          Start-Process (Join-Path $dir "unins000.exe") -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART" -Wait
+          for ($i = 0; $i -lt 60 -and (Test-Path (Join-Path $dir "DomainRecon.exe")); $i++) { Start-Sleep -Seconds 1 }
+          if (Test-Path (Join-Path $dir "DomainRecon.exe")) { throw "Désinstallation incomplète" }
+          if (-not (Test-Path $db)) { throw "Une désinstallation silencieuse doit conserver les données" }
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist-windows
+          path: |
+            release/${{ needs.version.outputs.version }}/DomainRecon-*-setup.exe
+            release/${{ needs.version.outputs.version }}/DomainRecon-*-portable-win64.zip
+            release/${{ needs.version.outputs.version }}/DomainRecon-*-portable.exe
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+
+  linux:
+    name: Linux (.deb, Ubuntu 22.04)
+    needs: [version, frontend]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: web
+          path: domainrecon/web
+
+      - name: Paquets npm (textes de licence de THIRD_PARTY_NOTICES.md)
+        working-directory: frontend
+        run: npm ci --ignore-scripts
+
+      - name: Paquets système (PyGObject, WebKitGTK 4.1)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libgirepository1.0-dev libcairo2-dev pkg-config gir1.2-gtk-3.0 gir1.2-webkit2-4.1 libwebkit2gtk-4.1-0
+
+      - name: Dépendances de construction (versions figées)
+        run: |
+          python -m pip install --require-hashes -r packaging/requirements.lock
+          # Fenêtre native : PyGObject 3.50 (girepository 1.0, disponible sur Ubuntu 22.04).
+          python -m pip install "PyGObject==3.50.0" "pycairo==1.29.1"
+
+      - name: Construire
+        run: python packaging/build.py --target linux --skip-frontend
+
+      - name: Contenu du paquet
+        run: |
+          dpkg-deb --info "release/${VERSION}/domainrecon_${VERSION}_amd64.deb"
+          dpkg-deb --contents "release/${VERSION}/domainrecon_${VERSION}_amd64.deb" > "$RUNNER_TEMP/contenu.txt"
+          head -n 40 "$RUNNER_TEMP/contenu.txt"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist-linux
+          path: release/${{ needs.version.outputs.version }}/domainrecon_*_amd64.deb
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+
+  smoke-deb:
+    name: Test du .deb (${{ matrix.image }})
+    needs: [version, linux]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Installation minimale (Depends seulement) : serveur sans bureau.
+          - image: "ubuntu:22.04"
+            apt-options: "--no-install-recommends"
+          # Installation habituelle d'un poste de travail (Recommends compris).
+          - image: "ubuntu:24.04"
+            apt-options: ""
+          - image: "debian:12"
+            apt-options: "--no-install-recommends"
+    container:
+      image: ${{ matrix.image }}
+      options: --shm-size=1g
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+      DEBIAN_FRONTEND: noninteractive
+    steps:
+      - name: Python et certificats (image nue)
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3 ca-certificates
+
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist-linux
+          path: release/${{ needs.version.outputs.version }}
+
+      - name: Installer le paquet
+        run: apt-get install -y ${{ matrix.apt-options }} "./release/${VERSION}/domainrecon_${VERSION}_amd64.deb"
+
+      - name: Test de fumée (capture d'écran comprise)
+        run: >-
+          python3 packaging/smoke_test.py
+          --exe /usr/bin/domainrecon
+          --expect-version "$VERSION"
+          --data-dir /tmp/smoke-deb
+          --version-flag --scan example.com
+
+  release:
+    name: Release brouillon
+    needs: [version, windows, linux, smoke-deb]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      # Notes de version : docs/releases/<version>.md du dépôt.
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: dist-*
+          path: release/${{ needs.version.outputs.version }}
+          merge-multiple: true
+
+      - name: Sommes SHA-256
+        working-directory: release/${{ needs.version.outputs.version }}
+        run: |
+          sha256sum -- * > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Notes de version (NOTES.md)
+        # Absentes : corps vide, complété par les notes générées par GitHub.
+        run: |
+          notes="docs/releases/${VERSION}.md"
+          if [ -f "$notes" ]; then
+            cp "$notes" "release/${VERSION}/NOTES.md"
+          else
+            echo "::warning::$notes absent : notes de version générées seulement"
+            : > "release/${VERSION}/NOTES.md"
+          fi
+
+      - name: Attestations de provenance
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-checksums: release/${{ needs.version.outputs.version }}/SHA256SUMS
+
+      - name: Release brouillon
+        uses: softprops/action-gh-release@v3
+        with:
+          draft: true
+          name: DomainRecon ${{ needs.version.outputs.version }}
+          body_path: release/${{ needs.version.outputs.version }}/NOTES.md
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            release/${{ needs.version.outputs.version }}/DomainRecon-${{ needs.version.outputs.version }}-setup.exe
+            release/${{ needs.version.outputs.version }}/DomainRecon-${{ needs.version.outputs.version }}-portable-win64.zip
+            release/${{ needs.version.outputs.version }}/DomainRecon-${{ needs.version.outputs.version }}-portable.exe
+            release/${{ needs.version.outputs.version }}/domainrecon_${{ needs.version.outputs.version }}_amd64.deb
+            release/${{ needs.version.outputs.version }}/SHA256SUMS

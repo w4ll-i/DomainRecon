@@ -1,0 +1,7 @@
+{
+  "module.waf.checks": "Detects a web application firewall (WAF) or content delivery network (CDN) in front of the site, from headers, cookies and responses.",
+  "module.waf.fix": "If the site is public and handles accounts, forms or payments, put it behind a web application firewall (WAF): a managed service from your CDN or host (for example Cloudflare, AWS WAF, Akamai) or a self-hosted WAF (ModSecurity or Coraza with the OWASP Core Rule Set).\nEnable the managed rules against common attacks (SQL injection, XSS, automated scanners) in log-only mode first for a few days, review the false positives, then switch to blocking.\nIf the module reports a CDN without a WAF, turn on that provider's WAF option: a CDN on its own speeds up delivery and absorbs traffic spikes, but it does not filter application attacks.\nRoute all traffic through the WAF and restrict direct access to the origin server to the provider's addresses only (server firewall), otherwise an attacker bypasses the WAF by visiting the origin IP address.\nReview the WAF logs regularly and keep its rules up to date: it complements code fixes, it does not replace them.\nRun the scan again: detection is passive and only finds a WAF through its visible marks (headers, cookies); a discreet WAF can go undetected without being absent.",
+  "module.waf.fix_ref": "https://coreruleset.org/docs/",
+  "module.waf.title": "WAF / CDN",
+  "module.waf.why": "A WAF filters part of web attacks and a CDN absorbs traffic spikes: their presence strengthens defence in depth."
+}

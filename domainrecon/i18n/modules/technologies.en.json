@@ -1,0 +1,7 @@
+{
+  "module.technologies.checks": "Identifies the site technologies (web server, CMS, frameworks, JavaScript libraries, analytics tools) from the headers and page code.",
+  "module.technologies.fix": "Compare the detected list with your real inventory: any technology you do not recognise (old tool, forgotten plugin, test script, undeclared third-party service) should be removed, or documented if it is intended.\nUpdate or replace components whose version is no longer maintained (web server, CMS, framework, JavaScript library) using the vendor's security advisory; the \"Technology stack\" module reports versions that have reached end of life.\nHide the versions announced by the `Server`, `X-Powered-By` and `X-Generator` headers: the \"Technology stack\" module provides ready-to-copy snippets for nginx, Apache, PHP and IIS.\nRemove from the page whatever needlessly names the software and its version: the meta tag named `generator` added by the CMS or a theme, HTML comments, version numbers in script addresses.\nKeep this list as a baseline and run the scan again after each major update: a component that appeared without you installing it may reveal an unintended change, or even a compromise.",
+  "module.technologies.fix_ref": "https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/01-Information_Gathering/02-Fingerprint_Web_Server/",
+  "module.technologies.title": "Technologies",
+  "module.technologies.why": "Knowing the building blocks makes it possible to track their known vulnerabilities and spot version information exposed for no reason."
+}

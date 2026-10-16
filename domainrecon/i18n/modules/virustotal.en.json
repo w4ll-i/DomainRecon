@@ -1,0 +1,15 @@
+{
+  "finding.virustotal.domain_flagged": "VirusTotal: {count} analysis engine(s) rate the domain as malicious ({engines}).",
+  "finding.virustotal.ip_flagged": "VirusTotal: {count} analysis engine(s) rate the server's IP address as malicious (the address may be shared with other sites).",
+  "module.virustotal.checks": "Queries VirusTotal for the target's domain and IP address: number of antivirus engines and threat lists that rate them malicious or suspicious, categories, community reputation.",
+  "module.virustotal.fix": "Open the VirusTotal page of the domain (and of the IP address if it is flagged) on virustotal.com, \"Detection\" tab: note which engines flag it and the category (malware, phishing, spam...). A single detection is a weak signal; several detections should be taken seriously.\nIf the flag is justified, remove the malicious content first: unknown pages, files and scripts, redirects, compromised third-party JavaScript libraries, unknown administrator or FTP accounts. Restore a clean backup, update the CMS, plugins and server, and change all passwords and API keys.\nIf only the IP address is flagged and not the domain (shared hosting, CDN, reassigned address), the detections often come from other sites sharing the address: ask the host to deal with the cause or to give you another address.\nOnce the site is clean, click \"Reanalyse\" on the domain's VirusTotal page to refresh the verdicts.\nFor each engine that still flags the domain, dispute the detection directly with its vendor, using its false positive form: VirusTotal cannot change a vendor's detection. Attach proof of the fix or of the site's legitimacy.\nIf the vendor has confirmed the removal but VirusTotal still shows the detection, send the evidence with VirusTotal's false positive form so that the cached result is cleared.\nCheck the result with the command in the snippet (`last_analysis_stats` field), then run the DomainRecon scan again; the result is cached for one hour.",
+  "module.virustotal.fix_ref": "https://docs.virustotal.com/docs/false-positive",
+  "module.virustotal.fix_snippet": "# curl\ncurl -s -H \"x-apikey: $VT_API_KEY\" https://www.virustotal.com/api/v3/domains/example.com\n# PowerShell\n(Invoke-RestMethod -Headers @{ \"x-apikey\" = $env:VT_API_KEY } -Uri \"https://www.virustotal.com/api/v3/domains/example.com\").data.attributes.last_analysis_stats",
+  "module.virustotal.title": "VirusTotal reputation",
+  "module.virustotal.why": "A domain or IP flagged by several engines is likely to be blocked by security filters and often reveals a compromise, phishing or malware distribution.",
+  "virustotal.score_clean": "No VirusTotal detection",
+  "virustotal.score_flagged": "{count} malicious detection(s) on VirusTotal",
+  "virustotal.score_unknown": "Object unknown to VirusTotal",
+  "virustotal.score_weak": "{count} isolated detection(s) on VirusTotal (weak signal)",
+  "virustotal.unreadable": "Unreadable VirusTotal response"
+}

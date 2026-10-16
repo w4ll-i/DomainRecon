@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Signaler une faille de sécurité
+    url: https://github.com/w4ll-i/DomainRecon/security/advisories/new
+    about: Signalement privé, à utiliser à la place d'un ticket public.
+  - name: Documentation
+    url: https://github.com/w4ll-i/DomainRecon/blob/main/docs/README.md
+    about: Installation, guide d'utilisation, FAQ et dépannage.

@@ -1,0 +1,14 @@
+{
+  "finding.zone_transfer.open": "Zone transfer (AXFR) accepted by {servers}: {count} records handed to anyone. Restrict AXFR to your secondary servers.",
+  "module.zone_transfer.checks": "Asks every name server of the domain for a full copy of the zone (AXFR). Active module: TCP connections to the name servers.",
+  "module.zone_transfer.fix": "The finding names the name servers that hand out the zone: close the transfer on each of them without delay, because anyone can already copy the full list of your names and addresses.\nIf your name servers are run by a DNS host or a registrar: disable zone transfer (AXFR) in the admin panel, or ask support to restrict it to your secondary servers.\nIf you run your own name servers (BIND, NSD, PowerDNS, Windows DNS): limit transfers to the addresses of your secondary servers only, ideally with a TSIG key, and refuse everyone else (see the snippet).\nIf a legitimate secondary server needs the zone, add its IP address to the allowed list rather than opening the transfer to everyone.\nConsider the list of names and addresses in the zone as already known to third parties: remove internal or obsolete records from the public DNS (internal hosts, private addresses, old servers) and check the services they point to.\nCheck with `dig +short NS example.com`, then `dig AXFR example.com @ns1.example.net` for each server: the answer must be `Transfer failed.` or `REFUSED`, never the list of records. Then run the scan again.",
+  "module.zone_transfer.fix_ref": "https://www.rfc-editor.org/rfc/rfc5936",
+  "module.zone_transfer.fix_snippet": "# BIND\nzone \"example.com\" {\n    type master;\n    file \"/etc/bind/db.example.com\";\n    allow-transfer { 203.0.113.10; };\n};\n\n# NSD\nzone:\n    name: \"example.com\"\n    zonefile: \"example.com.zone\"\n    provide-xfr: 203.0.113.10 NOKEY\n\n# PowerDNS\nallow-axfr-ips=203.0.113.10\n\n# PowerShell\nSet-DnsServerPrimaryZone -Name \"example.com\" -SecureSecondaries TransferToSecureServers -SecondaryServers \"203.0.113.10\"\n\n# Bash\ndig +short NS example.com\ndig AXFR example.com @ns1.example.net",
+  "module.zone_transfer.title": "DNS zone transfer (AXFR)",
+  "module.zone_transfer.why": "A server that hands its zone to anyone exposes every hostname and address of the domain, internal machines included: a map offered to the attacker.",
+  "zone_transfer.no_address": "No address found for the name servers of {zone}",
+  "zone_transfer.no_ns": "No name server for {zone}",
+  "zone_transfer.score_closed": "Zone transfer refused by the {count} name server(s)",
+  "zone_transfer.score_open": "Zone transfer open on: {servers}",
+  "zone_transfer.unreachable": "None of the {count} name server(s) answered on TCP port 53"
+}

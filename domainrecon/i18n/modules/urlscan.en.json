@@ -1,0 +1,13 @@
+{
+  "finding.urlscan.malicious": "urlscan.io: {count} recent scan(s) of this site are rated malicious (categories: {categories}). Report: {report}",
+  "module.urlscan.checks": "Reads urlscan.io's public history for the target (no new scan is started): number of scans, IP addresses and countries seen, title, screenshot and verdicts of the most recent scans.",
+  "module.urlscan.fix": "Open the urlscan.io report quoted in the finding: look at the screenshot, the loaded content, the IP addresses and domains contacted, the verdict category (malware, phishing...) and the brands impersonated.\nWork out what was scanned by comparing the IP address, server and domains in the report with yours: your site genuinely compromised (injected page or script, redirect, malicious third-party component), or a copy or impersonation of your site hosted elsewhere.\nIf it is your site, immediately remove the malicious content (pages, injected scripts, redirects, compromised third-party JavaScript libraries), restore a clean backup, update the CMS and plugins and change the passwords and API keys.\nIf it is an impersonation, report the page to its host and its registrar (abuse contact shown by RDAP or WHOIS) with the link to the report, and to a phishing reporting service such as Google Safe Browsing.\nOnce the site is clean, start a new public scan of your page on urlscan.io: the most recent verdict must be clean. The command in the snippet lists the domain's scan history.\nFor a wrong scan or a page that should not have been public, use the orange \"Report\" button on the result page to ask for its removal (see the urlscan.io FAQ).\nRun the DomainRecon scan again. Verdicts are only read with a urlscan.io API key and only for the 2 most recent scans: without a key, only the history is visible.",
+  "module.urlscan.fix_ref": "https://urlscan.io/docs/faq/",
+  "module.urlscan.fix_snippet": "curl -s -G \"https://urlscan.io/api/v1/search/\" --data-urlencode \"q=task.apexDomain:example.com AND page.apexDomain:example.com\" -d size=10",
+  "module.urlscan.title": "urlscan.io history",
+  "module.urlscan.why": "urlscan.io keeps a record of pages scanned by the community and by security tools: a malicious verdict or sudden hosting changes reveal a compromised or impersonated site.",
+  "urlscan.score_clean": "No malicious verdict on recent scans ({count} public scan(s))",
+  "urlscan.score_malicious": "Malicious verdict on a recent urlscan.io scan",
+  "urlscan.score_unknown": "No urlscan.io verdict available",
+  "urlscan.unreadable": "Unreadable urlscan.io response"
+}

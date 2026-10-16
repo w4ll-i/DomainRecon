@@ -1,0 +1,73 @@
+/* Page Aide : navigation interne, étapes numérotées, listes de définitions, questions. */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  font-size: 13px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding-left: 20px;
+}
+
+.steps li {
+  padding-left: 4px;
+}
+
+.steps strong {
+  display: block;
+  font-size: 14px;
+}
+
+.steps span {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.defs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.defs dt {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.defs dd {
+  margin: 2px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.faq {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.faq summary {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.faq p {
+  margin: var(--space-2) 0 0;
+}

@@ -1,0 +1,44 @@
+/* Module sans résultat : encart sans fond propre (il prend celui de la carte ou de la
+   page), pointillés gris pour un module non mesuré, trait plein pour un module sans
+   objet. */
+.notice {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--grade-na);
+  border-radius: var(--radius-sm);
+}
+
+.notice[data-kind="skipped"] {
+  border-style: solid;
+  border-color: var(--border);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reason {
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  color: var(--text-secondary);
+  font-size: 12px;
+}

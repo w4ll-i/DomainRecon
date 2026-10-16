@@ -1,0 +1,8 @@
+{
+  "module.web_files.checks": "Looks for the standard public files of the site: robots.txt, sitemap.xml and security.txt (security contact, RFC 9116).",
+  "module.web_files.fix": "Create the file `/.well-known/security.txt` (RFC 9116), served over HTTPS as `text/plain` in UTF-8. Two fields are mandatory: `Contact` (a `mailto:` address or https URL) and `Expires` (an ISO 8601 date, less than one year ahead).\nGive a dedicated, monitored mailbox (an alias such as `security@example.com`, not a personal address); add `Preferred-Languages`, `Canonical` (the file's address) and `Policy` (your disclosure policy) as needed.\nSet a calendar reminder to renew `Expires` before it passes: an expired file is treated as stale by researchers and tools.\nReview `robots.txt`: it is public, so do not list sensitive paths (administration, backups) believing it hides them. Protect them with authentication or IP filtering, then remove the `Disallow` lines that reveal them.\nCheck that `sitemap.xml` only lists the pages you want public, and declare it in `robots.txt` with a `Sitemap:` line.\nCheck publication with `curl -si https://example.com/.well-known/security.txt`, then run the scan again.",
+  "module.web_files.fix_ref": "https://www.rfc-editor.org/rfc/rfc9116",
+  "module.web_files.fix_snippet": "# security.txt\nContact: mailto:security@example.com\nExpires: 2027-06-30T23:00:00.000Z\nPreferred-Languages: en, fr\nCanonical: https://example.com/.well-known/security.txt\nPolicy: https://example.com/security-policy",
+  "module.web_files.title": "Web files",
+  "module.web_files.why": "security.txt tells researchers whom to notify about a vulnerability; robots.txt sometimes reveals sensitive paths thought to be hidden."
+}

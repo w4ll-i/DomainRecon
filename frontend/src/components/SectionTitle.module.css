@@ -1,0 +1,65 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.section[data-align="center"] {
+  align-items: center;
+  text-align: center;
+}
+
+/* Étiquette : mono en majuscules, texte secondaire (lisible sur toutes les surfaces). */
+.label {
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Étiquette seule (menu) : plus discrète, sans filet. */
+.alone {
+  display: block;
+  width: 100%;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Titre suivi d'un élément (pastille de compte) : sur une même ligne, alignés au centre. */
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.title {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.title[data-size="page"] {
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.title[data-size="hero"] {
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.title[data-level="3"] {
+  font-size: 16px;
+}
+
+/* Mot mis en valeur : même couleur que le titre (l'accent bleu est réservé au focus, aux
+   liens, à la sélection et à la progression). */
+.accent {
+  color: inherit;
+}

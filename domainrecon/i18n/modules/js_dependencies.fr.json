@@ -1,0 +1,20 @@
+{
+  "finding.js_dependencies.risky_cdn": "Script chargé depuis {host}, domaine compromis (attaque de la chaîne d'approvisionnement de 2024) : le retirer ou le remplacer.",
+  "finding.js_dependencies.sri_missing": "{count} ressource(s) tierce(s) sans attribut d'intégrité (SRI), dont {scripts} script(s), chez : {hosts}.",
+  "finding.js_dependencies.vulnerable": "{name} {version} : {count} vulnérabilité(s) connue(s), dont {cve}. Corrigé à partir de : {fixed}.",
+  "js_dependencies.kind_code_injection": "injection de code",
+  "js_dependencies.kind_csrf": "falsification de requête (CSRF)",
+  "js_dependencies.kind_dos": "déni de service",
+  "js_dependencies.kind_path_traversal": "traversée de chemin",
+  "js_dependencies.kind_prototype_pollution": "pollution de prototype",
+  "js_dependencies.kind_redos": "déni de service par expression régulière (ReDoS)",
+  "js_dependencies.kind_ssrf": "requête serveur forgée (SSRF)",
+  "js_dependencies.kind_xss": "injection de script (XSS)",
+  "js_dependencies.score_detail": "{vulnerable} bibliothèque(s) vulnérable(s), {sri} ressource(s) sans SRI",
+  "module.js_dependencies.checks": "Détecte les bibliothèques JavaScript chargées par la page (CDN et fichiers du site), leurs vulnérabilités connues (OSV.dev et table locale), l'intégrité des sous-ressources (SRI) et les CDN compromis comme polyfill.io.",
+  "module.js_dependencies.fix": "Si un script vient de `polyfill.io` ou d'un domaine du même opérateur (compromis en 2024), retirez-le immédiatement de vos modèles de pages, thèmes et gestionnaires de balises : il peut injecter du code malveillant chez vos visiteurs. Remplacez-le par une copie hébergée chez vous ou par un miroir de confiance chargé avec `integrity`, et vérifiez que le site n'a pas déjà redirigé des visiteurs.\nMettez à jour chaque bibliothèque vulnérable vers la version indiquée par « Corrigé à partir de » dans le constat (ou une plus récente), puis testez les pages concernées.\nSi une bibliothèque n'est plus maintenue (AngularJS par exemple), remplacez-la par une alternative suivie ; en attendant, n'y faites passer que du contenu de confiance.\nAjoutez les attributs `integrity` et `crossorigin=\"anonymous\"` à chaque script et feuille de style chargés depuis un autre domaine, avec une version figée dans l'adresse (jamais `latest`) : l'extrait montre la balise et la commande qui calcule l'empreinte.\nRecalculez l'empreinte à chaque changement de version. Si le navigateur bloque la ressource, vérifiez l'empreinte et l'en-tête `Access-Control-Allow-Origin` du CDN.\nLes services dont le contenu change à dessein (Google Tag Manager, Stripe, polices Google) ne se protègent pas par `integrity` : limitez-les avec `script-src` dans la `Content-Security-Policy`.\nMieux : hébergez vous-même vos bibliothèques (npm et build, ou copie versionnée) et suivez-les avec `npm audit` ou un outil comme Dependabot ou Renovate.\nRelancez le scan.",
+  "module.js_dependencies.fix_ref": "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity",
+  "module.js_dependencies.fix_snippet": "# HTML\n<script src=\"https://cdn.example.com/lib/1.2.3/lib.min.js\"\n  integrity=\"sha384-BASE64_HASH\"\n  crossorigin=\"anonymous\"></script>\n\n# Bash\ncurl -s https://cdn.example.com/lib/1.2.3/lib.min.js | openssl dgst -sha384 -binary | openssl base64 -A",
+  "module.js_dependencies.title": "Dépendances JavaScript",
+  "module.js_dependencies.why": "Une bibliothèque obsolète donne une faille toute faite, et un script tiers sans SRI peut être remplacé par du code hostile : c'est une attaque de la chaîne d'approvisionnement."
+}

@@ -1,0 +1,11 @@
+{
+  "module.securitytrails.checks": "Queries SecurityTrails (API key) for the domain's known subdomains and the history of its IPv4 addresses.",
+  "module.securitytrails.fix": "Compare the subdomains and addresses found with your current inventory: a name or address you do not recognize is a forgotten service or a leftover of old infrastructure.\nFor a forgotten subdomain: delete its DNS record, then shut down the service behind it; check that no CNAME points to a terminated third-party service (subdomain takeover modules).\nFor each old address in the history: check that it no longer answers for your name (first command in the snippet). If it still hosts a service, terminate or move it; if it was returned to the host, make sure no current record points to it.\nIf your site is behind a CDN and the history shows the real address of the origin server: accept only the CDN's connections on the origin, using the address ranges published by the provider (see the snippet, to be adapted); if the origin stayed exposed for a long time, ask your host for a new IP address.\nDo not expect to erase the history: third-party sources keep it. Consider any address that appears there as known to third parties.\nRun this scan again after every migration or change of host to check that the old infrastructure no longer answers.",
+  "module.securitytrails.fix_ref": "https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/",
+  "module.securitytrails.fix_snippet": "# Bash\ncurl -sI --max-time 10 --resolve example.com:443:203.0.113.10 https://example.com/\n\n# nginx\nlocation / {\n    allow 203.0.113.0/24;\n    deny all;\n}\n\n# Apache\n<Location \"/\">\n    Require ip 203.0.113.0/24\n</Location>",
+  "module.securitytrails.title": "SecurityTrails",
+  "module.securitytrails.why": "Yesterday's subdomains and addresses reveal forgotten services and the real address of a server behind a CDN.",
+  "securitytrails.key_rejected": "SecurityTrails rejected the key (invalid or outside the plan)",
+  "securitytrails.no_key": "SecurityTrails key missing",
+  "securitytrails.unreadable": "Unreadable SecurityTrails response"
+}

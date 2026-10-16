@@ -1,0 +1,141 @@
+/* Barres de décomposition du score. La valeur d'une barre est l'attribut value
+   d'un <progress> ; la couleur vient de --bar-fill, posée par data-kind :
+   mesuré = accent, bonus = cyan, non mesuré = pointillé gris, sans objet = rayé.
+   Barres plates : aplat uni, aucun dégradé.
+   Les pseudo-éléments propres à chaque moteur ne se groupent pas dans une même
+   règle : un sélecteur inconnu invaliderait toute la liste. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  /* La mise en page suit la largeur de la liste, pas celle de la fenêtre (voir @container). */
+  container-type: inline-size;
+}
+
+.row {
+  --bar-fill: var(--text-secondary);
+  display: grid;
+  /* Colonne des valeurs de largeur fixe : les barres de toutes les lignes se terminent
+     au même endroit, que la ligne dise « 19/25 » ou « non mesuré ». */
+  grid-template-columns: minmax(88px, 150px) minmax(0, 1fr) 100px;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.row[data-kind="bonus"] {
+  --bar-fill: var(--text);
+}
+
+.row[data-kind="notMeasured"],
+.row[data-kind="notApplicable"] {
+  --bar-fill: transparent;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.value {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Bonus, non mesuré, sans objet : le texte remplace le nombre de points. */
+.row:not([data-kind="points"]) .value {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+/* Explication du critère : sous la barre, sur toute la largeur de la ligne. */
+.detail {
+  grid-column: 1 / -1;
+  margin-top: -4px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.bar {
+  display: block;
+  width: 100%;
+  height: 8px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--border);
+  color: var(--accent);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.bar::-webkit-progress-bar {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.bar::-webkit-progress-value {
+  background: var(--bar-fill);
+  border-radius: 4px;
+}
+
+.bar::-moz-progress-bar {
+  background: var(--bar-fill);
+  border-radius: 4px;
+}
+
+/* Bonus : piste cerclée, qui se lit même à zéro. */
+.row[data-kind="bonus"] .bar {
+  background: transparent;
+  outline: 1px solid var(--border-strong);
+  outline-offset: -1px;
+}
+
+.row[data-kind="bonus"] .bar::-webkit-progress-bar {
+  background: transparent;
+}
+
+/* Non mesuré : gabarit vide au contour pointillé gris, comme les autres « N/A ». */
+.row[data-kind="notMeasured"] .bar {
+  background: transparent;
+  border: 1px dashed var(--grade-na);
+}
+
+.row[data-kind="notMeasured"] .bar::-webkit-progress-bar {
+  background: transparent;
+}
+
+/* Sans objet : piste transparente rayée. */
+.row[data-kind="notApplicable"] .bar {
+  background: repeating-linear-gradient(135deg, var(--border-strong) 0 3px, transparent 3px 7px);
+}
+
+.row[data-kind="notApplicable"] .bar::-webkit-progress-bar {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar::-webkit-progress-value {
+    transition: none;
+  }
+}
+
+/* Liste étroite : la barre passe sous l'étiquette et la valeur, sur toute la largeur. */
+@container (max-width: 380px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .bar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}

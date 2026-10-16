@@ -1,0 +1,16 @@
+{
+  "finding.leakix.exposed": "{count} service(s) reachable without authentication according to LeakIX",
+  "finding.leakix.leaks": "LeakIX reports {count} data leak(s) ({critical} critical)",
+  "leakix.key_missing": "LeakIX key not set (Settings)",
+  "leakix.key_rejected": "LeakIX key rejected by the service",
+  "leakix.score_clean": "No leak or open service reported by LeakIX",
+  "leakix.score_exposed": "{count} service(s) open without authentication",
+  "leakix.score_leaks": "{count} leak(s) reported by LeakIX",
+  "leakix.unreadable": "Unreadable response from the LeakIX service",
+  "module.leakix.checks": "Queries LeakIX (key required) for data leaks and services exposed without authentication on the domain or address. Credentials found are never copied.",
+  "module.leakix.fix": "Remove the exposure right away: for each host and port reported in the result, block access from the Internet (server firewall, security group or your cloud provider's firewall) or stop the service if it is not needed; for a file, backup or status page reachable by URL, remove it from the web server.\nIf the leak or the open service gave access to credentials, API keys, tokens or a database: assume they were copied, change the passwords, revoke and regenerate the keys, then look in the access logs for unknown connections since the date of the exposure.\nMake the service listen only locally (`127.0.0.1`) or on the private network and require authentication: databases (Redis, MongoDB, Elasticsearch, PostgreSQL, MySQL), admin consoles and dashboards must never be open to the Internet (snippet below).\nFor remote administration (SSH, RDP, web admin interface): restrict access to your fixed IP addresses or go through a VPN, and turn on multi-factor authentication when the service supports it.\nIf LeakIX reports a known vulnerability (CVE) on a service: update it to a fixed version, or put it behind a reverse proxy with authentication while the update is not possible.\nCheck from outside your network that the port no longer answers, for example with `nc -vz 203.0.113.10 6379` or `nmap -Pn -p 6379 203.0.113.10` (replace the address and port with those of the finding).\nRun the scan again: LeakIX rescans the host on its next passes, and the free plan returns results delayed by about 15 days; the finding can therefore stay displayed for a while after the fix.",
+  "module.leakix.fix_ref": "https://docs.leakix.net/docs/getting-started/",
+  "module.leakix.fix_snippet": "# Redis (redis.conf)\nbind 127.0.0.1 -::1\nprotected-mode yes\n\n# MongoDB (mongod.conf)\nnet:\n  bindIp: 127.0.0.1\nsecurity:\n  authorization: enabled\n\n# Elasticsearch (elasticsearch.yml)\nnetwork.host: 127.0.0.1\nxpack.security.enabled: true\n\n# PostgreSQL (postgresql.conf)\nlisten_addresses = 'localhost'\n\n# MySQL / MariaDB (my.cnf)\n[mysqld]\nbind-address = 127.0.0.1\n\n# ufw (Linux)\nsudo ufw deny 6379/tcp\nsudo ufw status numbered",
+  "module.leakix.title": "LeakIX (exposed services and leaks)",
+  "module.leakix.why": "A database or service left open without authentication is exploited by bots within hours; knowing it is indexed lets you close it first."
+}

@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Version=1.5
+Name=DomainRecon
+GenericName=OSINT domain scanner
+GenericName[fr]=Analyse OSINT de domaines
+Comment=Scan a domain and grade its security
+Comment[fr]=Analyser un domaine et noter sa sécurité
+Exec=domainrecon
+Icon=domainrecon
+Terminal=false
+Categories=Network;
+Keywords=OSINT;DNS;TLS;security;domain;
+Keywords[fr]=OSINT;DNS;TLS;sécurité;domaine;
+StartupNotify=true

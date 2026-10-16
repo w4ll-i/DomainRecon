@@ -1,0 +1,13 @@
+{
+  "module.pdns_data.checks": "Réunit l'historique des enregistrements DNS du domaine : CIRCL Passive DNS et AlienVault OTX (identifiants facultatifs) et Robtex (gratuit).",
+  "module.pdns_data.fix": "Triez l'historique par date et repérez les adresses et les noms qui ne figurent plus dans votre zone actuelle : anciens hébergeurs, migrations passées, environnements retirés.\nPour chaque ancienne adresse : vérifiez qu'elle ne répond plus pour votre nom (première commande de l'extrait) ; si elle héberge encore un service, résiliez-le ou déplacez-le, et confirmez qu'aucun enregistrement actuel ne la vise.\nPour chaque ancien nom : s'il n'est plus dans votre zone, il n'y a rien à supprimer côté DNS, mais contrôlez qu'aucun CNAME ne pend vers un service tiers résilié et que les certificats de ce nom sont révoqués ou expirés.\nSi l'historique révèle l'adresse d'origine d'un site protégé par un CDN : limitez l'origine aux connexions du CDN (voir l'extrait, plages d'adresses à adapter), et si ce serveur est resté joignable en direct, demandez à l'hébergeur une nouvelle adresse IP.\nN'envoyez pas de courrier ni ne publiez d'enregistrement direct depuis l'adresse d'origine du serveur : un MX, un SPF ou un en-tête de message la rendrait visible.\nLes archives tierces ne s'effacent pas : considérez toute adresse qui y figure comme connue de tiers, et rejouez ce scan après chaque changement d'hébergement.",
+  "module.pdns_data.fix_ref": "https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/",
+  "module.pdns_data.fix_snippet": "# Bash\ncurl -sI --max-time 10 --resolve example.com:443:203.0.113.10 https://example.com/\n\n# nginx\nlocation / {\n    allow 203.0.113.0/24;\n    deny all;\n}\n\n# Apache\n<Location \"/\">\n    Require ip 203.0.113.0/24\n</Location>",
+  "module.pdns_data.title": "DNS passif (historique)",
+  "module.pdns_data.why": "L'historique montre les adresses et noms que le domaine a utilisés : anciens hébergeurs, serveurs d'origine derrière un CDN, services oubliés.",
+  "pdns_data.all_failed": "Aucune source de DNS passif n'a répondu : {errors}",
+  "pdns_data.circl_rejected": "CIRCL a refusé les identifiants",
+  "pdns_data.credentials_needed": "{service} : identifiants non renseignés, source passée",
+  "pdns_data.otx_rejected": "AlienVault OTX a refusé la clé",
+  "pdns_data.unreadable": "{service} : réponse illisible"
+}

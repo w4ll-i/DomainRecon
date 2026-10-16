@@ -1,0 +1,53 @@
+/* Note en grand : lettre typographique à la couleur de la note (data-grade), score sur 100
+   en retrait. La lettre est toujours écrite : la couleur ne la porte jamais seule. */
+.gauge {
+  --gauge-color: var(--grade-na);
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  color: var(--gauge-color);
+}
+
+.gauge[data-grade="A"] {
+  --gauge-color: var(--grade-a);
+}
+
+.gauge[data-grade="B"] {
+  --gauge-color: var(--grade-b);
+}
+
+.gauge[data-grade="C"] {
+  --gauge-color: var(--grade-c);
+}
+
+.gauge[data-grade="D"] {
+  --gauge-color: var(--grade-d);
+}
+
+.gauge[data-grade="F"] {
+  --gauge-color: var(--grade-f);
+}
+
+.letter {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* N/A et score indicatif : lettre plus discrète, en texte secondaire (contraste AA). */
+.gauge[data-state="na"] .letter,
+.gauge[data-state="indicative"] .letter {
+  color: var(--text-secondary);
+}
+
+.score {
+  color: var(--text-secondary);
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  color: var(--text-tertiary);
+  font-size: 13px;
+}

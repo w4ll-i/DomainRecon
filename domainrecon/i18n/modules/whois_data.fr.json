@@ -1,0 +1,17 @@
+{
+  "finding.whois_data.expired": "Le domaine est expiré selon le registre : il peut être repris par un tiers",
+  "finding.whois_data.expires_soon": "Le domaine expire dans {days} jour(s) : à renouveler",
+  "finding.whois_data.no_transfer_lock": "Aucun verrou de transfert (clientTransferProhibited) : le domaine peut être transféré sans blocage",
+  "module.whois_data.checks": "Interroge le registre du domaine, par RDAP puis WHOIS en repli : bureau d'enregistrement, dates de création et d'expiration, serveurs de noms, statuts de protection (verrous), DNSSEC et contacts publics.",
+  "module.whois_data.fix": "Connectez-vous à la console de votre bureau d'enregistrement (registrar), celui qui figure dans le résultat du module, et vérifiez la date d'expiration, le titulaire et l'adresse e-mail de contact : elle doit être à jour et surveillée, car les avis d'expiration y sont envoyés.\nSi le domaine est expiré ou expire dans moins de 60 jours : renouvelez-le tout de suite, de préférence pour plusieurs années. Un domaine expiré passe par une période de grâce puis de rédemption (restauration payante) avant d'être supprimé et rachetable par un tiers, qui récupérerait votre site et vos e-mails.\nActivez le renouvellement automatique avec un moyen de paiement valide (carte non expirée) et ajoutez un rappel dans votre agenda 90 jours avant l'échéance.\nSi le module signale l'absence de verrou de transfert : activez le verrouillage du domaine dans la console du registrar (souvent nommé « Registrar Lock » ou « Verrouillage »), qui ajoute le statut `clientTransferProhibited`. Pour un domaine critique, demandez aussi le verrou du registre (« Registry Lock », statut `serverTransferProhibited`) si votre extension et votre registrar le proposent.\nProtégez l'accès au compte du registrar : mot de passe long et unique, authentification à deux facteurs, au moins deux administrateurs de confiance. Ne communiquez jamais le code de transfert (« auth code » ou code EPP) et faites-le régénérer s'il a pu fuiter.\nComparez le reste de l'enregistrement à ce que vous attendez : serveurs de noms (ceux de votre hébergeur DNS), registrar, DNSSEC et contacts publics (préférez une adresse de rôle à une adresse personnelle). Tout écart inconnu est à traiter comme un détournement : contactez aussitôt le registrar.\nVérifiez : interrogez le registre avec les commandes de l'extrait et contrôlez les statuts et la date d'expiration, puis relancez le scan.",
+  "module.whois_data.fix_ref": "https://messervices.cyber.gouv.fr/guides/bonnes-pratiques-pour-lacquisition-et-lexploitation-de-noms-de-domaine",
+  "module.whois_data.fix_snippet": "# whois\nwhois example.com | grep -iE \"status|expir\"\n# RDAP\ncurl -sL https://rdap.org/domain/example.com",
+  "module.whois_data.title": "WHOIS / RDAP",
+  "module.whois_data.why": "Un domaine qui expire bientôt ou sans verrou de transfert peut être perdu ou détourné, avec tout ce qui en dépend (site, messagerie).",
+  "whois_data.score_expired": "Domaine expiré depuis {days} jour(s)",
+  "whois_data.score_no_date": "Date d'expiration non publiée par le registre",
+  "whois_data.score_no_lock": "Aucun verrou de transfert sur le domaine",
+  "whois_data.score_ok": "Domaine valide encore {days} jour(s), verrouillé contre le transfert",
+  "whois_data.score_soon": "Le domaine expire dans {days} jour(s)",
+  "whois_data.score_unregistered": "Domaine non enregistré selon le registre"
+}

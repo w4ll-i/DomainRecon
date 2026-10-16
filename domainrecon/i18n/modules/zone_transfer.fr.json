@@ -1,0 +1,14 @@
+{
+  "finding.zone_transfer.open": "Transfert de zone (AXFR) accepté par {servers} : {count} enregistrements livrés à n'importe qui. Limitez l'AXFR à vos serveurs secondaires.",
+  "module.zone_transfer.checks": "Demande une copie complète de la zone (AXFR) à chaque serveur de noms du domaine. Module actif : connexions TCP vers les serveurs de noms.",
+  "module.zone_transfer.fix": "Le constat cite les serveurs de noms qui livrent la zone : fermez le transfert sur chacun d'eux sans attendre, car n'importe qui peut déjà copier la liste complète de vos noms et adresses.\nSi vos serveurs de noms sont tenus par un hébergeur DNS ou un registrar : désactivez le transfert de zone (AXFR) dans le panneau d'administration, ou demandez au support de le restreindre à vos serveurs secondaires.\nSi vous gérez vous-même vos serveurs de noms (BIND, NSD, PowerDNS, Windows DNS) : limitez le transfert aux seules adresses de vos serveurs secondaires, idéalement avec une clé TSIG, et refusez tous les autres (voir l'extrait).\nSi un serveur secondaire légitime a besoin de la zone, ajoutez son adresse IP à la liste autorisée plutôt que d'ouvrir le transfert à tous.\nConsidérez la liste des noms et adresses de la zone comme déjà connue de tiers : retirez du DNS public les enregistrements internes ou obsolètes (hôtes internes, adresses privées, anciens serveurs) et contrôlez les services qu'ils désignent.\nVérifiez avec `dig +short NS example.com`, puis `dig AXFR example.com @ns1.example.net` pour chaque serveur : la réponse doit être `Transfer failed.` ou `REFUSED`, jamais la liste des enregistrements. Relancez ensuite le scan.",
+  "module.zone_transfer.fix_ref": "https://www.rfc-editor.org/rfc/rfc5936",
+  "module.zone_transfer.fix_snippet": "# BIND\nzone \"example.com\" {\n    type master;\n    file \"/etc/bind/db.example.com\";\n    allow-transfer { 203.0.113.10; };\n};\n\n# NSD\nzone:\n    name: \"example.com\"\n    zonefile: \"example.com.zone\"\n    provide-xfr: 203.0.113.10 NOKEY\n\n# PowerDNS\nallow-axfr-ips=203.0.113.10\n\n# PowerShell\nSet-DnsServerPrimaryZone -Name \"example.com\" -SecureSecondaries TransferToSecureServers -SecondaryServers \"203.0.113.10\"\n\n# Bash\ndig +short NS example.com\ndig AXFR example.com @ns1.example.net",
+  "module.zone_transfer.title": "Transfert de zone DNS (AXFR)",
+  "module.zone_transfer.why": "Un serveur qui livre sa zone à n'importe qui expose tous les noms d'hôtes et adresses du domaine, y compris les machines internes : c'est une cartographie offerte à l'attaquant.",
+  "zone_transfer.no_address": "Aucune adresse trouvée pour les serveurs de noms de {zone}",
+  "zone_transfer.no_ns": "Aucun serveur de noms pour {zone}",
+  "zone_transfer.score_closed": "Transfert de zone refusé par les {count} serveur(s) de noms",
+  "zone_transfer.score_open": "Transfert de zone ouvert sur : {servers}",
+  "zone_transfer.unreachable": "Aucun des {count} serveur(s) de noms n'a répondu sur le port 53 en TCP"
+}

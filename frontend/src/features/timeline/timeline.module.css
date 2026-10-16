@@ -1,0 +1,267 @@
+/* Timeline d'un domaine : titre SectionTitle, trois indicateurs (StatCard), courbe du
+   score, tableau des relevés avec changements DNS, domaines du même site. Cartes à plat,
+   bordures de 1 px, aucune ombre. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.back:hover {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.back svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Blocs sous le titre. */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.total {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* Indicateurs : trois cartes d'égale largeur, une colonne sur téléphone. */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.kpiBest {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Valeur d'une StatCard (dont la valeur fait 24 px par défaut) : ramenée à 18 px. */
+.kpiValue {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.chart {
+  position: relative;
+  height: 260px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+/* Colonne des changements DNS : une largeur minimale évite des lignes de plusieurs écrans
+   de haut quand le tableau défile sur un écran moyen. */
+.table th:last-child,
+.table td:last-child {
+  min-width: 240px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th,
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+  vertical-align: top;
+}
+
+/* En-têtes de colonnes : étiquettes mono en majuscules, discrètes. */
+.table thead th {
+  border-bottom-color: var(--border);
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Survol : un léger voile neutre sur --surface-card (le fond reste proche de la carte,
+   pour que les textes colorés gardent leur contraste sous le curseur). */
+.row {
+  --row-hover: color-mix(in srgb, var(--text) 4%, var(--surface-card));
+}
+
+.row:hover,
+.row:focus-within {
+  background: var(--row-hover);
+}
+
+.date {
+  white-space: nowrap;
+}
+
+.ip {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.score [data-low="true"] {
+  color: var(--text-secondary);
+}
+
+.coverage {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.changes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.change {
+  display: block;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.change[data-kind="added"] {
+  color: var(--success);
+}
+
+.change[data-kind="removed"] {
+  color: var(--danger);
+}
+
+/* Type d'enregistrement : étiquette mono neutre. */
+.recordType {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (max-width: 720px) {
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: var(--space-3);
+  }
+
+  .chart {
+    height: 220px;
+  }
+}
+
+/* Téléphone : un relevé par carte (date en titre), libellés tirés de data-label, comme
+   dans l'Historique ; plus de défilement horizontal. */
+@media (max-width: 640px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody {
+    display: block;
+  }
+
+  .table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: var(--space-2);
+    padding: var(--space-2) 0;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .table th,
+  .table td {
+    border-bottom: 0;
+    padding: 4px 12px;
+  }
+
+  .table td:last-child {
+    min-width: 0;
+  }
+
+  .table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 12px;
+  }
+
+  .date,
+  .changesCell {
+    grid-column: 1 / -1;
+  }
+}

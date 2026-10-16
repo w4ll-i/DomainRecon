@@ -1,0 +1,15 @@
+{
+  "finding.intelx.leaks": "Intelligence X lists {count} leak document(s) for this domain ({credentials} in credential databases)",
+  "intelx.key_missing": "Intelligence X key not set (Settings)",
+  "intelx.key_rejected": "Intelligence X key rejected (tried on the free and paid plans)",
+  "intelx.no_credit": "Intelligence X credits exhausted for this key",
+  "intelx.score_clean": "No leak listed by Intelligence X",
+  "intelx.score_found": "{count} leak document(s) in {buckets} bucket(s)",
+  "intelx.search_refused": "Search refused by Intelligence X (invalid term or too many concurrent searches)",
+  "intelx.unreadable": "Unreadable response from the Intelligence X service",
+  "module.intelx.checks": "Searches \"@domain\" in leaks, pastes and dark web collections indexed by Intelligence X (free or paid account). Only metadata is read: no credential is downloaded.",
+  "module.intelx.fix": "From a clean device, force a password reset for the domain accounts whose credentials appear in the leaks (email, VPN, administration, business tools; all accounts if you do not know which ones), then revoke their sessions, tokens and app passwords.\nOn intelx.io, with the account of the key, look at the documents found: their date and their database (bucket) show where the leak comes from and which addresses are affected; do not share their content.\nIf the documents come from stealer-malware log collections (buckets `dumpster` or `darknet`): the user's computer is probably infected; scan it with an antivirus or EDR, or reinstall it, before changing passwords, otherwise the new ones will be stolen too.\nTurn on multi-factor authentication on the affected accounts, starting with email and administration; prefer security keys or passkeys (FIDO2) over codes sent by SMS.\nLook for reuse: any identical password used on another service, professional or personal, must be changed too; require a unique password per service with a password manager.\nReject already-compromised passwords when accounts are created and favor long passphrases (see the reference).\nInform the people concerned and remind them not to use their work address to sign up for external services: a large share of leaks comes from hacked third-party services, not from your domain.\nRun the scan again later: a leak document stays indexed even once passwords are changed, so the finding does not go away; only watch for new documents or new databases.",
+  "module.intelx.fix_ref": "https://pages.nist.gov/800-63-4/sp800-63b.html",
+  "module.intelx.title": "Intelligence X (credential leaks)",
+  "module.intelx.why": "Domain credentials in leaks allow account takeover; knowing about them lets you force a password reset."
+}

@@ -1,0 +1,12 @@
+{
+  "finding.observatory.low_grade": "The MDN HTTP Observatory grades the site's HTTP security {grade}.",
+  "module.observatory.checks": "Queries the MDN HTTP Observatory (formerly Mozilla Observatory, API v2): A+ to F grade for the site's HTTP security (CSP, HSTS, cookies, redirections, SRI, headers).",
+  "module.observatory.fix": "Open the MDN HTTP Observatory report for your domain (the link is in the module result) and note the failed tests: that is the list of what lowers the grade.\nFix HTTPS and the HTTP to HTTPS redirect first, then HSTS: see the \"Redirects\" and \"Security headers\" modules, which give ready-to-copy snippets for nginx, Apache, IIS and Caddy.\nThen add a `Content-Security-Policy` without `'unsafe-inline'`, followed by `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY` (or `frame-ancestors`) and `Referrer-Policy: strict-origin-when-cross-origin`.\nProtect session cookies with the `Secure`, `HttpOnly` and `SameSite=Lax` (or `Strict`) attributes, and add the `integrity` attribute to scripts and stylesheets loaded from another domain (see the \"JavaScript dependencies\" module).\nIf the service cannot reach the site (firewall, IP allowlist, bot protection), allow its requests for the duration of the test: the scan is run from Mozilla's servers, not from your machine.\nWait at least 60 seconds between two scans of the same host (service limit), then run it again: an A or A+ grade is the goal, but it does not replace fixes or the other checks.",
+  "module.observatory.fix_ref": "https://developer.mozilla.org/en-US/observatory/docs/tests_and_scoring",
+  "module.observatory.fix_snippet": "# HTTP\nSet-Cookie: session=VALUE; Secure; HttpOnly; SameSite=Lax; Path=/",
+  "module.observatory.title": "MDN Observatory",
+  "module.observatory.why": "It is an independent second opinion, produced by Mozilla, on the site's HTTP security. The scan is run by Mozilla's servers: the target receives a request from them.",
+  "observatory.scan_error": "The MDN Observatory service could not analyse the site ({reason})",
+  "observatory.score_grade": "MDN Observatory grade {grade}",
+  "observatory.score_unknown": "Observatory grade unavailable"
+}

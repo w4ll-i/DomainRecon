@@ -1,0 +1,16 @@
+{
+  "finding.safebrowsing.flagged": "Google Safe Browsing flags the site: {threats}.",
+  "module.safebrowsing.checks": "Checks in Google Safe Browsing (API v5, hash-based: the URL is never sent) whether the domain, \"www.\" and the main domain are listed as malware, phishing, unwanted software or harmful application.",
+  "module.safebrowsing.fix": "If visitors are at risk, immediately put the site into maintenance mode or take it offline while you clean it.\nOpen the \"Security issues\" report in Google Search Console (add and verify the domain as a property first): it lists the flagged URLs and the type of threat (malware, phishing, unwanted software, harmful application).\nRemove what is flagged: phishing pages, malicious files and scripts, booby-trapped downloads, compromised ads or third-party components, then restore a clean backup from before the intrusion.\nClose the entry point: update the CMS, plugins and themes, remove those you no longer use, change all passwords (administration, FTP or SFTP, database, host) and API keys, and delete unknown accounts.\nAlso check `www` and the subdomains: the check covers the domain, `www.` and the main domain. Delete orphaned DNS records (CNAME to a terminated service) that a third party could take over.\nCheck the flagged pages from a network different from your host's, then verify that they no longer serve dangerous content.\nIn the \"Security issues\" report, click \"Request review\": describe the exact issue, the fixes you made and the result. Do it only once everything is fixed on all pages: a premature request can lengthen later reviews.\nDo not send a new request while the first is pending: the review can take from a few days to a few weeks and Google emails you when it receives the request and when it finishes.\nRun the DomainRecon scan again once the warning is lifted (the result is cached briefly) and monitor the site: regular updates, backups, alerts on file changes.",
+  "module.safebrowsing.fix_ref": "https://support.google.com/webmasters/answer/9044101",
+  "module.safebrowsing.title": "Google Safe Browsing",
+  "module.safebrowsing.why": "A site listed by Safe Browsing is blocked by Chrome, Firefox and Safari behind a red warning page: traffic collapses and visitor trust is lost.",
+  "safebrowsing.cap_reason": "Site listed as malware or phishing by Google Safe Browsing",
+  "safebrowsing.score_flagged": "Flagged by Safe Browsing: {threats}",
+  "safebrowsing.score_safe": "No threat known to Safe Browsing",
+  "safebrowsing.threat_harmful_application": "potentially harmful application",
+  "safebrowsing.threat_malware": "malware",
+  "safebrowsing.threat_social_engineering": "phishing (social engineering)",
+  "safebrowsing.threat_unwanted_software": "unwanted software",
+  "safebrowsing.unreadable": "Unreadable Safe Browsing response"
+}

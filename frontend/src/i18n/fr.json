@@ -1,0 +1,1814 @@
+{
+  "common": {
+    "na": "N/A",
+    "yes": "Oui",
+    "no": "Non",
+    "unknown": "Inconnu",
+    "loading": "Chargement…",
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "showAll": "Tout afficher ({{count}})",
+    "showLess": "Réduire",
+    "listSeparator": " ; ",
+    "indicative": "(indicatif)"
+  },
+  "tabsNav": {
+    "previous": "Onglets précédents",
+    "next": "Onglets suivants",
+    "all": "Tous",
+    "allHidden": "les onglets",
+    "menu": "Tous les onglets",
+    "menuOf": "Tous les onglets : {{label}}"
+  },
+  "nav": {
+    "label": "Navigation principale",
+    "skip": "Aller au contenu",
+    "brandTagline": "Reconnaissance de domaines",
+    "newScan": "Nouveau scan",
+    "result": "Résultat",
+    "resultDisabled": "Aucun résultat consulté pour l'instant",
+    "history": "Historique",
+    "settings": "Réglages",
+    "language": "Langue",
+    "scan": "Scanner",
+    "dashboard": "Tableau de bord",
+    "batch": "Lot",
+    "compare": "Comparer",
+    "monitoring": "Surveillance",
+    "help": "Aide"
+  },
+  "server": {
+    "online": "Serveur en ligne",
+    "degraded": "Serveur dégradé",
+    "offline": "Serveur injoignable",
+    "checking": "Vérification du serveur…",
+    "stopped": "DomainRecon ne répond plus : il s'est sans doute arrêté automatiquement (onglet fermé, ou mis en veille par le navigateur). Relancez DomainRecon, puis rechargez cette page."
+  },
+  "lang": {
+    "fr": "Français",
+    "en": "English"
+  },
+  "errors": {
+    "title": "Une erreur est survenue",
+    "routeTitle": "Cet écran n'a pas pu s'afficher",
+    "reload": "Recharger la page",
+    "network": "Serveur injoignable : vérifiez la connexion puis réessayez.",
+    "unreadable": "Réponse illisible du serveur (HTTP {{status}}).",
+    "validation": "Données refusées : {{details}}",
+    "http": {
+      "400": "Requête refusée par le serveur.",
+      "401": "Authentification requise : jeton d'API absent ou invalide.",
+      "403": "Accès refusé.",
+      "404": "Ressource introuvable.",
+      "413": "Requête trop volumineuse.",
+      "415": "Format de requête refusé par le serveur.",
+      "422": "Données refusées par le serveur.",
+      "429": "Trop de requêtes en cours : réessayez dans quelques instants.",
+      "500": "Erreur interne du serveur : consultez les journaux du serveur.",
+      "502": "Serveur injoignable derrière le proxy (HTTP 502) : réessayez dans quelques instants.",
+      "503": "Service indisponible : réessayez dans quelques instants.",
+      "504": "Délai dépassé (HTTP 504) : le serveur n'a pas répondu à temps.",
+      "5xx": "Erreur du serveur (HTTP {{status}}) : réessayez dans quelques instants.",
+      "other": "Erreur HTTP {{status}}"
+    }
+  },
+  "token": {
+    "title": "Jeton d'API",
+    "text": "Ce serveur exige un jeton d'API (variable API_TOKEN). Il est gardé dans cet onglet seulement, et oublié à sa fermeture.",
+    "label": "Jeton d'API",
+    "submit": "Valider",
+    "forget": "Oublier le jeton",
+    "rejected": "Le serveur a refusé ce jeton : saisissez-le à nouveau.",
+    "required": "Saisissez le jeton d'API.",
+    "ascii": "Le jeton ne peut contenir que des caractères ASCII imprimables.",
+    "saved": "Jeton d'API enregistré pour cet onglet",
+    "forgotten": "Jeton d'API oublié"
+  },
+  "toast": {
+    "region": "Notifications",
+    "close": "Fermer la notification"
+  },
+  "grade": {
+    "aria": "Note {{grade}}",
+    "bigAria": "Note globale : {{grade}}",
+    "gaugeScore": "score {{score}} sur 100",
+    "gaugeIndicative": "Score indicatif {{score}} sur 100, sans note (couverture insuffisante)",
+    "gaugeCoverage": "couverture {{coverage}} %",
+    "indicative": "indicatif"
+  },
+  "scanStatus": {
+    "success": "Réussi",
+    "partial": "Partiel",
+    "error": "En échec",
+    "unknown": "Inconnu"
+  },
+  "moduleStatus": {
+    "ok": "Mesuré",
+    "failed": "Non mesuré (échec du module)",
+    "timeout": "Non mesuré (délai dépassé)",
+    "skipped": "Sans objet",
+    "pending": "En attente",
+    "running": "En cours",
+    "not_launched": "Non lancé"
+  },
+  "familyState": {
+    "ok": "OK",
+    "warning": "Attention",
+    "critical": "Critique",
+    "unmeasured": "Non mesuré",
+    "skipped": "Sans objet",
+    "info": "Informatif"
+  },
+  "severity": {
+    "critical": "Critique",
+    "high": "Élevée",
+    "medium": "Moyenne",
+    "low": "Faible"
+  },
+  "confidence": {
+    "high": "élevée",
+    "medium": "moyenne",
+    "low": "faible"
+  },
+  "families": {
+    "web": {
+      "name": "Web",
+      "description": "En-têtes de sécurité, cookies, CORS, redirections, fichiers web, technologies, WAF"
+    },
+    "tls": {
+      "name": "TLS",
+      "description": "Certificat et connexion chiffrée"
+    },
+    "email": {
+      "name": "E-mail",
+      "description": "SPF, DKIM, DMARC, MTA-STS et TLS-RPT"
+    },
+    "dns": {
+      "name": "DNS & sous-domaines",
+      "description": "Enregistrements DNS, sous-domaines, takeover, DNS inverse"
+    },
+    "network": {
+      "name": "Réseau",
+      "description": "Ports ouverts, géolocalisation, voisins IP"
+    },
+    "identity": {
+      "name": "Identité",
+      "description": "WHOIS, capture d'écran, notes et tags"
+    },
+    "reputation": {
+      "name": "Réputation",
+      "description": "Réputation du domaine et de l'adresse IP : listes de blocage, signalements d'abus, historique"
+    },
+    "leaks": {
+      "name": "Fuites de données",
+      "description": "Identifiants et comptes du domaine exposés : fuites de données, dépôts de code publics, services exposés"
+    }
+  },
+  "modules": {
+    "dns_records": "Enregistrements DNS",
+    "subdomains": "Sous-domaines",
+    "security_headers": "En-têtes de sécurité",
+    "tls_certificate": "Certificat TLS",
+    "technologies": "Technologies",
+    "geo_data": "Géolocalisation",
+    "whois_data": "WHOIS",
+    "open_ports": "Ports ouverts",
+    "email_security": "Sécurité e-mail",
+    "waf": "WAF / CDN",
+    "redirect_chain": "Redirections",
+    "web_files": "Fichiers web",
+    "cookie_security": "Cookies",
+    "cors": "CORS",
+    "reverse_dns": "DNS inverse (PTR)",
+    "network_extended": "Réseau étendu",
+    "screenshot": "Capture d'écran",
+    "subdomain_takeover": "Takeover de sous-domaines"
+  },
+  "unavailable": {
+    "skippedHint": "Ce module est sans objet pour cette cible.",
+    "unmeasuredHint": "Aucune conclusion possible : l'absence de résultat ne signifie pas que rien n'existe.",
+    "withReason": "{{status}} : {{reason}}",
+    "notLaunchedHint": "Ce module n'a pas été lancé dans ce scan (profil choisi, clé d'API absente ou autorisation non donnée)."
+  },
+  "newScan": {
+    "title": "Nouveau scan",
+    "lead": "Analysez la sécurité et l'infrastructure publique d'un domaine : des dizaines de modules, un verdict clair.",
+    "label": "Domaine ou URL à analyser",
+    "placeholder": "exemple.com",
+    "submit": "Scan",
+    "examples": "Exemples :",
+    "lengthError": "Le domaine doit faire de {{min}} à {{max}} caractères.",
+    "recent": "Derniers scans",
+    "recentEmpty": "Aucune analyse pour l'instant : lancez votre premier scan.",
+    "recentError": "Derniers scans indisponibles : {{detail}}",
+    "historyLink": "Tout l'historique",
+    "hero": {
+      "kicker": "Reconnaissance · OSINT",
+      "title": "Analyse de domaine",
+      "titleAccent": "domaine"
+    },
+    "recentKicker": "Récent"
+  },
+  "live": {
+    "title": "Analyse de {{domain}}",
+    "titleUnknown": "Analyse en cours",
+    "running": "Analyse en cours…",
+    "connecting": "Connexion au suivi de l'analyse…",
+    "progress": "{{done}}/{{total}}",
+    "progressLabel": "Avancement de l'analyse",
+    "progressText": "{{done}} modules sur {{total}}",
+    "elapsed": "{{seconds}} s",
+    "cancel": "Annuler",
+    "cancelling": "Annulation…",
+    "cancelError": "Annulation impossible : {{detail}}",
+    "cancelled": "Analyse annulée",
+    "cancelledText": "L'analyse a été interrompue avant la fin : aucun résultat n'a été enregistré.",
+    "failed": "L'analyse a échoué",
+    "lost": "Suivi de l'analyse interrompu",
+    "jobNotFound": "Tâche introuvable : le serveur a peut-être redémarré. Consultez l'historique ou relancez l'analyse.",
+    "invalidJobTitle": "Tâche introuvable",
+    "invalidJob": "Ce lien ne désigne aucune analyse : l'identifiant de la tâche est mal formé. Consultez l'historique ou lancez un nouveau scan.",
+    "connectionLost": "Connexion au serveur perdue pendant l'analyse.",
+    "restart": "Relancer",
+    "newScan": "Nouveau scan",
+    "openHistory": "Voir l'historique",
+    "done": "Analyse de {{domain}} terminée",
+    "tileAria": "{{family}} : {{state}}",
+    "tile": {
+      "pending": "En attente",
+      "running": "{{done}}/{{total}} modules",
+      "done": "Terminé",
+      "partial": "Terminé, {{count}} non mesuré(s)",
+      "skipped": "Sans objet"
+    },
+    "counterLabel": "Modules analysés",
+    "elapsedLabel": "Chronomètre",
+    "currentLabel": "En cours",
+    "finalizing": "Finalisation…",
+    "waitingFirst": "En attente du premier module…",
+    "log": {
+      "kicker": "Journal",
+      "title": "Modules terminés",
+      "empty": "Aucun module terminé pour l'instant.",
+      "aria": "Modules terminés, dans l'ordre d'arrivée"
+    },
+    "tiles": {
+      "kicker": "Familles",
+      "title": "Avancement par famille"
+    }
+  },
+  "result": {
+    "scanTitle": "Résultat de {{domain}}",
+    "score": "{{score}}/100",
+    "scoreNA": "Pas de note",
+    "indicative": "Score indicatif {{score}}/100",
+    "coverageLabel": "Couverture",
+    "coverage": "{{coverage}} % du barème mesuré",
+    "confidence": "confiance {{level}}",
+    "ip": "Adresse IP",
+    "date": "Date",
+    "duration": "Durée",
+    "status": "Statut",
+    "errorTitle": "L'analyse a échoué",
+    "partialTitle": "Analyse incomplète",
+    "failedModules": "{{count}} module(s) sans résultat (échec ou délai dépassé) :",
+    "timeoutSuffix": "(délai dépassé)",
+    "findings": "À corriger",
+    "families": "Familles",
+    "tileAria": "{{family}} : {{state}}, note {{grade}}. {{summary}}",
+    "actions": "Actions sur ce scan",
+    "rescan": "Relancer",
+    "timeline": "Timeline",
+    "notFound": "Scan introuvable",
+    "notFoundText": "Ce scan n'existe pas ou a été supprimé.",
+    "invalidId": "Identifiant de scan invalide.",
+    "noDetail": "Le serveur n'a fourni aucun détail sur cet état.",
+    "kicker": "Résultat du scan",
+    "radarCaption": "Barème par famille",
+    "findingsKicker": "Priorités",
+    "familiesKicker": "Analyse",
+    "tabs": {
+      "label": "Sections du résultat",
+      "overview": "Vue d'ensemble"
+    },
+    "tile": {
+      "modulesLabel": "Modules mesurés",
+      "modulesTotal": "sur {{total}}"
+    },
+    "summary": {
+      "good": {
+        "clean": "Bonne posture de sécurité : rien à corriger.",
+        "minor": "Bonne posture de sécurité, avec {{count}} point(s) à améliorer.",
+        "severe": "Bonne note, mais {{count}} problème(s) sérieux à corriger en priorité."
+      },
+      "fair": {
+        "clean": "Posture moyenne, sans problème à corriger parmi les critères mesurés.",
+        "minor": "Posture moyenne : {{count}} point(s) à améliorer.",
+        "severe": "Posture moyenne : {{count}} problème(s) sérieux à corriger en priorité."
+      },
+      "poor": {
+        "clean": "Note faible, mais aucun constat à corriger parmi les critères mesurés.",
+        "minor": "Posture fragile : {{count}} point(s) à corriger.",
+        "severe": "Posture fragile : {{count}} problème(s) sérieux à corriger en priorité."
+      },
+      "error": "L'analyse a échoué : aucune conclusion possible.",
+      "noGrade": "Mesures insuffisantes pour attribuer une note : le score reste indicatif."
+    },
+    "modulesLabel": "Modules",
+    "modulesCount": "{{measured}} mesurés sur {{total}} lancés",
+    "row": {
+      "issues": "{{count}} problème(s)",
+      "none": "Aucun problème"
+    }
+  },
+  "findings": {
+    "none": "Aucun point à corriger parmi les critères mesurés.",
+    "noneLowCoverage": "Aucun point à corriger parmi les critères mesurés, mais la couverture est insuffisante pour conclure.",
+    "noneError": "Aucune conclusion possible : l'analyse a échoué.",
+    "openFamily": "Voir la famille {{family}}",
+    "showAll": "Voir les {{count}} autres",
+    "showLess": "Réduire la liste"
+  },
+  "score": {
+    "title": "Détail du score",
+    "points": "{{score}}/{{max}}",
+    "bonusDetail": "{{detail}} — bonus non obtenu, hors barème",
+    "measured": "Critères mesurés : {{points}}/{{max}} points, soit {{raw}}/100.",
+    "measuredAdjusted": "Critères mesurés : {{points}}/{{max}} points, soit {{raw}}/100 avant pénalités et plafond.",
+    "penalties": "Pénalités hors barème : −{{total}} point(s)",
+    "cap": "Grade plafonné à {{grade}} (vulnérabilité critique)",
+    "capUnknown": "Grade plafonné (vulnérabilité critique)",
+    "criteria": {
+      "headers": "En-têtes",
+      "tls": "TLS",
+      "email": "E-mail",
+      "waf": "WAF",
+      "cookies": "Cookies",
+      "cors": "CORS",
+      "https_redirect": "Redirection HTTPS",
+      "takeover": "Takeover",
+      "whois": "WHOIS"
+    },
+    "kind": {
+      "notApplicable": "sans objet",
+      "notMeasured": "non mesuré",
+      "bonus": "bonus"
+    }
+  },
+  "radar": {
+    "aria": "Radar des familles : part du barème obtenue par famille, de 0 à 100 %",
+    "caption": "Part du barème obtenue par famille (équivalent texte du radar)",
+    "dataset": "Barème obtenu (%)",
+    "family": "Famille",
+    "state": "État",
+    "value": "Barème obtenu",
+    "percent": "{{percent}} %",
+    "tooltip": "{{family}} : {{percent}} %"
+  },
+  "metrics": {
+    "aria": "Indicateurs du scan",
+    "ip": "IP",
+    "asn": "ASN",
+    "subdomains": "Sous-domaines",
+    "ports": "Ports",
+    "duration": "Durée"
+  },
+  "family": {
+    "nav": "Familles du scan",
+    "back": "Résultat de {{domain}}",
+    "backToResult": "Retour au résultat",
+    "unknown": "Famille inconnue",
+    "unknownText": "Cette famille n'existe pas. Familles disponibles : web, tls, email, dns, network, identity, reputation.",
+    "findings": "À corriger dans cette famille",
+    "noFindings": "Aucun point à corriger dans cette famille parmi les critères mesurés.",
+    "noFindingsUnmeasured": "Aucune conclusion possible : cette famille n'a pas pu être mesurée.",
+    "noFindingsSkipped": "Sans objet pour cette cible : rien à corriger dans cette famille.",
+    "noFindingsDegraded": "Aucun constat détaillé, mais l'état de cette famille n'est pas sain : voir le détail des modules ci-dessous.",
+    "kicker": "Famille",
+    "findingsKicker": "Priorités",
+    "tabs": {
+      "label": "Modules de la famille {{family}}",
+      "graph": "Carte réseau",
+      "notes": "Notes et tags"
+    }
+  },
+  "headerStatus": {
+    "ok": "Conforme",
+    "weak": "Partiel",
+    "invalid": "Sans effet",
+    "missing": "Absent",
+    "info": "Informatif"
+  },
+  "verdict": {
+    "tls": {
+      "invalid": "Certificat invalide",
+      "noHttps": "Pas de HTTPS",
+      "validDays": "Valide, expire dans {{days}} j",
+      "valid": "Valide",
+      "noInfo": "Aucune information TLS"
+    },
+    "takeover": {
+      "found": "{{confirmed}} confirmé(s), {{toCheck}} à vérifier",
+      "confirmedOnly": "{{count}} confirmé(s)",
+      "toCheckOnly": "{{count}} à vérifier",
+      "notChecked": "Non vérifié",
+      "noneTested": "Aucun takeover détecté ({{count}} sous-domaine(s) testé(s))",
+      "none": "Aucun takeover détecté"
+    }
+  },
+  "web": {
+    "headers": {
+      "counts": "{{ok}}/{{total}} conforme(s)",
+      "weak": "{{count}} partiel(s)",
+      "invalid": "{{count}} sans effet",
+      "missing": "{{count}} absent(s)",
+      "offSite": "Redirection vers un autre site non suivie ({{url}}) : en-têtes de la réponse de redirection.",
+      "downgrade": "HTTPS redirige vers HTTP : en-têtes lus sur la réponse servie en clair.",
+      "legacyPresent": "Présent (valeur non évaluée : scan antérieur)",
+      "legacyMissing": "Absent"
+    },
+    "cookies": {
+      "analysed": "{{count}} cookie(s) analysé(s)",
+      "none": "Aucun cookie Set-Cookie détecté",
+      "secure": "Sécurisé",
+      "problems": "{{count}} problème(s)",
+      "scopeDomain": "Domaine : {{value}}",
+      "scopePath": "Chemin : {{value}}",
+      "flagYes": "{{flag}} : oui",
+      "flagNo": "{{flag}} : non",
+      "sameSite": "SameSite : {{value}}",
+      "sameSiteMissing": "SameSite : absent",
+      "sameSiteNone": "SameSite=None : cookie envoyé aussi sur les requêtes intersites"
+    },
+    "cors": {
+      "critical": "Misconfiguration CORS critique : origine arbitraire acceptée avec credentials",
+      "permissive": "Configuration CORS permissive",
+      "wildcard": "CORS ouvert à toutes les origines (*) : acceptable pour du contenu public",
+      "ok": "CORS activé et correctement configuré",
+      "disabled": "CORS non activé",
+      "inconclusive": "Résultat non concluant : des tests d'origine ont échoué, aucune conclusion « conforme » n'est possible",
+      "enabled": "CORS activé",
+      "anyOrigin": "Origine joker (*)",
+      "credentialsWildcard": "Credentials + joker",
+      "reflects": "Reflète l'origine",
+      "reflectsCredentials": "Reflète l'origine avec credentials",
+      "details": "Détails",
+      "originErrors": "Tests d'origine en échec ({{failed}}/{{total}})"
+    },
+    "redirects": {
+      "hops": "Sauts",
+      "forcesHttps": "Force HTTPS",
+      "finalUrl": "URL finale",
+      "downgrade": "HTTPS → HTTP",
+      "downgradeTitle": "Une URL HTTPS du site redirige vers une URL HTTP",
+      "fromHttp": "Depuis http://",
+      "fromHttps": "Depuis https://",
+      "server": "Serveur : {{value}}",
+      "none": "Aucune donnée de redirection",
+      "step": "Étape {{index}}"
+    },
+    "files": {
+      "partial": "Vérification partielle : certains fichiers n'ont pas pu être vérifiés (voir leur carte).",
+      "found": "Trouvé",
+      "absent": "Absent",
+      "unverified": "Non vérifié",
+      "unverifiedDefault": "Aucune réponse probante : présence inconnue",
+      "disallowed": "Chemins interdits ({{count}}) :",
+      "sitemaps": "Sitemaps :",
+      "noRestriction": "Aucune restriction (aucun Disallow non vide)",
+      "urlCount": "URL indexées : {{count}}",
+      "urlCountMin": "URL indexées : au moins {{count}}",
+      "truncated": "Fichier tronqué (limite de lecture atteinte) : nombre minimal",
+      "contact": "Contact : {{value}}",
+      "notFound": "Non trouvé",
+      "recommended": "Non trouvé — recommandé"
+    },
+    "tech": {
+      "none": "Aucune technologie détectée"
+    },
+    "waf": {
+      "detected": "WAF détecté · confiance {{confidence}}",
+      "detectedNoConfidence": "WAF détecté",
+      "unnamed": "WAF non identifié",
+      "evidence": "Preuves",
+      "none": "Aucun WAF détecté",
+      "noneText": "Aucune signature de WAF dans les en-têtes et cookies du site (détection passive).",
+      "cdn": "CDN : {{name}}",
+      "cdnUnnamed": "CDN détecté",
+      "cdnText": "Un CDN n'est pas un WAF : il ne filtre pas, à lui seul, les attaques applicatives.",
+      "offSite": "Redirection vers un autre site non suivie : {{url}}"
+    }
+  },
+  "tls": {
+    "noHttps": "Pas de HTTPS utilisable",
+    "invalid": "Certificat invalide",
+    "refused": "Certificat refusé",
+    "invalidHint": "Les navigateurs refusent ce certificat : les détails ci-dessous sont ceux du certificat présenté.",
+    "verifyCode": "code OpenSSL {{code}}",
+    "valid": "Certificat valide (chaîne, nom d'hôte et dates vérifiés)",
+    "downgrade": "HTTPS redirige vers HTTP : la connexion chiffrée est abandonnée (voir les redirections, famille Web).",
+    "noInfo": "Aucune information TLS",
+    "certificate": "Certificat",
+    "validity": "Validité",
+    "connection": "Connexion",
+    "san": "SAN ({{count}})",
+    "subject": "Sujet (CN)",
+    "issuer": "Émetteur",
+    "serial": "N° de série",
+    "version": "Version",
+    "status": "Statut",
+    "statusValid": "Valide",
+    "statusInvalid": "Invalide",
+    "notBefore": "Valide depuis",
+    "notAfter": "Expire le",
+    "daysRemaining": "Jours restants",
+    "protocol": "Protocole",
+    "cipher": "Suite de chiffrement",
+    "bits": "Bits"
+  },
+  "email": {
+    "grade": "Note globale de la sécurité e-mail",
+    "summary": "{{level}} — {{spf}} · {{dmarc}} · {{dkim}}",
+    "level": {
+      "A": "Excellent",
+      "B": "Bon",
+      "C": "Moyen",
+      "D": "Faible",
+      "F": "Critique"
+    },
+    "noData": "Données non disponibles",
+    "notEvaluated": "Non évalué",
+    "spf": {
+      "found": "SPF {{all}}",
+      "present": "SPF présent",
+      "absent": "SPF absent",
+      "unmeasured": "SPF non mesuré"
+    },
+    "dmarc": {
+      "found": "DMARC {{policy}}",
+      "present": "DMARC présent",
+      "absent": "DMARC absent",
+      "unmeasured": "DMARC non mesuré"
+    },
+    "dkim": {
+      "found": "DKIM détecté",
+      "noMail": "DKIM sans objet (domaine sans messagerie)",
+      "notFound": "DKIM non détecté sur les sélecteurs courants",
+      "unmeasured": "DKIM non mesuré"
+    },
+    "nullMx": "MX nul (RFC 7505) : le domaine n'accepte aucun courrier",
+    "partial": "Note partielle : SPF ou DMARC non mesuré (requête DNS en échec)",
+    "notes": "Informations",
+    "found": "Publié",
+    "publishedIncomplete": "Publié, évaluation incomplète",
+    "absent": "Absent",
+    "notDetected": "Non détecté",
+    "unmeasured": "Non mesuré",
+    "unmeasuredReason": "Non mesuré : {{reason}}",
+    "spfNone": "Aucun enregistrement SPF trouvé",
+    "spfOf": "SPF de {{domain}}",
+    "spfOfApex": "SPF de {{domain}} (domaine racine : un SPF ne s'applique pas à {{target}})",
+    "spfApexRecord": "SPF de {{domain}} (domaine racine, ne s'applique pas à l'hôte) : {{record}}",
+    "dkimDetected": "DKIM détecté",
+    "dkimSelectors": "Sélecteurs :",
+    "dkimNoMail": "Sans objet : domaine sans messagerie, aucune signature attendue",
+    "dkimNotFound": "Non détecté (sélecteurs courants testés)",
+    "dkimRevoked": "Joker *._domainkey révoqué (p= vide) : aucune clé pour les sélecteurs non publiés",
+    "analysedOn": "Analysé sur {{domain}} (domaine racine)",
+    "dmarcNone": "Aucun enregistrement DMARC trouvé",
+    "dmarcSource": "Source : {{source}}",
+    "dmarcInherited": "(héritée : sp= s'applique)",
+    "dmarcPolicy": "Politique :",
+    "transport": "Transport (MTA-STS, TLS-RPT)",
+    "mtaSts": "MTA-STS",
+    "tlsRpt": "TLS-RPT",
+    "recommendations": "Recommandations"
+  },
+  "dns": {
+    "nxdomain": "Domaine inexistant (NXDOMAIN)",
+    "nxdomainText": "Le DNS répond que {{domain}} n'existe pas : aucun enregistrement ne peut être publié sous ce nom.",
+    "records": "{{count}} enregistrement(s)",
+    "queryFailed": "Requête échouée : non mesuré",
+    "nullMx": "MX nul (RFC 7505) : le domaine n'accepte aucun courrier",
+    "soa": "NS : {{mname}} · Mail : {{rname}} · Série : {{serial}}",
+    "dmarcSource": "Source : {{source}}",
+    "emptyTypes": "Aucun enregistrement : {{types}}",
+    "info": "Informations",
+    "wildcard": "Joker DNS (*)",
+    "none": "Aucun enregistrement DNS trouvé",
+    "subdomains": {
+      "count": "{{shown}} trouvé(s)",
+      "countCapped": "{{shown}} affiché(s) sur {{total}} trouvé(s)",
+      "resolved": "{{count}} résolu(s)",
+      "wildcardCount": "dont {{count}} par joker DNS",
+      "untested": "{{count}} non testé(s)",
+      "fallback": "Source de secours : Cert Spotter (crt.sh indisponible). Résultats partiels : seuls les certificats en cours de validité sont visibles.",
+      "none": "Aucun sous-domaine découvert via {{source}}",
+      "wildcardIp": "{{ip}} (résolution par joker)",
+      "wildcardTitle": "Adresse du joker DNS : tout nom du site résout, ce sous-domaine peut ne pas exister",
+      "notTested": "Non testé",
+      "notTestedTitle": "Au-delà des premiers noms, non résolus pendant le scan",
+      "unresolved": "Non résolu"
+    },
+    "takeover": {
+      "none": "Aucun takeover détecté",
+      "tested": "{{count}} sous-domaine(s) testé(s)",
+      "testedOf": "{{tested}} sous-domaine(s) testé(s) sur {{total}} découvert(s) (les non résolus d'abord)",
+      "confirmed": "{{count}} takeover(s) confirmé(s)",
+      "toCheck": "{{count}} sous-domaine(s) à vérifier",
+      "dangerText": "Ces sous-domaines peuvent être détournés par un attaquant.",
+      "checkText": "Indices sans preuve d'exploitabilité : vérification manuelle nécessaire.",
+      "confirmedPill": "Confirmé",
+      "toCheckPill": "À vérifier",
+      "risk": {
+        "high": "Risque élevé",
+        "medium": "Risque moyen",
+        "low": "Risque faible"
+      },
+      "cname": "CNAME",
+      "provider": "Fournisseur",
+      "proof": "Preuve",
+      "proofNx": "CNAME pendant (NXDOMAIN)",
+      "proofFingerprint": "Empreinte du fournisseur",
+      "proofNoHttp": "Aucune réponse HTTP",
+      "unknownProvider": "inconnu",
+      "http": "HTTP {{code}}"
+    },
+    "rdns": {
+      "ip": "IP",
+      "ptr": "PTR",
+      "aliases": "Alias",
+      "none": "Aucun enregistrement PTR"
+    },
+    "graph": {
+      "title": "Carte réseau",
+      "aria": "Carte réseau de {{domain}} : {{subdomains}} sous-domaine(s), {{ports}} port(s)",
+      "fit": "Recentrer",
+      "zoomIn": "Zoom avant",
+      "zoomOut": "Zoom arrière",
+      "hover": "Nœud : {{label}}",
+      "hint": "Survolez ou touchez un nœud pour afficher son détail.",
+      "more": "+{{count}} autres",
+      "moreDetail": "voir la carte « Sous-domaines »",
+      "untested": "non testé",
+      "unresolved": "non résolu",
+      "wildcardIp": "{{ip}}, résolution par joker",
+      "ariaMore": "Carte réseau de {{domain}} : {{subdomains}} sous-domaine(s) représenté(s), plus {{more}} autres résumés par un nœud, {{ports}} port(s)"
+    }
+  },
+  "network": {
+    "geo": {
+      "sharedCdn": "IP mutualisée d'un CDN : voisins et géolocalisation non significatifs",
+      "country": "Pays",
+      "region": "Région",
+      "city": "Ville",
+      "coordinates": "Coordonnées",
+      "timezone": "Fuseau horaire",
+      "isp": "FAI",
+      "asn": "ASN",
+      "noData": "Données de géolocalisation non disponibles"
+    },
+    "map": {
+      "aria": "Carte de localisation de {{place}}",
+      "offline": "Carte indisponible hors ligne : la carte n'a pas pu être chargée. Les coordonnées restent affichées.",
+      "failed": "La carte n'a pas pu être affichée. Les coordonnées restent affichées."
+    },
+    "ports": {
+      "none": "Aucun port ouvert parmi les ports courants testés",
+      "sensitive": "Sensible"
+    },
+    "ext": {
+      "asn": "Informations ASN",
+      "org": "Organisation",
+      "hostname": "Nom d'hôte",
+      "anycast": "Anycast",
+      "neighbors": "Voisins IP (reverse IP)",
+      "count": "{{shown}} domaine(s)",
+      "countOf": "{{shown}} affiché(s) sur {{total}} domaine(s)",
+      "truncated": "Liste limitée par le serveur",
+      "none": "Aucun voisin IP détecté",
+      "sourceError": "Non mesuré : {{reason}}"
+    }
+  },
+  "identity": {
+    "whois": {
+      "otherDomain": "WHOIS de {{queried}} (domaine racine ou plateforme d'hébergement), pas de {{domain}}",
+      "notRegistered": "Domaine non enregistré selon le registre WHOIS",
+      "registrar": "Registrar",
+      "registrant": "Organisation",
+      "created": "Création",
+      "expires": "Expiration",
+      "updated": "Mise à jour",
+      "dnssec": "DNSSEC",
+      "emails": "E-mails",
+      "statuses": "Statuts",
+      "nameServers": "Serveurs de noms"
+    },
+    "screenshot": {
+      "none": "Aucune capture d'écran disponible",
+      "loading": "Chargement de la capture…",
+      "alt": "Capture d'écran de {{domain}}",
+      "caption": "Capture de la page d'accueil · fenêtre 1280×720",
+      "unavailable": "Image non disponible : {{detail}}",
+      "undecodable": "fichier image illisible"
+    },
+    "notes": {
+      "title": "Notes et tags",
+      "label": "Notes d'investigation",
+      "placeholder": "Écrivez vos notes d'investigation…",
+      "save": "Enregistrer les notes",
+      "saved": "Notes enregistrées",
+      "tooLong": "Notes trop longues : {{length}} caractères pour {{max}} au maximum"
+    },
+    "tags": {
+      "label": "Tags",
+      "none": "Aucun tag",
+      "add": "Ajouter",
+      "placeholder": "Ajouter un tag…",
+      "remove": "Retirer le tag {{tag}}",
+      "tooLong": "Tag trop long : {{max}} caractères au maximum",
+      "duplicate": "Ce tag existe déjà",
+      "tooMany": "{{max}} tags au maximum"
+    },
+    "meta": {
+      "error": "Enregistrement impossible : {{detail}}"
+    }
+  },
+  "history": {
+    "title": "Historique",
+    "search": "Rechercher un domaine",
+    "searchPlaceholder": "Rechercher un domaine…",
+    "searchTooLong": "Recherche trop longue : {{max}} caractères au maximum.",
+    "grade": "Note",
+    "gradeAll": "Toutes les notes",
+    "status": "Statut",
+    "statusAll": "Tous les statuts",
+    "reset": "Réinitialiser les filtres",
+    "caption": "Scans enregistrés, du plus récent au plus ancien",
+    "col": {
+      "domain": "Domaine",
+      "grade": "Note",
+      "score": "Score",
+      "status": "Statut",
+      "subdomains": "Sous-domaines",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "subdomainsNATitle": "Sous-domaines non mesurés (échec, délai dépassé ou sans objet)",
+    "empty": "Aucune analyse effectuée. Lancez votre premier scan.",
+    "emptyFiltered": "Aucun scan ne correspond à ces critères.",
+    "range": "{{from}}–{{to}} sur {{total}} scan(s)",
+    "pagination": "Pagination de l'historique",
+    "prev": "Page précédente",
+    "next": "Page suivante",
+    "page": "Page {{page}} sur {{pages}}",
+    "timeline": "Timeline de {{domain}}",
+    "delete": "Supprimer le scan de {{domain}}",
+    "deleteTitle": "Supprimer ce scan ?",
+    "deleteText": "Le scan de {{domain}} du {{date}} sera supprimé définitivement, avec ses tags, ses notes et sa capture d'écran.",
+    "deleted": "Scan supprimé",
+    "alreadyDeleted": "Ce scan avait déjà été supprimé",
+    "deleteError": "Suppression impossible : {{detail}}",
+    "loadError": "Impossible de charger l'historique : {{detail}}",
+    "tableRegion": "Liste des scans (défilable horizontalement)",
+    "firstPage": "Revenir à la première page",
+    "naNote": "N/A : sous-domaines non mesurés (échec, délai dépassé ou sans objet).",
+    "kicker": "Archives"
+  },
+  "timeline": {
+    "title": "Timeline de {{domain}}",
+    "back": "Retour à l'historique",
+    "total": "{{count}} scan(s) pour {{domain}}",
+    "notEnough": "Pas assez de données",
+    "notEnoughText": "Au moins 2 scans du même domaine sont nécessaires pour afficher la timeline. Actuellement : {{count}} scan(s) pour {{domain}}.",
+    "notFound": "Aucun historique pour ce domaine.",
+    "chartTitle": "Évolution du score",
+    "chartAria": "Évolution du score sur {{count}} scans, de {{first}} à {{last}}",
+    "chartAriaIndicative": "Évolution du score sur {{count}} scans, de {{first}} à {{last}}, dont {{indicative}} score(s) indicatif(s)",
+    "chartIndicativeNote": "Triangle creux et trait en pointillés : score indicatif (couverture insuffisante), pas une note.",
+    "chartTooltip": "{{label}} : {{value}}",
+    "caption": "Scans de {{domain}}, du plus ancien au plus récent",
+    "col": {
+      "date": "Date",
+      "ip": "IP",
+      "subdomains": "Sous-dom.",
+      "ports": "Ports",
+      "score": "Score",
+      "changes": "Changements DNS"
+    },
+    "naTitle": "Non mesuré (échec, délai dépassé ou sans objet)",
+    "coverage": "{{coverage}} % mesuré",
+    "first": "Premier relevé",
+    "notComparable": "Non comparable",
+    "notComparableTitle": "Relevé DNS de ce scan ou des scans précédents indisponible",
+    "noChange": "Aucun changement",
+    "more": "… et {{count}} autre(s)",
+    "nullMx": "(MX nul)",
+    "related": "Autres cibles du même site ({{apex}})",
+    "relatedCount": "{{domain}} ({{count}} scan(s))",
+    "openScan": "Ouvrir le scan du {{date}}",
+    "truncated": "Seuls les {{shown}} relevés les plus récents sont affichés, sur {{total}}.",
+    "invalidTitle": "Nom de domaine invalide",
+    "invalid": "« {{domain}} » n'est pas un nom de domaine valide : vérifiez l'adresse.",
+    "naNote": "N/A : valeur non mesurée (échec, délai dépassé ou sans objet).",
+    "kicker": "Évolution",
+    "kpi": {
+      "aria": "Indicateurs de la timeline",
+      "scans": "Scans",
+      "best": "Meilleure note",
+      "last": "Dernier scan"
+    },
+    "chartKicker": "Score",
+    "tableKicker": "Relevés",
+    "tableTitle": "Scans et changements DNS",
+    "relatedKicker": "Voisinage",
+    "tableRegion": "Relevés de la timeline (défilable horizontalement)"
+  },
+  "settings": {
+    "title": "Réglages",
+    "language": "Langue de l'interface",
+    "languageHint": "Les résultats des scans sont traduits par le serveur ; les anciens scans gardent leur texte d'origine.",
+    "data": "Dossier des données",
+    "dataHint": "Base SQLite, captures d'écran et fichier .env optionnel.",
+    "open": "Ouvrir",
+    "opened": "Dossier des données ouvert",
+    "openError": "Ouverture impossible : {{detail}}",
+    "portable": "Mode portable : les données restent à côté de l'application.",
+    "infoError": "Informations du serveur indisponibles : {{detail}}",
+    "version": "Version",
+    "versionValue": "DomainRecon {{version}}",
+    "apiDocs": "Documentation de l'API",
+    "token": "Jeton d'API",
+    "tokenSet": "Un jeton est enregistré pour cet onglet.",
+    "tokenUnset": "Aucun jeton enregistré (nécessaire seulement si le serveur définit API_TOKEN).",
+    "tokenEnter": "Saisir le jeton",
+    "licenses": "Licences",
+    "licensesIntro": "DomainRecon est un logiciel à code source disponible : son code peut être lu et amélioré par des contributions, mais pas réutilisé ni redistribué sans autorisation (voir LICENSE). Il s'appuie sur les composants libres suivants ; le détail complet figure dans THIRD_PARTY_NOTICES.md, livré avec l'application.",
+    "licenseName": "Composant",
+    "licenseType": "Licence",
+    "kicker": "Préférences",
+    "section": {
+      "language": "Interface",
+      "data": "Stockage",
+      "version": "Application",
+      "token": "Sécurité",
+      "licenses": "Légal"
+    },
+    "apiKeys": {
+      "kicker": "Intégrations",
+      "title": "Clés API",
+      "hint": "Chaque service débloque des modules. Les clés sont chiffrées sur cette machine et ne sont jamais réaffichées en clair.",
+      "configured": "Clé enregistrée",
+      "missing": "Pas de clé",
+      "placeholder": "Saisir la clé",
+      "remove": "Supprimer",
+      "test": "Tester",
+      "saved": "Clés d'API enregistrées",
+      "none": "Aucun service à clé dans le catalogue des modules.",
+      "testHint": "Le test utilise la clé enregistrée : enregistrez d'abord vos modifications.",
+      "save": "Enregistrer les clés"
+    },
+    "theme": "Thème",
+    "themes": {
+      "dark": "Sombre",
+      "light": "Clair"
+    },
+    "loadError": "Réglages indisponibles : {{detail}}",
+    "network": {
+      "kicker": "Scan",
+      "title": "Délais, capture et proxy",
+      "scanTimeout": "Délai du scan complet (s)",
+      "quickTimeout": "Délai du scan rapide (s)",
+      "timeoutHint": "Entre {{min}} et {{max}} secondes.",
+      "screenshot": "Prendre une capture d'écran du site",
+      "screenshotHint": "Demande le navigateur Chromium de Playwright ; sans lui, la capture est ignorée.",
+      "proxy": "Proxy HTTP ou SOCKS",
+      "proxyHint": "Exemples : http://127.0.0.1:8080 ou socks5h://127.0.0.1:1080. Laissez vide pour ne pas utiliser de proxy.",
+      "proxyDns": "Le DNS ne passe pas par le proxy : les résolutions de noms partent directement de cette machine.",
+      "save": "Enregistrer",
+      "saved": "Réglages enregistrés"
+    },
+    "vpn": {
+      "kicker": "Confidentialité",
+      "title": "VPN Mullvad",
+      "error": "Statut du VPN indisponible : {{detail}}",
+      "hint": "Lecture seule : DomainRecon n'active ni ne coupe votre VPN."
+    },
+    "channels": {
+      "kicker": "Alertes",
+      "title": "Canaux d'alerte",
+      "hint": "Configurez ici où envoyer les alertes de la surveillance. Les adresses et mots de passe sont chiffrés et ne sont jamais réaffichés.",
+      "names": {
+        "discord": "Discord",
+        "slack": "Slack",
+        "teams": "Teams",
+        "webhook": "Webhook JSON",
+        "email": "E-mail (SMTP)",
+        "desktop": "Notification de bureau"
+      },
+      "saved": "Canal {{name}} enregistré",
+      "testOk": "Message d'essai envoyé",
+      "testFailed": "Échec de l'envoi",
+      "configured": "Configuré",
+      "notConfigured": "Non configuré",
+      "enable": "Activer {{name}}",
+      "url": "Adresse du webhook",
+      "desktopHint": "Affiche une notification du système. Sans environnement graphique, elle est ignorée.",
+      "save": "Enregistrer",
+      "test": "Envoyer un essai",
+      "smtp": {
+        "host": "Serveur SMTP",
+        "port": "Port",
+        "security": "Sécurité",
+        "modes": {
+          "starttls": "STARTTLS",
+          "ssl": "SSL/TLS",
+          "none": "Aucune"
+        },
+        "sender": "Expéditeur",
+        "recipients": "Destinataires (séparés par des virgules)",
+        "username": "Identifiant",
+        "password": "Mot de passe"
+      }
+    },
+    "import": {
+      "kicker": "Migration",
+      "title": "Importer une ancienne base",
+      "text": "Reprenez l'historique d'une ancienne base DomainRecon (fichier .db). Les scans déjà présents sont ignorés ; les captures d'écran ne sont pas importées.",
+      "fileLabel": "Ancienne base DomainRecon (fichier .db)",
+      "choose": "Choisir un fichier",
+      "change": "Changer de fichier",
+      "noFile": "Aucun fichier choisi",
+      "start": "Importer",
+      "cancel": "Annuler",
+      "uploading": "Envoi du fichier : {{percent}} %",
+      "processing": "Fichier reçu. Lecture de la base et ajout des scans en cours…",
+      "cancelled": "Import annulé. Vous pouvez le relancer : les scans déjà ajoutés ne seront pas dupliqués.",
+      "tooBig": "Ce fichier fait {{size}} : la limite est de {{max}}.",
+      "hint": "Vous pouvez relancer un import sans risque : un scan déjà présent (même domaine, même date) est ignoré.",
+      "result": {
+        "title": "Résultat de l'import",
+        "read": "Scans lus",
+        "imported": "Ajoutés à l'historique",
+        "ignored": "Ignorés",
+        "duplicates": "Déjà présents",
+        "unusable": "Inutilisables (domaine ou date illisible)",
+        "unknownColumns": "Colonnes sans équivalent, non reprises"
+      },
+      "summary": "{{count}} scan(s) ajouté(s) à l'historique.",
+      "nothingNew": "Aucun nouveau scan : tous ceux de ce fichier sont déjà dans l'historique.",
+      "nothingToImport": "Ce fichier ne contient aucun scan exploitable.",
+      "done": "Import terminé : {{count}} scan(s) ajouté(s).",
+      "history": "Voir l'historique"
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "L'adresse demandée ne correspond à aucun écran.",
+    "home": "Retour au nouveau scan"
+  },
+  "shell": {
+    "sections": {
+      "navigation": "Navigation",
+      "settings": "Réglages"
+    },
+    "theme": {
+      "toLight": "Passer au thème clair",
+      "toDark": "Passer au thème sombre"
+    },
+    "quickScan": {
+      "label": "Scan rapide",
+      "placeholder": "Nouveau domaine…",
+      "submit": "Lancer le scan"
+    },
+    "count": {
+      "history": "{{count}} scan(s)",
+      "findings": "{{count}} à corriger"
+    }
+  },
+  "generic": {
+    "none": "Aucune donnée à afficher.",
+    "more": "… et {{count}} de plus",
+    "tableAria": "Tableau de résultats",
+    "requiresAuth": "Cible autorisée requise",
+    "duration": "{{seconds}} s",
+    "missingKeys": "Clé d'API requise, non renseignée dans les Réglages : {{keys}}.",
+    "authHint": "Ce module n'est lancé que sur une cible autorisée (profil personnalisé).",
+    "category": {
+      "passif": "Passif",
+      "actif": "Actif",
+      "cle_api": "Clé d'API",
+      "sensible": "Sensible"
+    }
+  },
+  "palette": {
+    "title": "Palette de commandes",
+    "open": "Rechercher ou lancer une commande",
+    "shortcut": "Ctrl K",
+    "placeholder": "Scanner un domaine, aller à une page…",
+    "results": "Résultats",
+    "groups": {
+      "actions": "Actions",
+      "pages": "Aller à",
+      "recent": "Scans récents"
+    },
+    "scanDomain": "Scanner {{domain}}",
+    "openScan": "Résultat de {{domain}}",
+    "empty": "Aucun résultat.",
+    "hint": "Entrée pour valider, Échap pour fermer"
+  },
+  "category": {
+    "passif": "Passif",
+    "actif": "Actif",
+    "cle_api": "Clé d'API",
+    "sensible": "Sensible",
+    "desc": {
+      "passif": "Lit des sources publiques (DNS, certificats publics, bases ouvertes) sans envoyer de sonde à la cible.",
+      "actif": "Envoie des requêtes ou des connexions à la cible (ports, fichiers, méthodes). À réserver à vos propres domaines.",
+      "cle_api": "Interroge un service tiers (Shodan, VirusTotal...) et demande une clé d'API renseignée dans les Réglages.",
+      "sensible": "Recherche des informations exposées ou teste des faiblesses (fuites, fichiers sensibles). Exige votre autorisation expresse."
+    }
+  },
+  "scanProfile": {
+    "legend": "Profil du scan",
+    "rapide": {
+      "name": "Rapide",
+      "desc": "Les {{count}} modules passifs essentiels. Quelques secondes, aucune sonde envoyée à la cible.",
+      "descPending": "Les modules passifs essentiels. Quelques secondes, aucune sonde envoyée à la cible."
+    },
+    "complet": {
+      "name": "Complet",
+      "desc": "Tous les modules passifs, et ceux qui utilisent une clé d'API renseignée. Aucun module actif ni sensible."
+    },
+    "personnalise": {
+      "name": "Personnalisé",
+      "desc": "Vous choisissez les modules, famille par famille, y compris les modules actifs et sensibles."
+    },
+    "selectedCount": "{{count}} module(s) choisi(s) sur {{total}}",
+    "selectFamily": "Tout choisir : {{family}}",
+    "clearFamily": "Aucun : {{family}}",
+    "keyMissing": "Ce module a besoin d'une clé d'API : ajoutez-la dans les Réglages, sinon il sera ignoré.",
+    "noneSelected": "Choisissez au moins un module.",
+    "authorized": "J'ai l'autorisation de tester cette cible",
+    "authorizedPlural": "J'ai l'autorisation de tester ces cibles",
+    "authorizedHint": "Obligatoire pour les modules actifs et sensibles. Ne testez que des domaines qui vous appartiennent ou pour lesquels vous avez une autorisation écrite."
+  },
+  "export": {
+    "button": "Exporter",
+    "menu": "Formats d'export",
+    "done": "Export {{format}} téléchargé",
+    "error": "Export {{format}} impossible : {{detail}}",
+    "formats": {
+      "pdf": "PDF",
+      "html": "HTML",
+      "md": "Markdown",
+      "csv": "CSV",
+      "json": "JSON",
+      "sarif": "SARIF"
+    },
+    "hints": {
+      "pdf": "Rapport à imprimer ou à envoyer",
+      "html": "Page autonome, lisible dans un navigateur",
+      "md": "Texte structuré pour un ticket ou un wiki",
+      "csv": "Tableau des constats pour un tableur",
+      "json": "Données complètes, pour vos scripts",
+      "sarif": "Format des outils d'analyse de sécurité"
+    }
+  },
+  "understand": {
+    "toggle": "Comprendre et corriger",
+    "what": "Ce que c'est",
+    "why": "Pourquoi c'est important",
+    "fix": "Comment corriger",
+    "whatDefault": "Contrôle réalisé par le module « {{module}} ».",
+    "whyDefault": "Une faiblesse signalée ici peut être exploitée pour usurper, intercepter ou détourner le domaine.",
+    "copy": "Copier",
+    "copied": "Copié",
+    "copyCode": "Copier l'extrait",
+    "copyVariant": "Copier l'extrait {{variant}}",
+    "copyError": "Copie impossible : sélectionnez le code à la main.",
+    "platforms": "Variantes par plateforme",
+    "variantDefault": "Variante {{number}}",
+    "reference": "Documentation officielle",
+    "newTab": "(s'ouvre dans un nouvel onglet)"
+  },
+  "fix": {
+    "families": {
+      "web": "Ajoutez ou corrigez les en-têtes de sécurité et les réglages du serveur web, puis relancez le scan pour vérifier.",
+      "tls": "Renouvelez le certificat avant son expiration, activez TLS 1.2 ou plus et retirez les protocoles et suites obsolètes.",
+      "email": "Publiez des enregistrements SPF, DKIM et DMARC cohérents dans le DNS de votre domaine, puis visez une politique DMARC stricte.",
+      "dns": "Corrigez la zone DNS chez votre hébergeur : supprimez les enregistrements orphelins et activez DNSSEC si possible.",
+      "network": "Fermez les ports qui n'ont pas besoin d'être publics et placez les services d'administration derrière un VPN ou un pare-feu.",
+      "identity": "Vérifiez les informations d'enregistrement du domaine et activez le verrouillage et la confidentialité chez le registraire.",
+      "reputation": "Identifiez la cause de la mauvaise réputation, corrigez-la, puis demandez le retrait aux services concernés.",
+      "leaks": "Changez les identifiants exposés, retirez les fichiers ou secrets publiés et activez l'authentification à deux facteurs."
+    },
+    "modules": {
+      "dns_records": "Complétez les enregistrements manquants (A, MX, NS, CAA) et supprimez ceux qui ne servent plus.",
+      "subdomains": "Supprimez les sous-domaines inutilisés et vérifiez que chacun est protégé comme le domaine principal.",
+      "security_headers": "Ajoutez Strict-Transport-Security, Content-Security-Policy, X-Content-Type-Options, X-Frame-Options et Referrer-Policy dans la configuration du serveur web.",
+      "tls_certificate": "Renouvelez le certificat avant son expiration (idéalement avec un renouvellement automatique) et vérifiez qu'il couvre bien le nom du site.",
+      "technologies": "Mettez à jour les composants détectés et masquez les numéros de version dans les en-têtes du serveur.",
+      "geo_data": "Vérifiez que l'hébergement se trouve dans la zone attendue et que l'adresse IP appartient bien à votre fournisseur.",
+      "whois_data": "Vérifiez les contacts du domaine, activez le verrouillage du transfert et anticipez la date d'expiration.",
+      "open_ports": "Fermez les ports inutiles au pare-feu et limitez l'accès aux services d'administration (SSH, bases de données) par adresse IP ou VPN.",
+      "email_security": "Publiez ou resserrez SPF (-all), DKIM et DMARC (p=quarantine puis p=reject), et ajoutez MTA-STS si votre fournisseur le permet.",
+      "waf": "Placez le site derrière un pare-feu applicatif (WAF) ou un CDN qui filtre les attaques courantes.",
+      "redirect_chain": "Redirigez HTTP vers HTTPS en une seule étape et évitez les chaînes de redirections multiples.",
+      "web_files": "Retirez les fichiers sensibles accessibles publiquement et vérifiez le contenu de robots.txt et security.txt.",
+      "cookie_security": "Ajoutez les attributs Secure, HttpOnly et SameSite aux cookies de session.",
+      "cors": "Remplacez les origines autorisées génériques (*) par la liste précise des sites qui ont besoin d'accéder à votre API.",
+      "reverse_dns": "Faites correspondre le DNS inverse de l'adresse IP au nom du serveur, notamment pour le serveur de messagerie.",
+      "network_extended": "Vérifiez l'appartenance du réseau (ASN) et les annonces BGP, et demandez à votre hébergeur de corriger toute anomalie.",
+      "screenshot": "Vérifiez que la page affichée est bien celle attendue et ne présente pas de contenu inattendu.",
+      "subdomain_takeover": "Supprimez l'enregistrement DNS qui pointe vers un service que vous n'utilisez plus, ou recréez la ressource sur ce service."
+    }
+  },
+  "dashboard": {
+    "kicker": "Vue d'ensemble",
+    "title": "Tableau de bord",
+    "lead": "Le dernier état de chaque domaine analysé : note, tendance, constats ouverts et surveillance.",
+    "trend": "Tendance des scores de {{domain}}",
+    "noFindings": "Aucun constat",
+    "findings": "{{count}} constat(s) dont {{urgent}} urgent(s)",
+    "compare": "Comparer",
+    "emptyTitle": "Aucun domaine analysé",
+    "emptyText": "Lancez votre premier scan : le tableau de bord résumera ensuite l'état de chacun de vos domaines.",
+    "emptyAction": "Lancer un scan",
+    "tableCaption": "Dernier scan de chaque domaine",
+    "stats": {
+      "domains": "Domaines",
+      "average": "Score moyen",
+      "urgent": "Avec constat urgent",
+      "watched": "Surveillés"
+    },
+    "col": {
+      "domain": "Domaine",
+      "grade": "Note",
+      "score": "Score",
+      "trend": "Tendance",
+      "findings": "Constats",
+      "watch": "Surveillance",
+      "status": "Statut",
+      "last": "Dernier scan",
+      "actions": "Actions"
+    }
+  },
+  "compare": {
+    "kicker": "Évolution",
+    "title": "Comparer deux scans",
+    "lead": "Choisissez un domaine puis deux de ses scans : l'écran montre ce qui a changé (note, constats, ports, sous-domaines, DNS, certificat).",
+    "domain": "Domaine",
+    "domainPlaceholder": "exemple.com",
+    "choose": "Choisir",
+    "reference": "Scan de référence (le plus ancien)",
+    "recent": "Scan à comparer (le plus récent)",
+    "added": "Ajouté",
+    "removed": "Retiré",
+    "notMeasured": "Non mesuré dans l'un des deux scans : aucune comparaison possible.",
+    "noChange": "Aucun changement.",
+    "notComparable": "L'un des deux scans est en erreur : la comparaison n'est pas possible.",
+    "score": "Note et score",
+    "points": "points",
+    "identical": "Aucune différence entre ces deux scans.",
+    "summary": "Résumé des changements",
+    "findings": "Constats",
+    "newFindings": "Nouveaux constats",
+    "resolvedFindings": "Constats résolus",
+    "noNewFindings": "Aucun nouveau constat.",
+    "noResolvedFindings": "Aucun constat résolu.",
+    "unchanged": "{{count}} constat(s) inchangé(s).",
+    "ports": "Ports ouverts",
+    "subdomains": "Sous-domaines",
+    "dns": "Enregistrements DNS",
+    "certificate": "Certificat TLS",
+    "certField": {
+      "subject": "Sujet",
+      "issuer_org": "Émetteur",
+      "issuer_cn": "Nom de l'émetteur",
+      "serial_number": "Numéro de série",
+      "not_before": "Valide à partir du",
+      "not_after": "Expire le"
+    },
+    "technologies": "Technologies",
+    "emptyTitle": "Aucun domaine choisi",
+    "emptyText": "Saisissez un domaine déjà analysé pour comparer deux de ses scans.",
+    "needTwoTitle": "Deux scans nécessaires",
+    "needTwoText": "{{domain}} n'a pas assez de scans : il en faut au moins deux pour comparer. Relancez une analyse.",
+    "needTwoAction": "Lancer un scan",
+    "sameScan": "Choisissez deux scans différents."
+  },
+  "batch": {
+    "kicker": "Plusieurs domaines",
+    "title": "Scan en lot",
+    "lead": "Collez une liste de domaines (un par ligne, ou séparés par des virgules) ou importez un fichier .txt ou .csv, puis suivez l'avancement.",
+    "listLabel": "Liste de domaines",
+    "listPlaceholder": "exemple.com\nexemple.org\nexemple.net",
+    "importLabel": "Fichier de domaines (.txt ou .csv)",
+    "import": "Importer un fichier",
+    "detected": "{{count}} domaine(s) détecté(s)",
+    "start": "Lancer le lot ({{count}})",
+    "duplicates": "{{count}} doublon(s) ignoré(s).",
+    "rejected": "{{count}} entrée(s) refusée(s) :",
+    "emptyTitle": "Aucun lot en cours",
+    "emptyText": "Collez vos domaines ci-dessus et lancez le lot. Les résultats apparaîtront ici, avec un export CSV.",
+    "progress": "{{done}} sur {{total}} terminé(s)",
+    "progressLabel": "Avancement du lot",
+    "cancel": "Annuler le lot",
+    "exportCsv": "Exporter en CSV",
+    "counts": "{{done}} réussi(s), {{failed}} en échec, {{cancelled}} annulé(s)",
+    "tableCaption": "Résultats du lot",
+    "col": {
+      "domain": "Domaine",
+      "status": "Statut",
+      "grade": "Note",
+      "score": "Score",
+      "result": "Résultat"
+    },
+    "status": {
+      "queued": "En attente",
+      "running": "En cours",
+      "done": "Terminé",
+      "failed": "Échec",
+      "cancelled": "Annulé"
+    },
+    "open": "Ouvrir le résultat",
+    "fileTooBig": "Fichier trop volumineux (512 Ko au plus).",
+    "fileError": "Lecture du fichier impossible."
+  },
+  "monitoring": {
+    "kicker": "Suivi dans le temps",
+    "title": "Surveillance",
+    "lead": "Scannez vos domaines à intervalle régulier et soyez alerté quand quelque chose change : note, nouveau constat, certificat, port ou sous-domaine.",
+    "tabs": {
+      "label": "Sections de la surveillance",
+      "watches": "Surveillances",
+      "notifications": "Notifications"
+    },
+    "frequency": {
+      "daily": "Quotidienne",
+      "weekly": "Hebdomadaire",
+      "monthly": "Mensuelle"
+    },
+    "rules": {
+      "legend": "Règles d'alerte",
+      "grade_drop": "La note baisse",
+      "new_findings": "Un constat critique ou élevé apparaît",
+      "new_port": "Un nouveau port s'ouvre",
+      "new_subdomain": "Un nouveau sous-domaine apparaît",
+      "cert_expiry_days": "Alerter quand le certificat expire dans (jours)",
+      "certOff": "Désactivé"
+    },
+    "channels": {
+      "legend": "Canaux d'alerte",
+      "center": "Centre de notifications",
+      "desktop": "Notification de bureau",
+      "discord": "Discord",
+      "slack": "Slack",
+      "teams": "Teams",
+      "webhook": "Webhook JSON",
+      "email": "E-mail (SMTP)",
+      "hint": "Les canaux externes se configurent dans les Réglages."
+    },
+    "add": {
+      "title": "Ajouter une surveillance",
+      "domain": "Domaine à surveiller",
+      "frequency": "Fréquence",
+      "submit": "Surveiller ce domaine"
+    },
+    "added": "{{domain}} est maintenant surveillé",
+    "saved": "Surveillance enregistrée",
+    "save": "Enregistrer",
+    "deleteTitle": "Supprimer la surveillance ?",
+    "deleteMessage": "{{domain}} ne sera plus scanné automatiquement. Ses scans restent dans l'historique.",
+    "deleteLabel": "Supprimer la surveillance de {{domain}}",
+    "frequencyOf": "Fréquence de {{domain}}",
+    "active": "Active",
+    "paused": "En pause",
+    "neverRun": "Jamais exécutée",
+    "lastScan": "Voir le scan",
+    "runQueued": "Scan de {{domain}} planifié",
+    "run": "Lancer maintenant",
+    "edit": "Modifier",
+    "emptyTitle": "Aucune surveillance",
+    "emptyText": "Ajoutez un domaine ci-dessous : il sera scanné automatiquement et comparé au scan précédent.",
+    "tableCaption": "Domaines surveillés",
+    "col": {
+      "domain": "Domaine",
+      "frequency": "Fréquence",
+      "state": "État",
+      "last": "Dernière exécution",
+      "next": "Prochaine exécution",
+      "actions": "Actions"
+    },
+    "task": {
+      "title": "Tâche système",
+      "hint": "Exécute les surveillances échues même quand DomainRecon est fermé (Planificateur de tâches Windows ou minuteur systemd).",
+      "unsupported": "Ce système ne permet pas d'installer la tâche automatiquement. Lancez « domainrecon monitor run-due » depuis votre planificateur.",
+      "installed": "Tâche système installée",
+      "removed": "Tâche système supprimée",
+      "stateOn": "Installée",
+      "stateOff": "Non installée",
+      "install": "Installer la tâche",
+      "uninstall": "Désinstaller la tâche"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "emptyTitle": "Aucune notification",
+    "emptyText": "Les alertes de vos surveillances apparaîtront ici dès qu'un changement sera détecté.",
+    "unread": "{{count}} non lue(s)",
+    "markAll": "Tout marquer comme lu",
+    "clear": "Vider",
+    "new": "Nouveau",
+    "open": "Voir le scan",
+    "markOne": "Marquer comme lue l'alerte de {{domain}}",
+    "removeOne": "Supprimer l'alerte de {{domain}}"
+  },
+  "glossary": {
+    "spf": {
+      "name": "SPF",
+      "def": "Enregistrement DNS qui liste les serveurs autorisés à envoyer du courrier pour le domaine. Il limite l'usurpation d'expéditeur."
+    },
+    "dkim": {
+      "name": "DKIM",
+      "def": "Signature cryptographique ajoutée à chaque e-mail sortant. Le destinataire la vérifie avec une clé publiée dans le DNS."
+    },
+    "dmarc": {
+      "name": "DMARC",
+      "def": "Politique qui dit quoi faire d'un e-mail dont SPF ou DKIM échoue (ignorer, mettre en quarantaine, rejeter) et où envoyer les rapports."
+    },
+    "bimi": {
+      "name": "BIMI",
+      "def": "Permet d'afficher le logo de votre marque dans la boîte de réception, à condition d'avoir un DMARC strict."
+    },
+    "mta_sts": {
+      "name": "MTA-STS",
+      "def": "Politique qui oblige les serveurs de messagerie à chiffrer en TLS le courrier envoyé à votre domaine."
+    },
+    "tls_rpt": {
+      "name": "TLS-RPT",
+      "def": "Rapports envoyés quand une connexion TLS vers votre serveur de messagerie échoue. Complète MTA-STS."
+    },
+    "dane": {
+      "name": "DANE",
+      "def": "Publie dans le DNS (protégé par DNSSEC) l'empreinte du certificat attendu, pour authentifier un serveur sans dépendre d'une autorité."
+    },
+    "dnssec": {
+      "name": "DNSSEC",
+      "def": "Signature cryptographique des réponses DNS. Elle empêche de falsifier ou de rediriger les résolutions de noms."
+    },
+    "caa": {
+      "name": "CAA",
+      "def": "Enregistrement DNS qui limite les autorités de certification autorisées à émettre un certificat pour votre domaine."
+    },
+    "hsts": {
+      "name": "HSTS",
+      "def": "En-tête qui force le navigateur à n'utiliser que HTTPS pour votre site pendant une durée donnée."
+    },
+    "csp": {
+      "name": "CSP",
+      "def": "En-tête qui liste les sources autorisées pour les scripts, images et styles. Il limite l'impact des failles d'injection (XSS)."
+    },
+    "cors": {
+      "name": "CORS",
+      "def": "Mécanisme qui décide quels autres sites ont le droit d'appeler votre API depuis un navigateur."
+    },
+    "x_frame_options": {
+      "name": "X-Frame-Options",
+      "def": "En-tête qui interdit d'afficher votre page dans un cadre d'un autre site, contre le détournement de clic."
+    },
+    "referrer_policy": {
+      "name": "Referrer-Policy",
+      "def": "En-tête qui contrôle l'adresse de la page d'origine transmise aux sites visités ensuite."
+    },
+    "permissions_policy": {
+      "name": "Permissions-Policy",
+      "def": "En-tête qui active ou coupe des fonctions du navigateur (caméra, micro, localisation) pour votre page."
+    },
+    "httponly": {
+      "name": "HttpOnly",
+      "def": "Attribut de cookie qui interdit aux scripts de le lire. Il protège les sessions contre le vol par XSS."
+    },
+    "samesite": {
+      "name": "SameSite",
+      "def": "Attribut de cookie qui limite son envoi lors de requêtes venant d'un autre site, contre les attaques CSRF."
+    },
+    "asn": {
+      "name": "ASN",
+      "def": "Numéro d'un système autonome : le réseau (hébergeur, opérateur) qui annonce une adresse IP sur Internet."
+    },
+    "bgp": {
+      "name": "BGP",
+      "def": "Protocole par lequel les réseaux s'annoncent les adresses IP qu'ils savent atteindre. Une annonce erronée peut détourner du trafic."
+    },
+    "ct": {
+      "name": "CT (Certificate Transparency)",
+      "def": "Journaux publics où toute autorité de certification inscrit les certificats émis. Utile pour repérer un certificat inattendu."
+    },
+    "ocsp": {
+      "name": "OCSP",
+      "def": "Service par lequel on vérifie qu'un certificat n'a pas été révoqué. L'agrafage OCSP évite une requête supplémentaire."
+    },
+    "tls": {
+      "name": "TLS",
+      "def": "Protocole qui chiffre les connexions (HTTPS, messagerie). Les versions 1.2 et 1.3 sont les seules à conserver."
+    },
+    "certificate": {
+      "name": "Certificat",
+      "def": "Document numérique qui prouve l'identité d'un site et contient la clé publique servant au chiffrement."
+    },
+    "ca": {
+      "name": "Autorité de certification",
+      "def": "Organisme de confiance qui signe les certificats et garantit qu'ils appartiennent bien à leur titulaire."
+    },
+    "san": {
+      "name": "SAN",
+      "def": "Liste des noms de domaine couverts par un même certificat (Subject Alternative Name)."
+    },
+    "cipher": {
+      "name": "Suite de chiffrement",
+      "def": "Ensemble d'algorithmes négociés pour une connexion TLS. Les suites anciennes sont cassables."
+    },
+    "pfs": {
+      "name": "Confidentialité persistante",
+      "def": "Propriété qui protège les échanges passés même si la clé du serveur est volée plus tard (Perfect Forward Secrecy)."
+    },
+    "dns": {
+      "name": "DNS",
+      "def": "L'annuaire d'Internet : il traduit un nom de domaine en adresse IP et indique où livrer le courrier."
+    },
+    "a_record": {
+      "name": "Enregistrement A",
+      "def": "Associe un nom à une adresse IPv4."
+    },
+    "aaaa_record": {
+      "name": "Enregistrement AAAA",
+      "def": "Associe un nom à une adresse IPv6."
+    },
+    "mx": {
+      "name": "MX",
+      "def": "Enregistrement qui désigne les serveurs de messagerie chargés de recevoir le courrier du domaine."
+    },
+    "ns": {
+      "name": "NS",
+      "def": "Enregistrement qui désigne les serveurs DNS faisant autorité pour le domaine."
+    },
+    "txt": {
+      "name": "TXT",
+      "def": "Enregistrement de texte libre, utilisé pour SPF, DMARC, DKIM et les vérifications de propriété."
+    },
+    "cname": {
+      "name": "CNAME",
+      "def": "Alias : un nom qui renvoie vers un autre nom. Un CNAME vers un service désactivé expose à la prise de contrôle."
+    },
+    "soa": {
+      "name": "SOA",
+      "def": "Enregistrement d'en-tête de la zone DNS : serveur principal, contact et durées de rafraîchissement."
+    },
+    "ptr": {
+      "name": "PTR (DNS inverse)",
+      "def": "Associe une adresse IP à un nom. Les serveurs de messagerie le contrôlent pour juger un expéditeur."
+    },
+    "ttl": {
+      "name": "TTL",
+      "def": "Durée, en secondes, pendant laquelle une réponse DNS peut être gardée en mémoire avant d'être redemandée."
+    },
+    "zone_transfer": {
+      "name": "Transfert de zone",
+      "def": "Copie complète de la zone DNS (AXFR). Ouvert à tous, il révèle la liste de vos machines."
+    },
+    "wildcard_dns": {
+      "name": "DNS générique",
+      "def": "Enregistrement qui répond pour n'importe quel sous-domaine inexistant. Il fausse la découverte de sous-domaines."
+    },
+    "subdomain": {
+      "name": "Sous-domaine",
+      "def": "Nom placé devant votre domaine (par exemple mail.exemple.com), souvent oublié donc moins surveillé."
+    },
+    "takeover": {
+      "name": "Prise de contrôle de sous-domaine",
+      "def": "Un sous-domaine pointe vers un service que vous n'utilisez plus : un tiers peut le réclamer et publier à votre nom."
+    },
+    "waf": {
+      "name": "WAF",
+      "def": "Pare-feu applicatif : il filtre les requêtes web malveillantes avant qu'elles n'atteignent le site."
+    },
+    "cdn": {
+      "name": "CDN",
+      "def": "Réseau de serveurs qui sert votre site au plus près des visiteurs et absorbe une partie des attaques."
+    },
+    "whois": {
+      "name": "WHOIS",
+      "def": "Annuaire d'enregistrement d'un domaine : registraire, dates de création et d'expiration, serveurs DNS."
+    },
+    "rdap": {
+      "name": "RDAP",
+      "def": "Successeur moderne de WHOIS, qui répond dans un format structuré."
+    },
+    "open_port": {
+      "name": "Port ouvert",
+      "def": "Porte d'un serveur qui accepte les connexions. Chaque port ouvert est une surface d'attaque potentielle."
+    },
+    "banner": {
+      "name": "Bannière",
+      "def": "Texte qu'un service renvoie à la connexion, souvent avec son nom et sa version."
+    },
+    "typosquatting": {
+      "name": "Typosquatting",
+      "def": "Domaines presque identiques au vôtre (faute de frappe) enregistrés pour tromper vos visiteurs."
+    },
+    "dnsbl": {
+      "name": "DNSBL",
+      "def": "Liste noire interrogée par DNS qui recense les adresses IP à mauvaise réputation (spam, malware)."
+    },
+    "osint": {
+      "name": "OSINT",
+      "def": "Renseignement de sources ouvertes : informations obtenues à partir de sources publiques uniquement."
+    },
+    "passive": {
+      "name": "Module passif",
+      "def": "Lit des sources publiques sans envoyer de sonde à la cible."
+    },
+    "active": {
+      "name": "Module actif",
+      "def": "Envoie des requêtes ou connexions à la cible. À réserver à vos propres domaines."
+    },
+    "proxy": {
+      "name": "Proxy",
+      "def": "Intermédiaire par lequel passent les requêtes HTTP. Le DNS, lui, ne passe pas par le proxy de DomainRecon."
+    },
+    "sarif": {
+      "name": "SARIF",
+      "def": "Format standard d'échange de résultats d'analyse de sécurité, lu par GitHub et de nombreux outils."
+    }
+  },
+  "help": {
+    "kicker": "Documentation",
+    "title": "Aide",
+    "lead": "Tout pour bien démarrer : le guide en cinq étapes, les profils de scan, le cadre légal, les questions fréquentes et le glossaire.",
+    "nav": "Sections de l'aide",
+    "sections": {
+      "guide": "Guide de démarrage",
+      "profiles": "Profils et modules",
+      "legal": "Cadre légal",
+      "faq": "Questions fréquentes",
+      "glossary": "Glossaire"
+    },
+    "guide": {
+      "1": {
+        "title": "Saisissez un domaine",
+        "text": "Sur « Nouveau scan », écrivez le domaine à analyser (exemple.com) ou collez son adresse."
+      },
+      "2": {
+        "title": "Choisissez un profil",
+        "text": "Rapide pour un premier coup d'œil, Complet pour tout ce qui est passif, Personnalisé pour choisir les modules."
+      },
+      "3": {
+        "title": "Suivez l'analyse",
+        "text": "Les modules s'exécutent en direct. Vous pouvez annuler à tout moment."
+      },
+      "4": {
+        "title": "Lisez le résultat",
+        "text": "La note résume l'état de sécurité. Chaque constat explique ce que c'est, pourquoi c'est important et comment le corriger."
+      },
+      "5": {
+        "title": "Suivez dans le temps",
+        "text": "Comparez deux scans, exportez un rapport ou surveillez le domaine pour être alerté en cas de changement."
+      }
+    },
+    "replayOnboarding": "Relancer la visite guidée",
+    "categories": "Catégories de modules",
+    "profileDesc": {
+      "rapide": "Les modules passifs essentiels : quelques secondes, aucune sonde envoyée à la cible.",
+      "complet": "Tous les modules passifs et ceux qui utilisent une clé d'API renseignée. Aucun module actif ni sensible.",
+      "personnalise": "Vous choisissez les modules famille par famille. Seul profil qui permet les modules actifs et sensibles."
+    },
+    "legal": {
+      "intro": "DomainRecon est un outil d'audit de vos propres domaines. Interroger des sources publiques est libre, mais sonder un système sans autorisation peut être un délit.",
+      "own": "N'analysez que des domaines qui vous appartiennent ou pour lesquels vous avez une autorisation écrite de leur titulaire.",
+      "active": "Les modules actifs envoient des requêtes et des connexions à la cible (ports, fichiers, méthodes HTTP) : ils laissent des traces dans ses journaux.",
+      "sensitive": "Les modules sensibles recherchent des fuites, des fichiers exposés ou des faiblesses exploitables : ils exigent votre autorisation expresse.",
+      "responsibility": "En cochant « J'ai l'autorisation de tester cette cible », vous déclarez disposer de ce droit et en assumez la responsabilité.",
+      "note": "Les règles varient selon les pays. En cas de doute, demandez l'accord du titulaire ou d'un juriste."
+    },
+    "faq": {
+      "1": {
+        "q": "Où sont stockées mes données ?",
+        "a": "Localement, dans le dossier des données indiqué dans les Réglages. Aucun résultat n'est envoyé à un serveur de DomainRecon."
+      },
+      "2": {
+        "q": "Pourquoi certains modules sont-ils ignorés ?",
+        "a": "Un module à clé d'API est ignoré tant que la clé n'est pas renseignée dans les Réglages, et un module actif ou sensible exige votre autorisation."
+      },
+      "3": {
+        "q": "Que veut dire « non mesuré » ?",
+        "a": "Le module n'a pas pu conclure (délai dépassé, service injoignable). Ce n'est pas une bonne note : relancez le scan."
+      },
+      "4": {
+        "q": "Comment est calculée la note ?",
+        "a": "Chaque famille a un barème. Le détail du score, ses pénalités et sa couverture sont visibles dans l'onglet « Détail du score » du résultat."
+      },
+      "5": {
+        "q": "Le DNS passe-t-il par mon proxy ?",
+        "a": "Non. Le proxy HTTP ou SOCKS ne concerne que les requêtes web : les résolutions DNS partent directement de cette machine."
+      },
+      "6": {
+        "q": "Comment recevoir des alertes ?",
+        "a": "Ajoutez une surveillance, choisissez les règles et les canaux, puis installez la tâche système pour qu'elle s'exécute même application fermée."
+      },
+      "7": {
+        "q": "Comment importer une ancienne base ?",
+        "a": "Dans les Réglages, section « Importer une ancienne base » : choisissez le fichier .db, les scans sont repris sans doublon."
+      },
+      "8": {
+        "q": "Le PDF ne se génère pas, pourquoi ?",
+        "a": "Le PDF utilise le navigateur Chromium de Playwright. S'il n'est pas installé, utilisez l'export HTML ou Markdown."
+      }
+    },
+    "toSettings": "Ouvrir les Réglages",
+    "glossaryFilter": "Filtrer le glossaire",
+    "glossaryCount": "{{count}} terme(s)"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Bienvenue dans DomainRecon",
+      "text": "DomainRecon audite la sécurité publique de vos propres domaines : DNS, certificats, e-mail, web et réputation. Tout reste sur votre machine.",
+      "authorized": "Usage autorisé uniquement : n'analysez que vos domaines ou ceux pour lesquels vous avez une autorisation écrite de leur titulaire.",
+      "tour": "Une courte visite guidée vous montre les éléments de l'interface, un par un.",
+      "replay": "Vous pourrez la relancer à tout moment depuis l'Aide ou la palette de commandes (Ctrl+K).",
+      "later": "Plus tard",
+      "start": "Commencer la visite"
+    },
+    "tour": {
+      "step": "Étape {{current}} sur {{total}}",
+      "announce": "{{step}} : {{title}}",
+      "skip": "Passer",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "finish": "Terminer",
+      "keys": "Flèches gauche et droite pour naviguer, Échap pour quitter."
+    },
+    "steps": {
+      "palette": {
+        "title": "Recherche rapide",
+        "text": "Ce bouton ouvre la palette de commandes : tapez le nom d'une page, un domaine à scanner ou un scan récent, puis Entrée. Raccourci : Ctrl+K (Cmd+K sur Mac), depuis n'importe quel écran."
+      },
+      "domain": {
+        "title": "Domaine à analyser",
+        "text": "Saisissez un nom de domaine (par exemple exemple.fr) ou une adresse web, puis cliquez sur Scan. L'analyse se suit en direct et peut être annulée à tout moment."
+      },
+      "profiles": {
+        "title": "Profil de scan",
+        "text": "Le profil choisit les modules lancés :",
+        "point1": "Rapide : les contrôles passifs essentiels, en quelques secondes.",
+        "point2": "Complet : tous les contrôles passifs et ceux dont la clé d'API est renseignée.",
+        "point3": "Personnalisé : vous cochez les modules. Les modules actifs, qui envoient des requêtes à la cible, exigent de cocher la case d'autorisation : ne la cochez que pour vos domaines ou avec un accord écrit."
+      },
+      "nav": {
+        "title": "Menu de navigation",
+        "text": "Les écrans pour suivre vos domaines dans le temps :",
+        "point1": "Tableau de bord : la vue d'ensemble de vos domaines et de leurs notes.",
+        "point2": "Historique : tous les scans passés, à rouvrir ou à supprimer.",
+        "point3": "Lot : plusieurs domaines analysés d'un coup.",
+        "point4": "Comparer : deux scans côte à côte, pour voir ce qui a changé.",
+        "point5": "Surveillance : des scans réguliers et une alerte en cas de changement."
+      },
+      "settings": {
+        "title": "Réglages",
+        "text": "Adaptez l'application à votre usage :",
+        "point1": "Clés d'API, facultatives : elles activent des modules supplémentaires, l'outil fonctionne sans.",
+        "point2": "Thème clair ou sombre.",
+        "point3": "Langue de l'interface : français ou anglais."
+      },
+      "help": {
+        "title": "Aide et glossaire",
+        "text": "Guide pas à pas, profils, cadre légal, questions fréquentes et glossaire des termes techniques. Vous pouvez y relancer cette visite à tout moment."
+      },
+      "resultScore": {
+        "title": "Note de sécurité",
+        "text": "La note, de A à F, et le score résument l'état du domaine. La couverture indique la part des contrôles qui ont pu être mesurés."
+      },
+      "resultFinding": {
+        "title": "Constats",
+        "text": "Les constats les plus importants viennent en premier. « Comprendre et corriger » explique ce que c'est, pourquoi c'est important et comment le corriger."
+      },
+      "resultFamily": {
+        "title": "Familles de contrôles",
+        "text": "Chaque ligne regroupe une famille (DNS, e-mail, web, TLS…) avec son état. Ouvrez-la pour le détail module par module."
+      },
+      "resultExport": {
+        "title": "Actions et export",
+        "text": "Relancez le scan, suivez l'évolution du domaine dans le temps, ou cliquez sur Exporter pour obtenir un rapport PDF, HTML, Markdown, CSV, JSON ou SARIF."
+      },
+      "resultIntro": {
+        "title": "Écran de résultat",
+        "text": "Après votre premier scan, l'écran de résultat présente :",
+        "point1": "La note de A à F et le score, avec la couverture des contrôles.",
+        "point2": "Les constats, chacun avec « Comprendre et corriger ».",
+        "point3": "Les familles de contrôles (DNS, e-mail, web…), à ouvrir pour le détail.",
+        "point4": "Le bouton Exporter : rapport PDF, HTML, Markdown, CSV, JSON ou SARIF."
+      }
+    },
+    "palette": {
+      "label": "Relancer la visite guidée",
+      "keywords": "visite guide tutoriel tuto découverte onboarding"
+    }
+  },
+  "uninstall": {
+    "kicker": "Zone de danger",
+    "title": "Désinstaller complètement DomainRecon",
+    "text": "Supprime de cette machine l'historique des scans, les captures, les clés API et leur clé de chiffrement, les réglages, les journaux et la tâche de surveillance, puis retire le programme selon votre installation. Une sauvegarde vous est proposée avant.",
+    "open": "Désinstaller complètement…",
+    "dialogTitle": "Désinstaller complètement DomainRecon",
+    "next": "Continuer",
+    "back": "Retour",
+    "steps": {
+      "label": "Étapes de la désinstallation",
+      "plan": "Ce qui sera supprimé",
+      "backup": "Sauvegarde",
+      "confirm": "Confirmation",
+      "result": "Résultat"
+    },
+    "plan": {
+      "loading": "Inventaire en cours…",
+      "error": "Inventaire impossible : {{detail}}",
+      "mode": "Installation détectée : {{mode}}.",
+      "intro": "Ces éléments seront supprimés de cette machine :",
+      "empty": "Aucune donnée DomainRecon trouvée sur cette machine.",
+      "total": "Espace libéré : {{size}}",
+      "after": "Ensuite :",
+      "removeProgram": "Supprimer aussi le programme après la fermeture",
+      "removeProgramHint": "Seuls les fichiers de DomainRecon sont effacés ; le dossier n'est retiré que s'il est vide."
+    },
+    "mode": {
+      "windows_installed": "installation Windows",
+      "deb": "paquet Debian (.deb)",
+      "portable_onefile": "exécutable portable",
+      "portable_folder": "dossier portable",
+      "frozen_other": "exécutable dans un dossier",
+      "source": "lancement depuis les sources"
+    },
+    "kind": {
+      "database": "Base de données (historique, surveillances, réglages, clés API chiffrées)",
+      "screenshots": "Captures d'écran",
+      "logs": "Journaux",
+      "webview": "Données de la fenêtre de l'application",
+      "settings_file": "Fichier de réglages (.env)",
+      "secret_key": "Clé de chiffrement des clés API",
+      "other_data": "Autre fichier du dossier de données",
+      "data_dir": "Dossier de données",
+      "cache": "Cache",
+      "temp": "Fichier temporaire",
+      "system_task": "Tâche planifiée de la surveillance"
+    },
+    "status": {
+      "planned": "À supprimer",
+      "deleted": "Supprimé",
+      "missing": "Déjà absent",
+      "failed": "Non supprimé",
+      "skipped": "Ignoré (hors des dossiers de DomainRecon)"
+    },
+    "backup": {
+      "intro": "Avant de tout supprimer, gardez une copie de votre historique, de vos surveillances et de vos réglages. Le fichier .db se réimporte dans « Importer une ancienne base » d'une future installation.",
+      "download": "Télécharger une sauvegarde (.db)",
+      "done": "Sauvegarde téléchargée : {{name}}",
+      "error": "Sauvegarde impossible : {{detail}}",
+      "skip": "Continuer sans sauvegarde"
+    },
+    "confirm": {
+      "intro": "Cette action est définitive : rien ne pourra être récupéré sans sauvegarde. Tapez {{word}} pour confirmer.",
+      "label": "Tapez {{word}}",
+      "submit": "Désinstaller définitivement",
+      "running": "Désinstallation en cours…",
+      "error": "Désinstallation impossible : {{detail}}"
+    },
+    "result": {
+      "done": "DomainRecon a été désinstallé.",
+      "deleted": "Éléments supprimés : {{count}}.",
+      "failed": "Certains éléments sont encore utilisés ou protégés : voir les étapes restantes.",
+      "remaining": "Étapes restantes :",
+      "close": "Fermer DomainRecon",
+      "closing": "DomainRecon se ferme…",
+      "closeManually": "Fermez maintenant DomainRecon (fenêtre ou onglet).",
+      "dismiss": "Terminer",
+      "copy": "Copier",
+      "copied": "Copié"
+    },
+    "remaining": {
+      "windows_uninstaller": "À la fermeture, le désinstalleur Windows retire le programme, ses raccourcis et son entrée dans « Applications installées ».",
+      "apt_remove": "Retirez le programme dans un terminal (droits administrateur) :",
+      "delete_program": "Supprimez le programme à la main après la fermeture : {{path}}",
+      "program_scheduled": "Le programme sera supprimé après la fermeture : {{path}}",
+      "source_tree": "Lancement depuis les sources : le dossier du projet n'est pas touché ({{path}}).",
+      "shared_browsers": "Le Chromium de Playwright, partagé avec d'autres outils, n'est pas supprimé.",
+      "custom_data_dir": "Dossier de données personnalisé (DATA_DIR) : seuls les fichiers de DomainRecon sont retirés de {{path}}.",
+      "unsafe_data_dir": "Dossier de données refusé par sécurité, rien n'y est supprimé : {{path}}",
+      "external_database": "Base de données hors du dossier de données, à supprimer à la main : {{path}}",
+      "external_database_url": "Base de données externe (DATABASE_URL) : à supprimer avec les outils de votre base.",
+      "leftovers_scheduled": "Les fichiers encore utilisés seront supprimés après la fermeture.",
+      "leftovers": "Certains fichiers n'ont pas pu être supprimés : effacez-les à la main après la fermeture."
+    }
+  }
+}

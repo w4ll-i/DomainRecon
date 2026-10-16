@@ -1,0 +1,17 @@
+{
+  "finding.linked_domains.mixed_content": "{count} ressource(s) active(s) chargée(s) en HTTP sur une page HTTPS (contenu mixte), par exemple {example}.",
+  "finding.linked_domains.trackers": "{count} domaines de mesure d'audience ou de publicité tiers : à documenter et soumettre au consentement.",
+  "linked_domains.cat_analytics": "Mesure d'audience et publicité",
+  "linked_domains.cat_cdn": "CDN",
+  "linked_domains.cat_font": "Polices",
+  "linked_domains.cat_maps": "Cartes",
+  "linked_domains.cat_media": "Médias",
+  "linked_domains.cat_payment": "Paiement",
+  "linked_domains.cat_social": "Réseaux sociaux",
+  "module.linked_domains.checks": "Liste les domaines externes que la page référence (scripts, styles, images, cadres, formulaires), classés par type : CDN, mesure d'audience et publicité, réseaux sociaux, paiement, polices.",
+  "module.linked_domains.fix": "Contenu mixte : remplacez chaque adresse `http://` (scripts, feuilles de style, cadres, formulaires, images) par `https://` ou par une adresse relative, dans le code, le thème, le CMS et les anciens contenus enregistrés en base. Si le tiers ne propose pas HTTPS, retirez-le ou hébergez la ressource vous-même.\nRepérez les adresses fautives avec la console du navigateur (touche F12, onglet Console) sur chaque type de page : chaque avertissement de contenu mixte nomme l'adresse en cause.\nEn filet de sécurité seulement, ajoutez `upgrade-insecure-requests` à votre politique `Content-Security-Policy` : le navigateur réécrit alors en `https://` les adresses oubliées. Cela ne remplace pas la correction des sources.\nDressez la liste des domaines tiers affichés par le module et, pour chacun, notez son rôle, son responsable et son contrat ; retirez ceux qui ne servent plus à rien.\nPour la mesure d'audience et la publicité (cinq domaines ou plus), supprimez les doublons, ne chargez ces services qu'après consentement (bandeau de cookies) et mentionnez-les dans votre politique de confidentialité et votre registre des traitements.\nRéduisez la dépendance : hébergez vous-même les polices, scripts et bibliothèques qui peuvent l'être (les visiteurs n'envoient plus leur adresse IP au tiers) et ajoutez l'attribut `integrity` aux scripts tiers conservés.\nLimitez par `Content-Security-Policy` les domaines autorisés pour les scripts, les images et les connexions à ceux qui sont réellement nécessaires, puis relancez le scan.",
+  "module.linked_domains.fix_ref": "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Mixed_content",
+  "module.linked_domains.fix_snippet": "# nginx\nadd_header Content-Security-Policy \"default-src 'self'; script-src 'self' https://cdn.example.com; upgrade-insecure-requests\" always;\n\n# Apache\nHeader always set Content-Security-Policy \"default-src 'self'; script-src 'self' https://cdn.example.com; upgrade-insecure-requests\"",
+  "module.linked_domains.title": "Domaines liés",
+  "module.linked_domains.why": "Chaque domaine tiers est une dépendance : s'il est compromis, la page l'est aussi. Les traceurs posent en outre une question de vie privée."
+}

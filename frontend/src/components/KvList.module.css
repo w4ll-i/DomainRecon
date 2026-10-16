@@ -1,0 +1,31 @@
+/* Liste étiquette / valeur d'un module : rangées denses séparées d'un filet, étiquettes
+   en mono majuscules (texte secondaire : lisible sur toutes les surfaces). */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(110px, 34%) minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

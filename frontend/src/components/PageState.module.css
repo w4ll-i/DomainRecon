@@ -1,0 +1,62 @@
+/* États de page : chargement, erreur, vide. Surfaces plates, filet de 1 px ; l'erreur
+   se lit par son icône et son titre autant que par sa teinte. */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  color: var(--text-secondary);
+}
+
+.loading svg {
+  width: 18px;
+  height: 18px;
+}
+
+.error {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  background: var(--danger-bg);
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--danger);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.title {
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+.detail {
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Vide : encart pointillé sans fond, texte secondaire centré. */
+.empty {
+  padding: var(--space-5);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  text-align: center;
+}

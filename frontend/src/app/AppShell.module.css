@@ -1,0 +1,329 @@
+/* Coquille « Monochrome pro » : menu latéral sobre, en-tête plat avec le bouton de la
+   palette de commandes et l'état du serveur. Surfaces unies, filets de 1 px. L'entrée
+   active se lit par son fond et son poids ; l'accent est réservé au focus. */
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.skip {
+  position: absolute;
+  top: 8px;
+  left: -9999px;
+  z-index: 100;
+  padding: 8px 12px;
+  background: var(--primary);
+  border-radius: var(--radius-sm);
+  color: var(--on-primary);
+}
+
+.skip:focus {
+  left: 8px;
+}
+
+/* ---- Menu latéral ---------------------------------------------------------- */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  height: 100vh;
+  height: 100dvh;
+  padding: var(--space-4) var(--space-3);
+  overflow-y: auto;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px;
+  color: var(--text);
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.brandMark {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+}
+
+.brandName {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav {
+  flex: 1;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.link svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+}
+
+.link:hover {
+  background: var(--surface-raised);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.active {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.active svg,
+.active:hover svg {
+  color: var(--text);
+}
+
+.linkText {
+  min-width: 0;
+}
+
+.footer {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+.themeToggle {
+  /* « Passer au thème sombre » passait sur deux lignes à 3 px près (pied du menu plus haut
+     en clair qu'en sombre) : marge droite et écart réduits, avec un peu de jeu. */
+  gap: 8px;
+  padding-right: 6px;
+  cursor: pointer;
+}
+
+/* Anneau à l'intérieur : le menu défile et rognerait un anneau extérieur. */
+.link:focus-visible {
+  outline-offset: -2px;
+}
+
+/* ---- Colonne principale et en-tête ----------------------------------------- */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.server {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.server svg {
+  width: 15px;
+  height: 15px;
+  color: var(--text-dim);
+}
+
+.server[data-state="online"] svg {
+  color: var(--success);
+}
+
+.server[data-state="degraded"] svg {
+  color: var(--warning);
+}
+
+.server[data-state="offline"] svg {
+  color: var(--danger);
+}
+
+/* Bouton de la palette de commandes : un faux champ de recherche. */
+.paletteButton {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 420px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: left;
+  transition: border-color var(--dur-fast);
+}
+
+.paletteButton:hover {
+  border-color: var(--border-strong);
+}
+
+.paletteButton svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--text-dim);
+}
+
+.paletteText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kbd {
+  flex-shrink: 0;
+  padding: 1px 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6) clamp(16px, 4vw, 48px);
+  outline: none;
+}
+
+/* Serveur arrêté (battement sans réponse) : à relancer, puis recharger. */
+.stopped {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  background: var(--danger-bg);
+}
+
+/* Navigateur étroit (version portable) : menu en bandeau, jusqu'à 360 px. */
+@media (max-width: 760px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Relatif et non statique : les éléments masqués (position absolue) du menu restent dans le
+     bandeau et n'élargissent pas la page. */
+  .sidebar {
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    height: auto;
+    padding: var(--space-3) var(--space-4);
+    overflow: visible;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Les entrées passent à la ligne plutôt que de défiler : tout reste visible sans geste caché. */
+  .nav {
+    order: 3;
+    flex: none;
+    width: 100%;
+  }
+
+  .navList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-1) 0;
+  }
+
+  .link {
+    width: auto;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+
+  /* Bandeau : l'entrée active se souligne au lieu de se teinter. */
+  .active {
+    background: transparent;
+  }
+
+  .active::before {
+    content: "";
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    left: 10px;
+    height: 2px;
+    background: var(--text);
+  }
+
+  .footer {
+    margin-left: auto;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* Bouton de thème : icône seule, le libellé reste pour les lecteurs d'écran. */
+  .themeToggle .linkText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .main {
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .server span,
+  .kbd {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "finding.observatory.low_grade": "Le MDN HTTP Observatory note la sécurité HTTP du site {grade}.",
+  "module.observatory.checks": "Interroge le MDN HTTP Observatory (ex-Mozilla Observatory, API v2) : note de A+ à F de la sécurité HTTP du site (CSP, HSTS, cookies, redirections, SRI, en-têtes).",
+  "module.observatory.fix": "Ouvrez le rapport du MDN HTTP Observatory pour votre domaine (le lien figure dans le résultat du module) et notez les tests en échec : c'est la liste de ce qui fait baisser la note.\nCorrigez d'abord HTTPS et la redirection de HTTP vers HTTPS, puis HSTS : voir les modules « Redirections » et « En-têtes de sécurité », qui donnent les extraits à copier pour nginx, Apache, IIS et Caddy.\nAjoutez ensuite une `Content-Security-Policy` sans `'unsafe-inline'`, puis `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY` (ou `frame-ancestors`) et `Referrer-Policy: strict-origin-when-cross-origin`.\nProtégez les cookies de session avec les attributs `Secure`, `HttpOnly` et `SameSite=Lax` (ou `Strict`), et ajoutez l'attribut `integrity` aux scripts et feuilles de style chargés depuis un autre domaine (voir le module « Dépendances JavaScript »).\nSi le service ne parvient pas à joindre le site (pare-feu, liste d'adresses autorisées, protection anti-robots), autorisez ses requêtes le temps du test : le scan est fait depuis les serveurs de Mozilla, pas depuis votre poste.\nAttendez au moins 60 secondes entre deux scans du même hôte (limite du service), puis relancez : une note A ou A+ est l'objectif, mais elle ne remplace ni les correctifs ni les autres contrôles.",
+  "module.observatory.fix_ref": "https://developer.mozilla.org/en-US/observatory/docs/tests_and_scoring",
+  "module.observatory.fix_snippet": "# HTTP\nSet-Cookie: session=VALUE; Secure; HttpOnly; SameSite=Lax; Path=/",
+  "module.observatory.title": "MDN Observatory",
+  "module.observatory.why": "C'est un second avis indépendant, produit par Mozilla, sur la sécurité HTTP du site. Le scan est réalisé par les serveurs de Mozilla : la cible reçoit une requête de leur part.",
+  "observatory.scan_error": "Le service MDN Observatory n'a pas pu analyser le site ({reason})",
+  "observatory.score_grade": "Note MDN Observatory {grade}",
+  "observatory.score_unknown": "Note Observatory indisponible"
+}

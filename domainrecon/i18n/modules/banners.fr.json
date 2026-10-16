@@ -1,0 +1,17 @@
+{
+  "banners.no_open_port": "Aucun port ouvert : aucune bannière à lire",
+  "banners.no_probe": "Aucun des ports ouverts n'a de sonde de bannière",
+  "banners.no_scan": "Scan de ports indisponible : aucune bannière à lire",
+  "banners.score_clean": "Aucune version ni accès ouvert dans les bannières",
+  "banners.score_unauthenticated": "Service accessible sans authentification",
+  "banners.score_versions": "Version de logiciel annoncée dans une bannière",
+  "banners.unreachable": "Aucun des ports ouverts n'a répondu aux sondes",
+  "finding.banners.unauthenticated": "Le service {service} (port {port}) répond sans authentification",
+  "finding.banners.version_disclosed": "Le port {port} annonce {product} {version}",
+  "module.banners.checks": "Se connecte aux ports ouverts et lit l'annonce de chaque service avec une sonde adaptée au protocole : produit, version, TLS, et accès sans authentification (Redis, Docker, Elasticsearch…).",
+  "module.banners.fix": "Si un service est signalé « sans authentification » (Redis, Memcached, Docker, Elasticsearch, Consul, CouchDB) : couper tout de suite son accès depuis Internet par une règle de blocage du port dans le pare-feu de l'hébergeur et dans celui du serveur, avant toute autre action.\nConsidérer les données de ce service comme lues ou modifiées : changer les mots de passe, clés d'API et jetons qui s'y trouvent ou qui y passent, relire les journaux d'accès et chercher des traces d'intrusion (clés ou tâches planifiées inconnues dans Redis, conteneurs inconnus avec Docker).\nFaire écouter chaque service uniquement en local ou sur le réseau privé, activer son authentification, puis le redémarrer (extraits ci-dessous pour Redis, Memcached, Elasticsearch et MongoDB).\nDocker : retirer l'écoute TCP (`tcp://0.0.0.0:2375`) de `hosts` dans `/etc/docker/daemon.json` ou de l'option `-H` du service ; administrer à distance par SSH (`DOCKER_HOST=ssh://admin@203.0.113.10`) ou par TLS avec certificats clients sur le port `2376`.\nConsul : `client_addr = \"127.0.0.1\"` et ACL activées avec `default_policy` à `deny`. CouchDB : dans la section `[chttpd]` de `local.ini`, `bind_address = 127.0.0.1` et `require_valid_user = true`.\nVersions annoncées : installer les mises à jour de sécurité du produit (c'est le vrai remède, masquer une version ne corrige aucune faille), puis réduire l'annonce quand le produit le permet : `server_tokens off;` (nginx), `ServerTokens Prod` (Apache), `smtpd_banner` sans version (Postfix).\nVérifier depuis l'extérieur : `redis-cli -h 203.0.113.10 ping` ne doit pas répondre `PONG` et `curl -s http://203.0.113.10:9200` ne doit rien renvoyer ; relancer ensuite les modules « Ports ouverts » et « Bannières de services ».",
+  "module.banners.fix_ref": "https://top10.owasp.org/2021/A05_2021-Security_Misconfiguration",
+  "module.banners.fix_snippet": "# Redis\nbind 127.0.0.1 -::1\nprotected-mode yes\nrequirepass CHANGE_ME_long_random_password\n\n# Memcached\n-l 127.0.0.1\n-U 0\n\n# Elasticsearch\nnetwork.host: 127.0.0.1\nxpack.security.enabled: true\n\n# MongoDB\nnet:\n  bindIp: 127.0.0.1\nsecurity:\n  authorization: enabled\n\n# nginx\nserver_tokens off;\n\n# Apache\nServerTokens Prod\nServerSignature Off",
+  "module.banners.title": "Bannières de services",
+  "module.banners.why": "Une bannière qui annonce un produit et sa version guide un attaquant vers les failles connues ; un service de données ou d'administration qui répond sans mot de passe est déjà compromis."
+}

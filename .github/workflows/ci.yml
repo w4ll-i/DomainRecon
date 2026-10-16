@@ -1,0 +1,213 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Le jeton du workflow ne peut que lire le dépôt.
+permissions:
+  contents: read
+
+# Un nouveau push annule l'exécution en cours sur la même branche.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint Python (ruff)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Installer ruff
+        # Même borne que l'extra « dev » de pyproject.toml.
+        run: |
+          grep -oE '"ruff[<>=!~][^"]*"' pyproject.toml | tr -d '"' > "$RUNNER_TEMP/ruff.txt"
+          python -m pip install -r "$RUNNER_TEMP/ruff.txt"
+
+      - name: ruff check
+        run: ruff check .
+
+      - name: ruff format
+        run: ruff format --check .
+
+  test:
+    name: Tests (Python ${{ matrix.python-version }}${{ matrix.chromium && ', Chromium' || '' }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.10 : version minimale ; 3.13 : version des livrables.
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        include:
+          # Tests de capture (vrai Chromium derrière le proxy filtrant).
+          - python-version: "3.13"
+            chromium: true
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Installer le projet et ses outils de test
+        run: python -m pip install -e ".[dev]"
+
+      - name: Installer Chromium (headless shell)
+        if: matrix.chromium
+        run: python -m playwright install --with-deps --only-shell chromium
+
+      - name: Tests (avec couverture)
+        # Seuil minimal : fail_under dans pyproject.toml. Là où Chromium est
+        # installé, un test de capture sauté est un échec (tests/conftest.py).
+        env:
+          DOMAINRECON_REQUIRE_CHROMIUM: ${{ matrix.chromium && '1' || '' }}
+        run: python -m pytest -q --cov --cov-report=term
+
+  test-minimal:
+    # Chaque dépendance directe à sa plus ancienne version autorisée : chaque
+    # borne `paquet>=X` de pyproject.toml devient la contrainte `paquet==X`.
+    name: Tests (versions minimales, Python 3.10)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.10"
+
+      - name: Installer les versions minimales
+        run: |
+          python -m pip install "uv>=0.12,<0.13"
+          sed -nE 's/^[[:space:]]*"([A-Za-z0-9_.-]+)(\[[^]]*\])?>=([^,;" ]+).*/\1==\3/p' \
+            pyproject.toml > "$RUNNER_TEMP/bornes.txt"
+          cat "$RUNNER_TEMP/bornes.txt"
+          test -s "$RUNNER_TEMP/bornes.txt"
+          uv pip install --system --resolution lowest-direct -e ".[dev]" -c "$RUNNER_TEMP/bornes.txt"
+
+      - name: Tests
+        run: python -m pytest -q
+
+  frontend:
+    name: Interface (types, lint, Vitest, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          # Node 22 LTS : compatible avec Vite (^20.19 || >=22.12) et Vitest (^22.12 || ^24).
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Vérification des types
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests unitaires (Vitest)
+        run: npm run test
+
+      - name: Build (vers domainrecon/web)
+        run: npm run build
+
+  e2e:
+    name: Interface E2E (Playwright, backend réel)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Installer le projet
+        run: python -m pip install -e ".[dev]"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Construire l'interface (domainrecon/web)
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Navigateur de Playwright Test
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Tests E2E (base seedée, faux scanner)
+        working-directory: frontend
+        env:
+          # Interpréteur qui a domainrecon installé (setup-python), utilisé par
+          # playwright.config.ts pour lancer tests/e2e_server.py.
+          E2E_PYTHON: python
+        run: npm run e2e
+
+      - name: Rapport Playwright (en cas d'échec)
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: frontend/playwright-report
+          retention-days: 7
+
+  linux-package:
+    name: Fichiers du paquet Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Installer desktop-file-utils
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends desktop-file-utils
+
+      - name: Entrée de menu (.desktop)
+        run: desktop-file-validate packaging/linux/domainrecon.desktop
+
+      - name: Syntaxe des scripts du paquet (sh -n)
+        run: |
+          sh -n packaging/linux/build-deb.sh
+          sh -n packaging/linux/postinst

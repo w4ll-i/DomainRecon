@@ -1,0 +1,328 @@
+/* Historique : en-tête SectionTitle, barre de filtres, tableau dense (mono pour les
+   données, liseret fin de la couleur de la note à gauche de chaque ligne), pagination.
+   Surfaces plates, bordures de 1 px, aucune ombre. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  min-width: 0;
+}
+
+/* Barre de filtres : une carte basse à plat, champs de saisie sur --surface. */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.searchField {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.input,
+.selectField select {
+  height: 38px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  transition: border-color var(--dur-fast);
+}
+
+.input {
+  width: 100%;
+  padding: 0 12px 0 36px;
+}
+
+/* Le texte d'aide garde la police du texte, plus lisible qu'en mono ; --text-tertiary
+   passe 4,5:1 sur --surface. */
+.input::placeholder {
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+}
+
+.input:focus,
+.selectField select:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.selectField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.selectField label {
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+
+.selectField select {
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.error {
+  color: var(--danger);
+}
+
+/* Tableau : carte à plat, défilement horizontal atteignable au clavier.
+   Position relative : les textes masqués du tableau (position absolue, comme l'en-tête de la
+   colonne des actions) restent dans ce conteneur défilant au lieu d'élargir toute la page. */
+.tableWrap {
+  position: relative;
+  overflow-x: auto;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th,
+.table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* En-têtes de colonnes : étiquettes mono en majuscules, discrètes. */
+.table thead th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-bottom-color: var(--border);
+  background: var(--surface-card);
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Liseret de la couleur de la note (décor : la lettre de la pastille dit la note). */
+.row {
+  --row-grade: var(--grade-na);
+  /* Survol : un léger voile neutre sur --surface-card. Le fond reste proche de la carte,
+     pour que les pastilles de statut gardent 4,5:1 même sous le curseur. */
+  --row-hover: color-mix(in srgb, var(--text) 4%, var(--surface-card));
+}
+
+.row[data-grade="A"] {
+  --row-grade: var(--grade-a);
+}
+
+.row[data-grade="B"] {
+  --row-grade: var(--grade-b);
+}
+
+.row[data-grade="C"] {
+  --row-grade: var(--grade-c);
+}
+
+.row[data-grade="D"] {
+  --row-grade: var(--grade-d);
+}
+
+.row[data-grade="F"] {
+  --row-grade: var(--grade-f);
+}
+
+.row:hover,
+.row:focus-within {
+  background: var(--row-hover);
+}
+
+.domainHead {
+  font-weight: 500;
+  box-shadow: inset 2px 0 0 var(--row-grade);
+}
+
+.domainCell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px var(--space-2);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.domain {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ip {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.score {
+  font-weight: 600;
+}
+
+.score[data-low="true"] {
+  color: var(--text-secondary);
+}
+
+.date {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.actions {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.action {
+  min-height: 30px;
+  padding: 4px 8px;
+}
+
+.delete:hover:not(:disabled) {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Pagination : plage et page en mono, boutons .btn. */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.range,
+.pageCount {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.pageButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.muted {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.emptyBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Téléphone : une carte par scan, libellés tirés de data-label. */
+@media (max-width: 640px) {
+  .filters {
+    padding: var(--space-3);
+  }
+
+  /* Les cartes de scan portent déjà leur cadre : celui du conteneur ferait un double cadre. */
+  .tableWrap {
+    background: none;
+    border: 0;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody {
+    display: block;
+  }
+
+  .table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: var(--space-2) 0;
+    padding: var(--space-2) 0;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--row-grade);
+    border-radius: var(--radius-sm);
+  }
+
+  .table th,
+  .table td {
+    border-bottom: 0;
+    padding: 4px 12px;
+  }
+
+  .table .domainHead {
+    grid-column: 1 / -1;
+    box-shadow: none;
+  }
+
+  /* La carte n'a pas d'en-tête de colonne : le libellé vient de data-label. */
+  .table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 12px;
+  }
+
+  .actions {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+}

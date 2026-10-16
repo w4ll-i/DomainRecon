@@ -1,0 +1,20 @@
+{
+  "finding.js_dependencies.risky_cdn": "Script loaded from {host}, a compromised domain (2024 supply-chain attack): remove or replace it.",
+  "finding.js_dependencies.sri_missing": "{count} third-party resource(s) without an integrity (SRI) attribute, including {scripts} script(s), from: {hosts}.",
+  "finding.js_dependencies.vulnerable": "{name} {version}: {count} known vulnerability(ies), including {cve}. Fixed from: {fixed}.",
+  "js_dependencies.kind_code_injection": "code injection",
+  "js_dependencies.kind_csrf": "cross-site request forgery (CSRF)",
+  "js_dependencies.kind_dos": "denial of service",
+  "js_dependencies.kind_path_traversal": "path traversal",
+  "js_dependencies.kind_prototype_pollution": "prototype pollution",
+  "js_dependencies.kind_redos": "regular-expression denial of service (ReDoS)",
+  "js_dependencies.kind_ssrf": "server-side request forgery (SSRF)",
+  "js_dependencies.kind_xss": "cross-site scripting (XSS)",
+  "js_dependencies.score_detail": "{vulnerable} vulnerable librar(ies), {sri} resource(s) without SRI",
+  "module.js_dependencies.checks": "Detects the JavaScript libraries loaded by the page (CDNs and site files), their known vulnerabilities (OSV.dev and local table), subresource integrity (SRI) and compromised CDNs such as polyfill.io.",
+  "module.js_dependencies.fix": "If a script comes from `polyfill.io` or a domain run by the same operator (compromised in 2024), remove it immediately from your page templates, themes and tag managers: it can inject malicious code into your visitors' browsers. Replace it with a copy hosted by you or a trusted mirror loaded with `integrity`, and check that the site has not already redirected visitors.\nUpdate each vulnerable library to the version given by \"Fixed from\" in the finding (or a newer one), then test the pages concerned.\nIf a library is no longer maintained (AngularJS for example), replace it with a maintained alternative; in the meantime, only pass trusted content through it.\nAdd the `integrity` and `crossorigin=\"anonymous\"` attributes to every script and stylesheet loaded from another domain, with a pinned version in the address (never `latest`): the snippet shows the tag and the command that computes the hash.\nRecompute the hash on every version change. If the browser blocks the resource, check the hash and the CDN's `Access-Control-Allow-Origin` header.\nServices whose content changes by design (Google Tag Manager, Stripe, Google fonts) cannot be protected by `integrity`: limit them with `script-src` in the `Content-Security-Policy`.\nBetter: host your libraries yourself (npm and a build, or a versioned copy) and track them with `npm audit` or a tool such as Dependabot or Renovate.\nRun the scan again.",
+  "module.js_dependencies.fix_ref": "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity",
+  "module.js_dependencies.fix_snippet": "# HTML\n<script src=\"https://cdn.example.com/lib/1.2.3/lib.min.js\"\n  integrity=\"sha384-BASE64_HASH\"\n  crossorigin=\"anonymous\"></script>\n\n# Bash\ncurl -s https://cdn.example.com/lib/1.2.3/lib.min.js | openssl dgst -sha384 -binary | openssl base64 -A",
+  "module.js_dependencies.title": "JavaScript dependencies",
+  "module.js_dependencies.why": "An outdated library hands over a ready-made flaw, and a third-party script without SRI can be swapped for hostile code: a supply-chain attack."
+}

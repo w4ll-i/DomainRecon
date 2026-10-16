@@ -1,0 +1,11 @@
+{
+  "module.securitytrails.checks": "Interroge SecurityTrails (clé API) pour les sous-domaines connus du domaine et l'historique de ses adresses IPv4.",
+  "module.securitytrails.fix": "Comparez les sous-domaines et les adresses remontés à votre inventaire actuel : un nom ou une adresse que vous ne reconnaissez pas est un service oublié ou un reste d'ancienne infrastructure.\nPour un sous-domaine oublié : supprimez son enregistrement DNS, puis arrêtez le service qui se trouve derrière ; vérifiez qu'aucun CNAME ne vise un service tiers résilié (modules de détournement de sous-domaines).\nPour chaque ancienne adresse de l'historique : vérifiez qu'elle ne répond plus pour votre nom (première commande de l'extrait). Si elle héberge encore un service, résiliez-le ou déplacez-le ; si elle a été rendue à l'hébergeur, assurez-vous qu'aucun enregistrement actuel ne la vise.\nSi votre site est derrière un CDN et que l'historique montre l'adresse réelle du serveur d'origine : n'acceptez sur l'origine que les connexions du CDN, avec les plages d'adresses publiées par le fournisseur (voir l'extrait, à adapter) ; si l'origine est restée exposée longtemps, demandez à l'hébergeur une nouvelle adresse IP.\nN'attendez pas d'effacer l'historique : il est conservé par des sources tierces. Considérez toute adresse qui y figure comme connue de tiers.\nRejouez ce scan après chaque migration ou changement d'hébergeur pour vérifier que l'ancienne infrastructure ne répond plus.",
+  "module.securitytrails.fix_ref": "https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/",
+  "module.securitytrails.fix_snippet": "# Bash\ncurl -sI --max-time 10 --resolve example.com:443:203.0.113.10 https://example.com/\n\n# nginx\nlocation / {\n    allow 203.0.113.0/24;\n    deny all;\n}\n\n# Apache\n<Location \"/\">\n    Require ip 203.0.113.0/24\n</Location>",
+  "module.securitytrails.title": "SecurityTrails",
+  "module.securitytrails.why": "Les sous-domaines et adresses d'hier révèlent des services oubliés et l'adresse réelle d'un serveur derrière un CDN.",
+  "securitytrails.key_rejected": "SecurityTrails a refusé la clé (invalide ou hors offre)",
+  "securitytrails.no_key": "Clé SecurityTrails absente",
+  "securitytrails.unreadable": "Réponse SecurityTrails illisible"
+}

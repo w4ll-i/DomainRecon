@@ -1,0 +1,70 @@
+name: Bogue
+description: Signaler un comportement incorrect de DomainRecon.
+title: "[Bogue] "
+labels: ["bogue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de prendre le temps de signaler ce problème. Une faille de sécurité ne se signale pas ici : suivez SECURITY.md.
+        Ne collez ni clé d'API, ni jeton, ni nom de domaine que vous ne voulez pas rendre public.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Affichée dans Réglages, ou par `domainrecon --version`.
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: livrable
+    attributes:
+      label: Livrable
+      options:
+        - Installeur Windows (setup.exe)
+        - Portable Windows, un seul fichier (portable.exe)
+        - Portable Windows, zip
+        - Paquet .deb
+        - Depuis les sources
+    validations:
+      required: true
+  - type: input
+    id: systeme
+    attributes:
+      label: Système
+      placeholder: "Windows 11 23H2, Ubuntu 24.04…"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Ce qui se passe
+      description: Ce que vous observez, et ce que vous attendiez.
+    validations:
+      required: true
+  - type: textarea
+    id: etapes
+    attributes:
+      label: Étapes pour reproduire
+      description: Profil de scan, écran, commande lancée. Utilisez example.com si possible.
+      placeholder: |
+        1. Lancer un scan complet de example.com
+        2. Ouvrir la famille Web
+        3. …
+    validations:
+      required: true
+  - type: textarea
+    id: journal
+    attributes:
+      label: Extrait du journal
+      description: logs/domainrecon.log dans le dossier des données, ou sortie de la console. Retirez toute information sensible.
+      render: text
+  - type: checkboxes
+    id: verifications
+    attributes:
+      label: Vérifications
+      options:
+        - label: J'ai cherché dans les tickets existants et dans la FAQ (docs/faq.md).
+          required: true
+        - label: Le domaine concerné est à moi, ou je suis autorisé à le tester.
+          required: true

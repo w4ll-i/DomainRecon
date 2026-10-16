@@ -1,0 +1,79 @@
+/* En bas à droite : une notification ne recouvre ni l'en-tête (état du serveur) ni les boutons
+   d'action en haut de page (Exporter, Relancer). Surface relevée et opaque, filet de 1 px teinté par le ton ; la seule ombre de
+   l'interface avec celle des modales. */
+.region {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.toast {
+  --toast-color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: min(420px, calc(100vw - 32px));
+  padding: 10px 12px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-size: 13px;
+  pointer-events: auto;
+}
+
+.toast[data-tone="success"] {
+  --toast-color: var(--success);
+  border-color: color-mix(in srgb, var(--toast-color) 45%, var(--border-strong));
+}
+
+.toast[data-tone="error"] {
+  --toast-color: var(--danger);
+  border-color: color-mix(in srgb, var(--toast-color) 45%, var(--border-strong));
+}
+
+.toast[data-tone="warning"] {
+  --toast-color: var(--warning);
+  border-color: color-mix(in srgb, var(--toast-color) 45%, var(--border-strong));
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--toast-color);
+}
+
+.message {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.close {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.close:hover {
+  color: var(--text);
+}
+
+.close svg {
+  width: 14px;
+  height: 14px;
+}

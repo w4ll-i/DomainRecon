@@ -1,0 +1,15 @@
+{
+  "finding.http_versions.no_http2": "The HTTPS server does not offer HTTP/2 (HTTP/1.1 only): probably outdated server software.",
+  "http_versions.no_https": "Port 443 unreachable: no HTTPS",
+  "http_versions.score_h1": "HTTP/1.1 only",
+  "http_versions.score_h2": "HTTP/2 supported",
+  "http_versions.score_h3": "HTTP/3 advertised",
+  "http_versions.score_no_https": "HTTPS unavailable: HTTP versions not applicable",
+  "http_versions.tls_failed": "TLS handshake failed ({detail})",
+  "module.http_versions.checks": "Detects HTTP/1.1 and HTTP/2 support (ALPN negotiation) and HTTP/3 advertisement (Alt-Svc header, HTTPS DNS record).",
+  "module.http_versions.fix": "Identify which software terminates HTTPS (nginx, Apache, IIS, Caddy, load balancer or CDN) and its version, for example with `nginx -v` or `apachectl -v`. HTTP/2 needs nginx 1.9.5 or later, Apache 2.4.17 or later with `mod_http2`, or IIS 10 (Windows Server 2016 or later): below that, update the software.\nEnable HTTP/2 on the HTTPS listener (see the snippet). IIS 10 and Caddy turn it on by themselves as soon as a site is served over HTTPS; behind a CDN or a load balancer, enable it in its network settings.\nCheck that the server accepts TLS 1.2 or later with modern cipher suites: HTTP/2 is not negotiated below TLS 1.2.\nFor HTTP/3 (optional, recommended): open UDP port 443 in the firewall and at the host, enable QUIC on the server (nginx 1.25.0 or later built with the HTTP/3 module; Caddy does it by default) or at the CDN, then advertise HTTP/3 with the `Alt-Svc: h3=\":443\"; ma=86400` header or with an HTTPS-type DNS record (nginx HTTP/3 and DNS snippets).\nIf the server stays limited to HTTP/1.1 because the software is old or runs on an unmaintained system, plan its update or replacement: it is often the sign of a component that no longer receives fixes.\nCheck: `curl -sI --http2 https://example.com | head -1` must show `HTTP/2 200` (or the page's status code); on Linux, `openssl s_client -alpn h2 -connect example.com:443 < /dev/null` must contain `ALPN protocol: h2`; for HTTP/3, `curl -sI https://example.com | grep -i alt-svc` must show `h3`. Then run the scan again.",
+  "module.http_versions.fix_ref": "https://nginx.org/en/docs/http/ngx_http_v2_module.html",
+  "module.http_versions.fix_snippet": "# nginx\nlisten 443 ssl;\nhttp2 on;\n\n# nginx < 1.25.1\nlisten 443 ssl http2;\n\n# nginx HTTP/3\nlisten 443 ssl;\nlisten 443 quic reuseport;\nhttp2 on;\nhttp3 on;\nadd_header Alt-Svc 'h3=\":443\"; ma=86400' always;\n\n# Apache\nLoadModule http2_module modules/mod_http2.so\nProtocols h2 http/1.1\n\n# DNS\nexample.com. 3600 IN HTTPS 1 . alpn=\"h3,h2\"",
+  "module.http_versions.title": "HTTP versions",
+  "module.http_versions.why": "HTTP/2 and HTTP/3 speed up the site and reduce the attack surface of older protocols. A server limited to HTTP/1.1 is often ageing software."
+}

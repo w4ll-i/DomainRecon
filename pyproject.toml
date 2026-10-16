@@ -1,0 +1,128 @@
+# =============================================================================
+# DomainRecon - Projet Python : dépendances, commande, outils
+# =============================================================================
+# Installation (développement) : python -m pip install -e ".[dev]"
+# Livrables (PyInstaller) : extra « build ».
+# Bornes : le minimum est une version connue pour fonctionner ; le maximum
+# exclut la prochaine version majeure (ou la 1.0 pour les paquets en 0.x).
+# =============================================================================
+
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "domainrecon"
+version = "1.0.0"
+description = "Reconnaissance OSINT de domaines : application de bureau et API locale"
+readme = "README.md"
+license = "LicenseRef-DomainRecon-Source-Available"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "W4ll-I" }]
+dependencies = [
+    # fastapi >= 0.133 : strict_content_type (protection CSRF), Starlette 1.x accepté.
+    "fastapi>=0.133.0,<1.0",
+    # starlette >= 1.7 : TrustedHostMiddleware comprend les en-têtes Host IPv6.
+    "starlette>=1.7.0,<2.0",
+    "uvicorn[standard]>=0.32.0,<1.0",
+    "sqlalchemy>=2.0.36,<3.0",
+    "pydantic>=2.10.0,<3.0",
+    "python-dotenv>=1.0.0,<2.0",
+    "httpx>=0.27.0,<1.0",
+    # Proxy sortant SOCKS (socks5://, socks5h://) : httpx l'exige (extra « httpx[socks] »).
+    "socksio>=1.0.0,<2.0",
+    # >= 3.18 : exigé par httpx2 (client HTTP des tests) ; corrige CVE-2024-3651.
+    "idna>=3.18,<4.0",
+    "tldextract>=5.1.1,<6.0",
+    "python-whois>=0.9.4,<1.0",
+    "dnspython>=2.7.0,<3.0",
+    # Captures d'écran ; navigateur : python -m playwright install --only-shell chromium
+    "playwright>=1.49.0,<2.0",
+    # Fenêtre native : WebView2 (Windows), WebKitGTK ou Qt (Linux).
+    "pywebview>=6.2,<7",
+    # Chiffrement (Fernet) des clés API enregistrées dans les Réglages : core/crypto.py.
+    "cryptography>=45.0.0,<51",
+    # Notifications de bureau des alertes de surveillance : notify/channels.py (repli silencieux si indisponible).
+    "plyer>=2.1.0,<3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0,<10.0",
+    "pytest-cov>=6.0.0,<8.0",
+    # Mineure figée : une nouvelle mineure de ruff peut ajouter des règles.
+    "ruff>=0.16.0,<0.17",
+    # Client HTTP du TestClient de Starlette >= 1.0.
+    "httpx2>=2.13.0,<3.0",
+    # Lecture des workflows GitHub Actions dans les tests (tests/repo/test_workflows.py).
+    "pyyaml>=6.0.2,<7",
+]
+build = [
+    "pyinstaller>=6.22,<7",
+]
+# Fenêtre native sous Linux (PyGObject + WebKitGTK), depuis les sources :
+#   python -m pip install -e ".[dev,gtk]"
+# (paquets système : libgirepository1.0-dev libcairo2-dev pkg-config gir1.2-webkit2-4.1)
+gtk = ["pywebview[gtk]>=6.2,<7; sys_platform == 'linux'"]
+
+[project.scripts]
+domainrecon = "domainrecon.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["domainrecon*"]
+
+[tool.setuptools.package-data]
+# Catalogues des messages (et fragments des modules), interface construite (npm run build, phase 2) et icône de fenêtre.
+domainrecon = ["i18n/*.json", "i18n/modules/*.json", "web/**/*", "desktop/icon.png"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+# Caches et rapports générés : dans private/ (ignoré par git), pas à la racine.
+cache_dir = "private/cache/pytest"
+# Les dépréciations déclenchées par le code du projet font échouer les tests.
+filterwarnings = [
+    "error::DeprecationWarning:domainrecon",
+    "error::PendingDeprecationWarning:domainrecon",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["domainrecon"]
+data_file = "private/cache/coverage/.coverage"
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+# Seuil plancher, appliqué par `pytest --cov` (CI).
+fail_under = 60
+
+[tool.coverage.html]
+directory = "private/cache/coverage/html"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+cache-dir = "private/cache/ruff"
+extend-exclude = [".venv-test", "data", "private", "release", "frontend", "domainrecon/web"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = [
+    "E501",  # longueur de ligne : confiée à `ruff format` (vérifié par la CI)
+    "B008",  # Depends() en valeur par défaut : idiome FastAPI
+]
+
+[tool.ruff.lint.isort]
+# Aides de test (tests/rendu.py, tests/pkgload.py) rangées avec le code du projet.
+known-first-party = ["domainrecon", "rendu", "pkgload"]
+
+[tool.ruff.format]
+# Fins de ligne conservées fichier par fichier (checkout Windows en CRLF).
+line-ending = "auto"
+
+# Dépendances facultatives (PEP 735) : python -m pip install --group postgres (pip >= 25.1)
+[dependency-groups]
+# Pilote PostgreSQL, pour DATABASE_URL=postgresql+psycopg://…
+postgres = ["psycopg[binary]>=3.2.0,<4.0"]

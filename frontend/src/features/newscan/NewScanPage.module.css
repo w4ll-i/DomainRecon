@@ -1,0 +1,253 @@
+/* Accueil « Nouveau scan » : titre centré, champ en barre de commande avec le bouton
+   SCAN en aplat d'accent, exemples et scans récents. Surfaces plates, bordures de
+   1 px, aucune ombre. Jetons uniquement. */
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 760px;
+  margin: clamp(8px, 6vh, 64px) auto 0;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.lead {
+  max-width: 54ch;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Étiquette du champ : mono, majuscules, discrète. */
+.label {
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+
+/* Barre de commande : le champ et le bouton partagent un même cadre à bordure fine,
+   dont le contour passe à l'accent quand le focus y entre (le champ garde en plus
+   son propre anneau de focus). */
+.inputRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  transition: border-color var(--dur-fast);
+}
+
+.inputRow:focus-within {
+  border-color: var(--accent);
+}
+
+.inputRow[data-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  width: 18px;
+  height: 18px;
+  color: var(--text-dim);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Saisie en mono, 16 px (pas de zoom automatique des navigateurs mobiles). */
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px 0 40px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+  opacity: 1;
+}
+
+/* Bouton SCAN : l'aplat d'accent vient de .btn[data-variant="primary"]. */
+.submit {
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.examplesLabel {
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+
+.example {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  transition:
+    border-color var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.example:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.muted {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* Scans récents. */
+.recent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.recentHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.recentLink {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.recentList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: var(--space-3);
+}
+
+/* La carte entière est le lien ; le survol renforce son contour. */
+.recentItem {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius);
+  color: inherit;
+}
+
+.recentItem:hover {
+  text-decoration: none;
+}
+
+.recentItem > [data-variant] {
+  height: 100%;
+  transition: border-color var(--dur-fast);
+}
+
+.recentItem:hover > [data-variant] {
+  border-color: var(--border-strong);
+}
+
+.recentValue {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.recentDomain {
+  display: block;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recentResult {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.recentScore {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+@media (max-width: 560px) {
+  .page {
+    margin-top: var(--space-3);
+  }
+
+  .inputRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* En colonne, flex: 1 (base 0%) écraserait la hauteur de 44 px du champ. */
+  .input {
+    flex: none;
+  }
+
+  .searchIcon {
+    top: 28px;
+    left: 20px;
+  }
+
+  .submit {
+    justify-content: center;
+  }
+
+  .recentList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

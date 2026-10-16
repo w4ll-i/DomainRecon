@@ -1,0 +1,15 @@
+{
+  "finding.http_versions.no_http2": "Le serveur HTTPS ne propose pas HTTP/2 (HTTP/1.1 seulement) : logiciel serveur probablement ancien.",
+  "http_versions.no_https": "Port 443 inaccessible : pas de HTTPS",
+  "http_versions.score_h1": "HTTP/1.1 seulement",
+  "http_versions.score_h2": "HTTP/2 pris en charge",
+  "http_versions.score_h3": "HTTP/3 annoncé",
+  "http_versions.score_no_https": "HTTPS indisponible : versions HTTP sans objet",
+  "http_versions.tls_failed": "Poignée de main TLS impossible ({detail})",
+  "module.http_versions.checks": "Détecte la prise en charge de HTTP/1.1 et de HTTP/2 (négociation ALPN) et l'annonce de HTTP/3 (en-tête Alt-Svc, enregistrement DNS HTTPS).",
+  "module.http_versions.fix": "Identifier quel logiciel termine le HTTPS (nginx, Apache, IIS, Caddy, répartiteur de charge ou CDN) et sa version, par exemple avec `nginx -v` ou `apachectl -v`. HTTP/2 demande nginx 1.9.5 ou plus, Apache 2.4.17 ou plus avec `mod_http2`, ou IIS 10 (Windows Server 2016 ou plus) : en dessous, mettre le logiciel à jour.\nActiver HTTP/2 sur l'écouteur HTTPS (voir l'extrait). IIS 10 et Caddy l'activent d'eux-mêmes dès qu'un site est servi en HTTPS ; derrière un CDN ou un répartiteur de charge, l'activer dans ses réglages réseau.\nVérifier que le serveur accepte TLS 1.2 ou plus avec des suites de chiffrement modernes : HTTP/2 n'est pas négocié en dessous de TLS 1.2.\nPour HTTP/3 (facultatif, recommandé) : ouvrir le port UDP 443 dans le pare-feu et chez l'hébergeur, activer QUIC sur le serveur (nginx 1.25.0 ou plus compilé avec le module HTTP/3 ; Caddy le fait par défaut) ou chez le CDN, puis annoncer HTTP/3 par l'en-tête `Alt-Svc: h3=\":443\"; ma=86400` ou par un enregistrement DNS de type HTTPS (extraits nginx HTTP/3 et DNS).\nSi le serveur reste limité à HTTP/1.1 parce que le logiciel est ancien ou tourne sur un système qui n'est plus maintenu, planifier sa mise à jour ou son remplacement : c'est souvent le signe d'un composant qui ne reçoit plus de correctifs.\nVérifier : `curl -sI --http2 https://example.com | head -1` doit afficher `HTTP/2 200` (ou le code de la page) ; sous Linux, `openssl s_client -alpn h2 -connect example.com:443 < /dev/null` doit contenir `ALPN protocol: h2` ; pour HTTP/3, `curl -sI https://example.com | grep -i alt-svc` doit montrer `h3`. Relancer ensuite le scan.",
+  "module.http_versions.fix_ref": "https://nginx.org/en/docs/http/ngx_http_v2_module.html",
+  "module.http_versions.fix_snippet": "# nginx\nlisten 443 ssl;\nhttp2 on;\n\n# nginx < 1.25.1\nlisten 443 ssl http2;\n\n# nginx HTTP/3\nlisten 443 ssl;\nlisten 443 quic reuseport;\nhttp2 on;\nhttp3 on;\nadd_header Alt-Svc 'h3=\":443\"; ma=86400' always;\n\n# Apache\nLoadModule http2_module modules/mod_http2.so\nProtocols h2 http/1.1\n\n# DNS\nexample.com. 3600 IN HTTPS 1 . alpn=\"h3,h2\"",
+  "module.http_versions.title": "Versions HTTP",
+  "module.http_versions.why": "HTTP/2 et HTTP/3 accélèrent le site et réduisent la surface d'attaque des protocoles anciens. Un serveur limité à HTTP/1.1 est souvent un logiciel vieillissant."
+}

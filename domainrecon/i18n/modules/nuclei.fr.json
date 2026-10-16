@@ -1,0 +1,19 @@
+{
+  "finding.nuclei.critical": "Nuclei : {count} vulnérabilité(s) critique(s) ({names}).",
+  "finding.nuclei.high": "Nuclei : {count} vulnérabilité(s) élevée(s) ({names}).",
+  "finding.nuclei.medium": "Nuclei : {count} constat(s) de gravité moyenne ({names}).",
+  "module.nuclei.checks": "Lance le moteur de modèles Nuclei (CVE, expositions, mauvaises configurations, détournements) contre la cible et restitue les constats, avec leur gravité.",
+  "module.nuclei.fix": "Si un constat montre un secret, une clé, un fichier de configuration ou une console d'administration exposés, commencez par révoquer les secrets concernés et par retirer l'exposition d'Internet (suppression du fichier, filtrage d'adresses, authentification), avant de traiter le reste.\nPour chaque constat, notez le nom du modèle, l'éventuelle CVE et l'adresse touchée, puis reproduisez-le à la main (une requête avec `curl`) pour écarter un faux positif.\nPour un logiciel vulnérable (CVE), installez la mise à jour ou le correctif de l'éditeur ; si ce n'est pas possible tout de suite, appliquez le contournement décrit dans l'avis de sécurité et restreignez l'accès (pare-feu, VPN, filtrage d'adresses).\nPour des identifiants par défaut ou une mauvaise configuration, changez les mots de passe, désactivez les comptes et les fonctions de démonstration, puis fermez les services qui n'ont pas à être publics.\nPour un détournement de sous-domaine, supprimez l'enregistrement DNS orphelin ou recréez la ressource correspondante chez le fournisseur.\nTraitez dans l'ordre : critique, élevé, puis moyen. Gardez Nuclei et ses modèles à jour avec `nuclei -update-templates` pour ne pas rater les failles récentes.\nSi le module indique que Nuclei n'est pas installé, installez le binaire ou renseignez son chemin dans la variable `DOMAINRECON_NUCLEI_PATH`.\nRelancez le scan après chaque correction jusqu'à obtenir zéro constat.",
+  "module.nuclei.fix_ref": "https://docs.projectdiscovery.io/opensource/nuclei/overview",
+  "module.nuclei.title": "Nuclei (scan de vulnérabilités)",
+  "module.nuclei.why": "Nuclei applique des milliers de modèles de failles connues : c'est le seul contrôle de vulnérabilités réel de l'outil. Il exige le binaire installé et l'autorisation de la cible.",
+  "nuclei.cap": "Vulnérabilité critique relevée par Nuclei",
+  "nuclei.failed": "Nuclei a échoué : {detail}",
+  "nuclei.launch_failed": "Lancement de Nuclei impossible ({error}).",
+  "nuclei.not_installed": "Binaire Nuclei non installé : module sans objet. Réglez son chemin dans DOMAINRECON_NUCLEI_PATH.",
+  "nuclei.score_clean": "Aucune vulnérabilité relevée par Nuclei",
+  "nuclei.score_critical": "Vulnérabilité critique relevée par Nuclei",
+  "nuclei.score_findings": "{count} constat(s) Nuclei de gravité moyenne",
+  "nuclei.score_high": "Vulnérabilité élevée relevée par Nuclei",
+  "nuclei.timeout": "Nuclei n'a pas fini en {seconds} s."
+}

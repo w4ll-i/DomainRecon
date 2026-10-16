@@ -1,0 +1,10 @@
+{
+  "module.rdap_ip.checks": "Queries the regional registry (RDAP) for the target IP address: address block, network name, country, registration dates, holder organization and abuse contact.",
+  "module.rdap_ip.fix": "Check that the holder organization, the network name and the country match the expected hosting provider. A gap reveals a reseller, a CDN or an address that is no longer yours: in the latter case, fix the matching DNS `A` or `AAAA` record.\nIf the address block is yours (allocated by your regional registry), update its network object from your registry's portal (RIPE NCC, ARIN, APNIC, LACNIC or AFRINIC): organization, country, administrative and technical contacts.\nCheck the abuse contact: it must exist, be a monitored functional mailbox (for example `abuse@example.com`) and answer reports; otherwise complaints get lost and the address risks being blocked by third parties.\nRegistry data is public: prefer generic contacts (role, shared mailbox) to the names, phone numbers and e-mails of individuals.\nIf the address is leased from a hosting provider, the holder is the provider. To appear as the user of a sub-block, ask it to declare the block to the registry in your name; to report an incident, use its abuse contact.\nRead the public record again after each change (snippets below) and rerun the module to confirm the result.",
+  "module.rdap_ip.fix_ref": "https://www.rfc-editor.org/rfc/rfc9083",
+  "module.rdap_ip.fix_snippet": "# curl\ncurl -sL https://rdap.arin.net/registry/ip/203.0.113.10\n\n# whois\nwhois 203.0.113.10",
+  "module.rdap_ip.title": "IP RDAP registry",
+  "module.rdap_ip.why": "The registry tells who really owns the address block and where to report abuse; a gap with the announced host often reveals a reseller or a CDN.",
+  "rdap_ip.not_public": "Non-public address: RDAP not applicable (no third-party service queried)",
+  "rdap_ip.unreadable": "Unreadable response from the {service} service"
+}

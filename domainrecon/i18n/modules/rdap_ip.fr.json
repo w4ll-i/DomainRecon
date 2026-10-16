@@ -1,0 +1,10 @@
+{
+  "module.rdap_ip.checks": "Interroge le registre régional (RDAP) pour l'adresse IP de la cible : bloc d'adresses, nom du réseau, pays, dates d'enregistrement, organisation titulaire et contact abuse.",
+  "module.rdap_ip.fix": "Vérifier que l'organisation titulaire, le nom du réseau et le pays correspondent à l'hébergeur attendu. Un écart révèle un revendeur, un CDN ou une adresse qui n'est plus la vôtre : dans ce dernier cas, corriger l'enregistrement DNS `A` ou `AAAA` correspondant.\nSi le bloc d'adresses est le vôtre (attribué par votre registre régional), mettre à jour son objet réseau depuis le portail de votre registre (RIPE NCC, ARIN, APNIC, LACNIC ou AFRINIC) : organisation, pays, contacts administratif et technique.\nContrôler le contact abuse : il doit exister, être une boîte fonctionnelle surveillée (par exemple `abuse@example.com`) et répondre aux signalements ; sinon les plaintes se perdent et l'adresse risque d'être bloquée par des tiers.\nLes données du registre sont publiques : y préférer des contacts génériques (rôle, boîte partagée) aux noms, téléphones et e-mails de personnes.\nSi l'adresse est louée à un hébergeur, le titulaire est l'hébergeur. Pour figurer comme utilisateur d'un sous-bloc, lui demander de le déclarer au registre à votre nom ; pour signaler un incident, utiliser son contact abuse.\nRelire l'enregistrement public après chaque modification (extraits ci-dessous) et relancer le module pour confirmer le résultat.",
+  "module.rdap_ip.fix_ref": "https://www.rfc-editor.org/rfc/rfc9083",
+  "module.rdap_ip.fix_snippet": "# curl\ncurl -sL https://rdap.arin.net/registry/ip/203.0.113.10\n\n# whois\nwhois 203.0.113.10",
+  "module.rdap_ip.title": "Registre RDAP de l'IP",
+  "module.rdap_ip.why": "Le registre dit à qui appartient réellement le bloc d'adresses et où signaler un abus ; l'écart avec l'hébergeur annoncé trahit souvent un revendeur ou un CDN.",
+  "rdap_ip.not_public": "Adresse non publique : RDAP sans objet (aucun service tiers interrogé)",
+  "rdap_ip.unreadable": "Réponse illisible du service {service}"
+}

@@ -1,0 +1,90 @@
+/* Carte de chiffre clé, à deux niveaux (data-variant) : surface plate, filet de 1 px.
+   Le ton (data-tone) colore l'icône seulement ; l'état se lit aussi par le texte de
+   la valeur. La grande carte se distingue par sa taille, pas par un décor. */
+.card {
+  --tone-color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-4);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.card[data-tone="ok"] {
+  --tone-color: var(--success);
+}
+
+.card[data-tone="warning"] {
+  --tone-color: var(--warning);
+}
+
+.card[data-tone="critical"] {
+  --tone-color: var(--danger);
+}
+
+.card[data-tone="info"] {
+  --tone-color: var(--info);
+}
+
+.card[data-tone="accent"] {
+  --tone-color: var(--accent);
+}
+
+/* Non mesuré : bordure pointillée grise, comme les autres « N/A ». */
+.card[data-tone="na"] {
+  --tone-color: var(--grade-na);
+  border-style: dashed;
+}
+
+/* Grande carte : plus d'air, valeur en grand. */
+.card[data-variant="hero"] {
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--tone-color);
+}
+
+.icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.card[data-variant="hero"] .icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.label {
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+
+.value {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.card[data-variant="hero"] .value {
+  font-size: 32px;
+  line-height: 1.05;
+}

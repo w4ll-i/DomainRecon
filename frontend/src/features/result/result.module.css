@@ -1,0 +1,415 @@
+/* Écran Résultat « Monochrome pro » : en-tête (domaine, grande note, résumé, méta),
+   « À corriger », familles en lignes simples, détail du score. Pas de cadres imbriqués :
+   des listes à filets de 1 px. La couleur ne dit un état qu'avec une icône et un texte.
+   Jetons uniquement. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* ---- En-tête --------------------------------------------------------------- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.heroTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-4);
+}
+
+.domain {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+/* Note en grand et phrase de résumé côte à côte. */
+.scoreBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.summary {
+  flex: 1;
+  min-width: 220px;
+  max-width: 560px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.scoreNote {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.reason {
+  color: var(--text-secondary);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+}
+
+.meta dt {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.meta dd {
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+
+/* Bandeau « analyse incomplète » / « en échec » : filet de la couleur de l'état, titre qui
+   le dit en toutes lettres. */
+.banner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-sm);
+  background: var(--warning-bg);
+}
+
+.banner[data-tone="critical"] {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.bannerTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.bannerText {
+  overflow-wrap: anywhere;
+}
+
+.bannerHint {
+  font-size: 12px;
+}
+
+.failedList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.failedItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px var(--space-2);
+}
+
+.failedReason {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Actions --------------------------------------------------------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.actions :global(.btn) {
+  min-height: 30px;
+  padding: 4px 11px;
+  font-size: 13px;
+}
+
+/* ---- Sections -------------------------------------------------------------- */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ---- « À corriger » -------------------------------------------------------- */
+
+.findings {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.finding {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px var(--space-3);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.findingMessage {
+  flex: 1;
+  min-width: 200px;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.findingFamily {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.findingFamily:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.findingFamily svg {
+  width: 14px;
+  height: 14px;
+}
+
+.understand {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--accent-text);
+  font-size: 13px;
+}
+
+.understand:hover {
+  text-decoration: underline;
+}
+
+.understand svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Explication d'un constat : ce que c'est, pourquoi, comment corriger. */
+.detail {
+  display: grid;
+  /* Une colonne bornée à la largeur de la ligne : un long extrait de code défile dans son cadre
+     au lieu d'élargir la page. */
+  grid-template-columns: minmax(0, 1fr);
+  flex-basis: 100%;
+  min-width: 0;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.detail > div {
+  min-width: 0;
+}
+
+.detail dt {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.detail dd {
+  margin: 2px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.more {
+  align-self: flex-start;
+}
+
+/* Liste vide : jamais un simple vide, une phrase et l'icône de l'état qu'elle dit. */
+.empty {
+  --state-color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.empty svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--state-color);
+}
+
+.empty[data-state="ok"] {
+  --state-color: var(--success);
+}
+
+.empty[data-state="warning"] {
+  --state-color: var(--warning);
+}
+
+.empty[data-state="critical"] {
+  --state-color: var(--danger);
+}
+
+/* ---- Familles en lignes ---------------------------------------------------- */
+
+.rows {
+  border-top: 1px solid var(--border);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 40px minmax(110px, auto) minmax(90px, auto) 16px;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.row:hover {
+  background: var(--surface);
+  text-decoration: none;
+}
+
+.rowIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+}
+
+.rowName {
+  min-width: 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.rowGrade {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.rowState {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.rowState svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.row[data-state="ok"] .rowState svg {
+  color: var(--success);
+}
+
+.row[data-state="warning"] .rowState svg {
+  color: var(--warning);
+}
+
+.row[data-state="critical"] .rowState svg {
+  color: var(--danger);
+}
+
+.rowIssues {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.rowChevron {
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+}
+
+/* ---- Détail du score ------------------------------------------------------- */
+
+.scoreDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.note {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.penalties {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+.penaltyTitle {
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.penalties li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 2px 0;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 16px minmax(0, 1fr) 40px auto 16px;
+  }
+
+  .rowIssues {
+    display: none;
+  }
+}

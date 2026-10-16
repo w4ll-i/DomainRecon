@@ -1,0 +1,55 @@
+/* Pastille ronde : texte et filet de la couleur du ton, sur son fond teinté (les
+   paires ton / fond teinté sont vérifiées à 4,5:1 dans les deux thèmes). */
+.badge {
+  --badge-color: var(--text);
+  --badge-bg: var(--neutral-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid color-mix(in srgb, var(--badge-color) 35%, transparent);
+  border-radius: 999px;
+  background: var(--badge-bg);
+  color: var(--badge-color);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.badge[data-tone="ok"] {
+  --badge-color: var(--success);
+  --badge-bg: var(--success-bg);
+}
+
+.badge[data-tone="warning"] {
+  --badge-color: var(--warning);
+  --badge-bg: var(--warning-bg);
+}
+
+.badge[data-tone="critical"] {
+  --badge-color: var(--danger);
+  --badge-bg: var(--danger-bg);
+}
+
+.badge[data-tone="info"] {
+  --badge-color: var(--info);
+  --badge-bg: var(--info-bg);
+}
+
+.badge[data-tone="accent"] {
+  --badge-color: var(--accent-text);
+  --badge-bg: var(--accent-bg);
+}
+
+/* Non mesuré : gris pointillé, comme les autres « N/A ». */
+.badge[data-tone="na"] {
+  --badge-color: var(--text-secondary);
+  --badge-bg: transparent;
+  border: 1px dashed var(--grade-na);
+}

@@ -1,0 +1,211 @@
+/* Zone de danger des Réglages et fenêtre de désinstallation en quatre étapes.
+   Surfaces unies, filets de 1 px ; le rouge reste discret (filet de la carte, bouton final). */
+
+.danger {
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--border));
+}
+
+/* Titre de la fenêtre : texte plein, seule l'icône d'alerte est rouge. */
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.heading svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--danger);
+}
+
+/* Fenêtre plus large que la confirmation simple : la liste des chemins doit rester lisible.
+   Le panneau de Modal est ciblé par son contenu, sans toucher au composant partagé. */
+[aria-modal="true"]:has(> .body) {
+  max-width: 600px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.body p {
+  margin: 0;
+}
+
+.muted {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 13px;
+}
+
+/* Étapes : numéros dans un filet, l'étape courante en texte plein, les passées en coche discrète. */
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0 0 var(--space-3);
+  border-bottom: 1px solid var(--border);
+  list-style: none;
+  counter-reset: step;
+}
+
+.step {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-tertiary);
+  font-size: 12px;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step);
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.step[aria-current="step"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.step[aria-current="step"]::before {
+  border-color: var(--text);
+}
+
+.stepDone {
+  color: var(--text-secondary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  max-height: 260px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  list-style: none;
+  /* Barre fine aux couleurs du thème : la barre native de WebView2 (grise, large) jurait,
+     surtout en sombre. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px var(--space-3);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 13px;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.path {
+  grid-column: 1 / -1;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.size {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.statusFailed {
+  color: var(--danger);
+  font-size: 12px;
+}
+
+.statusOk {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-4);
+  font-size: 13px;
+  list-style: disc outside;
+}
+
+.notes li::marker {
+  color: var(--text-tertiary);
+}
+
+.command {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 4px;
+}
+
+.command code {
+  padding: 4px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 13px;
+}
+
+.check input {
+  margin-top: 2px;
+  accent-color: var(--accent);
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-family: var(--font-mono);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.spacer {
+  flex: 1;
+}

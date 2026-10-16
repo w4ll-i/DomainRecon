@@ -1,0 +1,13 @@
+{
+  "module.pdns_data.checks": "Gathers the domain's DNS record history: CIRCL Passive DNS and AlienVault OTX (optional credentials) and Robtex (free).",
+  "module.pdns_data.fix": "Sort the history by date and spot the addresses and names that no longer appear in your current zone: former hosts, past migrations, retired environments.\nFor each old address: check that it no longer answers for your name (first command in the snippet); if it still hosts a service, terminate or move it, and confirm that no current record points to it.\nFor each old name: if it is no longer in your zone, there is nothing to delete in the DNS, but check that no CNAME dangles toward a terminated third-party service and that the certificates for that name are revoked or expired.\nIf the history reveals the origin address of a site protected by a CDN: limit the origin to the CDN's connections (see the snippet, address ranges to adapt), and if that server stayed reachable directly, ask your host for a new IP address.\nDo not send mail or publish a direct record from the server's origin address: an MX, an SPF record or a message header would make it visible.\nThird-party archives cannot be erased: consider any address that appears there as known to third parties, and run this scan again after every hosting change.",
+  "module.pdns_data.fix_ref": "https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/",
+  "module.pdns_data.fix_snippet": "# Bash\ncurl -sI --max-time 10 --resolve example.com:443:203.0.113.10 https://example.com/\n\n# nginx\nlocation / {\n    allow 203.0.113.0/24;\n    deny all;\n}\n\n# Apache\n<Location \"/\">\n    Require ip 203.0.113.0/24\n</Location>",
+  "module.pdns_data.title": "Passive DNS (history)",
+  "module.pdns_data.why": "History shows the addresses and names the domain has used: former hosts, origin servers behind a CDN, forgotten services.",
+  "pdns_data.all_failed": "No passive DNS source answered: {errors}",
+  "pdns_data.circl_rejected": "CIRCL rejected the credentials",
+  "pdns_data.credentials_needed": "{service}: credentials not set, source skipped",
+  "pdns_data.otx_rejected": "AlienVault OTX rejected the key",
+  "pdns_data.unreadable": "{service}: unreadable response"
+}

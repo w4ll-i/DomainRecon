@@ -1,0 +1,1814 @@
+{
+  "common": {
+    "na": "N/A",
+    "yes": "Yes",
+    "no": "No",
+    "unknown": "Unknown",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "showAll": "Show all ({{count}})",
+    "showLess": "Show less",
+    "listSeparator": "; ",
+    "indicative": "(indicative)"
+  },
+  "tabsNav": {
+    "previous": "Previous tabs",
+    "next": "Next tabs",
+    "all": "All",
+    "allHidden": "tabs",
+    "menu": "All tabs",
+    "menuOf": "All tabs: {{label}}"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "skip": "Skip to content",
+    "brandTagline": "Domain reconnaissance",
+    "newScan": "New scan",
+    "result": "Result",
+    "resultDisabled": "No result viewed yet",
+    "history": "History",
+    "settings": "Settings",
+    "language": "Language",
+    "scan": "Scan",
+    "dashboard": "Dashboard",
+    "batch": "Batch",
+    "compare": "Compare",
+    "monitoring": "Monitoring",
+    "help": "Help"
+  },
+  "server": {
+    "online": "Server online",
+    "degraded": "Server degraded",
+    "offline": "Server unreachable",
+    "checking": "Checking the server…",
+    "stopped": "DomainRecon is no longer responding: it probably stopped automatically (tab closed, or put to sleep by the browser). Restart DomainRecon, then reload this page."
+  },
+  "lang": {
+    "fr": "Français",
+    "en": "English"
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "routeTitle": "This screen could not be displayed",
+    "reload": "Reload the page",
+    "network": "Server unreachable: check the connection and try again.",
+    "unreadable": "Unreadable server response (HTTP {{status}}).",
+    "validation": "Data rejected: {{details}}",
+    "http": {
+      "400": "Request rejected by the server.",
+      "401": "Authentication required: API token missing or invalid.",
+      "403": "Access denied.",
+      "404": "Resource not found.",
+      "413": "Request too large.",
+      "415": "Request format rejected by the server.",
+      "422": "Data rejected by the server.",
+      "429": "Too many requests in progress: try again in a moment.",
+      "500": "Internal server error: check the server logs.",
+      "502": "Server unreachable behind the proxy (HTTP 502): try again in a moment.",
+      "503": "Service unavailable: try again in a moment.",
+      "504": "Timeout (HTTP 504): the server did not answer in time.",
+      "5xx": "Server error (HTTP {{status}}): try again in a moment.",
+      "other": "HTTP error {{status}}"
+    }
+  },
+  "token": {
+    "title": "API token",
+    "text": "This server requires an API token (API_TOKEN variable). It is kept in this tab only and forgotten when the tab closes.",
+    "label": "API token",
+    "submit": "Confirm",
+    "forget": "Forget the token",
+    "rejected": "The server rejected this token: enter it again.",
+    "required": "Enter the API token.",
+    "ascii": "The token may only contain printable ASCII characters.",
+    "saved": "API token saved for this tab",
+    "forgotten": "API token forgotten"
+  },
+  "toast": {
+    "region": "Notifications",
+    "close": "Close the notification"
+  },
+  "grade": {
+    "aria": "Grade {{grade}}",
+    "bigAria": "Overall grade: {{grade}}",
+    "gaugeScore": "score {{score}} out of 100",
+    "gaugeIndicative": "Indicative score {{score}} out of 100, no grade (insufficient coverage)",
+    "gaugeCoverage": "coverage {{coverage}}%",
+    "indicative": "indicative"
+  },
+  "scanStatus": {
+    "success": "Succeeded",
+    "partial": "Partial",
+    "error": "Failed",
+    "unknown": "Unknown"
+  },
+  "moduleStatus": {
+    "ok": "Measured",
+    "failed": "Not measured (module failure)",
+    "timeout": "Not measured (timed out)",
+    "skipped": "Not applicable",
+    "pending": "Pending",
+    "running": "Running",
+    "not_launched": "Not launched"
+  },
+  "familyState": {
+    "ok": "OK",
+    "warning": "Warning",
+    "critical": "Critical",
+    "unmeasured": "Not measured",
+    "skipped": "Not applicable",
+    "info": "Informational"
+  },
+  "severity": {
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "confidence": {
+    "high": "high",
+    "medium": "medium",
+    "low": "low"
+  },
+  "families": {
+    "web": {
+      "name": "Web",
+      "description": "Security headers, cookies, CORS, redirects, web files, technologies, WAF"
+    },
+    "tls": {
+      "name": "TLS",
+      "description": "Certificate and encrypted connection"
+    },
+    "email": {
+      "name": "Email",
+      "description": "SPF, DKIM, DMARC, MTA-STS and TLS-RPT"
+    },
+    "dns": {
+      "name": "DNS & subdomains",
+      "description": "DNS records, subdomains, takeover, reverse DNS"
+    },
+    "network": {
+      "name": "Network",
+      "description": "Open ports, geolocation, IP neighbours"
+    },
+    "identity": {
+      "name": "Identity",
+      "description": "WHOIS, screenshot, notes and tags"
+    },
+    "reputation": {
+      "name": "Reputation",
+      "description": "Domain and IP address reputation: blocklists, abuse reports, history"
+    },
+    "leaks": {
+      "name": "Data leaks",
+      "description": "Exposed credentials and accounts of the domain: data breaches, public code repositories, exposed services"
+    }
+  },
+  "modules": {
+    "dns_records": "DNS records",
+    "subdomains": "Subdomains",
+    "security_headers": "Security headers",
+    "tls_certificate": "TLS certificate",
+    "technologies": "Technologies",
+    "geo_data": "Geolocation",
+    "whois_data": "WHOIS",
+    "open_ports": "Open ports",
+    "email_security": "Email security",
+    "waf": "WAF / CDN",
+    "redirect_chain": "Redirects",
+    "web_files": "Web files",
+    "cookie_security": "Cookies",
+    "cors": "CORS",
+    "reverse_dns": "Reverse DNS (PTR)",
+    "network_extended": "Extended network",
+    "screenshot": "Screenshot",
+    "subdomain_takeover": "Subdomain takeover"
+  },
+  "unavailable": {
+    "skippedHint": "This module does not apply to this target.",
+    "unmeasuredHint": "No conclusion possible: a missing result does not mean that nothing exists.",
+    "withReason": "{{status}}: {{reason}}",
+    "notLaunchedHint": "This module was not launched in this scan (chosen profile, missing API key or authorization not given)."
+  },
+  "newScan": {
+    "title": "New scan",
+    "lead": "Check the security and public infrastructure of a domain: dozens of modules, one clear verdict.",
+    "label": "Domain or URL to scan",
+    "placeholder": "example.com",
+    "submit": "Scan",
+    "examples": "Examples:",
+    "lengthError": "The domain must be {{min}} to {{max}} characters long.",
+    "recent": "Recent scans",
+    "recentEmpty": "No scan yet: run your first scan.",
+    "recentError": "Recent scans unavailable: {{detail}}",
+    "historyLink": "Full history",
+    "hero": {
+      "kicker": "Reconnaissance · OSINT",
+      "title": "Domain analysis",
+      "titleAccent": "analysis"
+    },
+    "recentKicker": "Recent"
+  },
+  "live": {
+    "title": "Scanning {{domain}}",
+    "titleUnknown": "Scan in progress",
+    "running": "Scan in progress…",
+    "connecting": "Connecting to the scan progress…",
+    "progress": "{{done}}/{{total}}",
+    "progressLabel": "Scan progress",
+    "progressText": "{{done}} modules out of {{total}}",
+    "elapsed": "{{seconds}} s",
+    "cancel": "Cancel",
+    "cancelling": "Cancelling…",
+    "cancelError": "Could not cancel: {{detail}}",
+    "cancelled": "Scan cancelled",
+    "cancelledText": "The scan was stopped before the end: no result was saved.",
+    "failed": "The scan failed",
+    "lost": "Scan tracking interrupted",
+    "jobNotFound": "Job not found: the server may have restarted. Check the history or run the scan again.",
+    "invalidJobTitle": "Job not found",
+    "invalidJob": "This link does not point to any scan: the job identifier is malformed. Check the history or start a new scan.",
+    "connectionLost": "Connection to the server lost during the scan.",
+    "restart": "Run again",
+    "newScan": "New scan",
+    "openHistory": "Open the history",
+    "done": "Scan of {{domain}} finished",
+    "tileAria": "{{family}}: {{state}}",
+    "tile": {
+      "pending": "Pending",
+      "running": "{{done}}/{{total}} modules",
+      "done": "Done",
+      "partial": "Done, {{count}} not measured",
+      "skipped": "Not applicable"
+    },
+    "counterLabel": "Modules analyzed",
+    "elapsedLabel": "Elapsed time",
+    "currentLabel": "Running",
+    "finalizing": "Finishing…",
+    "waitingFirst": "Waiting for the first module…",
+    "log": {
+      "kicker": "Log",
+      "title": "Completed modules",
+      "empty": "No module has finished yet.",
+      "aria": "Completed modules, in order of arrival"
+    },
+    "tiles": {
+      "kicker": "Families",
+      "title": "Progress by family"
+    }
+  },
+  "result": {
+    "scanTitle": "Result for {{domain}}",
+    "score": "{{score}}/100",
+    "scoreNA": "No grade",
+    "indicative": "Indicative score {{score}}/100",
+    "coverageLabel": "Coverage",
+    "coverage": "{{coverage}}% of the scale measured",
+    "confidence": "{{level}} confidence",
+    "ip": "IP address",
+    "date": "Date",
+    "duration": "Duration",
+    "status": "Status",
+    "errorTitle": "The scan failed",
+    "partialTitle": "Incomplete scan",
+    "failedModules": "{{count}} module(s) without a result (failure or timeout):",
+    "timeoutSuffix": "(timed out)",
+    "findings": "To fix",
+    "families": "Families",
+    "tileAria": "{{family}}: {{state}}, grade {{grade}}. {{summary}}",
+    "actions": "Scan actions",
+    "rescan": "Scan again",
+    "timeline": "Timeline",
+    "notFound": "Scan not found",
+    "notFoundText": "This scan does not exist or was deleted.",
+    "invalidId": "Invalid scan identifier.",
+    "noDetail": "The server gave no detail about this status.",
+    "kicker": "Scan result",
+    "radarCaption": "Score by family",
+    "findingsKicker": "Priorities",
+    "familiesKicker": "Analysis",
+    "tabs": {
+      "label": "Result sections",
+      "overview": "Overview"
+    },
+    "tile": {
+      "modulesLabel": "Modules measured",
+      "modulesTotal": "of {{total}}"
+    },
+    "summary": {
+      "good": {
+        "clean": "Good security posture: nothing to fix.",
+        "minor": "Good security posture, with {{count}} point(s) to improve.",
+        "severe": "Good grade, but {{count}} serious issue(s) to fix first."
+      },
+      "fair": {
+        "clean": "Average posture, with no issue to fix among the measured criteria.",
+        "minor": "Average posture: {{count}} point(s) to improve.",
+        "severe": "Average posture: {{count}} serious issue(s) to fix first."
+      },
+      "poor": {
+        "clean": "Low grade, but no finding to fix among the measured criteria.",
+        "minor": "Weak posture: {{count}} point(s) to fix.",
+        "severe": "Weak posture: {{count}} serious issue(s) to fix first."
+      },
+      "error": "The scan failed: no conclusion is possible.",
+      "noGrade": "Not enough measurements to give a grade: the score is only indicative."
+    },
+    "modulesLabel": "Modules",
+    "modulesCount": "{{measured}} measured out of {{total}} run",
+    "row": {
+      "issues": "{{count}} issue(s)",
+      "none": "No issues"
+    }
+  },
+  "findings": {
+    "none": "Nothing to fix among the measured criteria.",
+    "noneLowCoverage": "Nothing to fix among the measured criteria, but coverage is too low to conclude.",
+    "noneError": "No conclusion possible: the scan failed.",
+    "openFamily": "Open the {{family}} family",
+    "showAll": "Show the other {{count}}",
+    "showLess": "Show fewer"
+  },
+  "score": {
+    "title": "Score details",
+    "points": "{{score}}/{{max}}",
+    "bonusDetail": "{{detail}} — bonus not earned, outside the scale",
+    "measured": "Measured criteria: {{points}}/{{max}} points, i.e. {{raw}}/100.",
+    "measuredAdjusted": "Measured criteria: {{points}}/{{max}} points, i.e. {{raw}}/100 before penalties and cap.",
+    "penalties": "Penalties outside the scale: −{{total}} point(s)",
+    "cap": "Grade capped at {{grade}} (critical vulnerability)",
+    "capUnknown": "Grade capped (critical vulnerability)",
+    "criteria": {
+      "headers": "Headers",
+      "tls": "TLS",
+      "email": "Email",
+      "waf": "WAF",
+      "cookies": "Cookies",
+      "cors": "CORS",
+      "https_redirect": "HTTPS redirect",
+      "takeover": "Takeover",
+      "whois": "WHOIS"
+    },
+    "kind": {
+      "notApplicable": "not applicable",
+      "notMeasured": "not measured",
+      "bonus": "bonus"
+    }
+  },
+  "radar": {
+    "aria": "Family radar: share of the scale earned by each family, from 0 to 100%",
+    "caption": "Share of the scale earned by each family (text equivalent of the radar)",
+    "dataset": "Scale earned (%)",
+    "family": "Family",
+    "state": "State",
+    "value": "Scale earned",
+    "percent": "{{percent}}%",
+    "tooltip": "{{family}}: {{percent}}%"
+  },
+  "metrics": {
+    "aria": "Scan indicators",
+    "ip": "IP",
+    "asn": "ASN",
+    "subdomains": "Subdomains",
+    "ports": "Ports",
+    "duration": "Duration"
+  },
+  "family": {
+    "nav": "Scan families",
+    "back": "Result for {{domain}}",
+    "backToResult": "Back to the result",
+    "unknown": "Unknown family",
+    "unknownText": "This family does not exist. Available families: web, tls, email, dns, network, identity, reputation.",
+    "findings": "To fix in this family",
+    "noFindings": "Nothing to fix in this family among the measured criteria.",
+    "noFindingsUnmeasured": "No conclusion possible: this family could not be measured.",
+    "noFindingsSkipped": "Not applicable to this target: nothing to fix in this family.",
+    "noFindingsDegraded": "No detailed finding, but this family's status is not healthy: see the module details below.",
+    "kicker": "Family",
+    "findingsKicker": "Priorities",
+    "tabs": {
+      "label": "{{family}} family modules",
+      "graph": "Network map",
+      "notes": "Notes and tags"
+    }
+  },
+  "headerStatus": {
+    "ok": "Compliant",
+    "weak": "Partial",
+    "invalid": "Ineffective",
+    "missing": "Missing",
+    "info": "Informational"
+  },
+  "verdict": {
+    "tls": {
+      "invalid": "Invalid certificate",
+      "noHttps": "No HTTPS",
+      "validDays": "Valid, expires in {{days}} d",
+      "valid": "Valid",
+      "noInfo": "No TLS information"
+    },
+    "takeover": {
+      "found": "{{confirmed}} confirmed, {{toCheck}} to check",
+      "confirmedOnly": "{{count}} confirmed",
+      "toCheckOnly": "{{count}} to check",
+      "notChecked": "Not checked",
+      "noneTested": "No takeover detected ({{count}} subdomain(s) tested)",
+      "none": "No takeover detected"
+    }
+  },
+  "web": {
+    "headers": {
+      "counts": "{{ok}}/{{total}} compliant",
+      "weak": "{{count}} partial",
+      "invalid": "{{count}} ineffective",
+      "missing": "{{count}} missing",
+      "offSite": "Redirect to another site not followed ({{url}}): headers of the redirect response.",
+      "downgrade": "HTTPS redirects to HTTP: headers read on the plain-text response.",
+      "legacyPresent": "Present (value not evaluated: older scan)",
+      "legacyMissing": "Missing"
+    },
+    "cookies": {
+      "analysed": "{{count}} cookie(s) analysed",
+      "none": "No Set-Cookie cookie detected",
+      "secure": "Secure",
+      "problems": "{{count}} issue(s)",
+      "scopeDomain": "Domain: {{value}}",
+      "scopePath": "Path: {{value}}",
+      "flagYes": "{{flag}}: yes",
+      "flagNo": "{{flag}}: no",
+      "sameSite": "SameSite: {{value}}",
+      "sameSiteMissing": "SameSite: missing",
+      "sameSiteNone": "SameSite=None: cookie also sent on cross-site requests"
+    },
+    "cors": {
+      "critical": "Critical CORS misconfiguration: arbitrary origin accepted with credentials",
+      "permissive": "Permissive CORS configuration",
+      "wildcard": "CORS open to all origins (*): acceptable for public content",
+      "ok": "CORS enabled and correctly configured",
+      "disabled": "CORS not enabled",
+      "inconclusive": "Inconclusive result: some origin tests failed, no \"compliant\" conclusion is possible",
+      "enabled": "CORS enabled",
+      "anyOrigin": "Wildcard origin (*)",
+      "credentialsWildcard": "Credentials + wildcard",
+      "reflects": "Reflects the origin",
+      "reflectsCredentials": "Reflects the origin with credentials",
+      "details": "Details",
+      "originErrors": "Failed origin tests ({{failed}}/{{total}})"
+    },
+    "redirects": {
+      "hops": "Hops",
+      "forcesHttps": "Forces HTTPS",
+      "finalUrl": "Final URL",
+      "downgrade": "HTTPS → HTTP",
+      "downgradeTitle": "An HTTPS URL of the site redirects to an HTTP URL",
+      "fromHttp": "From http://",
+      "fromHttps": "From https://",
+      "server": "Server: {{value}}",
+      "none": "No redirect data",
+      "step": "Step {{index}}"
+    },
+    "files": {
+      "partial": "Partial check: some files could not be checked (see their card).",
+      "found": "Found",
+      "absent": "Missing",
+      "unverified": "Not checked",
+      "unverifiedDefault": "No conclusive answer: presence unknown",
+      "disallowed": "Disallowed paths ({{count}}):",
+      "sitemaps": "Sitemaps:",
+      "noRestriction": "No restriction (no non-empty Disallow)",
+      "urlCount": "Indexed URLs: {{count}}",
+      "urlCountMin": "Indexed URLs: at least {{count}}",
+      "truncated": "File truncated (read limit reached): minimum count",
+      "contact": "Contact: {{value}}",
+      "notFound": "Not found",
+      "recommended": "Not found — recommended"
+    },
+    "tech": {
+      "none": "No technology detected"
+    },
+    "waf": {
+      "detected": "WAF detected · {{confidence}} confidence",
+      "detectedNoConfidence": "WAF detected",
+      "unnamed": "Unidentified WAF",
+      "evidence": "Evidence",
+      "none": "No WAF detected",
+      "noneText": "No WAF signature in the site's headers and cookies (passive detection).",
+      "cdn": "CDN: {{name}}",
+      "cdnUnnamed": "CDN detected",
+      "cdnText": "A CDN is not a WAF: on its own, it does not filter application attacks.",
+      "offSite": "Redirect to another site not followed: {{url}}"
+    }
+  },
+  "tls": {
+    "noHttps": "No usable HTTPS",
+    "invalid": "Invalid certificate",
+    "refused": "Certificate rejected",
+    "invalidHint": "Browsers reject this certificate: the details below are those of the certificate presented.",
+    "verifyCode": "OpenSSL code {{code}}",
+    "valid": "Valid certificate (chain, hostname and dates checked)",
+    "downgrade": "HTTPS redirects to HTTP: the encrypted connection is dropped (see redirects, Web family).",
+    "noInfo": "No TLS information",
+    "certificate": "Certificate",
+    "validity": "Validity",
+    "connection": "Connection",
+    "san": "SAN ({{count}})",
+    "subject": "Subject (CN)",
+    "issuer": "Issuer",
+    "serial": "Serial number",
+    "version": "Version",
+    "status": "Status",
+    "statusValid": "Valid",
+    "statusInvalid": "Invalid",
+    "notBefore": "Valid from",
+    "notAfter": "Expires on",
+    "daysRemaining": "Days remaining",
+    "protocol": "Protocol",
+    "cipher": "Cipher suite",
+    "bits": "Bits"
+  },
+  "email": {
+    "grade": "Overall email security grade",
+    "summary": "{{level}} — {{spf}} · {{dmarc}} · {{dkim}}",
+    "level": {
+      "A": "Excellent",
+      "B": "Good",
+      "C": "Fair",
+      "D": "Weak",
+      "F": "Critical"
+    },
+    "noData": "Data unavailable",
+    "notEvaluated": "Not evaluated",
+    "spf": {
+      "found": "SPF {{all}}",
+      "present": "SPF present",
+      "absent": "SPF missing",
+      "unmeasured": "SPF not measured"
+    },
+    "dmarc": {
+      "found": "DMARC {{policy}}",
+      "present": "DMARC present",
+      "absent": "DMARC missing",
+      "unmeasured": "DMARC not measured"
+    },
+    "dkim": {
+      "found": "DKIM detected",
+      "noMail": "DKIM not applicable (domain without email)",
+      "notFound": "DKIM not detected on common selectors",
+      "unmeasured": "DKIM not measured"
+    },
+    "nullMx": "Null MX (RFC 7505): the domain accepts no email",
+    "partial": "Partial grade: SPF or DMARC not measured (DNS query failed)",
+    "notes": "Information",
+    "found": "Published",
+    "publishedIncomplete": "Published, evaluation incomplete",
+    "absent": "Missing",
+    "notDetected": "Not detected",
+    "unmeasured": "Not measured",
+    "unmeasuredReason": "Not measured: {{reason}}",
+    "spfNone": "No SPF record found",
+    "spfOf": "SPF of {{domain}}",
+    "spfOfApex": "SPF of {{domain}} (registrable domain: an SPF record does not apply to {{target}})",
+    "spfApexRecord": "SPF of {{domain}} (registrable domain, does not apply to the host): {{record}}",
+    "dkimDetected": "DKIM detected",
+    "dkimSelectors": "Selectors:",
+    "dkimNoMail": "Not applicable: domain without email, no signature expected",
+    "dkimNotFound": "Not detected (common selectors tested)",
+    "dkimRevoked": "Wildcard *._domainkey revoked (empty p=): no key for unpublished selectors",
+    "analysedOn": "Analysed on {{domain}} (registrable domain)",
+    "dmarcNone": "No DMARC record found",
+    "dmarcSource": "Source: {{source}}",
+    "dmarcInherited": "(inherited: sp= applies)",
+    "dmarcPolicy": "Policy:",
+    "transport": "Transport (MTA-STS, TLS-RPT)",
+    "mtaSts": "MTA-STS",
+    "tlsRpt": "TLS-RPT",
+    "recommendations": "Recommendations"
+  },
+  "dns": {
+    "nxdomain": "Non-existent domain (NXDOMAIN)",
+    "nxdomainText": "DNS answers that {{domain}} does not exist: no record can be published under this name.",
+    "records": "{{count}} record(s)",
+    "queryFailed": "Query failed: not measured",
+    "nullMx": "Null MX (RFC 7505): the domain accepts no email",
+    "soa": "NS: {{mname}} · Mail: {{rname}} · Serial: {{serial}}",
+    "dmarcSource": "Source: {{source}}",
+    "emptyTypes": "No record: {{types}}",
+    "info": "Information",
+    "wildcard": "DNS wildcard (*)",
+    "none": "No DNS record found",
+    "subdomains": {
+      "count": "{{shown}} found",
+      "countCapped": "{{shown}} shown out of {{total}} found",
+      "resolved": "{{count}} resolved",
+      "wildcardCount": "including {{count}} through the DNS wildcard",
+      "untested": "{{count}} not tested",
+      "fallback": "Fallback source: Cert Spotter (crt.sh unavailable). Partial results: only currently valid certificates are visible.",
+      "none": "No subdomain discovered through {{source}}",
+      "wildcardIp": "{{ip}} (wildcard resolution)",
+      "wildcardTitle": "DNS wildcard address: every name of the site resolves, this subdomain may not exist",
+      "notTested": "Not tested",
+      "notTestedTitle": "Beyond the first names, not resolved during the scan",
+      "unresolved": "Unresolved"
+    },
+    "takeover": {
+      "none": "No takeover detected",
+      "tested": "{{count}} subdomain(s) tested",
+      "testedOf": "{{tested}} subdomain(s) tested out of {{total}} discovered (unresolved first)",
+      "confirmed": "{{count}} confirmed takeover(s)",
+      "toCheck": "{{count}} subdomain(s) to check",
+      "dangerText": "These subdomains can be hijacked by an attacker.",
+      "checkText": "Clues without proof of exploitability: manual check required.",
+      "confirmedPill": "Confirmed",
+      "toCheckPill": "To check",
+      "risk": {
+        "high": "High risk",
+        "medium": "Medium risk",
+        "low": "Low risk"
+      },
+      "cname": "CNAME",
+      "provider": "Provider",
+      "proof": "Evidence",
+      "proofNx": "Dangling CNAME (NXDOMAIN)",
+      "proofFingerprint": "Provider fingerprint",
+      "proofNoHttp": "No HTTP response",
+      "unknownProvider": "unknown",
+      "http": "HTTP {{code}}"
+    },
+    "rdns": {
+      "ip": "IP",
+      "ptr": "PTR",
+      "aliases": "Aliases",
+      "none": "No PTR record"
+    },
+    "graph": {
+      "title": "Network map",
+      "aria": "Network map of {{domain}}: {{subdomains}} subdomain(s), {{ports}} port(s)",
+      "fit": "Fit",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "hover": "Node: {{label}}",
+      "hint": "Hover or tap a node to show its details.",
+      "more": "+{{count}} more",
+      "moreDetail": "see the “Subdomains” card",
+      "untested": "not tested",
+      "unresolved": "unresolved",
+      "wildcardIp": "{{ip}}, wildcard resolution",
+      "ariaMore": "Network map of {{domain}}: {{subdomains}} subdomain(s) shown, plus {{more}} others summarised in one node, {{ports}} port(s)"
+    }
+  },
+  "network": {
+    "geo": {
+      "sharedCdn": "Shared CDN IP address: neighbours and geolocation are not meaningful",
+      "country": "Country",
+      "region": "Region",
+      "city": "City",
+      "coordinates": "Coordinates",
+      "timezone": "Time zone",
+      "isp": "ISP",
+      "asn": "ASN",
+      "noData": "Geolocation data unavailable"
+    },
+    "map": {
+      "aria": "Location map of {{place}}",
+      "offline": "Map unavailable offline: the map could not be loaded. The coordinates are still shown.",
+      "failed": "The map could not be displayed. The coordinates are still shown."
+    },
+    "ports": {
+      "none": "No open port among the common ports tested",
+      "sensitive": "Sensitive"
+    },
+    "ext": {
+      "asn": "ASN information",
+      "org": "Organisation",
+      "hostname": "Hostname",
+      "anycast": "Anycast",
+      "neighbors": "IP neighbours (reverse IP)",
+      "count": "{{shown}} domain(s)",
+      "countOf": "{{shown}} shown out of {{total}} domain(s)",
+      "truncated": "List limited by the server",
+      "none": "No IP neighbour detected",
+      "sourceError": "Not measured: {{reason}}"
+    }
+  },
+  "identity": {
+    "whois": {
+      "otherDomain": "WHOIS of {{queried}} (registrable domain or hosting platform), not of {{domain}}",
+      "notRegistered": "Domain not registered according to the WHOIS registry",
+      "registrar": "Registrar",
+      "registrant": "Organisation",
+      "created": "Created",
+      "expires": "Expires",
+      "updated": "Updated",
+      "dnssec": "DNSSEC",
+      "emails": "Emails",
+      "statuses": "Statuses",
+      "nameServers": "Name servers"
+    },
+    "screenshot": {
+      "none": "No screenshot available",
+      "loading": "Loading the screenshot…",
+      "alt": "Screenshot of {{domain}}",
+      "caption": "Home page screenshot · 1280×720 window",
+      "unavailable": "Image unavailable: {{detail}}",
+      "undecodable": "unreadable image file"
+    },
+    "notes": {
+      "title": "Notes and tags",
+      "label": "Investigation notes",
+      "placeholder": "Write your investigation notes…",
+      "save": "Save the notes",
+      "saved": "Notes saved",
+      "tooLong": "Notes too long: {{length}} characters for {{max}} at most"
+    },
+    "tags": {
+      "label": "Tags",
+      "none": "No tag",
+      "add": "Add",
+      "placeholder": "Add a tag…",
+      "remove": "Remove the tag {{tag}}",
+      "tooLong": "Tag too long: {{max}} characters at most",
+      "duplicate": "This tag already exists",
+      "tooMany": "{{max}} tags at most"
+    },
+    "meta": {
+      "error": "Could not save: {{detail}}"
+    }
+  },
+  "history": {
+    "title": "History",
+    "search": "Search a domain",
+    "searchPlaceholder": "Search a domain…",
+    "searchTooLong": "Search too long: {{max}} characters at most.",
+    "grade": "Grade",
+    "gradeAll": "All grades",
+    "status": "Status",
+    "statusAll": "All statuses",
+    "reset": "Reset the filters",
+    "caption": "Saved scans, newest first",
+    "col": {
+      "domain": "Domain",
+      "grade": "Grade",
+      "score": "Score",
+      "status": "Status",
+      "subdomains": "Subdomains",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "subdomainsNATitle": "Subdomains not measured (failure, timeout or not applicable)",
+    "empty": "No scan yet. Run your first scan.",
+    "emptyFiltered": "No scan matches these criteria.",
+    "range": "{{from}}–{{to}} of {{total}} scan(s)",
+    "pagination": "History pagination",
+    "prev": "Previous page",
+    "next": "Next page",
+    "page": "Page {{page}} of {{pages}}",
+    "timeline": "Timeline of {{domain}}",
+    "delete": "Delete the scan of {{domain}}",
+    "deleteTitle": "Delete this scan?",
+    "deleteText": "The scan of {{domain}} from {{date}} will be permanently deleted, with its tags, notes and screenshot.",
+    "deleted": "Scan deleted",
+    "alreadyDeleted": "This scan had already been deleted",
+    "deleteError": "Could not delete: {{detail}}",
+    "loadError": "Could not load the history: {{detail}}",
+    "tableRegion": "Scan list (scrolls horizontally)",
+    "firstPage": "Back to the first page",
+    "naNote": "N/A: subdomains not measured (failure, timeout or not applicable).",
+    "kicker": "Archive"
+  },
+  "timeline": {
+    "title": "Timeline of {{domain}}",
+    "back": "Back to the history",
+    "total": "{{count}} scan(s) of {{domain}}",
+    "notEnough": "Not enough data",
+    "notEnoughText": "At least 2 scans of the same domain are needed to show the timeline. Currently: {{count}} scan(s) of {{domain}}.",
+    "notFound": "No history for this domain.",
+    "chartTitle": "Score over time",
+    "chartAria": "Score over {{count}} scans, from {{first}} to {{last}}",
+    "chartAriaIndicative": "Score over {{count}} scans, from {{first}} to {{last}}, including {{indicative}} indicative score(s)",
+    "chartIndicativeNote": "Hollow triangle and dashed line: indicative score (insufficient coverage), not a grade.",
+    "chartTooltip": "{{label}}: {{value}}",
+    "caption": "Scans of {{domain}}, oldest first",
+    "col": {
+      "date": "Date",
+      "ip": "IP",
+      "subdomains": "Subdomains",
+      "ports": "Ports",
+      "score": "Score",
+      "changes": "DNS changes"
+    },
+    "naTitle": "Not measured (failure, timeout or not applicable)",
+    "coverage": "{{coverage}}% measured",
+    "first": "First record",
+    "notComparable": "Not comparable",
+    "notComparableTitle": "DNS record of this scan or of the previous scans unavailable",
+    "noChange": "No change",
+    "more": "… and {{count}} more",
+    "nullMx": "(null MX)",
+    "related": "Other targets of the same site ({{apex}})",
+    "relatedCount": "{{domain}} ({{count}} scan(s))",
+    "openScan": "Open the scan of {{date}}",
+    "truncated": "Only the {{shown}} most recent snapshots are shown, out of {{total}}.",
+    "invalidTitle": "Invalid domain name",
+    "invalid": "“{{domain}}” is not a valid domain name: check the address.",
+    "naNote": "N/A: value not measured (failure, timeout or not applicable).",
+    "kicker": "Trend",
+    "kpi": {
+      "aria": "Timeline indicators",
+      "scans": "Scans",
+      "best": "Best grade",
+      "last": "Latest scan"
+    },
+    "chartKicker": "Score",
+    "tableKicker": "Records",
+    "tableTitle": "Scans and DNS changes",
+    "relatedKicker": "Related",
+    "tableRegion": "Timeline records (horizontally scrollable)"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Interface language",
+    "languageHint": "Scan results are translated by the server; older scans keep their original text.",
+    "data": "Data folder",
+    "dataHint": "SQLite database, screenshots and optional .env file.",
+    "open": "Open",
+    "opened": "Data folder opened",
+    "openError": "Could not open: {{detail}}",
+    "portable": "Portable mode: the data stays next to the application.",
+    "infoError": "Server information unavailable: {{detail}}",
+    "version": "Version",
+    "versionValue": "DomainRecon {{version}}",
+    "apiDocs": "API documentation",
+    "token": "API token",
+    "tokenSet": "A token is saved for this tab.",
+    "tokenUnset": "No token saved (only needed if the server sets API_TOKEN).",
+    "tokenEnter": "Enter the token",
+    "licenses": "Licences",
+    "licensesIntro": "DomainRecon is source-available software: its code may be read and improved through contributions, but not reused or redistributed without permission (see LICENSE). It relies on the following open-source components; the full details are in THIRD_PARTY_NOTICES.md, shipped with the application.",
+    "licenseName": "Component",
+    "licenseType": "Licence",
+    "kicker": "Preferences",
+    "section": {
+      "language": "Interface",
+      "data": "Storage",
+      "version": "Application",
+      "token": "Security",
+      "licenses": "Legal"
+    },
+    "apiKeys": {
+      "kicker": "Integrations",
+      "title": "API keys",
+      "hint": "Each service unlocks modules. Keys are encrypted on this machine and never shown again in clear text.",
+      "configured": "Key saved",
+      "missing": "No key",
+      "placeholder": "Enter the key",
+      "remove": "Remove",
+      "test": "Test",
+      "saved": "API keys saved",
+      "none": "No keyed service in the module catalog.",
+      "testHint": "The test uses the saved key: save your changes first.",
+      "save": "Save keys"
+    },
+    "theme": "Theme",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "loadError": "Settings unavailable: {{detail}}",
+    "network": {
+      "kicker": "Scan",
+      "title": "Timeouts, screenshot and proxy",
+      "scanTimeout": "Full scan timeout (s)",
+      "quickTimeout": "Quick scan timeout (s)",
+      "timeoutHint": "Between {{min}} and {{max}} seconds.",
+      "screenshot": "Take a screenshot of the site",
+      "screenshotHint": "Needs Playwright's Chromium browser; without it, the screenshot is skipped.",
+      "proxy": "HTTP or SOCKS proxy",
+      "proxyHint": "Examples: http://127.0.0.1:8080 or socks5h://127.0.0.1:1080. Leave empty to use no proxy.",
+      "proxyDns": "DNS does not go through the proxy: name lookups leave directly from this machine.",
+      "save": "Save",
+      "saved": "Settings saved"
+    },
+    "vpn": {
+      "kicker": "Privacy",
+      "title": "Mullvad VPN",
+      "error": "VPN status unavailable: {{detail}}",
+      "hint": "Read-only: DomainRecon never turns your VPN on or off."
+    },
+    "channels": {
+      "kicker": "Alerts",
+      "title": "Alert channels",
+      "hint": "Set up here where monitoring alerts are sent. Addresses and passwords are encrypted and never shown again.",
+      "names": {
+        "discord": "Discord",
+        "slack": "Slack",
+        "teams": "Teams",
+        "webhook": "JSON webhook",
+        "email": "Email (SMTP)",
+        "desktop": "Desktop notification"
+      },
+      "saved": "{{name}} channel saved",
+      "testOk": "Test message sent",
+      "testFailed": "Sending failed",
+      "configured": "Configured",
+      "notConfigured": "Not configured",
+      "enable": "Enable {{name}}",
+      "url": "Webhook address",
+      "desktopHint": "Shows a system notification. Without a graphical environment, it is skipped.",
+      "save": "Save",
+      "test": "Send a test",
+      "smtp": {
+        "host": "SMTP server",
+        "port": "Port",
+        "security": "Security",
+        "modes": {
+          "starttls": "STARTTLS",
+          "ssl": "SSL/TLS",
+          "none": "None"
+        },
+        "sender": "Sender",
+        "recipients": "Recipients (comma-separated)",
+        "username": "Username",
+        "password": "Password"
+      }
+    },
+    "import": {
+      "kicker": "Migration",
+      "title": "Import an old database",
+      "text": "Bring in the history of an old DomainRecon database (.db file). Scans that are already present are skipped; screenshots are not imported.",
+      "fileLabel": "Old DomainRecon database (.db file)",
+      "choose": "Choose a file",
+      "change": "Choose another file",
+      "noFile": "No file chosen",
+      "start": "Import",
+      "cancel": "Cancel",
+      "uploading": "Uploading the file: {{percent}}%",
+      "processing": "File received. Reading the database and adding the scans…",
+      "cancelled": "Import cancelled. You can run it again: scans already added will not be duplicated.",
+      "tooBig": "This file is {{size}}: the limit is {{max}}.",
+      "hint": "Running an import again is safe: a scan that is already present (same domain, same date) is skipped.",
+      "result": {
+        "title": "Import result",
+        "read": "Scans read",
+        "imported": "Added to the history",
+        "ignored": "Skipped",
+        "duplicates": "Already present",
+        "unusable": "Unusable (unreadable domain or date)",
+        "unknownColumns": "Columns with no equivalent, not imported"
+      },
+      "summary": "{{count}} scan(s) added to the history.",
+      "nothingNew": "No new scan: every scan in this file is already in the history.",
+      "nothingToImport": "This file contains no usable scan.",
+      "done": "Import finished: {{count}} scan(s) added.",
+      "history": "View the history"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The requested address does not match any screen.",
+    "home": "Back to new scan"
+  },
+  "shell": {
+    "sections": {
+      "navigation": "Navigation",
+      "settings": "Settings"
+    },
+    "theme": {
+      "toLight": "Switch to light theme",
+      "toDark": "Switch to dark theme"
+    },
+    "quickScan": {
+      "label": "Quick scan",
+      "placeholder": "New domain…",
+      "submit": "Start the scan"
+    },
+    "count": {
+      "history": "{{count}} scan(s)",
+      "findings": "{{count}} to fix"
+    }
+  },
+  "generic": {
+    "none": "No data to display.",
+    "more": "… and {{count}} more",
+    "tableAria": "Results table",
+    "requiresAuth": "Authorized target required",
+    "duration": "{{seconds}} s",
+    "missingKeys": "API key required, not set in Settings: {{keys}}.",
+    "authHint": "This module only runs on an authorized target (custom profile).",
+    "category": {
+      "passif": "Passive",
+      "actif": "Active",
+      "cle_api": "API key",
+      "sensible": "Sensitive"
+    }
+  },
+  "palette": {
+    "title": "Command palette",
+    "open": "Search or run a command",
+    "shortcut": "Ctrl K",
+    "placeholder": "Scan a domain, go to a page…",
+    "results": "Results",
+    "groups": {
+      "actions": "Actions",
+      "pages": "Go to",
+      "recent": "Recent scans"
+    },
+    "scanDomain": "Scan {{domain}}",
+    "openScan": "Result for {{domain}}",
+    "empty": "No results.",
+    "hint": "Enter to confirm, Esc to close"
+  },
+  "category": {
+    "passif": "Passive",
+    "actif": "Active",
+    "cle_api": "API key",
+    "sensible": "Sensitive",
+    "desc": {
+      "passif": "Reads public sources (DNS, public certificates, open databases) without sending any probe to the target.",
+      "actif": "Sends requests or connections to the target (ports, files, methods). Reserve it for your own domains.",
+      "cle_api": "Queries a third-party service (Shodan, VirusTotal...) and needs an API key entered in Settings.",
+      "sensible": "Looks for exposed information or tests weaknesses (leaks, sensitive files). Requires your explicit authorization."
+    }
+  },
+  "scanProfile": {
+    "legend": "Scan profile",
+    "rapide": {
+      "name": "Quick",
+      "desc": "The {{count}} essential passive modules. A few seconds, no probe sent to the target.",
+      "descPending": "The essential passive modules. A few seconds, no probe sent to the target."
+    },
+    "complet": {
+      "name": "Full",
+      "desc": "Every passive module, plus those that use a configured API key. No active or sensitive module."
+    },
+    "personnalise": {
+      "name": "Custom",
+      "desc": "You pick the modules, family by family, including active and sensitive ones."
+    },
+    "selectedCount": "{{count}} module(s) selected out of {{total}}",
+    "selectFamily": "Select all: {{family}}",
+    "clearFamily": "None: {{family}}",
+    "keyMissing": "This module needs an API key: add it in Settings, otherwise it will be skipped.",
+    "noneSelected": "Select at least one module.",
+    "authorized": "I am authorized to test this target",
+    "authorizedPlural": "I am authorized to test these targets",
+    "authorizedHint": "Required for active and sensitive modules. Only test domains you own or have written permission to test."
+  },
+  "export": {
+    "button": "Export",
+    "menu": "Export formats",
+    "done": "{{format}} export downloaded",
+    "error": "{{format}} export failed: {{detail}}",
+    "formats": {
+      "pdf": "PDF",
+      "html": "HTML",
+      "md": "Markdown",
+      "csv": "CSV",
+      "json": "JSON",
+      "sarif": "SARIF"
+    },
+    "hints": {
+      "pdf": "Report to print or send",
+      "html": "Standalone page, readable in a browser",
+      "md": "Structured text for a ticket or a wiki",
+      "csv": "Table of findings for a spreadsheet",
+      "json": "Complete data, for your scripts",
+      "sarif": "Format used by security analysis tools"
+    }
+  },
+  "understand": {
+    "toggle": "Understand and fix",
+    "what": "What it is",
+    "why": "Why it matters",
+    "fix": "How to fix it",
+    "whatDefault": "Check performed by the \"{{module}}\" module.",
+    "whyDefault": "A weakness reported here can be used to spoof, intercept or hijack the domain.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyCode": "Copy snippet",
+    "copyVariant": "Copy {{variant}} snippet",
+    "copyError": "Could not copy: select the code by hand.",
+    "platforms": "Variants by platform",
+    "variantDefault": "Variant {{number}}",
+    "reference": "Official documentation",
+    "newTab": "(opens in a new tab)"
+  },
+  "fix": {
+    "families": {
+      "web": "Add or fix the security headers and web server settings, then run the scan again to check.",
+      "tls": "Renew the certificate before it expires, enable TLS 1.2 or higher and remove obsolete protocols and cipher suites.",
+      "email": "Publish consistent SPF, DKIM and DMARC records in your domain's DNS, then aim for a strict DMARC policy.",
+      "dns": "Fix the DNS zone at your provider: remove orphaned records and enable DNSSEC if possible.",
+      "network": "Close the ports that do not need to be public and put administration services behind a VPN or a firewall.",
+      "identity": "Check the domain registration details and enable locking and privacy at the registrar.",
+      "reputation": "Find the cause of the poor reputation, fix it, then request removal from the services concerned.",
+      "leaks": "Change the exposed credentials, remove published files or secrets and enable two-factor authentication."
+    },
+    "modules": {
+      "dns_records": "Fill in the missing records (A, MX, NS, CAA) and delete the ones no longer used.",
+      "subdomains": "Delete unused subdomains and make sure each one is protected like the main domain.",
+      "security_headers": "Add Strict-Transport-Security, Content-Security-Policy, X-Content-Type-Options, X-Frame-Options and Referrer-Policy in the web server configuration.",
+      "tls_certificate": "Renew the certificate before it expires (ideally with automatic renewal) and check that it covers the site name.",
+      "technologies": "Update the detected components and hide version numbers in the server headers.",
+      "geo_data": "Check that hosting is in the expected region and that the IP address belongs to your provider.",
+      "whois_data": "Check the domain contacts, enable transfer lock and plan ahead for the expiry date.",
+      "open_ports": "Close unnecessary ports at the firewall and restrict administration services (SSH, databases) by IP address or VPN.",
+      "email_security": "Publish or tighten SPF (-all), DKIM and DMARC (p=quarantine then p=reject), and add MTA-STS if your provider supports it.",
+      "waf": "Put the site behind a web application firewall (WAF) or a CDN that filters common attacks.",
+      "redirect_chain": "Redirect HTTP to HTTPS in a single step and avoid chains of multiple redirects.",
+      "web_files": "Remove publicly accessible sensitive files and review the content of robots.txt and security.txt.",
+      "cookie_security": "Add the Secure, HttpOnly and SameSite attributes to session cookies.",
+      "cors": "Replace wildcard allowed origins (*) with the exact list of sites that need to access your API.",
+      "reverse_dns": "Make the IP address's reverse DNS match the server name, especially for the mail server.",
+      "network_extended": "Check network ownership (ASN) and BGP announcements, and ask your host to fix any anomaly.",
+      "screenshot": "Check that the displayed page is the expected one and shows no unexpected content.",
+      "subdomain_takeover": "Delete the DNS record that points to a service you no longer use, or recreate the resource on that service."
+    }
+  },
+  "dashboard": {
+    "kicker": "Overview",
+    "title": "Dashboard",
+    "lead": "The latest state of every analyzed domain: grade, trend, open findings and monitoring.",
+    "trend": "Score trend for {{domain}}",
+    "noFindings": "No findings",
+    "findings": "{{count}} finding(s), {{urgent}} urgent",
+    "compare": "Compare",
+    "emptyTitle": "No domain analyzed yet",
+    "emptyText": "Run your first scan: the dashboard will then summarize the state of each of your domains.",
+    "emptyAction": "Run a scan",
+    "tableCaption": "Latest scan of each domain",
+    "stats": {
+      "domains": "Domains",
+      "average": "Average score",
+      "urgent": "With urgent finding",
+      "watched": "Monitored"
+    },
+    "col": {
+      "domain": "Domain",
+      "grade": "Grade",
+      "score": "Score",
+      "trend": "Trend",
+      "findings": "Findings",
+      "watch": "Monitoring",
+      "status": "Status",
+      "last": "Last scan",
+      "actions": "Actions"
+    }
+  },
+  "compare": {
+    "kicker": "Changes",
+    "title": "Compare two scans",
+    "lead": "Pick a domain, then two of its scans: this screen shows what changed (grade, findings, ports, subdomains, DNS, certificate).",
+    "domain": "Domain",
+    "domainPlaceholder": "example.com",
+    "choose": "Choose",
+    "reference": "Reference scan (the older one)",
+    "recent": "Scan to compare (the newer one)",
+    "added": "Added",
+    "removed": "Removed",
+    "notMeasured": "Not measured in one of the two scans: no comparison possible.",
+    "noChange": "No change.",
+    "notComparable": "One of the two scans failed: the comparison is not possible.",
+    "score": "Grade and score",
+    "points": "points",
+    "identical": "No difference between these two scans.",
+    "summary": "Summary of changes",
+    "findings": "Findings",
+    "newFindings": "New findings",
+    "resolvedFindings": "Resolved findings",
+    "noNewFindings": "No new finding.",
+    "noResolvedFindings": "No resolved finding.",
+    "unchanged": "{{count}} unchanged finding(s).",
+    "ports": "Open ports",
+    "subdomains": "Subdomains",
+    "dns": "DNS records",
+    "certificate": "TLS certificate",
+    "certField": {
+      "subject": "Subject",
+      "issuer_org": "Issuer",
+      "issuer_cn": "Issuer name",
+      "serial_number": "Serial number",
+      "not_before": "Valid from",
+      "not_after": "Expires on"
+    },
+    "technologies": "Technologies",
+    "emptyTitle": "No domain chosen",
+    "emptyText": "Enter a domain that has already been analyzed to compare two of its scans.",
+    "needTwoTitle": "Two scans needed",
+    "needTwoText": "{{domain}} does not have enough scans: at least two are needed to compare. Run another analysis.",
+    "needTwoAction": "Run a scan",
+    "sameScan": "Choose two different scans."
+  },
+  "batch": {
+    "kicker": "Several domains",
+    "title": "Batch scan",
+    "lead": "Paste a list of domains (one per line, or comma-separated) or import a .txt or .csv file, then follow the progress.",
+    "listLabel": "List of domains",
+    "listPlaceholder": "example.com\nexample.org\nexample.net",
+    "importLabel": "Domain file (.txt or .csv)",
+    "import": "Import a file",
+    "detected": "{{count}} domain(s) detected",
+    "start": "Start the batch ({{count}})",
+    "duplicates": "{{count}} duplicate(s) ignored.",
+    "rejected": "{{count}} entry(ies) rejected:",
+    "emptyTitle": "No batch running",
+    "emptyText": "Paste your domains above and start the batch. Results will appear here, with a CSV export.",
+    "progress": "{{done}} of {{total}} finished",
+    "progressLabel": "Batch progress",
+    "cancel": "Cancel the batch",
+    "exportCsv": "Export as CSV",
+    "counts": "{{done}} succeeded, {{failed}} failed, {{cancelled}} cancelled",
+    "tableCaption": "Batch results",
+    "col": {
+      "domain": "Domain",
+      "status": "Status",
+      "grade": "Grade",
+      "score": "Score",
+      "result": "Result"
+    },
+    "status": {
+      "queued": "Queued",
+      "running": "Running",
+      "done": "Done",
+      "failed": "Failed",
+      "cancelled": "Cancelled"
+    },
+    "open": "Open the result",
+    "fileTooBig": "File too large (512 KB at most).",
+    "fileError": "The file could not be read."
+  },
+  "monitoring": {
+    "kicker": "Tracking over time",
+    "title": "Monitoring",
+    "lead": "Scan your domains at regular intervals and get alerted when something changes: grade, new finding, certificate, port or subdomain.",
+    "tabs": {
+      "label": "Monitoring sections",
+      "watches": "Watches",
+      "notifications": "Notifications"
+    },
+    "frequency": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    },
+    "rules": {
+      "legend": "Alert rules",
+      "grade_drop": "The grade drops",
+      "new_findings": "A critical or high finding appears",
+      "new_port": "A new port opens",
+      "new_subdomain": "A new subdomain appears",
+      "cert_expiry_days": "Alert when the certificate expires within (days)",
+      "certOff": "Disabled"
+    },
+    "channels": {
+      "legend": "Alert channels",
+      "center": "Notification center",
+      "desktop": "Desktop notification",
+      "discord": "Discord",
+      "slack": "Slack",
+      "teams": "Teams",
+      "webhook": "JSON webhook",
+      "email": "Email (SMTP)",
+      "hint": "External channels are configured in Settings."
+    },
+    "add": {
+      "title": "Add a watch",
+      "domain": "Domain to monitor",
+      "frequency": "Frequency",
+      "submit": "Monitor this domain"
+    },
+    "added": "{{domain}} is now monitored",
+    "saved": "Watch saved",
+    "save": "Save",
+    "deleteTitle": "Delete the watch?",
+    "deleteMessage": "{{domain}} will no longer be scanned automatically. Its scans stay in the history.",
+    "deleteLabel": "Delete the watch for {{domain}}",
+    "frequencyOf": "Frequency for {{domain}}",
+    "active": "Active",
+    "paused": "Paused",
+    "neverRun": "Never run",
+    "lastScan": "View scan",
+    "runQueued": "Scan of {{domain}} scheduled",
+    "run": "Run now",
+    "edit": "Edit",
+    "emptyTitle": "No watch yet",
+    "emptyText": "Add a domain below: it will be scanned automatically and compared with the previous scan.",
+    "tableCaption": "Monitored domains",
+    "col": {
+      "domain": "Domain",
+      "frequency": "Frequency",
+      "state": "State",
+      "last": "Last run",
+      "next": "Next run",
+      "actions": "Actions"
+    },
+    "task": {
+      "title": "System task",
+      "hint": "Runs due watches even when DomainRecon is closed (Windows Task Scheduler or systemd timer).",
+      "unsupported": "This system cannot install the task automatically. Run \"domainrecon monitor run-due\" from your scheduler.",
+      "installed": "System task installed",
+      "removed": "System task removed",
+      "stateOn": "Installed",
+      "stateOff": "Not installed",
+      "install": "Install the task",
+      "uninstall": "Uninstall the task"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "emptyTitle": "No notification",
+    "emptyText": "Alerts from your watches will appear here as soon as a change is detected.",
+    "unread": "{{count}} unread",
+    "markAll": "Mark all as read",
+    "clear": "Clear",
+    "new": "New",
+    "open": "View scan",
+    "markOne": "Mark the alert for {{domain}} as read",
+    "removeOne": "Delete the alert for {{domain}}"
+  },
+  "glossary": {
+    "spf": {
+      "name": "SPF",
+      "def": "DNS record listing the servers allowed to send mail for the domain. It limits sender spoofing."
+    },
+    "dkim": {
+      "name": "DKIM",
+      "def": "Cryptographic signature added to each outgoing email. The recipient checks it with a key published in DNS."
+    },
+    "dmarc": {
+      "name": "DMARC",
+      "def": "Policy that says what to do with an email failing SPF or DKIM (ignore, quarantine, reject) and where to send reports."
+    },
+    "bimi": {
+      "name": "BIMI",
+      "def": "Lets your brand logo appear in the inbox, provided you have a strict DMARC policy."
+    },
+    "mta_sts": {
+      "name": "MTA-STS",
+      "def": "Policy that forces mail servers to encrypt mail sent to your domain with TLS."
+    },
+    "tls_rpt": {
+      "name": "TLS-RPT",
+      "def": "Reports sent when a TLS connection to your mail server fails. Complements MTA-STS."
+    },
+    "dane": {
+      "name": "DANE",
+      "def": "Publishes in DNS (protected by DNSSEC) the expected certificate fingerprint, to authenticate a server without relying on an authority."
+    },
+    "dnssec": {
+      "name": "DNSSEC",
+      "def": "Cryptographic signing of DNS answers. It prevents name resolutions from being forged or redirected."
+    },
+    "caa": {
+      "name": "CAA",
+      "def": "DNS record restricting which certificate authorities may issue a certificate for your domain."
+    },
+    "hsts": {
+      "name": "HSTS",
+      "def": "Header that forces the browser to use only HTTPS for your site for a given duration."
+    },
+    "csp": {
+      "name": "CSP",
+      "def": "Header listing the allowed sources for scripts, images and styles. It limits the impact of injection flaws (XSS)."
+    },
+    "cors": {
+      "name": "CORS",
+      "def": "Mechanism deciding which other sites may call your API from a browser."
+    },
+    "x_frame_options": {
+      "name": "X-Frame-Options",
+      "def": "Header that forbids showing your page in a frame of another site, against clickjacking."
+    },
+    "referrer_policy": {
+      "name": "Referrer-Policy",
+      "def": "Header controlling the originating page address sent to sites visited next."
+    },
+    "permissions_policy": {
+      "name": "Permissions-Policy",
+      "def": "Header that enables or disables browser features (camera, microphone, location) for your page."
+    },
+    "httponly": {
+      "name": "HttpOnly",
+      "def": "Cookie attribute that prevents scripts from reading it. It protects sessions against XSS theft."
+    },
+    "samesite": {
+      "name": "SameSite",
+      "def": "Cookie attribute that limits sending it on requests from another site, against CSRF attacks."
+    },
+    "asn": {
+      "name": "ASN",
+      "def": "Autonomous system number: the network (host, carrier) announcing an IP address on the Internet."
+    },
+    "bgp": {
+      "name": "BGP",
+      "def": "Protocol by which networks announce the IP addresses they can reach. A wrong announcement can hijack traffic."
+    },
+    "ct": {
+      "name": "CT (Certificate Transparency)",
+      "def": "Public logs where every certificate authority records issued certificates. Useful to spot an unexpected certificate."
+    },
+    "ocsp": {
+      "name": "OCSP",
+      "def": "Service used to check that a certificate has not been revoked. OCSP stapling avoids an extra request."
+    },
+    "tls": {
+      "name": "TLS",
+      "def": "Protocol that encrypts connections (HTTPS, mail). Versions 1.2 and 1.3 are the only ones to keep."
+    },
+    "certificate": {
+      "name": "Certificat",
+      "def": "Digital document proving a site's identity and holding the public key used for encryption."
+    },
+    "ca": {
+      "name": "Autorité de certification",
+      "def": "Trusted organization that signs certificates and guarantees they belong to their holder."
+    },
+    "san": {
+      "name": "SAN",
+      "def": "List of domain names covered by a single certificate (Subject Alternative Name)."
+    },
+    "cipher": {
+      "name": "Suite de chiffrement",
+      "def": "Set of algorithms negotiated for a TLS connection. Old suites can be broken."
+    },
+    "pfs": {
+      "name": "Confidentialité persistante",
+      "def": "Property that protects past exchanges even if the server key is stolen later (Perfect Forward Secrecy)."
+    },
+    "dns": {
+      "name": "DNS",
+      "def": "The Internet's directory: it translates a domain name into an IP address and says where to deliver mail."
+    },
+    "a_record": {
+      "name": "Enregistrement A",
+      "def": "Maps a name to an IPv4 address."
+    },
+    "aaaa_record": {
+      "name": "Enregistrement AAAA",
+      "def": "Maps a name to an IPv6 address."
+    },
+    "mx": {
+      "name": "MX",
+      "def": "Record naming the mail servers that receive the domain's mail."
+    },
+    "ns": {
+      "name": "NS",
+      "def": "Record naming the authoritative DNS servers for the domain."
+    },
+    "txt": {
+      "name": "TXT",
+      "def": "Free-text record, used for SPF, DMARC, DKIM and ownership checks."
+    },
+    "cname": {
+      "name": "CNAME",
+      "def": "Alias: a name that points to another name. A CNAME to a disabled service exposes you to takeover."
+    },
+    "soa": {
+      "name": "SOA",
+      "def": "Header record of the DNS zone: primary server, contact and refresh timers."
+    },
+    "ptr": {
+      "name": "PTR (DNS inverse)",
+      "def": "Maps an IP address to a name. Mail servers check it to judge a sender."
+    },
+    "ttl": {
+      "name": "TTL",
+      "def": "Duration, in seconds, during which a DNS answer may be cached before being asked again."
+    },
+    "zone_transfer": {
+      "name": "Transfert de zone",
+      "def": "Full copy of the DNS zone (AXFR). Open to everyone, it reveals the list of your machines."
+    },
+    "wildcard_dns": {
+      "name": "DNS générique",
+      "def": "Record answering for any nonexistent subdomain. It skews subdomain discovery."
+    },
+    "subdomain": {
+      "name": "Sous-domaine",
+      "def": "Name placed in front of your domain (for example mail.example.com), often forgotten and so less monitored."
+    },
+    "takeover": {
+      "name": "Prise de contrôle de sous-domaine",
+      "def": "A subdomain points to a service you no longer use: a third party can claim it and publish in your name."
+    },
+    "waf": {
+      "name": "WAF",
+      "def": "Web application firewall: it filters malicious web requests before they reach the site."
+    },
+    "cdn": {
+      "name": "CDN",
+      "def": "Network of servers serving your site close to visitors and absorbing part of the attacks."
+    },
+    "whois": {
+      "name": "WHOIS",
+      "def": "Registration directory of a domain: registrar, creation and expiry dates, DNS servers."
+    },
+    "rdap": {
+      "name": "RDAP",
+      "def": "Modern successor of WHOIS, answering in a structured format."
+    },
+    "open_port": {
+      "name": "Port ouvert",
+      "def": "A server door that accepts connections. Every open port is a potential attack surface."
+    },
+    "banner": {
+      "name": "Bannière",
+      "def": "Text a service returns on connection, often with its name and version."
+    },
+    "typosquatting": {
+      "name": "Typosquatting",
+      "def": "Domains almost identical to yours (typos) registered to trick your visitors."
+    },
+    "dnsbl": {
+      "name": "DNSBL",
+      "def": "DNS-queried blocklist of IP addresses with a bad reputation (spam, malware)."
+    },
+    "osint": {
+      "name": "OSINT",
+      "def": "Open-source intelligence: information obtained from public sources only."
+    },
+    "passive": {
+      "name": "Module passif",
+      "def": "Reads public sources without sending any probe to the target."
+    },
+    "active": {
+      "name": "Module actif",
+      "def": "Sends requests or connections to the target. Reserve it for your own domains."
+    },
+    "proxy": {
+      "name": "Proxy",
+      "def": "Intermediary through which HTTP requests go. DNS does not go through DomainRecon's proxy."
+    },
+    "sarif": {
+      "name": "SARIF",
+      "def": "Standard format for exchanging security analysis results, read by GitHub and many tools."
+    }
+  },
+  "help": {
+    "kicker": "Documentation",
+    "title": "Help",
+    "lead": "Everything to get started: the five-step guide, scan profiles, the legal framework, frequently asked questions and the glossary.",
+    "nav": "Help sections",
+    "sections": {
+      "guide": "Getting started",
+      "profiles": "Profiles and modules",
+      "legal": "Legal framework",
+      "faq": "Frequently asked questions",
+      "glossary": "Glossary"
+    },
+    "guide": {
+      "1": {
+        "title": "Enter a domain",
+        "text": "On \"New scan\", type the domain to analyze (example.com) or paste its address."
+      },
+      "2": {
+        "title": "Pick a profile",
+        "text": "Quick for a first look, Full for everything passive, Custom to choose the modules."
+      },
+      "3": {
+        "title": "Follow the analysis",
+        "text": "Modules run live. You can cancel at any time."
+      },
+      "4": {
+        "title": "Read the result",
+        "text": "The grade sums up the security state. Each finding explains what it is, why it matters and how to fix it."
+      },
+      "5": {
+        "title": "Track over time",
+        "text": "Compare two scans, export a report or monitor the domain to be alerted of any change."
+      }
+    },
+    "replayOnboarding": "Restart the guided tour",
+    "categories": "Module categories",
+    "profileDesc": {
+      "rapide": "The essential passive modules: a few seconds, no probe sent to the target.",
+      "complet": "Every passive module plus those that use a configured API key. No active or sensitive module.",
+      "personnalise": "You choose the modules family by family. The only profile that allows active and sensitive modules."
+    },
+    "legal": {
+      "intro": "DomainRecon is an audit tool for your own domains. Querying public sources is free, but probing a system without permission can be an offense.",
+      "own": "Only analyze domains you own or for which you have written permission from the holder.",
+      "active": "Active modules send requests and connections to the target (ports, files, HTTP methods): they leave traces in its logs.",
+      "sensitive": "Sensitive modules look for leaks, exposed files or exploitable weaknesses: they require your explicit authorization.",
+      "responsibility": "By ticking \"I am authorized to test this target\" you declare you have that right and take responsibility for it.",
+      "note": "Rules vary by country. When in doubt, ask the holder's agreement or a lawyer."
+    },
+    "faq": {
+      "1": {
+        "q": "Where is my data stored?",
+        "a": "Locally, in the data folder shown in Settings. No result is sent to a DomainRecon server."
+      },
+      "2": {
+        "q": "Why are some modules skipped?",
+        "a": "An API-key module is skipped until its key is set in Settings, and an active or sensitive module requires your authorization."
+      },
+      "3": {
+        "q": "What does \"not measured\" mean?",
+        "a": "The module could not conclude (timeout, unreachable service). It is not a good grade: run the scan again."
+      },
+      "4": {
+        "q": "How is the grade computed?",
+        "a": "Each family has a scale. The score detail, penalties and coverage are visible in the \"Score detail\" tab of the result."
+      },
+      "5": {
+        "q": "Does DNS go through my proxy?",
+        "a": "No. The HTTP or SOCKS proxy only applies to web requests: DNS lookups leave directly from this machine."
+      },
+      "6": {
+        "q": "How do I get alerts?",
+        "a": "Add a watch, pick the rules and channels, then install the system task so it runs even when the app is closed."
+      },
+      "7": {
+        "q": "How do I import an old database?",
+        "a": "In Settings, under \"Import an old database\": choose the .db file and its scans are imported without duplicates."
+      },
+      "8": {
+        "q": "Why does the PDF not generate?",
+        "a": "The PDF uses Playwright's Chromium browser. If it is not installed, use the HTML or Markdown export."
+      }
+    },
+    "toSettings": "Open Settings",
+    "glossaryFilter": "Filter the glossary",
+    "glossaryCount": "{{count}} term(s)"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to DomainRecon",
+      "text": "DomainRecon audits the public security of your own domains: DNS, certificates, email, web and reputation. Everything stays on your machine.",
+      "authorized": "Authorized use only: only scan your own domains or domains whose owner has given you written permission.",
+      "tour": "A short guided tour shows you the parts of the interface, one by one.",
+      "replay": "You can restart it at any time from Help or the command palette (Ctrl+K).",
+      "later": "Later",
+      "start": "Start the tour"
+    },
+    "tour": {
+      "step": "Step {{current}} of {{total}}",
+      "announce": "{{step}}: {{title}}",
+      "skip": "Skip",
+      "previous": "Previous",
+      "next": "Next",
+      "finish": "Finish",
+      "keys": "Left and right arrows to move, Esc to leave."
+    },
+    "steps": {
+      "palette": {
+        "title": "Quick search",
+        "text": "This button opens the command palette: type a page name, a domain to scan or a recent scan, then Enter. Shortcut: Ctrl+K (Cmd+K on Mac), from any screen."
+      },
+      "domain": {
+        "title": "Domain to analyze",
+        "text": "Type a domain name (for example example.com) or a web address, then click Scan. The analysis runs live and can be cancelled at any time."
+      },
+      "profiles": {
+        "title": "Scan profile",
+        "text": "The profile picks the modules that run:",
+        "point1": "Quick: the essential passive checks, in a few seconds.",
+        "point2": "Full: every passive check and those whose API key is set.",
+        "point3": "Custom: you tick the modules. Active modules, which send requests to the target, require ticking the authorization box: only tick it for your own domains or with written permission."
+      },
+      "nav": {
+        "title": "Navigation menu",
+        "text": "The screens to follow your domains over time:",
+        "point1": "Dashboard: the overview of your domains and their grades.",
+        "point2": "History: every past scan, to reopen or delete.",
+        "point3": "Batch: several domains analyzed at once.",
+        "point4": "Compare: two scans side by side, to see what changed.",
+        "point5": "Monitoring: regular scans and an alert when something changes."
+      },
+      "settings": {
+        "title": "Settings",
+        "text": "Adapt the application to your needs:",
+        "point1": "API keys, optional: they enable extra modules, the tool works without them.",
+        "point2": "Light or dark theme.",
+        "point3": "Interface language: French or English."
+      },
+      "help": {
+        "title": "Help and glossary",
+        "text": "Step-by-step guide, profiles, legal framework, frequently asked questions and a glossary of technical terms. You can restart this tour from there at any time."
+      },
+      "resultScore": {
+        "title": "Security grade",
+        "text": "The grade, from A to F, and the score sum up the state of the domain. Coverage shows the share of checks that could be measured."
+      },
+      "resultFinding": {
+        "title": "Findings",
+        "text": "The most important findings come first. “Understand and fix” explains what it is, why it matters and how to fix it."
+      },
+      "resultFamily": {
+        "title": "Check families",
+        "text": "Each row groups a family (DNS, email, web, TLS…) with its state. Open it for the module-by-module detail."
+      },
+      "resultExport": {
+        "title": "Actions and export",
+        "text": "Scan again, follow how the domain changes over time, or click Export to get a PDF, HTML, Markdown, CSV, JSON or SARIF report."
+      },
+      "resultIntro": {
+        "title": "Result screen",
+        "text": "After your first scan, the result screen shows:",
+        "point1": "The grade from A to F and the score, with the coverage of the checks.",
+        "point2": "The findings, each with “Understand and fix”.",
+        "point3": "The check families (DNS, email, web…), to open for the detail.",
+        "point4": "The Export button: PDF, HTML, Markdown, CSV, JSON or SARIF report."
+      }
+    },
+    "palette": {
+      "label": "Restart the guided tour",
+      "keywords": "tour guide tutorial walkthrough onboarding"
+    }
+  },
+  "uninstall": {
+    "kicker": "Danger zone",
+    "title": "Completely uninstall DomainRecon",
+    "text": "Deletes from this machine the scan history, screenshots, API keys and their encryption key, settings, logs and the monitoring task, then removes the program according to your installation. A backup is offered first.",
+    "open": "Completely uninstall…",
+    "dialogTitle": "Completely uninstall DomainRecon",
+    "next": "Continue",
+    "back": "Back",
+    "steps": {
+      "label": "Uninstall steps",
+      "plan": "What will be deleted",
+      "backup": "Backup",
+      "confirm": "Confirmation",
+      "result": "Result"
+    },
+    "plan": {
+      "loading": "Taking inventory…",
+      "error": "Inventory failed: {{detail}}",
+      "mode": "Detected installation: {{mode}}.",
+      "intro": "These items will be deleted from this machine:",
+      "empty": "No DomainRecon data found on this machine.",
+      "total": "Space freed: {{size}}",
+      "after": "Then:",
+      "removeProgram": "Also delete the program after closing",
+      "removeProgramHint": "Only DomainRecon files are erased; the folder is removed only if it is empty."
+    },
+    "mode": {
+      "windows_installed": "Windows installation",
+      "deb": "Debian package (.deb)",
+      "portable_onefile": "portable executable",
+      "portable_folder": "portable folder",
+      "frozen_other": "executable in a folder",
+      "source": "run from source"
+    },
+    "kind": {
+      "database": "Database (history, monitors, settings, encrypted API keys)",
+      "screenshots": "Screenshots",
+      "logs": "Logs",
+      "webview": "Application window data",
+      "settings_file": "Settings file (.env)",
+      "secret_key": "API key encryption key",
+      "other_data": "Other file in the data folder",
+      "data_dir": "Data folder",
+      "cache": "Cache",
+      "temp": "Temporary file",
+      "system_task": "Monitoring scheduled task"
+    },
+    "status": {
+      "planned": "To delete",
+      "deleted": "Deleted",
+      "missing": "Already gone",
+      "failed": "Not deleted",
+      "skipped": "Skipped (outside DomainRecon folders)"
+    },
+    "backup": {
+      "intro": "Before deleting everything, keep a copy of your history, monitors and settings. The .db file can be imported with \"Import an old database\" in a future installation.",
+      "download": "Download a backup (.db)",
+      "done": "Backup downloaded: {{name}}",
+      "error": "Backup failed: {{detail}}",
+      "skip": "Continue without a backup"
+    },
+    "confirm": {
+      "intro": "This action is permanent: nothing can be recovered without a backup. Type {{word}} to confirm.",
+      "label": "Type {{word}}",
+      "submit": "Uninstall permanently",
+      "running": "Uninstalling…",
+      "error": "Uninstall failed: {{detail}}"
+    },
+    "result": {
+      "done": "DomainRecon has been uninstalled.",
+      "deleted": "Items deleted: {{count}}.",
+      "failed": "Some items are still in use or protected: see the remaining steps.",
+      "remaining": "Remaining steps:",
+      "close": "Close DomainRecon",
+      "closing": "DomainRecon is closing…",
+      "closeManually": "Now close DomainRecon (window or tab).",
+      "dismiss": "Finish",
+      "copy": "Copy",
+      "copied": "Copied"
+    },
+    "remaining": {
+      "windows_uninstaller": "On closing, the Windows uninstaller removes the program, its shortcuts and its entry in \"Installed apps\".",
+      "apt_remove": "Remove the program in a terminal (administrator rights):",
+      "delete_program": "Delete the program by hand after closing: {{path}}",
+      "program_scheduled": "The program will be deleted after closing: {{path}}",
+      "source_tree": "Run from source: the project folder is left untouched ({{path}}).",
+      "shared_browsers": "Playwright's Chromium, shared with other tools, is not deleted.",
+      "custom_data_dir": "Custom data folder (DATA_DIR): only DomainRecon files are removed from {{path}}.",
+      "unsafe_data_dir": "Data folder refused for safety, nothing is deleted in it: {{path}}",
+      "external_database": "Database outside the data folder, to delete by hand: {{path}}",
+      "external_database_url": "External database (DATABASE_URL): delete it with your database tools.",
+      "leftovers_scheduled": "Files still in use will be deleted after closing.",
+      "leftovers": "Some files could not be deleted: erase them by hand after closing."
+    }
+  }
+}

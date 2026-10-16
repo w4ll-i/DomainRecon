@@ -1,0 +1,13 @@
+{
+  "finding.paste.credentials": "{count} paste(s) ou vidage(s) public(s) citent ce domaine près de mots sensibles (mot de passe, jeton…)",
+  "finding.paste.mentions": "{count} paste(s) ou vidage(s) public(s) citent ce domaine",
+  "module.paste.checks": "Cherche le domaine dans des vidages et journaux du code public (Sourcegraph), sur GitHub (jeton facultatif) et dans les pastes d'Intelligence X (clé facultative). Les extraits sont masqués.",
+  "module.paste.fix": "Révoquez et remplacez chaque secret visible dans le paste ou le vidage (mot de passe, jeton, clé d'API, clé privée) : une copie a pu être faite avant toute suppression, et ces contenus restent consultables longtemps (archives, moteurs de recherche).\nOuvrez les adresses citées dans le résultat pour identifier l'origine du contenu (journal d'application, export de base de données, fichier de configuration, courriel collé) et la personne ou l'outil qui l'a publié, puis listez les données et les comptes concernés.\nFaites retirer le contenu à la source : supprimez le fichier ou passez le dépôt en privé s'il vient de GitHub ou d'un code indexé par Sourcegraph, ou utilisez le lien de signalement du service de pastes ; une archive tierce peut toutefois en garder une copie.\nSi le vidage contient des données personnelles (clients, salariés) : traitez-le comme une violation de données, documentez-la et, si le risque est avéré, notifiez l'autorité de protection des données (la CNIL en France) sous 72 heures.\nEmpêchez la récidive : ne collez jamais de journaux, de configurations ou d'extraits de base de données bruts dans un service public ; masquez d'abord les valeurs sensibles, ou utilisez un outil de partage interne.\nSi le résultat ne montre que de simples mentions du domaine : vérifiez qu'elles sont légitimes (documentation, discussion publique) et ne révèlent ni nom de serveur interne ni adresse privée ; sinon, faites-les retirer.\nPour couvrir plus de sources, renseignez dans les Réglages un jeton GitHub et une clé Intelligence X (facultatifs), puis relancez l'analyse après les corrections.",
+  "module.paste.fix_ref": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+  "module.paste.title": "Pastes et code public",
+  "module.paste.why": "Des pastes et vidages publics contiennent souvent des identifiants ou des configurations copiés par erreur ; ils restent consultables bien après leur suppression.",
+  "paste.no_source": "Aucune source de pastes n'a répondu (renseignez un jeton GitHub ou une clé Intelligence X)",
+  "paste.score_clean": "Aucune mention dans les pastes interrogés",
+  "paste.score_credentials": "{count} paste(s) avec mots sensibles",
+  "paste.score_mentions": "{count} mention(s) dans des pastes ou vidages"
+}

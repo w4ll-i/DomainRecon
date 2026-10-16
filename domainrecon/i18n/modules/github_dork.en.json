@@ -1,0 +1,18 @@
+{
+  "finding.github_dork.mentions": "{count} file(s) in public GitHub code mention this domain",
+  "finding.github_dork.secrets": "{secrets} probable secret(s) in {files} file(s) of public GitHub code mentioning this domain",
+  "finding.github_dork.sensitive_files": "{count} sensitive file(s) (.env, configuration, keys) mention this domain in public GitHub code",
+  "github_dork.key_missing": "GitHub token not set (Settings)",
+  "github_dork.no_answer": "no search succeeded",
+  "github_dork.score_clean": "No mention in public GitHub code",
+  "github_dork.score_mentions": "{count} mention(s) in public code",
+  "github_dork.score_secrets": "{count} public file(s) with a probable secret",
+  "github_dork.score_sensitive": "{count} sensitive file(s) in public code",
+  "github_dork.token_rejected": "GitHub token rejected (expired, revoked or without search access)",
+  "module.github_dork.checks": "Searches GitHub public code (token required) for files mentioning the domain with sensitive keywords (.env, password, private key…) and detects secrets, always masked.",
+  "module.github_dork.fix": "Revoke right away every secret found in the reported files (token, API key, password, private key, AWS key starting with AKIA) at its issuer and create a new one: deleting the file is not enough, because the history, forks and copies taken by bots keep the value.\nLook in the audit or access logs of the affected service (cloud console, database, API provider) for any use of that secret by a third party since the publication date, and treat it as an incident if you find one.\nOpen each reported file (address in the result) to identify the repository and its owner; if the repository is not yours (contractor, former employee, personal project), ask its owner to remove it or report the content to GitHub.\nDelete the file from the repository; once the secret is revoked, you can also rewrite the history with `git-filter-repo` version 2.47 or later (snippet below), then force-push; GitHub Support can purge the cached views of pull requests.\nTake secrets out of the code: environment variables or a secrets manager, `.env` files excluded by `.gitignore` (snippet below) and an example file without any real value.\nTurn on GitHub secret scanning and push protection on your repositories, and add a pre-commit check (for example gitleaks or git-secrets) to block a secret before it is published.\nIf the finding only reports files that mention the domain, without a secret: check that they reveal no internal server name, private URL or configuration, and remove whatever should not be public.\nRun the scan again to confirm that no file shows up anymore; without rewriting the history, the value remains recoverable, hence the importance of revocation.",
+  "module.github_dork.fix_ref": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository",
+  "module.github_dork.fix_snippet": "# git filter-repo\ngit clone https://github.com/example/repository.git\ncd repository\ngit-filter-repo --sensitive-data-removal --invert-paths --path path/to/.env\ngit push --force --mirror origin\n\n# .gitignore\n.env\n.env.*\n!.env.example\n*.pem\n*.key\n*.p12\n*.pfx\n*.tfstate\n*.tfvars",
+  "module.github_dork.title": "GitHub dorks (secrets in public code)",
+  "module.github_dork.why": "A secret pushed by mistake to a public repository is harvested by bots within minutes; it must be revoked, not just deleted."
+}

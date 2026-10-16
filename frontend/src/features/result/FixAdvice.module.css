@@ -1,0 +1,116 @@
+/* « Comment corriger » : étapes numérotées, extrait à copier (bloc de code plat, variantes en
+   onglets sobres) et lien vers la documentation. Surfaces plates, filets fins, jetons seulement. */
+.advice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  min-width: 0;
+  margin-top: 2px;
+}
+
+/* Liste numérotée : la remise à zéro globale retire les puces, la numérotation est rétablie ici. */
+.steps {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: 22px;
+  list-style: decimal;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.steps li::marker {
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.fallback {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Code en ligne d'une étape. */
+.inline {
+  padding: 1px 5px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.variants {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* Bloc de code : fond du thème, filet, défilement horizontal du code seul ; le bouton Copier
+   a sa barre au-dessus, il ne recouvre aucune ligne. */
+.codeBox {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+
+.bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.pre {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.6;
+  tab-size: 2;
+  white-space: pre;
+  scrollbar-width: thin;
+}
+
+.pre:focus-visible {
+  outline-offset: -2px;
+}
+
+.copy {
+  min-height: 28px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.reference {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px var(--space-3);
+  margin: 0;
+  font-size: 13px;
+}
+
+.reference a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.reference svg {
+  width: 14px;
+  height: 14px;
+}
+
+.host {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}

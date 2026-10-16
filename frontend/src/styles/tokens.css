@@ -1,0 +1,195 @@
+/* Jetons de design « Monochrome pro » : gris neutres, surfaces plates, filets fins, un
+   seul accent bleu. Le thème sombre est celui de :root ; le thème clair ne redéfinit que
+   ce qui change, sous :root[data-theme="light"].
+
+   - L'attribut data-theme se pose sur <html> (même élément que :root) : les
+     jetons dérivés (alias, color-mix) y sont résolus avec les valeurs du thème.
+   - Les valeurs du thème sombre pour ce qui dessine hors CSS (Chart.js, Cytoscape,
+     PDF, carte) sont recopiées dans src/lib/colors.ts : toute valeur modifiée ici
+     doit l'être là aussi (vérifié par tokens.test.ts).
+   - Texte (contrastes vérifiés dans les deux thèmes par tokens.test.ts) :
+       --text, --text-secondary    texte courant et secondaire, sur tous les fonds
+       --text-tertiary             sur --bg, --bg-deep, --surface, --surface-card
+                                   (jamais sur --surface-raised ni sur un fond teinté)
+       --text-dim                  grand texte, icônes, note N/A (3:1 seulement)
+       --text-faint, --text-ghost  décor (filets, grilles, désactivé) : jamais du texte
+     En sombre, --text-tertiary est #808080 et non #737373 : #737373 n'atteint que 4,2:1
+     sur #0A0A0A, sous le seuil AA de 4,5:1.
+   - Bouton principal inversé : --primary (blanc cassé en sombre, noir en clair) et
+     --on-primary pour son texte.
+   - Accent : UN seul bleu, réservé au focus, aux liens, à la sélection et à la
+     progression. --accent sert aux aplats, bordures et icônes (3:1) ; pour du texte ou un
+     lien, --accent-text ; pour du texte posé sur un aplat --accent, --on-accent.
+   - Couleurs sémantiques sobres (succès, attention, danger) : réservées aux notes A à F
+     et à la gravité, toujours accompagnées d'une icône et d'un texte. --info est un gris.
+   - Anciens noms (--ok, --critical, --text-muted, --font-sans…) : alias en fin de
+     bloc, pour ne rien casser ; préférer les noms canoniques. */
+:root {
+  color-scheme: dark;
+
+  /* Fonds */
+  --bg: #0a0a0a;
+  --bg-deep: #0a0a0a;
+  --surface: #111111;
+  --surface-card: #111111;
+  --surface-raised: #1a1a1a;
+
+  /* Bordures */
+  --border: #262626;
+  --border-strong: #333333;
+  --border-subtle: #1a1a1a;
+
+  /* Texte : six niveaux */
+  --text: #ededed;
+  --text-secondary: #a1a1a1;
+  --text-tertiary: #808080;
+  --text-dim: #737373;
+  --text-faint: #525252;
+  --text-ghost: #3a3a3a;
+
+  /* Bouton principal inversé (blanc sur noir) */
+  --primary: #ededed;
+  --primary-hover: #ffffff;
+  --on-primary: #0a0a0a;
+
+  /* Accent bleu unique : focus, liens, sélection, progression */
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --accent-text: #3b82f6;
+  --on-accent: #0a0a0a;
+  --accent-bg: color-mix(in srgb, var(--accent) 6%, transparent);
+
+  /* États sobres, chacun avec son fond teinté (notes et gravité seulement) */
+  --success: #46a758;
+  --warning: #e0a030;
+  --danger: #ec5d5e;
+  --info: #a1a1a1;
+  --success-bg: color-mix(in srgb, var(--success) 10%, transparent);
+  --warning-bg: color-mix(in srgb, var(--warning) 10%, transparent);
+  --danger-bg: color-mix(in srgb, var(--danger) 10%, transparent);
+  --info-bg: color-mix(in srgb, var(--info) 10%, transparent);
+  --neutral-bg: color-mix(in srgb, var(--text-secondary) 10%, transparent);
+
+  /* Notes A à F (pas de E), dérivées des états ; le gris N/A ne sert qu'au grand
+     texte et aux bordures */
+  --grade-a: var(--success);
+  --grade-b: color-mix(in srgb, var(--success) 55%, var(--warning));
+  --grade-c: var(--warning);
+  --grade-d: color-mix(in srgb, var(--warning) 50%, var(--danger));
+  --grade-f: var(--danger);
+  --grade-na: var(--text-dim);
+
+  /* Ombres : surfaces plates ; une ombre très discrète pour les modales, les
+     popovers et les notifications seulement (--shadow-md) */
+  --shadow-sm: none;
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  /* Polices : Inter pour le texte et les titres, JetBrains Mono pour les données
+     (voir styles/fonts.css) */
+  --font-display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  /* Échelle typographique : 12 / 13 / 14 / 16 / 20 / 24 / 32 / 48 */
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-32: 32px;
+  --fs-48: 48px;
+
+  /* Forme et espacement */
+  --radius: 8px;
+  --radius-sm: 6px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --sidebar-width: 224px;
+
+  /* Focus et mouvement (fonctionnel seulement, 150 ms au plus) */
+  --focus-color: var(--accent-text);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--focus-color);
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast: 100ms;
+  --dur-base: 150ms;
+
+  /* Alias des noms de la v1 */
+  --text-muted: var(--text-secondary);
+  --ok: var(--success);
+  --critical: var(--danger);
+  --ok-bg: var(--success-bg);
+  --critical-bg: var(--danger-bg);
+  --font-sans: var(--font-body);
+}
+
+/* Thème clair : mêmes rôles ; les états sont assombris pour que le texte reste
+   à 4,5:1 au moins sur leur fond teinté à 10 %. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #ffffff;
+  --bg-deep: #ffffff;
+  --surface: #fafafa;
+  --surface-card: #fafafa;
+  --surface-raised: #f4f4f5;
+
+  --border: #eaeaea;
+  --border-strong: #d4d4d4;
+  --border-subtle: #f0f0f0;
+
+  --text: #0a0a0a;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-dim: #8a8a8a;
+  --text-faint: #a3a3a3;
+  --text-ghost: #d4d4d4;
+
+  --primary: #0a0a0a;
+  --primary-hover: #262626;
+  --on-primary: #ffffff;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-text: #2563eb;
+  --on-accent: #ffffff;
+
+  --success: #15692c;
+  --warning: #8a5a00;
+  --danger: #c4262e;
+  --info: #525252;
+
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Évite le flash sombre avant que le JS ne pose data-theme : tant que l'attribut
+   n'est pas présent, un utilisateur dont le système préfère le clair voit déjà
+   les jetons de peinture clairs. Seuls les jetons visibles au premier rendu sont
+   repris (fonds, surfaces, texte, bordures) ; le JS pose ensuite data-theme et
+   la palette complète s'applique sans second flash. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+
+    --bg: #ffffff;
+    --bg-deep: #ffffff;
+    --surface: #fafafa;
+    --surface-card: #fafafa;
+    --surface-raised: #f4f4f5;
+
+    --border: #eaeaea;
+    --border-strong: #d4d4d4;
+    --border-subtle: #f0f0f0;
+
+    --text: #0a0a0a;
+    --text-secondary: #525252;
+    --text-tertiary: #737373;
+    --text-dim: #8a8a8a;
+    --text-faint: #a3a3a3;
+    --text-ghost: #d4d4d4;
+  }
+}

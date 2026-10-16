@@ -1,0 +1,12 @@
+{
+  "censys.key_rejected": "Censys access token rejected (HTTP 401)",
+  "censys.no_key": "Censys access token missing: module not applicable",
+  "censys.not_public": "Non-public address: Censys not applicable (no third-party service queried)",
+  "censys.unreadable": "Unreadable response from the Censys service",
+  "module.censys.checks": "Queries the Censys platform for the target IP address: indexed services and software, labels, certificates and autonomous system.",
+  "module.censys.fix": "Compare the services, software, labels and certificates that Censys indexes on the address with your inventory: any unexpected service or port must be closed right away in the firewall (see the \"Open ports\" module), starting with databases, remote administration and APIs without authentication.\nIf a sensitive service appears without protection, close it first, then treat it as compromised: change its passwords, keys and tokens, read its logs.\nList what really listens on the server (snippets below) to find the service behind each Censys line: anything listening on `0.0.0.0` or `[::]` is reachable from anywhere if no firewall filters it.\nCertificates: those Censys sees on the address list the names it serves. If internal or test names appear, stop publishing them; if a certificate is expired or self-signed on a public service, replace it (see the \"TLS certificate\" module).\nSoftware and versions: update any outdated product with the vendor's or the distribution's security fixes; Censys infers versions and CVEs from the services' answers, so check them on the server.\nIf the address belongs to a CDN or shared hosting, Censys describes the provider and not your server: examine the origin address (the \"Origin IP behind a CDN\" module).\nCheck from outside with `nmap` on your own addresses (snippet below), then rerun this module: the Censys record only changes at the next pass of its probes, and the delay varies.",
+  "module.censys.fix_ref": "https://docs.censys.com/docs/platform-host-dataset",
+  "module.censys.fix_snippet": "# ss\nsudo ss -tulpn\n\n# PowerShell\nGet-NetTCPConnection -State Listen | Sort-Object LocalPort | Select-Object LocalAddress, LocalPort, OwningProcess\n\n# nmap\nnmap -Pn -sV -p- 203.0.113.10",
+  "module.censys.title": "Censys",
+  "module.censys.why": "Censys indexes the Internet the way attackers do: it reveals exposed services, their versions and the related certificates, even on ports nobody watches."
+}

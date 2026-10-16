@@ -1,0 +1,17 @@
+{
+  "banners.no_open_port": "No open port: no banner to read",
+  "banners.no_probe": "None of the open ports has a banner probe",
+  "banners.no_scan": "Port scan unavailable: no banner to read",
+  "banners.score_clean": "No version or open access in the banners",
+  "banners.score_unauthenticated": "Service reachable without authentication",
+  "banners.score_versions": "Software version announced in a banner",
+  "banners.unreachable": "None of the open ports answered the probes",
+  "finding.banners.unauthenticated": "The {service} service (port {port}) answers without authentication",
+  "finding.banners.version_disclosed": "Port {port} announces {product} {version}",
+  "module.banners.checks": "Connects to open ports and reads each service's announcement with a protocol-specific probe: product, version, TLS, and unauthenticated access (Redis, Docker, Elasticsearch...).",
+  "module.banners.fix": "If a service is flagged \"without authentication\" (Redis, Memcached, Docker, Elasticsearch, Consul, CouchDB): cut its access from the Internet right away with a rule blocking the port in the hosting provider's firewall and in the server's own, before anything else.\nTreat the data of this service as read or modified: change the passwords, API keys and tokens stored in it or passing through it, read the access logs and look for traces of intrusion (unknown keys or scheduled tasks in Redis, unknown containers with Docker).\nMake each service listen only locally or on the private network, enable its authentication, then restart it (snippets below for Redis, Memcached, Elasticsearch and MongoDB).\nDocker: remove the TCP listener (`tcp://0.0.0.0:2375`) from `hosts` in `/etc/docker/daemon.json` or from the service's `-H` option; administer remotely over SSH (`DOCKER_HOST=ssh://admin@203.0.113.10`) or over TLS with client certificates on port `2376`.\nConsul: `client_addr = \"127.0.0.1\"` and ACLs enabled with `default_policy` set to `deny`. CouchDB: in the `[chttpd]` section of `local.ini`, `bind_address = 127.0.0.1` and `require_valid_user = true`.\nAnnounced versions: install the product's security updates (this is the real remedy, hiding a version fixes no flaw), then reduce the announcement when the product allows it: `server_tokens off;` (nginx), `ServerTokens Prod` (Apache), `smtpd_banner` without a version (Postfix).\nCheck from outside: `redis-cli -h 203.0.113.10 ping` must not answer `PONG` and `curl -s http://203.0.113.10:9200` must return nothing; then rerun the \"Open ports\" and \"Service banners\" modules.",
+  "module.banners.fix_ref": "https://top10.owasp.org/2021/A05_2021-Security_Misconfiguration",
+  "module.banners.fix_snippet": "# Redis\nbind 127.0.0.1 -::1\nprotected-mode yes\nrequirepass CHANGE_ME_long_random_password\n\n# Memcached\n-l 127.0.0.1\n-U 0\n\n# Elasticsearch\nnetwork.host: 127.0.0.1\nxpack.security.enabled: true\n\n# MongoDB\nnet:\n  bindIp: 127.0.0.1\nsecurity:\n  authorization: enabled\n\n# nginx\nserver_tokens off;\n\n# Apache\nServerTokens Prod\nServerSignature Off",
+  "module.banners.title": "Service banners",
+  "module.banners.why": "A banner announcing a product and its version points an attacker to known flaws; a data or administration service that answers without a password is already compromised."
+}

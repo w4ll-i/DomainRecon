@@ -1,0 +1,20 @@
+Package: domainrecon
+Version: @VERSION@
+Section: net
+Priority: optional
+Architecture: amd64
+Maintainer: DomainRecon <noreply@domainrecon.invalid>
+Installed-Size: @INSTALLED_SIZE@
+Depends: @DEPENDS@
+Recommends: @RECOMMENDS@
+Homepage: https://github.com/w4ll-i/DomainRecon
+Description: audit de vos domaines (84 modules, note de sécurité)
+ DomainRecon audite vos propres domaines : DNS, sous-domaines, certificat
+ TLS, en-têtes de sécurité, e-mail, ports, réputation, fuites, WHOIS,
+ capture d'écran… et en tire une note de sécurité avec les points à
+ corriger. Comparaison de scans, analyse par lot, surveillance avec
+ alertes, rapports (PDF, HTML, Markdown, CSV, JSON, SARIF, JUnit) et ligne
+ de commande.
+ Interface en français et en anglais, dans une fenêtre native (WebKitGTK)
+ ou dans le navigateur. Python, l'interface et Chromium (headless shell)
+ sont embarqués.

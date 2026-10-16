@@ -1,0 +1,17 @@
+{
+  "finding.whois_data.expired": "The domain has expired according to the registry: a third party can take it over",
+  "finding.whois_data.expires_soon": "The domain expires in {days} day(s): renew it",
+  "finding.whois_data.no_transfer_lock": "No transfer lock (clientTransferProhibited): the domain can be transferred without any block",
+  "module.whois_data.checks": "Queries the domain registry, through RDAP with WHOIS as a fallback: registrar, creation and expiry dates, name servers, protection statuses (locks), DNSSEC and public contacts.",
+  "module.whois_data.fix": "Sign in to the console of your registrar (the company that holds the domain, shown in the module result) and check the expiry date, the registrant and the contact e-mail address: it must be current and monitored, because expiry notices are sent to it.\nIf the domain has expired or expires in less than 60 days: renew it right away, preferably for several years. An expired domain goes through a grace period and then a redemption period (paid restoration) before it is deleted and can be bought by a third party, who would take over your website and your e-mail.\nTurn on automatic renewal with a valid payment method (card not expired) and add a calendar reminder 90 days before the due date.\nIf the module reports no transfer lock: turn on domain locking in the registrar console (often called \"Registrar Lock\"), which adds the `clientTransferProhibited` status. For a critical domain, also ask for the registry lock (\"Registry Lock\", status `serverTransferProhibited`) if your extension and your registrar offer it.\nSecure access to the registrar account: long and unique password, two-factor authentication, at least two trusted administrators. Never share the transfer code (\"auth code\" or EPP code) and have it regenerated if it may have leaked.\nCompare the rest of the registration with what you expect: name servers (those of your DNS provider), registrar, DNSSEC and public contacts (prefer a role address to a personal one). Any unknown difference must be treated as a hijack: contact the registrar immediately.\nCheck: query the registry with the commands in the snippet and review the statuses and the expiry date, then run the scan again.",
+  "module.whois_data.fix_ref": "https://www.icann.org/resources/pages/epp-status-codes-2014-06-16-en",
+  "module.whois_data.fix_snippet": "# whois\nwhois example.com | grep -iE \"status|expir\"\n# RDAP\ncurl -sL https://rdap.org/domain/example.com",
+  "module.whois_data.title": "WHOIS / RDAP",
+  "module.whois_data.why": "A domain that expires soon or has no transfer lock can be lost or hijacked, along with everything that depends on it (website, email).",
+  "whois_data.score_expired": "Domain expired {days} day(s) ago",
+  "whois_data.score_no_date": "Expiry date not published by the registry",
+  "whois_data.score_no_lock": "No transfer lock on the domain",
+  "whois_data.score_ok": "Domain valid for {days} more day(s), locked against transfer",
+  "whois_data.score_soon": "The domain expires in {days} day(s)",
+  "whois_data.score_unregistered": "Domain not registered according to the registry"
+}

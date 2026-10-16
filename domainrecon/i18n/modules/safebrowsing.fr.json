@@ -1,0 +1,16 @@
+{
+  "finding.safebrowsing.flagged": "Google Safe Browsing signale le site : {threats}.",
+  "module.safebrowsing.checks": "Vérifie dans Google Safe Browsing (API v5, par empreintes : l'URL n'est jamais envoyée) si le domaine, « www. » et le domaine principal sont classés malware, hameçonnage, logiciel indésirable ou application dangereuse.",
+  "module.safebrowsing.fix": "Si des visiteurs sont en danger, mettez immédiatement le site en maintenance ou hors ligne le temps de le nettoyer.\nOuvrez le rapport « Problèmes de sécurité » de la Google Search Console (ajoutez et validez d'abord le domaine comme propriété) : il liste les URL signalées et le type de menace (logiciel malveillant, hameçonnage, logiciel indésirable, application dangereuse).\nRetirez ce qui est signalé : pages d'hameçonnage, fichiers et scripts malveillants, téléchargements piégés, publicités ou composants tiers compromis, puis restaurez une sauvegarde saine antérieure à l'intrusion.\nFermez la faille d'entrée : mettez à jour le CMS, les extensions et les thèmes, supprimez ceux que vous n'utilisez plus, changez tous les mots de passe (administration, FTP ou SFTP, base de données, hébergeur) et les clés d'API, et supprimez les comptes inconnus.\nVérifiez aussi `www` et les sous-domaines : le contrôle porte sur le domaine, `www.` et le domaine principal. Supprimez les enregistrements DNS orphelins (CNAME vers un service résilié) qu'un tiers pourrait reprendre.\nContrôlez les pages signalées depuis un réseau différent de celui de votre hébergeur, puis vérifiez qu'elles ne servent plus de contenu dangereux.\nDans le rapport « Problèmes de sécurité », cliquez sur « Demander un examen » : décrivez le problème exact, les corrections apportées et le résultat. Ne le faites qu'une fois tout corrigé sur toutes les pages : une demande prématurée peut allonger les examens suivants.\nN'envoyez pas de nouvelle demande tant que la première est en cours : l'examen peut durer de quelques jours à quelques semaines et Google vous prévient par courriel à la réception puis à la fin.\nRelancez le scan DomainRecon une fois l'avertissement levé (le résultat est mis en cache brièvement) et surveillez le site : mises à jour régulières, sauvegardes, alertes sur les modifications de fichiers.",
+  "module.safebrowsing.fix_ref": "https://support.google.com/webmasters/answer/9044101?hl=fr",
+  "module.safebrowsing.title": "Google Safe Browsing",
+  "module.safebrowsing.why": "Un site listé par Safe Browsing est bloqué par Chrome, Firefox et Safari avec un écran d'avertissement rouge : le trafic s'effondre et la confiance des visiteurs est perdue.",
+  "safebrowsing.cap_reason": "Site classé malware ou hameçonnage par Google Safe Browsing",
+  "safebrowsing.score_flagged": "Signalé par Safe Browsing : {threats}",
+  "safebrowsing.score_safe": "Aucune menace connue de Safe Browsing",
+  "safebrowsing.threat_harmful_application": "application potentiellement dangereuse",
+  "safebrowsing.threat_malware": "logiciel malveillant",
+  "safebrowsing.threat_social_engineering": "hameçonnage (ingénierie sociale)",
+  "safebrowsing.threat_unwanted_software": "logiciel indésirable",
+  "safebrowsing.unreadable": "Réponse Safe Browsing illisible"
+}

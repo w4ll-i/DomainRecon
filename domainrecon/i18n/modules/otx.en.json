@@ -1,0 +1,14 @@
+{
+  "finding.otx.malicious": "AlienVault OTX: the domain appears in {pulses} threat list(s), several of which name malware or threat actors ({malware}).",
+  "finding.otx.suspicious": "AlienVault OTX: the domain is cited in {pulses} threat list(s) with threat indicators ({tags}).",
+  "module.otx.checks": "Queries AlienVault OTX (LevelBlue): threat lists (\"pulses\") citing the domain or IP, tags, malware families, whitelisted popular domains and passive DNS (with a key).",
+  "module.otx.fix": "Open your domain's page on otx.alienvault.com and read the threat lists (\"pulses\") that cite it: author, date, tags, malware families or named actor, role given to the domain (distribution, command and control, phishing).\nWork out whether these lists concern you: a domain bought or expired then re-registered (lists older than your acquisition), an abandoned subdomain taken over by a third party, or a domain name contacted by malware without any compromise on your side. Compare the dates of the lists with your registration date for the domain.\nIf the indicators are recent, look for a compromise: unknown files, scripts, redirects or pages on the site, unknown administrator or FTP accounts, suspicious processes or scheduled tasks on the server. Remove them, restore a clean backup, update everything and change the passwords and keys.\nDelete orphaned DNS records (CNAME to a terminated service, address of a former server) so that no third party can take over a subdomain, and revoke access to services you no longer use.\nCross-check with the other reputation sources in DomainRecon (VirusTotal, Google Safe Browsing, urlscan.io): a flag confirmed elsewhere points to a real compromise to handle first.\nIf a list is outdated or wrong, contact its author or OTX support with a justification (domain acquisition date, proof of cleanup, screenshots, logs).\nRun the DomainRecon scan again. A mere citation without threat indicators (large well-known domain, whitelisted) is not counted: only malware, actors or threat tags matter.",
+  "module.otx.fix_ref": "https://csrc.nist.gov/pubs/sp/800/61/r3/final",
+  "module.otx.title": "AlienVault OTX reputation",
+  "module.otx.why": "OTX lists community-shared indicators of compromise: appearing there with associated malware flags a domain used in attacks, whereas a mere citation of a large site has no such value and is not counted.",
+  "otx.score_clean": "No OTX threat list",
+  "otx.score_malicious": "Domain associated with malware in {pulses} OTX list(s)",
+  "otx.score_mentioned": "Cited in {pulses} OTX list(s) without threat indicators (not counted)",
+  "otx.score_suspicious": "Threat indicators in {pulses} OTX list(s)",
+  "otx.unreadable": "Unreadable OTX response"
+}

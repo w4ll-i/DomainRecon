@@ -1,0 +1,17 @@
+{
+  "finding.linked_domains.mixed_content": "{count} active resource(s) loaded over HTTP on an HTTPS page (mixed content), for example {example}.",
+  "finding.linked_domains.trackers": "{count} third-party analytics or advertising domains: document them and subject them to consent.",
+  "linked_domains.cat_analytics": "Analytics and advertising",
+  "linked_domains.cat_cdn": "CDN",
+  "linked_domains.cat_font": "Fonts",
+  "linked_domains.cat_maps": "Maps",
+  "linked_domains.cat_media": "Media",
+  "linked_domains.cat_payment": "Payment",
+  "linked_domains.cat_social": "Social networks",
+  "module.linked_domains.checks": "Lists the external domains the page references (scripts, styles, images, frames, forms), by type: CDN, analytics and advertising, social networks, payment, fonts.",
+  "module.linked_domains.fix": "Mixed content: replace every `http://` address (scripts, stylesheets, frames, forms, images) with `https://` or a relative address, in the code, the theme, the CMS and old content stored in the database. If the third party does not offer HTTPS, remove it or host the resource yourself.\nFind the faulty addresses with the browser console (F12, Console tab) on each type of page: every mixed content warning names the address at fault.\nAs a safety net only, add `upgrade-insecure-requests` to your `Content-Security-Policy`: the browser then rewrites forgotten addresses to `https://`. It does not replace fixing the sources.\nList the third-party domains shown by the module and, for each, note its purpose, its owner and its contract; remove those that are no longer useful.\nFor analytics and advertising (five domains or more), remove duplicates, only load these services after consent (cookie banner) and mention them in your privacy policy and your record of processing activities.\nReduce the dependency: host fonts, scripts and libraries yourself where possible (visitors no longer send their IP address to the third party) and add the `integrity` attribute to the third-party scripts you keep.\nUse `Content-Security-Policy` to limit the domains allowed for scripts, images and connections to those actually needed, then run the scan again.",
+  "module.linked_domains.fix_ref": "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Mixed_content",
+  "module.linked_domains.fix_snippet": "# nginx\nadd_header Content-Security-Policy \"default-src 'self'; script-src 'self' https://cdn.example.com; upgrade-insecure-requests\" always;\n\n# Apache\nHeader always set Content-Security-Policy \"default-src 'self'; script-src 'self' https://cdn.example.com; upgrade-insecure-requests\"",
+  "module.linked_domains.title": "Linked domains",
+  "module.linked_domains.why": "Every third-party domain is a dependency: if it is compromised, so is the page. Trackers also raise a privacy question."
+}

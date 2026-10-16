@@ -1,0 +1,12 @@
+{
+  "finding.tech_cves.vulnerable": "{name} {version}: {count} known vulnerability(ies), including {cve}. Fixed from: {fixed}.",
+  "module.tech_cves.checks": "Looks up known vulnerabilities (CVE) in OSV.dev for the detected frameworks and software with their version: Django, Laravel, Symfony, Drupal, Joomla, Next.js, Angular…",
+  "module.tech_cves.fix": "For each piece of software in the finding, move to the version given by \"Fixed from\" or to a newer one. Read the release notes for breaking changes and test on a copy of the site first.\nCheck the version actually installed before concluding: the version announced by the site may be hidden, frozen by a cache, or patched by the distribution without changing number. Useful commands: `composer show`, `pip show`, `npm ls`.\nIf a major upgrade is not possible without development work, install the latest patch release of the branch that is still maintained, or apply the workaround from the vendor's advisory, and restrict access to the affected feature.\nUse your package manager's tool to list then fix vulnerable dependencies: `npm audit`, `composer audit`, `pip-audit`, `bundle audit`, then update the lock file.\nServers (nginx, Apache, IIS, PHP) are not covered by OSV.dev: check their version against the vendor's or your distribution's security advisories, and apply system updates.\nEnable automatic alerts (Dependabot, Renovate, a subscription to the vendor's advisories) and schedule regular updates, for example monthly.\nRun the scan again: if the announced version stays old, clear the CDN cache and check that the right server was updated.",
+  "module.tech_cves.fix_ref": "https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html",
+  "module.tech_cves.fix_snippet": "# npm\nnpm audit\nnpm install package-name@latest\n\n# Composer\ncomposer audit\ncomposer update vendor/package-name\n\n# pip\npip install pip-audit\npip-audit\npip install --upgrade package-name",
+  "module.tech_cves.title": "Technology vulnerabilities",
+  "module.tech_cves.why": "A vulnerable framework or CMS version is one of the most exploited entry points. Servers (nginx, Apache, PHP) are not covered by OSV.dev.",
+  "tech_cves.no_stack": "No technology detected by the \"Technology stack\" module",
+  "tech_cves.score_detail": "{count} technology item(s) with known vulnerabilities",
+  "tech_cves.score_nothing": "No technology with a known version that OSV.dev can be queried for"
+}

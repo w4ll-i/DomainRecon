@@ -1,0 +1,29 @@
+name: Idée
+description: Proposer une amélioration ou un nouveau module.
+title: "[Idée] "
+labels: ["idée"]
+body:
+  - type: textarea
+    id: besoin
+    attributes:
+      label: Besoin
+      description: Le problème que vous rencontrez, ou ce que vous voulez pouvoir faire.
+    validations:
+      required: true
+  - type: textarea
+    id: proposition
+    attributes:
+      label: Proposition
+      description: Ce que DomainRecon devrait faire. Pour un module, indiquez la famille, la catégorie (passif, actif, clé d'API, sensible) et les sources interrogées.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives envisagées
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: Je peux proposer une demande de fusion pour cette idée (voir CONTRIBUTING.md).

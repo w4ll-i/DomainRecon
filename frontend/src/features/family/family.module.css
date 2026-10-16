@@ -1,0 +1,227 @@
+/* Écran d'une famille « Ardoise » : navigation entre familles en pastilles, en-tête à plat,
+   constats à corriger, puis un onglet par module. Surfaces unies, bordures de 1 px, aucune
+   ombre ni dégradé ; l'état d'une famille se lit par une icône et un texte, la couleur
+   ne fait que le souligner. Jetons uniquement. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.back:hover {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.back svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Navigation entre familles : des pastilles (les onglets soulignés sont réservés aux
+   modules, dessous). Elles passent à la ligne quand elles ne tiennent pas : les huit
+   familles restent visibles d'un coup d'oeil, sans barre de défilement. */
+.nav {
+  /* Contexte de positionnement : le texte .visually-hidden (position absolue) des
+     pastilles reste dans la navigation. */
+  position: relative;
+}
+
+.navList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.navLink {
+  --state-color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    border-color var(--dur-fast),
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.navLink:hover {
+  border-color: var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Page courante : contour et fond d'accent, comme les onglets et le menu. */
+.navActive,
+.navActive:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text);
+}
+
+/* Anneau de focus à l'intérieur : la liste rogne ce qui déborde. */
+.navLink:focus-visible {
+  outline-offset: -2px;
+}
+
+.navLink[data-state="ok"] {
+  --state-color: var(--success);
+}
+
+.navLink[data-state="warning"] {
+  --state-color: var(--warning);
+}
+
+.navLink[data-state="critical"] {
+  --state-color: var(--danger);
+}
+
+.navLink[data-state="info"] {
+  --state-color: var(--info);
+}
+
+.navIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
+}
+
+.navIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.navState {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--state-color);
+}
+
+/* En-tête à plat : icône de famille neutre, titre, note et état, résumé. */
+.header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-4) var(--space-5);
+  padding: var(--space-5);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.familyIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+}
+
+.familyIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.headerBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+
+.badges {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.summary {
+  font-size: 14px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.description {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.findings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Onglets des modules, puis le panneau du module affiché. */
+.modules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+/* Les blocs du panneau, quelle que soit leur origine (carte de module, carte réseau,
+   notes), partagent le même fond uni et n'ont pas d'ombre. */
+.panel > section {
+  background: var(--surface-card);
+  box-shadow: none;
+}
+
+@media (max-width: 560px) {
+  .header {
+    padding: var(--space-4);
+    gap: var(--space-3) var(--space-4);
+  }
+
+  .familyIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .familyIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+}

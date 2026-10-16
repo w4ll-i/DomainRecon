@@ -1,0 +1,20 @@
+# Fins de ligne normalisées (LF) dans le dépôt, quel que soit le réglage
+# core.autocrlf de chacun.
+* text=auto
+
+# Scripts shell et fichiers du paquet .deb : LF obligatoire, même après un
+# clone sous Windows. Un shebang terminé par CR (« #!/bin/sh\r ») fait
+# échouer dpkg (« bad interpreter ») ; build-deb.sh retire aussi les CR.
+*.sh text eol=lf
+packaging/linux/postinst text eol=lf
+packaging/linux/control.in text eol=lf
+packaging/linux/*.desktop text eol=lf
+
+# Scripts Windows : CRLF, que cmd.exe lit correctement. (Le lanceur de la
+# version portable, « Lancer DomainRecon.bat », est écrit par build.py.)
+*.bat text eol=crlf
+
+# Binaires : jamais de conversion.
+*.ico binary
+*.png binary
+*.woff2 binary

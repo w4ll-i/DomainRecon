@@ -1,0 +1,18 @@
+{
+  "finding.phishing.pages_listed": "{count} page(s) of {scope} appear in phishing feeds ({sources}), for example {sample}. Compromised site or platform abused by third parties.",
+  "finding.phishing.root_listed": "The home page of {scope} appears in verified phishing feeds ({sources}): {sample}",
+  "module.phishing.checks": "Downloads the verified, online phishing feeds of PhishTank and OpenPhish and searches them for the domain and its subdomains (local search: no URL of the target is sent).",
+  "module.phishing.fix": "Remove the listed pages immediately: the addresses quoted in the finding (and those in the PhishTank or OpenPhish feed). Delete the phishing page and its folder, or put the site into maintenance mode if you do not yet know everything that is online.\nLook for the whole compromise, because a phishing kit is almost never alone: recently added or modified files (upload folders, `.htaccess`, `wp-content`), backdoors (web shells), unknown administrator or FTP accounts, redirects. The access logs give the date and entry point of the intrusion.\nClose the hole and restore: backup from before the intrusion, update the CMS, plugins and server, remove abandoned components, change all passwords and keys (administration, FTP, database, host), two-factor authentication wherever it exists.\nIf your site hosts user content (uploads, personal pages, forms, customer subdomains), block the abuse: account verification, moderation, file type limits, quick handling of reports. Dozens of listed pages on a large platform point to abuse by third parties rather than a hack.\nCheck with the command in the snippet that the listed addresses no longer answer (404 or 410 code), over `http://` as well as `https://`.\nThe feed consulted only contains verified, online pages: once the page is deleted, the entry should disappear at a later feed update (PhishTank updates every hour). If an entry is wrong, use the \"Something wrong with this submission?\" link on its PhishTank page.\nAlso check that Google Safe Browsing does not flag the site (DomainRecon's Google Safe Browsing module) and, if it does, request a review in Search Console after the cleanup. Warn the people who may have entered their credentials on the fake page so that they change them.\nRun the DomainRecon scan again to confirm that the domain is no longer listed.",
+  "module.phishing.fix_ref": "https://developers.google.com/search/docs/monitor-debug/security/social-engineering",
+  "module.phishing.fix_snippet": "# curl\ncurl -sI -o /dev/null -w \"%{http_code}\\n\" https://example.com/listed-page/\n# PowerShell 7\n(Invoke-WebRequest -Uri \"https://example.com/listed-page/\" -Method Head -SkipHttpErrorCheck).StatusCode",
+  "module.phishing.title": "Phishing (PhishTank, OpenPhish)",
+  "module.phishing.why": "A site listed in these feeds is used to steal credentials: it is blocked by browsers and mail filters, and its reputation takes a long time to recover.",
+  "phishing.feed_too_large": "Phishing feed too large",
+  "phishing.feed_unreadable": "Unreadable {source} feed",
+  "phishing.insecure_redirect": "Redirect to an insecure address refused",
+  "phishing.no_source": "No phishing feed could be consulted",
+  "phishing.score_clean": "No entry in phishing feeds",
+  "phishing.score_pages": "{count} page(s) listed in phishing feeds",
+  "phishing.score_platform": "{count} pages listed: hosting platform abused by third parties",
+  "phishing.score_root": "Home page listed in phishing feeds ({count} entry/entries)"
+}

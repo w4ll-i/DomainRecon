@@ -1,0 +1,85 @@
+/* Pastilles d'état et de gravité : texte de la couleur du ton sur son fond teinté,
+   filet de 1 px de la même couleur très atténué. Aucune ombre, aucun aplat vif
+   (hors gravité « critique »). */
+.pill {
+  --pill-color: var(--text);
+  --pill-bg: var(--neutral-bg);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 9px;
+  border: 1px solid color-mix(in srgb, var(--pill-color) 30%, transparent);
+  border-radius: 999px;
+  background: var(--pill-bg);
+  color: var(--pill-color);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.pill svg {
+  width: 12px;
+  height: 12px;
+}
+
+.pill[data-tone="ok"] {
+  --pill-color: var(--success);
+  --pill-bg: var(--success-bg);
+}
+
+.pill[data-tone="warning"] {
+  --pill-color: var(--warning);
+  --pill-bg: var(--warning-bg);
+}
+
+.pill[data-tone="critical"] {
+  --pill-color: var(--danger);
+  --pill-bg: var(--danger-bg);
+}
+
+.pill[data-tone="info"] {
+  --pill-color: var(--info);
+  --pill-bg: var(--info-bg);
+}
+
+.pill[data-tone="accent"] {
+  --pill-color: var(--accent-text);
+  --pill-bg: var(--accent-bg);
+}
+
+/* Non mesuré : gris pointillé, comme les autres « N/A ». */
+.pill[data-tone="na"] {
+  --pill-color: var(--text-secondary);
+  --pill-bg: transparent;
+  border: 1px dashed var(--grade-na);
+}
+
+/* Gravité : icône et texte, dans la couleur de la gravité ; ni aplat ni cadre. */
+.severity {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 84px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.severity svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.severity[data-severity="critical"],
+.severity[data-severity="high"] {
+  color: var(--danger);
+}
+
+.severity[data-severity="medium"] {
+  color: var(--warning);
+}
+
+.severity[data-severity="low"] {
+  color: var(--text-secondary);
+}
