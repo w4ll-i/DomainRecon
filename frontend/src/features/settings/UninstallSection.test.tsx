@@ -104,7 +104,7 @@ describe("désinstallation complète", () => {
     const { calls } = mockFetch({
       "POST /api/system/uninstall": ({ init }) => jsonResponse((bodyOf(init) as { dry_run?: boolean }).dry_run ? plan : done),
       "POST /api/system/backup": () =>
-        new Response(new Blob(["SQLite format 3"]), {
+        new Response("SQLite format 3", {
           status: 200,
           headers: { "Content-Disposition": 'attachment; filename="domainrecon-sauvegarde-20261016-101500.db"' },
         }),

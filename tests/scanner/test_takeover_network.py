@@ -8,6 +8,7 @@
 # =============================================================================
 
 import asyncio
+import sys
 import time
 
 import httpx
@@ -457,7 +458,9 @@ def test_scan_ports_boucle_bloquee_resonde_les_ports_sans_reponse(monkeypatch):
         return ports
 
     assert asyncio.run(scenario()) == [{"port": 80, "state": "open", "service": "HTTP"}]
-    assert calls == [80, 80]  # sonde non concluante, refaite une fois
+    # Avant Python 3.12, asyncio.wait_for rend le résultat déjà arrivé à l'échéance : une
+    # seule sonde suffit. Depuis 3.12, la sonde expire et elle est refaite une fois.
+    assert calls == ([80, 80] if sys.version_info >= (3, 12) else [80])
 
 
 def test_scan_ports_aucune_reponse_n_est_pas_aucun_port_ouvert(monkeypatch):

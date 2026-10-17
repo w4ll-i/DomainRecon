@@ -52,13 +52,13 @@ def test_dependances_reprises_de_requirements():
         "uvicorn[standard]>=0.32.0,<1.0",
         "sqlalchemy>=2.0.36,<3.0",
         "pydantic>=2.10.0,<3.0",
-        "python-dotenv>=1.0.0,<2.0",
-        "httpx>=0.27.0,<1.0",
+        "python-dotenv>=1.2.3,<2.0",
+        "httpx>=0.28.0,<1.0",
         "idna>=3.18,<4.0",
         "tldextract>=5.1.1,<6.0",
-        "python-whois>=0.9.4,<1.0",
+        "python-whois>=0.9.6,<1.0",
         "dnspython>=2.7.0,<3.0",
-        "playwright>=1.49.0,<2.0",
+        "playwright>=1.53.0,<2.0",
     ):
         assert f'"{dependance}"' in project, dependance
 

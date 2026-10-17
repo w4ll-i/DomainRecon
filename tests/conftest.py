@@ -11,11 +11,13 @@
 # un test de capture sauté faute de navigateur au lieu de le laisser passer.
 # =============================================================================
 
+import asyncio
 import importlib
 import os
 import shutil
 import sys
 import tempfile
+import warnings
 from pathlib import Path
 
 import pytest
@@ -100,6 +102,21 @@ def _cache_ttl_vide():
     cache.clear_cache()
     yield
     cache.clear_cache()
+
+
+@pytest.fixture(autouse=True)
+def _politique_asyncio_par_defaut():
+    """Politique asyncio par défaut rétablie après chaque test.
+
+    D'anciennes versions d'uvicorn installent uvloop comme politique
+    globale en démarrant un serveur réel : les tests suivants résolvaient alors
+    les noms par uvloop, sans passer par un socket.getaddrinfo simulé.
+    """
+    yield
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)  # API dépréciée en 3.14
+        if type(asyncio.get_event_loop_policy()) is not asyncio.DefaultEventLoopPolicy:
+            asyncio.set_event_loop_policy(None)
 
 
 @pytest.hookimpl(wrapper=True)

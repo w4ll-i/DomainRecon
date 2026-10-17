@@ -28,17 +28,21 @@ dependencies = [
     "uvicorn[standard]>=0.32.0,<1.0",
     "sqlalchemy>=2.0.36,<3.0",
     "pydantic>=2.10.0,<3.0",
-    "python-dotenv>=1.0.0,<2.0",
-    "httpx>=0.27.0,<1.0",
+    # >= 1.2.3 : lit un .env enregistré avec un BOM UTF-8 (Bloc-notes de Windows).
+    "python-dotenv>=1.2.3,<2.0",
+    # >= 0.28 : proxys socks5h:// (résolution DNS par le proxy).
+    "httpx>=0.28.0,<1.0",
     # Proxy sortant SOCKS (socks5://, socks5h://) : httpx l'exige (extra « httpx[socks] »).
     "socksio>=1.0.0,<2.0",
     # >= 3.18 : exigé par httpx2 (client HTTP des tests) ; corrige CVE-2024-3651.
     "idna>=3.18,<4.0",
     "tldextract>=5.1.1,<6.0",
-    "python-whois>=0.9.4,<1.0",
+    # >= 0.9.6 : NICClient.get_socket (délais et erreurs réseau du WHOIS).
+    "python-whois>=0.9.6,<1.0",
     "dnspython>=2.7.0,<3.0",
     # Captures d'écran ; navigateur : python -m playwright install --only-shell chromium
-    "playwright>=1.49.0,<2.0",
+    # >= 1.53 : table des dépendances système lue pour construire le .deb.
+    "playwright>=1.53.0,<2.0",
     # Fenêtre native : WebView2 (Windows), WebKitGTK ou Qt (Linux).
     "pywebview>=6.2,<7",
     # Chiffrement (Fernet) des clés API enregistrées dans les Réglages : core/crypto.py.
