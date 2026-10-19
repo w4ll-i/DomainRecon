@@ -56,7 +56,7 @@ dev = [
     "pytest>=8.0.0,<10.0",
     "pytest-cov>=6.0.0,<8.0",
     # Mineure figée : une nouvelle mineure de ruff peut ajouter des règles.
-    "ruff>=0.16.0,<0.17",
+    "ruff>=0.16.0,<0.18",
     # Client HTTP du TestClient de Starlette >= 1.0.
     "httpx2>=2.13.0,<3.0",
     # Lecture des workflows GitHub Actions dans les tests (tests/repo/test_workflows.py).
